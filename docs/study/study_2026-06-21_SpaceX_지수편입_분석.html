@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpaceX 지수 편입 예정일 및 주가 흐름 분석</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #f8f9fa;
+      color: #212529;
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 40px 48px;
+    }
+    .meta {
+      font-size: 13px;
+      color: #6c757d;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      border-bottom: 3px solid #0d6efd;
+      padding-bottom: 12px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #6c757d;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 19px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-top: 36px;
+      margin-bottom: 12px;
+      padding-left: 10px;
+      border-left: 4px solid #0d6efd;
+    }
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #343a40;
+      margin-top: 22px;
+      margin-bottom: 8px;
+    }
+    p { margin-bottom: 12px; }
+    .en {
+      font-size: 13px;
+      color: #6c757d;
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+    .highlight-box {
+      background: #e8f0fe;
+      border-left: 4px solid #0d6efd;
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin: 16px 0;
+    }
+    .warning-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin: 16px 0;
+    }
+    .success-box {
+      background: #d1e7dd;
+      border-left: 4px solid #198754;
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin: 16px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    th {
+      background-color: #1a1a2e;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #dee2e6;
+    }
+    tr:nth-child(even) td { background-color: #f8f9fa; }
+    tr:hover td { background-color: #e9ecef; }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge-blue { background: #cfe2ff; color: #0a58ca; }
+    .badge-green { background: #d1e7dd; color: #146c43; }
+    .badge-orange { background: #ffe5d0; color: #c35a00; }
+    .badge-red { background: #f8d7da; color: #842029; }
+    .badge-purple { background: #e2d9f3; color: #6f42c1; }
+    .timeline {
+      border-left: 3px solid #0d6efd;
+      padding-left: 20px;
+      margin: 16px 0;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 18px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -26px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #0d6efd;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #0d6efd;
+    }
+    .timeline-date {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0d6efd;
+      text-transform: uppercase;
+    }
+    .timeline-title { font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+    .timeline-body { font-size: 14px; color: #495057; }
+    .source {
+      font-size: 12px;
+      color: #0d6efd;
+    }
+    .source a { color: #0d6efd; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+    .price-card {
+      display: inline-block;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 10px 18px;
+      margin: 6px 6px 6px 0;
+      min-width: 120px;
+    }
+    .price-label { font-size: 11px; color: #6c757d; font-weight: 600; }
+    .price-value { font-size: 18px; font-weight: 800; color: #1a1a2e; }
+    .price-change-up { color: #198754; font-size: 13px; font-weight: 600; }
+    .price-change-down { color: #dc3545; font-size: 13px; font-weight: 600; }
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #dee2e6;
+      font-size: 12px;
+      color: #6c757d;
+    }
+    ul { padding-left: 20px; margin-bottom: 12px; }
+    li { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="meta">스터디 노트 | 생성일: <span id="now"></span></div>
+  <h1>SpaceX 지수 편입 예정일 및 주가 흐름 분석</h1>
+  <p class="subtitle">
+    SpaceX Index Inclusion Timeline &amp; Stock Price Analysis — IPO부터 나스닥100·러셀1000·S&amp;P500 편입까지
+  </p>
+
+  <!-- 핵심 요약 -->
+  <h2>1. 핵심 요약 (Executive Summary)</h2>
+  <p>스페이스X(SpaceX)는 2026년 6월 12일 나스닥(Nasdaq)에 티커 <strong>SPCX</strong>로 상장했습니다. 공모가 135달러로 역사상 최대 규모 IPO를 기록했으며, 상장 첫날 19% 급등해 161달러에 마감했습니다. 지수 편입 일정은 지수별로 크게 다릅니다.</p>
+  <p class="en">SpaceX (ticker: SPCX) debuted on the Nasdaq on June 12, 2026, at an IPO price of $135 per share — the largest IPO in history. The stock surged ~19% on its first day, closing at ~$161. Index inclusion timelines vary significantly across benchmarks.</p>
+
+  <div class="highlight-box">
+    <strong>주요 포인트</strong>
+    <ul style="margin-top:8px">
+      <li>🚀 IPO 규모: 750억 달러 이상, 역사상 최대 IPO (Largest IPO in history)</li>
+      <li>📈 나스닥100 편입: 2026년 7월 6일경 (상장 후 15거래일, Fast-Track)</li>
+      <li>📊 러셀1000/3000 편입: 상장 후 5거래일 충족 → 2026년 9월 또는 12월 편입 확정</li>
+      <li>⛔ S&P500 편입: 최소 2027년 중반 이후 (GAAP 흑자 4분기 요건 미충족)</li>
+    </ul>
+  </div>
+
+  <!-- IPO 개요 -->
+  <h2>2. IPO 개요 (IPO Overview)</h2>
+  <p>스페이스X는 나스닥 최대 기술 IPO로 기록됩니다. 일론 머스크(Elon Musk)가 이끄는 로켓·위성 기업으로, 상장 당일 시가총액이 약 2.1조 달러에 달했습니다.</p>
+  <p class="en">SpaceX set the record for the largest tech IPO on the Nasdaq. Led by Elon Musk, the company's market cap reached approximately $2.1 trillion on its first day of trading.</p>
+
+  <h3>IPO 주요 수치</h3>
+  <div>
+    <div class="price-card">
+      <div class="price-label">공모가 (IPO Price)</div>
+      <div class="price-value">$135</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">시초가 (Open)</div>
+      <div class="price-value">$150</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">첫날 종가 (1st Day Close)</div>
+      <div class="price-value">$161</div>
+      <div class="price-change-up">+19.3%</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">사상 최고가 (ATH)</div>
+      <div class="price-value">$225.64</div>
+      <div class="price-label" style="margin-top:2px">6월 16일</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">최근 주가 (6/19)</div>
+      <div class="price-value">$185</div>
+      <div class="price-change-down">-3.6% (일간)</div>
+    </div>
+  </div>
+  <div class="source" style="margin-top:8px">출처: <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html" target="_blank">CNBC — SpaceX IPO takeaways: SPCX closes at $161, jumping 19% after record debut</a> | <a href="https://finance.yahoo.com/markets/stocks/article/spacex-sets-135-ipo-price-ahead-of-friday-nasdaq-debut-101955774.html" target="_blank">Yahoo Finance</a></div>
+
+  <!-- 지수 편입 타임라인 -->
+  <h2>3. 지수 편입 타임라인 (Index Inclusion Timeline)</h2>
+  <p>스페이스X의 지수 편입 일정은 각 지수 제공사의 규정 변경 여부에 따라 크게 달라집니다. 아래 타임라인은 현재까지 확인된 정보를 기반으로 합니다.</p>
+  <p class="en">SpaceX's index inclusion schedule differs significantly depending on each index provider's rules and any recent rule changes.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2026년 6월 12일</div>
+      <div class="timeline-title">나스닥 상장 (Nasdaq IPO)</div>
+      <div class="timeline-body">공모가 $135에 상장, 첫날 19% 급등 마감 ($161). 역사상 최대 IPO.</div>
+      <div class="source">출처: <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html" target="_blank">CNBC</a></div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026년 6월 18일 이후</div>
+      <div class="timeline-title">러셀1000·3000 편입 자격 충족 (Russell 1000/3000 Eligibility Met)</div>
+      <div class="timeline-body">FTSE Russell의 규정에 따라 상장 후 5거래일 요건 충족. 단, 실제 편입은 9월 또는 12월 리밸런싱 시점에 이루어짐. FTSE Russell은 최소 공개유통비율(float) 기준을 완화해 스페이스X 편입 길을 열었음. <strong>스페이스X의 실제 공개 유통 비율은 약 4%</strong>로 낮은 수준임.</div>
+      <div class="source">출처: <a href="https://finance.yahoo.com/markets/stocks/articles/spacex-added-russell-1000-russell-092600311.html" target="_blank">Yahoo Finance — SpaceX Can Be Added to the Russell 1000 and Russell 3000</a> | <a href="https://www.tradingkey.com/analysis/stocks/us-stocks/261930566-spacex-ipo-russell-eases-inclusion-rules-us-space-force-2-29-billion-contract-tradingkey" target="_blank">TradingKey</a></div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026년 7월 6일경</div>
+      <div class="timeline-title">나스닥100 편입 (Nasdaq-100 Fast-Track)</div>
+      <div class="timeline-body">2026년 5월 나스닥이 도입한 신규 규정 — 시가총액 상위 40위 이내 신규 상장사는 상장 후 15거래일 만에 나스닥100 편입 가능. 이 규정에 따라 스페이스X는 약 7월 6일 나스닥100에 편입 예정. QQQ(Invesco QQQ Trust, 약 4,957억 달러 운용)를 비롯한 나스닥100 추종 ETF의 자동 매수 강제 발생.</div>
+      <div class="source">출처: <a href="https://spotgamma.com/spacex-ipo-index-changes-spotgamma/" target="_blank">SpotGamma — SpaceX IPO Index Inclusion</a> | <a href="https://www.etf.com/sections/news/spacex-ipo-every-etf-will-hold-spcx-and-when" target="_blank">ETF.com</a></div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026년 9월 또는 12월</div>
+      <div class="timeline-title">러셀1000·3000 공식 편입 확정 (Russell 1000/3000 Reconstitution)</div>
+      <div class="timeline-body">FTSE Russell의 정기 리밸런싱(9월 또는 12월) 시점에 공식 편입. IWM(iShares Russell 2000 ETF) 등 러셀 계열 ETF의 강제 매수 발생.</div>
+      <div class="source">출처: <a href="https://www.rimes.com/spacex-lists-on-nasdaq-which-benchmarks-follow-and-when/" target="_blank">Rimes — SpaceX Lists on Nasdaq: Which Benchmarks Follow and When</a></div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2027년 중반 이후 (최소)</div>
+      <div class="timeline-title">S&P500 편입 가능 시점 (S&P 500 Eligibility: Earliest)</div>
+      <div class="timeline-body">S&P Dow Jones Indices는 2026년 6월 4일, 메가캡 IPO에 대한 패스트트랙 규정 도입을 공식 거부. 기존 요건 — ① GAAP 기준 최근 분기 흑자 + 직전 4분기 누적 흑자, ② 상장 후 12개월 경과, ③ 최소 공개유통비율 10% — 이 모두 유지됨. 스페이스X는 2025년 기준 GAAP 순손실 49억 4천만 달러를 기록했으므로 2027년 중반 이전에는 편입 불가.</div>
+      <div class="source">출처: <a href="https://www.cnbc.com/2026/06/05/spacex-blocked-from-early-us-benchmark-index-entry-as-sp-reaffirms-existing-rules.html" target="_blank">CNBC — SpaceX blocked from early U.S. benchmark index entry</a> | <a href="https://cryptobriefing.com/spacex-sp500-inclusion-delayed-profitability-rules/" target="_blank">CryptoBriefing</a></div>
+    </div>
+  </div>
+
+  <!-- 지수별 편입 현황 요약표 -->
+  <h2>4. 지수별 편입 현황 요약 (Index Inclusion Summary)</h2>
+  <p class="en">Summary table of SpaceX's expected inclusion across major U.S. equity indexes.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>지수 (Index)</th>
+        <th>편입 예정일 (Expected Date)</th>
+        <th>상태 (Status)</th>
+        <th>비고</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>나스닥100 (Nasdaq-100)</strong></td>
+        <td>2026년 7월 6일경</td>
+        <td><span class="badge badge-green">임박 (Imminent)</span></td>
+        <td>15거래일 패스트트랙 규정 적용, QQQ 추종 ETF 강제 매수</td>
+      </tr>
+      <tr>
+        <td><strong>러셀1000 (Russell 1000)</strong></td>
+        <td>2026년 9월 또는 12월</td>
+        <td><span class="badge badge-blue">자격 충족 (Eligible)</span></td>
+        <td>정기 리밸런싱 시 편입, float 기준 완화로 자격 충족</td>
+      </tr>
+      <tr>
+        <td><strong>러셀3000 (Russell 3000)</strong></td>
+        <td>2026년 9월 또는 12월</td>
+        <td><span class="badge badge-blue">자격 충족 (Eligible)</span></td>
+        <td>러셀1000과 동일 일정</td>
+      </tr>
+      <tr>
+        <td><strong>S&amp;P 500</strong></td>
+        <td>2027년 중반 이후</td>
+        <td><span class="badge badge-red">불가 (Ineligible)</span></td>
+        <td>GAAP 4분기 흑자 미충족, 12개월 상장 요건 미충족</td>
+      </tr>
+      <tr>
+        <td><strong>MSCI 지수 계열</strong></td>
+        <td>미정 (TBD)</td>
+        <td><span class="badge badge-orange">검토 중 (Under Review)</span></td>
+        <td>MSCI는 별도 편입 일정 미발표</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 주가 흐름 분석 -->
+  <h2>5. 주가 흐름 분석 (Stock Price Analysis)</h2>
+  <h3>5-1. IPO 후 주가 흐름</h3>
+  <p>상장 이후 불과 4거래일 만에 공모가($135) 대비 67% 상승한 사상 최고가 $225.64를 기록했으나, 이후 조정을 받으며 $185 수준에서 거래되고 있습니다(6월 19일 기준).</p>
+  <p class="en">Within just four trading days of its IPO, SPCX surged 67% above the IPO price to an all-time high of $225.64 before pulling back to ~$185 as of June 19, 2026.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>날짜</th>
+        <th>이벤트</th>
+        <th>주가</th>
+        <th>IPO 대비 등락</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2026-06-12</td>
+        <td>IPO 상장일 (시초가)</td>
+        <td>$150.00</td>
+        <td><span class="price-change-up">+11.1%</span></td>
+      </tr>
+      <tr>
+        <td>2026-06-12</td>
+        <td>IPO 첫날 종가</td>
+        <td>$160.95</td>
+        <td><span class="price-change-up">+19.2%</span></td>
+      </tr>
+      <tr>
+        <td>2026-06-16</td>
+        <td>사상 최고가 (ATH)</td>
+        <td>$225.64</td>
+        <td><span class="price-change-up">+67.1%</span></td>
+      </tr>
+      <tr>
+        <td>2026-06-19</td>
+        <td>최근 종가 (6/19 기준)</td>
+        <td>$185.00</td>
+        <td><span class="price-change-up">+37.0%</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="source">출처: <a href="https://www.investing.com/equities/spacex" target="_blank">Investing.com — SpaceX Stock (SPCX)</a> | <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html" target="_blank">CNBC</a></div>
+
+  <h3>5-2. 나스닥100 편입 전후 주가 전망</h3>
+  <p>나스닥100 편입 시, QQQ 등 추종 ETF는 구성종목 비중을 맞추기 위해 스페이스X 주식을 의무 매수해야 합니다. 추정 강제 매수 규모는 최소 220억~270억 달러에 달합니다. 이는 주가에 단기 상방 압력으로 작용할 수 있습니다.</p>
+  <p class="en">Upon Nasdaq-100 inclusion, index-tracking ETFs like QQQ are required to buy SPCX to match index weights. Estimated forced buying ranges from $22–$27 billion, creating significant near-term upward price pressure.</p>
+
+  <div class="success-box">
+    <strong>강제 매수 추정 규모 (Estimated Forced Buying)</strong><br/>
+    나스닥100 + 러셀 계열 합산: <strong>약 220억~270억 달러</strong><br/>
+    나스닥100 내 스페이스X 예상 비중: <strong>약 0.47%~0.70%</strong>
+    <div class="source" style="margin-top:6px">출처: <a href="https://spotgamma.com/spacex-ipo-index-changes-spotgamma/" target="_blank">SpotGamma — SpaceX IPO Index Inclusion</a></div>
+  </div>
+
+  <h3>5-3. 리스크 요인 (Risk Factors)</h3>
+  <ul>
+    <li><strong>낮은 공개 유통 비율 (Low Float)</strong>: 스페이스X는 IPO에서 전체 주식의 약 4%만 매각했습니다. 유통 물량이 적어 강제 매수 시 주가 변동성이 증폭될 수 있습니다. (<a href="https://finance.yahoo.com/markets/stocks/articles/spacex-added-russell-1000-russell-092600311.html" target="_blank">Yahoo Finance</a>)</li>
+    <li><strong>GAAP 적자 지속</strong>: 2025년 기준 GAAP 순손실 약 49억 달러. S&P500 편입 지연의 직접 원인. (<a href="https://cryptobriefing.com/spacex-sp500-inclusion-delayed-profitability-rules/" target="_blank">CryptoBriefing</a>)</li>
+    <li><strong>인위적 주가 압력 우려</strong>: 지수 편입에 따른 기계적 매수는 펀더멘털이 아닌 수급에 의한 가격 상승이므로, 편입 완료 이후 되돌림 가능성 존재.</li>
+    <li><strong>이해충돌 논란</strong>: 이사회 다수가 일론 머스크와 이해관계를 공유하는 점, 테슬라 등 머스크 관련 기업과의 경쟁 자원 배분 문제가 투자자 우려로 제기됨.</li>
+  </ul>
+
+  <!-- S&P500 규정 분석 -->
+  <h2>6. S&P500 편입 요건 상세 (S&P 500 Inclusion Requirements)</h2>
+  <p>S&P Dow Jones Indices는 2026년 6월 4일, 스페이스X와 같은 메가캡 IPO의 패스트트랙 편입을 허용하는 규정 변경을 공식 거부했습니다. 이에 따라 현행 요건이 모두 유지됩니다.</p>
+  <p class="en">On June 4, 2026, S&P Dow Jones Indices officially rejected a proposal to fast-track megacap IPOs like SpaceX into the S&P 500. All existing eligibility criteria remain unchanged.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>요건 (Requirement)</th>
+        <th>내용 (Detail)</th>
+        <th>SpaceX 충족 여부</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>상장 기간 (Seasoning Period)</td>
+        <td>12개월 이상 공개 거래 이력</td>
+        <td><span class="badge badge-red">미충족 (2027년 6월 이후)</span></td>
+      </tr>
+      <tr>
+        <td>수익성 (Profitability)</td>
+        <td>최근 분기 GAAP 흑자 + 직전 4분기 누적 GAAP 흑자</td>
+        <td><span class="badge badge-red">미충족 (2025년 순손실 $4.94B)</span></td>
+      </tr>
+      <tr>
+        <td>공개유통비율 (IWF)</td>
+        <td>최소 10% 이상</td>
+        <td><span class="badge badge-red">미충족 (약 4%)</span></td>
+      </tr>
+      <tr>
+        <td>시가총액 (Market Cap)</td>
+        <td>일정 수준 이상</td>
+        <td><span class="badge badge-green">충족 ($2.1T)</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="source">출처: <a href="https://www.cnbc.com/2026/06/05/spacex-blocked-from-early-us-benchmark-index-entry-as-sp-reaffirms-existing-rules.html" target="_blank">CNBC — SpaceX blocked from early U.S. benchmark index entry</a> | <a href="https://mlq.ai/news/sp-500-rejects-fast-track-entry-for-spacex-blocks-profitability-waivers-for-openai-and-anthropic/" target="_blank">MLQ News</a></div>
+
+  <div class="warning-box" style="margin-top:16px">
+    <strong>패스트트랙 거부 배경 (Why Fast-Track Was Rejected)</strong><br/>
+    S&P는 수익성 요건을 완화하면 투자자 보호 측면에서 지수의 신뢰성을 훼손할 수 있다는 입장을 유지했습니다. 또한 OpenAI, Anthropic 등 다른 메가 IPO에도 동일한 선례가 적용될 수 있어 신중한 태도를 취했습니다.
+    <div class="source" style="margin-top:6px">출처: <a href="https://fortune.com/2026/06/02/spacex-index-funds-new-listing-rules/" target="_blank">Fortune — If S&P Dow Jones rewrites its listing rules SpaceX and Anthropic will benefit—investors won't</a></div>
+  </div>
+
+  <!-- 나스닥100 규정 변경 -->
+  <h2>7. 나스닥100 규정 변경 상세 (Nasdaq-100 Rule Change)</h2>
+  <p>나스닥은 2026년 5월 1일부터 신규 규정을 시행했습니다. 시가총액 기준 상위 40위 이내 신규 상장사는 기존의 '1~2분기 대기'가 아닌 <strong>단 15거래일</strong> 만에 나스닥100 편입이 가능합니다.</p>
+  <p class="en">Effective May 1, 2026, Nasdaq updated its methodology to allow newly listed companies ranked in the top 40 by market cap to enter the Nasdaq-100 after just 15 trading days — versus the traditional wait of one to two quarters.</p>
+
+  <div class="highlight-box">
+    <strong>나스닥100 편입에 따른 ETF 강제 매수 대상</strong>
+    <ul style="margin-top:8px">
+      <li><strong>QQQ</strong> (Invesco QQQ Trust) — 운용 자산 약 4,957억 달러</li>
+      <li><strong>QQQM</strong> (Invesco NASDAQ 100 ETF) — 운용 자산 약 984억 달러</li>
+      <li>기타 나스닥100 추종 ETF 및 인덱스 펀드 다수</li>
+    </ul>
+    <div class="source" style="margin-top:8px">출처: <a href="https://www.biyapay.com/en/blogdetail/3899-will-spacex-enter-the-nasdaq100-ipo-index-inclusio" target="_blank">BiyaPay — Will SpaceX Enter the Nasdaq-100?</a> | <a href="https://eciks.org/7803-24831-qqq-spacex-ipo-nasdaq-100-june-2026" target="_blank">ECIKS — SpaceX IPO and QQQ</a></div>
+  </div>
+
+  <!-- 투자 시사점 -->
+  <h2>8. 투자 시사점 (Investment Implications)</h2>
+  <p>스페이스X의 단계적 지수 편입은 수급 측면에서 단기적 주가 상방 압력을 제공하지만, 펀더멘털 요인과 저유통비율(Low Float) 리스크를 함께 고려해야 합니다.</p>
+  <p class="en">SpaceX's phased index inclusion creates near-term buying demand from passive funds, but the low float and fundamental losses remain key risk factors to monitor.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>시나리오</th>
+        <th>내용</th>
+        <th>주가 영향</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>나스닥100 편입 (7월 초)</td>
+        <td>QQQ 등 $220B+ 규모 ETF의 강제 매수 집행</td>
+        <td><span class="price-change-up">단기 상방 압력</span></td>
+      </tr>
+      <tr>
+        <td>러셀 편입 (9~12월)</td>
+        <td>Russell 계열 ETF 추가 매수</td>
+        <td><span class="price-change-up">추가 매수 압력</span></td>
+      </tr>
+      <tr>
+        <td>S&P500 편입 지연 (2027+)</td>
+        <td>시장 기대 하회, 편입 프리미엄 되돌림 가능성</td>
+        <td><span class="price-change-down">중립~소폭 하방</span></td>
+      </tr>
+      <tr>
+        <td>GAAP 흑자 전환 (시기 미정)</td>
+        <td>S&P500 편입 조건 충족, 대규모 추가 매수 발생</td>
+        <td><span class="price-change-up">강한 상방 촉매</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>참고: 유사 사례 (Historical Analogues)</h3>
+  <p>테슬라(TSLA)는 S&P500 편입 직전(2020년 11월~12월) 강한 주가 상승을 보였으며, 편입 이후 단기 조정을 겪었습니다. 스페이스X는 S&P500 편입 전 나스닥100 편입이 먼저 이루어지는 구조로, 테슬라보다 더 많은 단계적 매수 이벤트가 예정되어 있습니다.</p>
+  <p class="en">Tesla (TSLA) experienced a sharp rally ahead of its S&P 500 inclusion in December 2020, followed by a short-term pullback. SpaceX's multi-stage inclusion path (Nasdaq-100 first, then Russell, then eventually S&P 500) provides more sequential buying events than Tesla's single-step inclusion.</p>
+
+  <h2>9. 용어 정리 (Glossary)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>용어</th>
+        <th>English</th>
+        <th>설명</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>지수 편입</td>
+        <td>Index Inclusion</td>
+        <td>주식이 특정 주가지수의 구성종목으로 포함되는 것</td>
+      </tr>
+      <tr>
+        <td>패스트트랙</td>
+        <td>Fast-Track</td>
+        <td>일반적 대기 기간보다 빠르게 지수에 편입하는 특례 절차</td>
+      </tr>
+      <tr>
+        <td>리밸런싱</td>
+        <td>Reconstitution / Rebalancing</td>
+        <td>지수 구성종목을 정기적으로 재조정하는 절차</td>
+      </tr>
+      <tr>
+        <td>공개유통비율</td>
+        <td>Float / Investable Weight Factor (IWF)</td>
+        <td>전체 주식 중 시장에서 자유롭게 거래 가능한 비율</td>
+      </tr>
+      <tr>
+        <td>GAAP 수익성</td>
+        <td>GAAP Profitability</td>
+        <td>미국 일반회계기준(Generally Accepted Accounting Principles)에 따른 순이익 달성 여부</td>
+      </tr>
+      <tr>
+        <td>강제 매수</td>
+        <td>Forced / Passive Buying</td>
+        <td>인덱스 펀드가 지수 구성 변경에 따라 의무적으로 해당 종목을 매수하는 것</td>
+      </tr>
+      <tr>
+        <td>시가총액</td>
+        <td>Market Capitalization</td>
+        <td>현재 주가 × 총 발행 주식 수</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <p>작성일: <span id="footerDate"></span> | 주요 출처:</p>
+    <ul>
+      <li><a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html" target="_blank">CNBC — SpaceX IPO: SPCX closes at $161, jumping 19% after record debut</a></li>
+      <li><a href="https://www.cnbc.com/2026/06/05/spacex-blocked-from-early-us-benchmark-index-entry-as-sp-reaffirms-existing-rules.html" target="_blank">CNBC — SpaceX blocked from early U.S. benchmark index entry as S&P reaffirms existing rules</a></li>
+      <li><a href="https://spotgamma.com/spacex-ipo-index-changes-spotgamma/" target="_blank">SpotGamma — SpaceX IPO Index Inclusion: How Rule Changes Force Index Funds to Buy SpaceX</a></li>
+      <li><a href="https://www.etf.com/sections/news/spacex-ipo-every-etf-will-hold-spcx-and-when" target="_blank">ETF.com — SpaceX IPO: Every ETF That Will Hold SPCX — and When</a></li>
+      <li><a href="https://www.cmegroup.com/articles/2026/the-spacex-mega-ipo-why-index-choice-matters.html" target="_blank">CME Group — The SpaceX Mega-IPO: Why Index Choice Matters</a></li>
+      <li><a href="https://cryptobriefing.com/spacex-sp500-inclusion-delayed-profitability-rules/" target="_blank">CryptoBriefing — SpaceX faces lengthy wait for S&P 500 inclusion after rules change rejection</a></li>
+      <li><a href="https://finance.yahoo.com/markets/stocks/articles/spacex-ipo-finally-might-coming-212800235.html" target="_blank">Yahoo Finance — The SpaceX IPO Is Finally Here: This Is When It Might Be Coming to Your S&P 500 ETF</a></li>
+      <li><a href="https://www.rimes.com/spacex-lists-on-nasdaq-which-benchmarks-follow-and-when/" target="_blank">Rimes — SpaceX Lists on Nasdaq: Which Benchmarks Follow and When</a></li>
+    </ul>
+  </footer>
+</div>
+<script>
+  function formatDate(d) {
+    const pad = n => String(n).padStart(2,'0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())} (KST)`;
+  }
+  const now = new Date();
+  document.getElementById('now').textContent = formatDate(now);
+  document.getElementById('footerDate').textContent = formatDate(now);
+</script>
+</body>
+</html>
