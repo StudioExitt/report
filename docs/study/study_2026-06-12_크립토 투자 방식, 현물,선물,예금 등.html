@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>크립토 투자 방식 — 현물, 선물, 예금 등</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.7;
+      padding: 0 16px 80px;
+    }
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 48px 32px 36px;
+      margin: 0 -16px 40px;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    header .subtitle {
+      font-size: 1rem;
+      color: #a8b2d8;
+    }
+    header .meta {
+      margin-top: 16px;
+      font-size: 0.82rem;
+      color: #6c8ebf;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+
+    .toc {
+      background: #fff;
+      border: 1px solid #e0e7ef;
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+    }
+    .toc h2 { font-size: 1rem; font-weight: 700; color: #495057; margin-bottom: 12px; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin: 4px 0; }
+    .toc a { color: #0f3460; text-decoration: none; font-size: 0.93rem; }
+    .toc a:hover { text-decoration: underline; }
+
+    section {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e0e7ef;
+      padding: 32px 36px;
+      margin-bottom: 28px;
+    }
+    section h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #0f3460;
+      border-bottom: 3px solid #e7f0ff;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    section h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 24px 0 10px;
+    }
+    section h4 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: #495057;
+      margin: 16px 0 6px;
+    }
+    p { margin-bottom: 12px; font-size: 0.95rem; }
+    ul, ol { padding-left: 22px; margin-bottom: 12px; }
+    li { margin: 5px 0; font-size: 0.94rem; }
+
+    .en {
+      font-size: 0.82rem;
+      color: #6c757d;
+      font-style: italic;
+      margin-left: 6px;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .tag-low { background: #d4edda; color: #155724; }
+    .tag-mid { background: #fff3cd; color: #856404; }
+    .tag-high { background: #f8d7da; color: #842029; }
+    .tag-defi { background: #cff4fc; color: #055160; }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.88rem;
+    }
+    .compare-table th {
+      background: #0f3460;
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 700;
+    }
+    .compare-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .compare-table tr:nth-child(even) td { background: #f8f9fa; }
+    .compare-table tr:hover td { background: #e7f0ff; }
+
+    .callout {
+      border-left: 4px solid #0f3460;
+      background: #e7f0ff;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+      font-size: 0.92rem;
+    }
+    .callout.warn {
+      border-color: #e67e22;
+      background: #fef5ec;
+    }
+    .callout.danger {
+      border-color: #e74c3c;
+      background: #fdecea;
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+    .card {
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .card h4 { margin-top: 0; }
+
+    .footnotes {
+      font-size: 0.82rem;
+      color: #6c757d;
+      border-top: 1px solid #dee2e6;
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+    .footnotes a { color: #0f3460; }
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #adb5bd;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>크립토 투자 방식 완전 정복</h1>
+    <p class="subtitle">현물 · 선물 · 예금(스테이킹) · 파생 & DeFi — 개념부터 리스크까지</p>
+    <p class="meta" id="meta-date">작성일: 로딩 중...</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>목차 (Table of Contents)</h2>
+    <ol>
+      <li><a href="#overview">크립토 투자 개요</a></li>
+      <li><a href="#spot">현물 투자 (Spot Trading)</a></li>
+      <li><a href="#futures">선물·레버리지 투자 (Futures / Derivatives)</a></li>
+      <li><a href="#savings">예금형 투자 — 스테이킹·렌딩·적립</a></li>
+      <li><a href="#defi">DeFi 투자 (Decentralized Finance)</a></li>
+      <li><a href="#other">기타 투자 방식 — ETF, 채굴, NFT</a></li>
+      <li><a href="#comparison">방식별 비교표</a></li>
+      <li><a href="#risk">공통 리스크 & 세금</a></li>
+      <li><a href="#strategy">투자자 유형별 전략 제안</a></li>
+      <li><a href="#refs">참고 자료</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. 개요 -->
+  <section id="overview">
+    <h2>1. 크립토 투자 개요 <span class="en">(Overview of Crypto Investment)</span></h2>
+    <p>
+      암호화폐(Cryptocurrency) 시장은 24시간 365일 운영되는 글로벌 자산 시장입니다.
+      전통 금융(주식·채권·부동산)과 달리 <strong>높은 변동성</strong>, <strong>탈중앙화</strong>,
+      <strong>낮은 진입 장벽</strong>이 특징이며, 다양한 투자 방식이 존재합니다.
+    </p>
+    <div class="callout">
+      <strong>핵심 분류</strong>
+      크립토 투자는 크게 <em>가격 상승 수익</em>을 노리는 트레이딩 방식과,
+      <em>보유 자체로 수익</em>이 발생하는 인컴(Income) 방식으로 나뉩니다.
+      레버리지 사용 여부와 온체인(On-chain) 활동 여부도 중요한 분기점입니다.
+    </div>
+    <h3>주요 자산 유형</h3>
+    <ul>
+      <li><strong>Layer 1 코인</strong> — BTC, ETH, SOL, ADA 등 (메인체인 기반 자산)</li>
+      <li><strong>알트코인</strong> <span class="en">(Altcoin)</span> — BTC 제외 모든 코인. 시총 순위에 따라 대형·중형·소형으로 분류</li>
+      <li><strong>스테이블코인</strong> <span class="en">(Stablecoin)</span> — USDT, USDC 등 USD 연동 자산. 리스크 헤지 및 수익 창출에 사용</li>
+      <li><strong>토큰</strong> <span class="en">(Token)</span> — DeFi·NFT·GameFi 등 특정 프로토콜 위에서 발행된 자산</li>
+    </ul>
+  </section>
+
+  <!-- 2. 현물 -->
+  <section id="spot">
+    <h2>2. 현물 투자 <span class="en">(Spot Trading)</span> <span class="tag tag-low">리스크: 중</span></h2>
+    <p>
+      현물 거래는 자산을 <strong>실제 소유</strong>하는 가장 기본적인 방식입니다.
+      거래소나 DEX에서 암호화폐를 직접 매수·매도하며,
+      가격 상승 시 시세 차익(<span class="en">capital gain</span>)을 얻습니다.
+    </p>
+
+    <h3>2-1. 즉시 매매 <span class="en">(Active Spot Trading)</span></h3>
+    <p>단기 시세 변동을 활용해 매수·매도를 반복하는 방식입니다.</p>
+    <ul>
+      <li><strong>스캘핑</strong> <span class="en">(Scalping)</span>: 분·초 단위의 초단기 매매. 높은 집중력과 수수료 최소화 필요</li>
+      <li><strong>데이 트레이딩</strong> <span class="en">(Day Trading)</span>: 당일 내 포지션 정리. 오버나이트 리스크 없음</li>
+      <li><strong>스윙 트레이딩</strong> <span class="en">(Swing Trading)</span>: 수일~수주 보유. 추세(Trend) 및 지지·저항선 분석 활용</li>
+    </ul>
+
+    <h3>2-2. 장기 보유 <span class="en">(HODLing / Buy-and-Hold)</span></h3>
+    <p>
+      "HODL"은 암호화폐 커뮤니티의 유행어로 장기 보유 전략을 의미합니다.
+      단기 변동성을 무시하고 수년에 걸쳐 자산 가치 상승을 기대합니다.
+    </p>
+    <div class="callout">
+      BTC, ETH 등 대형 자산에 유리하며, 세금 측면에서도 장기 보유가 유리한 국가가 많습니다.
+    </div>
+
+    <h3>2-3. 적립식 매수 <span class="en">(DCA: Dollar-Cost Averaging)</span></h3>
+    <p>
+      매주·매월 일정 금액을 정기적으로 매수하여 평균 매입 단가를 낮추는 전략.
+      시장 타이밍 예측이 어려운 초보 투자자에게 적합합니다.
+    </p>
+    <div class="grid2">
+      <div class="card">
+        <h4>장점</h4>
+        <ul>
+          <li>감정적 매매 방지</li>
+          <li>하락장에서 평단가 절감</li>
+          <li>소액으로도 시작 가능</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>단점</h4>
+        <ul>
+          <li>강한 상승장에서 기회 손실</li>
+          <li>꾸준한 자금 투입 필요</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>2-4. 현물 거래소 종류</h3>
+    <ul>
+      <li><strong>중앙화 거래소(CEX)</strong>: 업비트, 빗썸(국내) / Binance, Coinbase, Kraken(해외). 편의성 높고 KYC 필요</li>
+      <li><strong>탈중앙화 거래소(DEX)</strong>: Uniswap, Jupiter, dYdX. 지갑 직접 연결, 익명성 가능</li>
+    </ul>
+  </section>
+
+  <!-- 3. 선물 -->
+  <section id="futures">
+    <h2>3. 선물·레버리지 투자 <span class="en">(Futures / Perpetual Contracts / Leverage)</span> <span class="tag tag-high">리스크: 매우 높음</span></h2>
+    <p>
+      선물(Futures)은 미래 특정 시점의 가격에 자산을 사고팔 것을 약정하는 파생상품입니다.
+      크립토 시장에서는 <strong>무기한 선물(Perpetual Futures)</strong>이 주로 사용됩니다.
+    </p>
+
+    <h3>3-1. 핵심 개념</h3>
+    <ul>
+      <li><strong>롱(Long)</strong>: 가격 상승 예상 시 매수 포지션 진입</li>
+      <li><strong>숏(Short)</strong>: 가격 하락 예상 시 매도 포지션 진입</li>
+      <li><strong>레버리지(Leverage)</strong>: 증거금(Margin)의 배수만큼 포지션 확대. 2x~125x까지 지원</li>
+      <li><strong>청산(Liquidation)</strong>: 손실이 증거금을 초과하면 포지션 강제 종료</li>
+      <li><strong>펀딩비(Funding Rate)</strong>: 무기한 선물에서 롱·숏 간 균형을 맞추기 위해 주기적으로 교환하는 비용</li>
+      <li><strong>마크 가격(Mark Price)</strong>: 청산 기준으로 사용하는 시장 평균 가격 (단순 거래소 가격이 아님)</li>
+    </ul>
+
+    <h3>3-2. 무기한 선물 <span class="en">(Perpetual Contracts)</span></h3>
+    <p>
+      만기일이 없는 선물 계약입니다. 현물 가격과 괴리를 방지하기 위해
+      펀딩비 메커니즘을 사용합니다. Binance Futures, Bybit, OKX 등이 대표적입니다.
+    </p>
+
+    <h3>3-3. 전략 종류</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>방향성 트레이딩 <span class="en">(Directional)</span></h4>
+        <p>가격 방향을 예측하여 롱 또는 숏 포지션 진입. 레버리지로 수익/손실 배수</p>
+      </div>
+      <div class="card">
+        <h4>헤징 <span class="en">(Hedging)</span></h4>
+        <p>현물 보유 자산의 하락 리스크를 선물 숏으로 상쇄. 자산 가치 보호</p>
+      </div>
+      <div class="card">
+        <h4>펀딩비 수취 <span class="en">(Funding Rate Arbitrage)</span></h4>
+        <p>현물 롱 + 선물 숏으로 중립 포지션 유지, 펀딩비(숏 측 수취) 수익화</p>
+      </div>
+      <div class="card">
+        <h4>기저 차익 <span class="en">(Basis Trade / Cash-and-Carry)</span></h4>
+        <p>현물 매수 + 선물 매도로 만기 시 가격 수렴 차익 획득</p>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <strong>⚠️ 고레버리지 경고</strong>
+      10x 레버리지 시 현물 대비 10% 하락이면 증거금 100% 손실(청산).
+      코인 시장은 변동성이 극심하여 단시간에 청산 가능.
+      초보자는 1x~3x 이하 권장 또는 선물 투자 자체를 지양.
+    </div>
+
+    <h3>3-4. 옵션 <span class="en">(Options)</span></h3>
+    <p>
+      특정 가격(행사가, Strike Price)에 자산을 사거나 팔 수 있는 <em>권리</em>를 거래하는 파생상품.
+      콜(Call, 매수 권리)과 풋(Put, 매도 권리)이 있습니다.
+      Deribit, Lyra, OKX Options 등에서 거래 가능합니다.
+    </p>
+  </section>
+
+  <!-- 4. 예금형 -->
+  <section id="savings">
+    <h2>4. 예금형 투자 — 스테이킹·렌딩·적립 <span class="tag tag-mid">리스크: 낮음~중간</span></h2>
+    <p>
+      자산을 보유하거나 네트워크에 기여하면서 <strong>이자 또는 보상</strong>을 받는 방식입니다.
+      전통 금융의 예금·채권에 해당합니다.
+    </p>
+
+    <h3>4-1. 스테이킹 <span class="en">(Staking)</span></h3>
+    <p>
+      지분증명(PoS, Proof-of-Stake) 블록체인에서 자산을 <strong>네트워크에 잠가(Lock-up)</strong>
+      검증자(Validator)를 지원하고 블록 보상을 받는 방식입니다.
+    </p>
+    <ul>
+      <li><strong>네이티브 스테이킹</strong>: ETH 스테이킹(~3~4% APR), SOL 스테이킹(~6~7%), ADA 위임 등</li>
+      <li><strong>리퀴드 스테이킹</strong> <span class="en">(Liquid Staking)</span>: 스테이킹하면서도 유동성 토큰(stETH, mSOL)을 받아 DeFi에서 추가 활용 가능. Lido, Rocket Pool 등</li>
+      <li><strong>교환소 스테이킹</strong>: Binance Earn, Coinbase Staking 등 CEX가 대신 운영. 편의성↑, 보상↓</li>
+    </ul>
+
+    <h3>4-2. 렌딩·보로잉 <span class="en">(Lending & Borrowing)</span></h3>
+    <p>
+      자산을 다른 투자자에게 빌려주고 이자를 받거나, 담보를 맡기고 자산을 빌리는 방식입니다.
+    </p>
+    <div class="grid2">
+      <div class="card">
+        <h4>CEX 렌딩</h4>
+        <p>Binance Flexible/Locked Earn, OKX Savings 등. USDT/USDC 예치 시 연 3~8% 이자 가능</p>
+      </div>
+      <div class="card">
+        <h4>DeFi 렌딩</h4>
+        <p>Aave, Compound, Morpho 등 온체인 프로토콜. 스마트 컨트랙트 리스크 있음</p>
+      </div>
+    </div>
+
+    <h3>4-3. 정기 예치 <span class="en">(Fixed-Term / Locked Savings)</span></h3>
+    <p>
+      일정 기간(7일, 30일, 90일 등) 자산을 잠그고 더 높은 이율을 받는 방식.
+      해지 불가 또는 패널티 있음. 스테이블코인 활용 시 안정적 수익 가능.
+    </p>
+
+    <h3>4-4. 이자농사 기본 <span class="en">(Simple Yield)</span></h3>
+    <p>
+      CEX의 자동 복리 상품(Auto-Invest), 스테이블코인 적립 상품 등 리스크가 낮은 수익 상품.
+      연 3~12% 수준의 안정적 수익을 목표로 합니다.
+    </p>
+
+    <div class="callout warn">
+      <strong>주의: 높은 수익률 = 높은 리스크</strong>
+      연 20% 이상을 제공하는 상품은 폰지(Ponzi) 구조이거나 스마트 컨트랙트 리스크,
+      프로토콜 해킹, 뱅크런 등의 가능성이 있습니다. Terra/LUNA 사태가 대표 사례.
+    </div>
+  </section>
+
+  <!-- 5. DeFi -->
+  <section id="defi">
+    <h2>5. DeFi 투자 <span class="en">(Decentralized Finance)</span> <span class="tag tag-defi">온체인</span> <span class="tag tag-high">리스크: 높음</span></h2>
+    <p>
+      블록체인 위에서 스마트 컨트랙트로 운영되는 탈중앙 금융 서비스입니다.
+      중개자(은행·거래소) 없이 직접 프로토콜과 상호작용합니다.
+    </p>
+
+    <h3>5-1. 유동성 공급 <span class="en">(Liquidity Providing, LP)</span></h3>
+    <p>
+      DEX(분산형 거래소)의 유동성 풀(Liquidity Pool)에 두 종류의 토큰을 동시에 예치하면
+      거래 수수료의 일부를 받습니다.
+    </p>
+    <ul>
+      <li>예: ETH/USDC 풀에 50:50 비율로 예치 → 해당 풀 거래 수수료의 일정 비율 수취</li>
+      <li><strong>비영구적 손실(Impermanent Loss)</strong>: 두 자산 가격 비율이 변할 때 단순 보유 대비 손실 발생 가능</li>
+      <li>주요 프로토콜: Uniswap V3/V4, Curve, Balancer, Raydium(SOL)</li>
+    </ul>
+
+    <h3>5-2. 이자농사 <span class="en">(Yield Farming)</span></h3>
+    <p>
+      LP 토큰이나 스테이킹 포지션을 다른 프로토콜에 추가로 예치하여
+      복수의 보상 토큰을 받는 전략. 복잡성이 높고 스마트 컨트랙트 리스크 누적.
+    </p>
+
+    <h3>5-3. 콜래터럴 루핑 <span class="en">(Leveraged Looping)</span></h3>
+    <p>
+      자산을 담보로 대출받은 후 같은 자산을 다시 담보로 예치하는 과정을 반복해
+      레버리지 없이 포지션 규모를 키우는 전략. ETH 리퀴드 스테이킹 + Aave 조합이 대표적.
+    </p>
+
+    <h3>5-4. 리스텐이킹 <span class="en">(Restaking)</span></h3>
+    <p>
+      이미 스테이킹된 ETH(stETH 등)를 <strong>EigenLayer</strong> 같은 프로토콜에 재예치(Restaking)하여
+      추가 보안 서비스를 제공하고 이중 보상을 받는 새로운 DeFi 카테고리.
+    </p>
+
+    <div class="callout danger">
+      <strong>DeFi 핵심 리스크</strong>
+      스마트 컨트랙트 해킹, 오라클 조작, 러그풀(Rug Pull), 담보 청산, 레이어 프로토콜 줄줄이 실패(Cascading Liquidations).
+      2022~2024년 DeFi 해킹 피해액은 수십억 달러 규모.
+    </div>
+  </section>
+
+  <!-- 6. 기타 -->
+  <section id="other">
+    <h2>6. 기타 투자 방식</h2>
+
+    <h3>6-1. 크립토 ETF / ETP <span class="en">(Exchange-Traded Products)</span></h3>
+    <p>
+      주식 계좌로 접근 가능한 암호화폐 연동 상품입니다.
+      직접 지갑을 관리할 필요 없이 전통 금융 채널을 통해 투자합니다.
+    </p>
+    <ul>
+      <li><strong>비트코인 현물 ETF</strong>: BlackRock IBIT, Fidelity FBTC 등 (2024년 미국 승인)</li>
+      <li><strong>이더리움 현물 ETF</strong>: 2024년 미국 승인</li>
+      <li><strong>크립토 관련 주식</strong>: Coinbase(COIN), MicroStrategy(MSTR), 채굴 기업 등</li>
+    </ul>
+
+    <h3>6-2. 채굴 <span class="en">(Mining)</span></h3>
+    <p>
+      작업증명(PoW, Proof-of-Work) 방식의 블록체인(BTC 등)에서
+      하드웨어(ASIC, GPU)로 수학 문제를 풀어 블록 보상을 받는 방식.
+      현재 BTC 채굴은 대형 채굴 팜 위주로 개인 수익성이 낮습니다.
+    </p>
+
+    <h3>6-3. NFT 투자 <span class="en">(Non-Fungible Tokens)</span></h3>
+    <p>
+      고유한 디지털 자산(아트, 게임 아이템, 도메인 등)을 매수·매도하거나
+      로열티 수익을 얻는 방식. 2021~2022년 급등 후 시장 위축.
+      높은 비유동성과 가치 측정의 어려움이 단점.
+    </p>
+
+    <h3>6-4. IDO / 에어드롭 <span class="en">(IDO / Airdrop)</span></h3>
+    <p>
+      신규 프로젝트 초기 토큰 세일 참여(IDO, Initial DEX Offering) 또는
+      프로토콜 사용 후 무상으로 토큰을 받는 에어드롭 전략.
+      높은 수익 잠재력이 있으나 사기(Scam) 및 가치 소멸 리스크가 큽니다.
+    </p>
+  </section>
+
+  <!-- 7. 비교표 -->
+  <section id="comparison">
+    <h2>7. 방식별 비교표 <span class="en">(Comparison Table)</span></h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>투자 방식</th>
+          <th>기대 수익</th>
+          <th>리스크</th>
+          <th>유동성</th>
+          <th>난이도</th>
+          <th>적합 대상</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>현물 장기보유 (HODLing)</strong></td>
+          <td>시장 연동</td>
+          <td>중</td>
+          <td>높음</td>
+          <td>쉬움</td>
+          <td>초보~중급</td>
+        </tr>
+        <tr>
+          <td><strong>현물 DCA</strong></td>
+          <td>시장 연동</td>
+          <td>중</td>
+          <td>높음</td>
+          <td>쉬움</td>
+          <td>초보</td>
+        </tr>
+        <tr>
+          <td><strong>현물 스윙 트레이딩</strong></td>
+          <td>중~고</td>
+          <td>중~고</td>
+          <td>높음</td>
+          <td>중급</td>
+          <td>중급</td>
+        </tr>
+        <tr>
+          <td><strong>선물 (저레버리지)</strong></td>
+          <td>중~고</td>
+          <td>높음</td>
+          <td>높음</td>
+          <td>고급</td>
+          <td>전문가</td>
+        </tr>
+        <tr>
+          <td><strong>선물 (고레버리지)</strong></td>
+          <td>매우 고</td>
+          <td>매우 높음</td>
+          <td>높음</td>
+          <td>전문가</td>
+          <td>비권장</td>
+        </tr>
+        <tr>
+          <td><strong>CEX 스테이킹/적립</strong></td>
+          <td>연 3~10%</td>
+          <td>낮음~중</td>
+          <td>중 (Lock-up)</td>
+          <td>쉬움</td>
+          <td>초보~중급</td>
+        </tr>
+        <tr>
+          <td><strong>네이티브 스테이킹</strong></td>
+          <td>연 3~8%</td>
+          <td>낮음~중</td>
+          <td>낮음 (언본딩)</td>
+          <td>중급</td>
+          <td>중급</td>
+        </tr>
+        <tr>
+          <td><strong>DeFi LP</strong></td>
+          <td>연 5~50%+</td>
+          <td>높음</td>
+          <td>중 (풀 탈출 가능)</td>
+          <td>고급</td>
+          <td>중~고급</td>
+        </tr>
+        <tr>
+          <td><strong>비트코인 ETF</strong></td>
+          <td>시장 연동</td>
+          <td>중</td>
+          <td>높음 (주식시간)</td>
+          <td>쉬움</td>
+          <td>기관·초보</td>
+        </tr>
+        <tr>
+          <td><strong>채굴 (Mining)</strong></td>
+          <td>변동</td>
+          <td>높음</td>
+          <td>낮음 (장비 투자)</td>
+          <td>전문가</td>
+          <td>대형 사업자</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 8. 리스크 & 세금 -->
+  <section id="risk">
+    <h2>8. 공통 리스크 & 세금 <span class="en">(Common Risks & Tax)</span></h2>
+
+    <h3>8-1. 주요 리스크 유형</h3>
+    <ul>
+      <li><strong>시장 리스크</strong> <span class="en">(Market Risk)</span>: 극심한 가격 변동성. BTC는 과거 80%+ 하락 사이클 반복</li>
+      <li><strong>유동성 리스크</strong> <span class="en">(Liquidity Risk)</span>: 소형 알트코인은 매도 시 슬리피지(Slippage) 크게 발생</li>
+      <li><strong>거래소 리스크</strong> <span class="en">(Exchange / Counterparty Risk)</span>: FTX, Celsius 사태처럼 거래소·플랫폼 파산 시 자산 동결·손실</li>
+      <li><strong>스마트 컨트랙트 리스크</strong>: DeFi 프로토콜 코드 취약점으로 해킹 발생 가능</li>
+      <li><strong>키 관리 리스크</strong>: 개인 지갑 비밀키(Private Key) 분실 시 자산 영구 손실</li>
+      <li><strong>규제 리스크</strong> <span class="en">(Regulatory Risk)</span>: 각국 규제 변화(거래 금지, 세금 강화 등)에 따른 자산 가치 변동</li>
+      <li><strong>사기 리스크</strong>: 피싱, 러그풀, 폰지 사기 등</li>
+    </ul>
+
+    <h3>8-2. 한국 세금 현황 (2026년 기준)</h3>
+    <div class="callout warn">
+      <strong>2025년 이후 국내 과세</strong>
+      2025년부터 가상자산 양도·대여소득에 대해 연 250만원 초과분의 22%(지방세 포함)를
+      <em>기타소득</em>으로 분류 과세하도록 법이 개정되었습니다.
+      최신 세법은 국세청 또는 세무사를 통해 확인하세요.
+    </div>
+    <ul>
+      <li>스테이킹·이자 수익도 소득으로 과세 대상이 될 수 있음</li>
+      <li>해외 거래소 이용 시 해외금융계좌 신고 의무(잔액 5억원 이상) 적용 가능</li>
+      <li>DeFi, NFT, 에어드롭 수익의 과세 여부는 지속 논의 중</li>
+    </ul>
+  </section>
+
+  <!-- 9. 전략 제안 -->
+  <section id="strategy">
+    <h2>9. 투자자 유형별 전략 제안 <span class="en">(Strategy by Investor Type)</span></h2>
+
+    <h3>입문자 (Beginner)</h3>
+    <div class="callout">
+      BTC/ETH 위주 DCA + CEX 스테이킹 예치.
+      전체 포트폴리오의 5~10% 이내에서 시작. 선물·DeFi는 충분히 이해 후 접근.
+    </div>
+
+    <h3>중급 투자자 (Intermediate)</h3>
+    <div class="callout">
+      현물 장기보유 코어(60~70%) + 스윙 트레이딩 일부(15~20%) + 리퀴드 스테이킹·렌딩(10~15%).
+      DCA를 통한 포지션 관리, 포트폴리오 분기별 리밸런싱.
+    </div>
+
+    <h3>고급 투자자 (Advanced)</h3>
+    <div class="callout">
+      현물 코어 + 헤징 선물(숏) + DeFi LP 선별 + 펀딩비 차익거래.
+      리스크 관리(스탑로스, 포지션 사이징) 필수. 온체인 모니터링 도구 활용.
+    </div>
+
+    <h3>기관/대형 투자자 (Institutional)</h3>
+    <div class="callout">
+      BTC/ETH 현물 ETF + OTC 거래 + 규제 준수 커스터디(Custody) + 체계적 리스크 관리.
+      내부 컴플라이언스 및 세무 구조 구축 필수.
+    </div>
+  </section>
+
+  <!-- 참고 자료 -->
+  <section id="refs">
+    <h2>10. 참고 자료 <span class="en">(References)</span></h2>
+    <div class="footnotes">
+      <ul>
+        <li><a href="https://academy.binance.com/ko" target="_blank">Binance Academy (한국어)</a> — 바이낸스 공식 크립토 교육 플랫폼</li>
+        <li><a href="https://ethereum.org/ko/staking/" target="_blank">Ethereum 공식 스테이킹 문서</a> — 이더리움 네이티브 스테이킹 가이드</li>
+        <li><a href="https://defillama.com/" target="_blank">DeFi Llama</a> — DeFi TVL 및 수익률 데이터</li>
+        <li><a href="https://www.coinglass.com/" target="_blank">CoinGlass</a> — 선물 청산 데이터, 펀딩비 현황</li>
+        <li><a href="https://coinmarketcap.com/" target="_blank">CoinMarketCap</a> — 코인 시총 및 거래량 데이터</li>
+        <li><a href="https://www.nts.go.kr/" target="_blank">국세청 (NTS)</a> — 국내 가상자산 세금 안내</li>
+        <li>Nakamoto, S. (2008). <em>Bitcoin: A Peer-to-Peer Electronic Cash System</em> — <a href="https://bitcoin.org/bitcoin.pdf" target="_blank">bitcoin.org</a></li>
+        <li><a href="https://docs.uniswap.org/" target="_blank">Uniswap V3/V4 문서</a> — 유동성 공급 및 비영구적 손실 설명</li>
+      </ul>
+      <p style="margin-top:12px;">
+        ※ 본 문서는 교육 목적으로 작성되었으며 투자 권유가 아닙니다.
+        모든 투자 결정은 본인의 책임 하에 이루어져야 합니다.
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>생성: Claude Sonnet 4.6 | 스터디 노트 자동 생성 시스템</p>
+</footer>
+
+<script>
+  // 로컬 타임존 기준 생성 일시 표시
+  const now = new Date();
+  const options = {
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false,
+    timeZoneName: 'short'
+  };
+  document.getElementById('meta-date').textContent =
+    '작성일: ' + now.toLocaleString('ko-KR', options);
+</script>
+</body>
+</html>

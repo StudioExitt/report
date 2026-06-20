@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux 서버 파일을 Google Drive로 rclone 동기화하기</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.75;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 48px 56px;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: #495057;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #e9ecef;
+    }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 40px 0 14px;
+      padding-left: 12px;
+      border-left: 4px solid #4285f4;
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #343a40;
+      margin: 24px 0 10px;
+    }
+    p {
+      margin-bottom: 14px;
+      color: #343a40;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      background: #f1f3f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: #c0392b;
+    }
+    pre {
+      background: #1e2235;
+      color: #e8eaf6;
+      padding: 20px 24px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      margin: 14px 0 20px;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    }
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+    .comment { color: #7c83a6; }
+    .cmd { color: #82aaff; }
+    .flag { color: #c3e88d; }
+    .string { color: #f78c6c; }
+    .keyword { color: #c792ea; }
+    .tip {
+      background: #e8f5e9;
+      border-left: 4px solid #43a047;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+    .tip strong { color: #2e7d32; }
+    .warning {
+      background: #fff3e0;
+      border-left: 4px solid #fb8c00;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+    .warning strong { color: #e65100; }
+    .info {
+      background: #e3f2fd;
+      border-left: 4px solid #1e88e5;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+    .info strong { color: #1565c0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.92rem;
+    }
+    th {
+      background: #e8eaf6;
+      font-weight: 700;
+      padding: 10px 14px;
+      text-align: left;
+      border: 1px solid #dee2e6;
+      color: #1a1a2e;
+    }
+    td {
+      padding: 10px 14px;
+      border: 1px solid #dee2e6;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8f9fa; }
+    .en {
+      font-size: 0.82rem;
+      color: #868e96;
+      font-style: italic;
+    }
+    ul, ol {
+      padding-left: 24px;
+      margin-bottom: 14px;
+    }
+    li { margin-bottom: 6px; }
+    .toc {
+      background: #f1f3f5;
+      border-radius: 8px;
+      padding: 20px 28px;
+      margin: 28px 0 36px;
+    }
+    .toc h2 {
+      font-size: 1rem;
+      border-left: none;
+      padding-left: 0;
+      margin: 0 0 12px;
+      color: #495057;
+    }
+    .toc ol { margin: 0; }
+    .toc a {
+      color: #4285f4;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .toc a:hover { text-decoration: underline; }
+    .step {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .step-num {
+      display: inline-block;
+      background: #4285f4;
+      color: white;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 2px 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .refs {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 2px solid #e9ecef;
+      font-size: 0.88rem;
+      color: #6c757d;
+    }
+    .refs a { color: #4285f4; }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid #e9ecef;
+      font-size: 0.82rem;
+      color: #adb5bd;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta">스터디 노트 / Study Note &nbsp;|&nbsp; <span id="created-time"></span></div>
+  <h1>Linux 서버 파일을 Google Drive로<br>rclone을 이용해서 동기화하기</h1>
+  <p class="subtitle">
+    Synchronizing Files from a Linux Server to Google Drive Using rclone<br>
+    <span class="en">A practical guide for automated cloud backup from Linux to Google Drive via rclone</span>
+  </p>
+
+  <div class="toc">
+    <h2>목차 / Table of Contents</h2>
+    <ol>
+      <li><a href="#intro">rclone이란? (What is rclone?)</a></li>
+      <li><a href="#install">rclone 설치 (Installation)</a></li>
+      <li><a href="#configure">Google Drive 연결 설정 (Configure Google Drive Remote)</a></li>
+      <li><a href="#commands">주요 명령어 (Key Commands)</a></li>
+      <li><a href="#sync">동기화 실행 (Running Sync)</a></li>
+      <li><a href="#automation">자동화 - cron 등록 (Automation with cron)</a></li>
+      <li><a href="#service-account">서비스 계정 사용 (Service Account — Headless)</a></li>
+      <li><a href="#options">유용한 옵션 (Useful Options)</a></li>
+      <li><a href="#troubleshoot">문제 해결 (Troubleshooting)</a></li>
+    </ol>
+  </div>
+
+  <!-- ====== 1. 개요 ====== -->
+  <h2 id="intro">1. rclone이란? <span class="en">What is rclone?</span></h2>
+  <p>
+    <strong>rclone</strong>은 클라우드 스토리지와 로컬 파일시스템 사이의 파일을 동기화·복사·이동할 수 있는
+    오픈소스 CLI 도구입니다. <em>"클라우드 스토리지용 rsync"</em>라고 불리기도 합니다.
+    <span class="en">rclone is an open-source CLI tool for syncing, copying, and moving files between cloud storage and local filesystems — often called <em>"rsync for cloud storage"</em>.</span>
+  </p>
+  <p>Google Drive, S3, Dropbox, OneDrive 등 70개 이상의 클라우드 스토리지를 지원합니다.</p>
+
+  <table>
+    <tr>
+      <th>특징 <span class="en">Feature</span></th>
+      <th>설명 <span class="en">Description</span></th>
+    </tr>
+    <tr>
+      <td><strong>크로스 플랫폼</strong> <span class="en">Cross-platform</span></td>
+      <td>Linux, macOS, Windows 모두 지원</td>
+    </tr>
+    <tr>
+      <td><strong>암호화</strong> <span class="en">Encryption</span></td>
+      <td>서버 측/클라이언트 측 암호화 지원</td>
+    </tr>
+    <tr>
+      <td><strong>체크섬 검증</strong> <span class="en">Checksum verification</span></td>
+      <td>MD5/SHA-1 기반 파일 무결성 검사</td>
+    </tr>
+    <tr>
+      <td><strong>대역폭 제어</strong> <span class="en">Bandwidth throttle</span></td>
+      <td><code>--bwlimit</code>으로 업로드 속도 제한 가능</td>
+    </tr>
+    <tr>
+      <td><strong>병렬 전송</strong> <span class="en">Parallel transfers</span></td>
+      <td>다수 파일 동시 업로드로 속도 향상</td>
+    </tr>
+  </table>
+
+  <!-- ====== 2. 설치 ====== -->
+  <h2 id="install">2. rclone 설치 <span class="en">Installation</span></h2>
+
+  <h3>공식 설치 스크립트 (권장) <span class="en">Official install script (recommended)</span></h3>
+  <pre><code><span class="comment"># 공식 설치 스크립트로 최신 버전 설치</span>
+<span class="comment"># Install latest version via official script</span>
+<span class="cmd">curl</span> <span class="flag">-fsSL</span> https://rclone.org/install.sh <span class="keyword">|</span> sudo bash</code></pre>
+
+  <h3>패키지 매니저 사용 <span class="en">Using package manager</span></h3>
+  <pre><code><span class="comment"># Ubuntu / Debian</span>
+sudo apt-get install rclone
+
+<span class="comment"># RHEL / CentOS / Rocky Linux</span>
+sudo dnf install rclone</code></pre>
+
+  <h3>설치 확인 <span class="en">Verify installation</span></h3>
+  <pre><code>rclone version
+<span class="comment"># rclone v1.68.x 형태로 출력되면 정상</span></code></pre>
+
+  <!-- ====== 3. 설정 ====== -->
+  <h2 id="configure">3. Google Drive 연결 설정 <span class="en">Configure Google Drive Remote</span></h2>
+
+  <p>
+    rclone은 <strong>remote(리모트)</strong>라는 개념으로 클라우드 스토리지 연결을 관리합니다.
+    <span class="en">rclone manages cloud storage connections via <strong>remotes</strong>.</span>
+  </p>
+
+  <div class="step">
+    <div class="step-num">STEP 1</div>
+    <h3>설정 마법사 실행 <span class="en">Run the configuration wizard</span></h3>
+    <pre><code>rclone config</code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 2</div>
+    <h3>새 리모트 추가 <span class="en">Add a new remote</span></h3>
+    <pre><code>No remotes found, make a new one?
+n) New remote
+...
+<span class="string">n/s/q> n</span>
+
+<span class="comment"># 리모트 이름 입력 (예: gdrive)</span>
+name> <span class="string">gdrive</span></code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 3</div>
+    <h3>스토리지 유형 선택 <span class="en">Select storage type</span></h3>
+    <pre><code><span class="comment"># 목록에서 Google Drive 번호 선택 (보통 17~20번 사이, 버전마다 다름)</span>
+Storage> <span class="string">drive</span>
+<span class="comment"># 또는 숫자로 선택: Storage> 17</span></code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 4</div>
+    <h3>OAuth 인증 <span class="en">OAuth Authentication</span></h3>
+    <pre><code><span class="comment"># client_id, client_secret은 공백(엔터)으로 기본값 사용 가능</span>
+<span class="comment"># (개인 사용 시 기본값으로도 충분)</span>
+client_id> <span class="string">[Enter]</span>
+client_secret> <span class="string">[Enter]</span>
+
+<span class="comment"># 접근 범위 선택</span>
+scope> <span class="string">1</span>   <span class="comment"># Full access to all files</span>
+
+<span class="comment"># 브라우저 인증 (GUI 환경 없는 서버는 N)</span>
+Use auto config?
+y) Yes (default)   <span class="comment"># 로컬 브라우저가 있을 때</span>
+n) No              <span class="comment"># 헤드리스 서버일 때</span>
+y/n> <span class="string">n</span></code></pre>
+    <div class="info">
+      <strong>헤드리스 서버 (Headless Server)의 경우:</strong><br>
+      <code>n</code>을 선택하면 rclone이 인증 URL을 출력합니다.
+      <strong>로컬 PC</strong>에서 해당 URL을 브라우저로 열어 인증 후 나타나는 코드를 서버에 붙여넣으면 됩니다.
+      <br><span class="en">If running on a headless server: select <code>n</code>, open the given URL on your local browser, authenticate, then paste the verification code back in the terminal.</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 5</div>
+    <h3>설정 완료 확인 <span class="en">Confirm configuration</span></h3>
+    <pre><code><span class="comment"># 설정된 리모트 목록 확인</span>
+rclone listremotes
+<span class="comment"># gdrive: 가 출력되면 성공</span>
+
+<span class="comment"># 연결 테스트: Google Drive 루트 목록 조회</span>
+rclone lsd gdrive:
+<span class="comment"># Google Drive의 폴더 목록이 나오면 정상</span></code></pre>
+  </div>
+
+  <!-- ====== 4. 주요 명령어 ====== -->
+  <h2 id="commands">4. 주요 명령어 <span class="en">Key Commands</span></h2>
+
+  <table>
+    <tr>
+      <th>명령어 <span class="en">Command</span></th>
+      <th>설명 <span class="en">Description</span></th>
+      <th>특징 <span class="en">Notes</span></th>
+    </tr>
+    <tr>
+      <td><code>rclone copy</code></td>
+      <td>소스 → 목적지 복사 <span class="en">Copy source to destination</span></td>
+      <td>목적지에만 있는 파일은 삭제 안 함</td>
+    </tr>
+    <tr>
+      <td><code>rclone sync</code></td>
+      <td>소스와 목적지를 동기화 <span class="en">Sync source to destination</span></td>
+      <td><strong>목적지에만 있는 파일 삭제됨</strong> ⚠️</td>
+    </tr>
+    <tr>
+      <td><code>rclone move</code></td>
+      <td>소스 파일을 이동 <span class="en">Move source files</span></td>
+      <td>전송 후 소스 파일 삭제</td>
+    </tr>
+    <tr>
+      <td><code>rclone ls</code></td>
+      <td>파일 목록 조회 <span class="en">List files</span></td>
+      <td>재귀적으로 모든 파일 나열</td>
+    </tr>
+    <tr>
+      <td><code>rclone lsd</code></td>
+      <td>디렉토리 목록 조회 <span class="en">List directories</span></td>
+      <td>폴더만 표시</td>
+    </tr>
+    <tr>
+      <td><code>rclone check</code></td>
+      <td>양쪽 파일 비교 <span class="en">Compare files</span></td>
+      <td>실제 전송 없이 차이만 확인</td>
+    </tr>
+    <tr>
+      <td><code>rclone mount</code></td>
+      <td>클라우드를 로컬에 마운트 <span class="en">Mount cloud as local filesystem</span></td>
+      <td>FUSE 기반 마운트</td>
+    </tr>
+  </table>
+
+  <div class="warning">
+    <strong>⚠️ sync vs copy 주의사항</strong><br>
+    <code>rclone sync</code>는 소스에 없는 파일을 목적지에서 <strong>삭제</strong>합니다.
+    처음 테스트할 때는 반드시 <code>--dry-run</code> 플래그를 함께 사용하세요.
+    <br><span class="en"><code>rclone sync</code> <strong>deletes</strong> files at the destination that don't exist at the source. Always test with <code>--dry-run</code> first.</span>
+  </div>
+
+  <!-- ====== 5. 동기화 실행 ====== -->
+  <h2 id="sync">5. 동기화 실행 <span class="en">Running Sync</span></h2>
+
+  <h3>기본 동기화 <span class="en">Basic sync</span></h3>
+  <pre><code><span class="comment"># 형식: rclone sync &lt;소스&gt; &lt;목적지&gt;</span>
+<span class="comment"># Format: rclone sync &lt;source&gt; &lt;destination&gt;</span>
+
+<span class="comment"># /home/user/data 를 Google Drive의 backup 폴더로 동기화</span>
+rclone sync /home/user/data gdrive:backup</code></pre>
+
+  <h3>드라이런 먼저 확인 <span class="en">Dry run first</span></h3>
+  <pre><code><span class="comment"># --dry-run: 실제 전송 없이 어떤 파일이 변경될지 미리 확인</span>
+<span class="comment"># --dry-run: simulate the operation without actually transferring files</span>
+rclone sync /home/user/data gdrive:backup <span class="flag">--dry-run</span> <span class="flag">-v</span></code></pre>
+
+  <h3>진행률 표시와 함께 실행 <span class="en">Run with progress output</span></h3>
+  <pre><code><span class="comment"># --progress: 실시간 전송 진행률 표시</span>
+rclone sync /home/user/data gdrive:backup <span class="flag">--progress</span>
+
+<span class="comment"># 자세한 로그와 함께</span>
+rclone sync /home/user/data gdrive:backup <span class="flag">-v</span> <span class="flag">--progress</span></code></pre>
+
+  <h3>특정 파일/패턴 제외 <span class="en">Exclude files/patterns</span></h3>
+  <pre><code><span class="comment"># .log 파일 제외</span>
+rclone sync /home/user/data gdrive:backup <span class="flag">--exclude</span> <span class="string">"*.log"</span>
+
+<span class="comment"># 특정 디렉토리 제외</span>
+rclone sync /home/user/data gdrive:backup <span class="flag">--exclude</span> <span class="string">"tmp/**"</span>
+
+<span class="comment"># 필터 파일로 복잡한 규칙 관리</span>
+rclone sync /home/user/data gdrive:backup <span class="flag">--filter-from</span> /etc/rclone/filters.txt</code></pre>
+
+  <h3>필터 파일 예시 <span class="en">Filter file example</span></h3>
+  <pre><code><span class="comment"># /etc/rclone/filters.txt</span>
+- *.tmp        <span class="comment"># .tmp 파일 제외 (exclude)</span>
+- .DS_Store    <span class="comment"># macOS 메타파일 제외</span>
+- __pycache__/ <span class="comment"># Python 캐시 제외</span>
++ **           <span class="comment"># 나머지 전부 포함 (include all)</span></code></pre>
+
+  <!-- ====== 6. 자동화 ====== -->
+  <h2 id="automation">6. 자동화 - cron 등록 <span class="en">Automation with cron</span></h2>
+
+  <h3>로그 디렉토리 준비 <span class="en">Prepare log directory</span></h3>
+  <pre><code>sudo mkdir -p /var/log/rclone
+sudo chown $USER:$USER /var/log/rclone</code></pre>
+
+  <h3>crontab 등록 <span class="en">Add to crontab</span></h3>
+  <pre><code><span class="comment"># crontab 편집 열기</span>
+crontab -e</code></pre>
+  <pre><code><span class="comment"># 매일 새벽 2시에 동기화 실행</span>
+<span class="comment"># Run sync every day at 2:00 AM</span>
+<span class="string">0 2 * * *</span> rclone sync /home/user/data gdrive:backup \
+  --log-file=/var/log/rclone/sync.log \
+  --log-level=INFO \
+  --transfers=4 \
+  --bwlimit=10M 2>&amp;1
+
+<span class="comment"># 6시간마다 실행 (매일 0, 6, 12, 18시)</span>
+<span class="comment"># Run every 6 hours</span>
+<span class="string">0 */6 * * *</span> rclone sync /home/user/data gdrive:backup \
+  --log-file=/var/log/rclone/sync.log --log-level=INFO</code></pre>
+
+  <h3>cron 표현식 참고 <span class="en">Cron expression reference</span></h3>
+  <table>
+    <tr>
+      <th>표현식 <span class="en">Expression</span></th>
+      <th>의미 <span class="en">Meaning</span></th>
+    </tr>
+    <tr><td><code>0 2 * * *</code></td><td>매일 새벽 2시 / Daily at 2:00 AM</td></tr>
+    <tr><td><code>0 */6 * * *</code></td><td>6시간마다 / Every 6 hours</td></tr>
+    <tr><td><code>0 2 * * 0</code></td><td>매주 일요일 새벽 2시 / Every Sunday at 2:00 AM</td></tr>
+    <tr><td><code>*/30 * * * *</code></td><td>30분마다 / Every 30 minutes</td></tr>
+  </table>
+
+  <h3>systemd 타이머 사용 (권장) <span class="en">Using systemd timer (recommended)</span></h3>
+  <p>systemd 타이머는 cron보다 로깅·의존성 관리가 용이합니다.
+    <span class="en">systemd timers offer better logging and dependency management than cron.</span></p>
+  <pre><code><span class="comment"># /etc/systemd/system/rclone-sync.service</span>
+[Unit]
+Description=rclone Google Drive Sync
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=<span class="string">your_username</span>
+ExecStart=rclone sync /home/user/data gdrive:backup \
+  --log-file=/var/log/rclone/sync.log \
+  --log-level=INFO \
+  --transfers=4
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+  <pre><code><span class="comment"># /etc/systemd/system/rclone-sync.timer</span>
+[Unit]
+Description=Run rclone sync daily
+
+[Timer]
+OnCalendar=*-*-* 02:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target</code></pre>
+  <pre><code><span class="comment"># 타이머 활성화 및 시작</span>
+sudo systemctl daemon-reload
+sudo systemctl enable --now rclone-sync.timer
+
+<span class="comment"># 상태 확인</span>
+sudo systemctl status rclone-sync.timer
+sudo journalctl -u rclone-sync.service -f</code></pre>
+
+  <!-- ====== 7. 서비스 계정 ====== -->
+  <h2 id="service-account">7. 서비스 계정 사용 (헤드리스 권장) <span class="en">Service Account — Recommended for Headless Servers</span></h2>
+
+  <p>
+    개인 OAuth 토큰은 주기적으로 만료되어 갱신이 필요합니다.
+    서버에서의 무인 자동화에는 <strong>Google Service Account</strong>를 사용하는 것이 안정적입니다.
+    <span class="en">Personal OAuth tokens expire periodically. For unattended server automation, using a <strong>Google Service Account</strong> is more reliable.</span>
+  </p>
+
+  <div class="step">
+    <div class="step-num">STEP 1</div>
+    <h3>Google Cloud Console에서 서비스 계정 생성</h3>
+    <ol>
+      <li><a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a> 접속</li>
+      <li>프로젝트 선택 또는 새 프로젝트 생성</li>
+      <li><strong>IAM 및 관리자 → 서비스 계정</strong> 메뉴로 이동</li>
+      <li>서비스 계정 생성 후 <strong>키 추가 → JSON</strong> 형식으로 키 파일 다운로드</li>
+      <li>Google Drive API 활성화 (APIs &amp; Services → Library)</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 2</div>
+    <h3>키 파일을 서버에 배포 <span class="en">Deploy key file to server</span></h3>
+    <pre><code><span class="comment"># 키 파일을 서버의 안전한 위치에 복사</span>
+sudo mkdir -p /etc/rclone
+sudo cp service-account-key.json /etc/rclone/gdrive-sa.json
+sudo chmod 600 /etc/rclone/gdrive-sa.json</code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-num">STEP 3</div>
+    <h3>rclone 설정에서 서비스 계정 지정 <span class="en">Specify service account in rclone config</span></h3>
+    <pre><code><span class="comment"># ~/.config/rclone/rclone.conf</span>
+[gdrive]
+type = drive
+scope = drive
+service_account_file = /etc/rclone/gdrive-sa.json</code></pre>
+    <div class="info">
+      <strong>Google Drive 폴더 공유:</strong> 서비스 계정 이메일(<code>xxx@project.iam.gserviceaccount.com</code>)에게
+      동기화 대상 Google Drive 폴더의 편집 권한을 부여해야 합니다.
+      <br><span class="en">Share the target Google Drive folder with the service account email address (editor permission).</span>
+    </div>
+  </div>
+
+  <!-- ====== 8. 유용한 옵션 ====== -->
+  <h2 id="options">8. 유용한 옵션 <span class="en">Useful Options</span></h2>
+
+  <table>
+    <tr>
+      <th>옵션 <span class="en">Option</span></th>
+      <th>설명 <span class="en">Description</span></th>
+      <th>예시 <span class="en">Example</span></th>
+    </tr>
+    <tr>
+      <td><code>--transfers N</code></td>
+      <td>동시 전송 파일 수 <span class="en">Parallel transfers</span></td>
+      <td><code>--transfers 4</code></td>
+    </tr>
+    <tr>
+      <td><code>--bwlimit RATE</code></td>
+      <td>대역폭 제한 <span class="en">Bandwidth limit</span></td>
+      <td><code>--bwlimit 10M</code></td>
+    </tr>
+    <tr>
+      <td><code>--checkers N</code></td>
+      <td>파일 검사 스레드 수 <span class="en">File check threads</span></td>
+      <td><code>--checkers 8</code></td>
+    </tr>
+    <tr>
+      <td><code>--retries N</code></td>
+      <td>실패 시 재시도 횟수 <span class="en">Retry count on failure</span></td>
+      <td><code>--retries 3</code></td>
+    </tr>
+    <tr>
+      <td><code>--timeout DURATION</code></td>
+      <td>IO 타임아웃 <span class="en">IO timeout</span></td>
+      <td><code>--timeout 60s</code></td>
+    </tr>
+    <tr>
+      <td><code>--drive-chunk-size</code></td>
+      <td>업로드 청크 크기 <span class="en">Upload chunk size</span></td>
+      <td><code>--drive-chunk-size 256M</code></td>
+    </tr>
+    <tr>
+      <td><code>--backup-dir DIR</code></td>
+      <td>삭제 파일 백업 위치 <span class="en">Backup deleted files here</span></td>
+      <td><code>--backup-dir gdrive:trash</code></td>
+    </tr>
+    <tr>
+      <td><code>--log-file FILE</code></td>
+      <td>로그 파일 경로 <span class="en">Log file path</span></td>
+      <td><code>--log-file /var/log/rclone/sync.log</code></td>
+    </tr>
+    <tr>
+      <td><code>--log-level LEVEL</code></td>
+      <td>로그 레벨 <span class="en">Log verbosity</span></td>
+      <td><code>--log-level INFO</code></td>
+    </tr>
+    <tr>
+      <td><code>--dry-run</code></td>
+      <td>모의 실행 <span class="en">Simulate without changes</span></td>
+      <td><code>--dry-run -v</code></td>
+    </tr>
+  </table>
+
+  <h3>실전 권장 명령어 조합 <span class="en">Recommended production command</span></h3>
+  <pre><code>rclone sync /home/user/data gdrive:backup \
+  <span class="flag">--transfers</span> 4 \
+  <span class="flag">--checkers</span> 8 \
+  <span class="flag">--bwlimit</span> 20M \
+  <span class="flag">--retries</span> 3 \
+  <span class="flag">--drive-chunk-size</span> 256M \
+  <span class="flag">--backup-dir</span> gdrive:backup_trash \
+  <span class="flag">--log-file</span> /var/log/rclone/sync.log \
+  <span class="flag">--log-level</span> INFO \
+  <span class="flag">--progress</span></code></pre>
+
+  <div class="tip">
+    <strong>팁 (Tip):</strong> <code>--backup-dir</code>를 사용하면 <code>sync</code> 중 삭제되는 파일이 영구 삭제되지 않고
+    지정한 폴더로 이동됩니다. 안전망 역할을 합니다.
+    <br><span class="en">Using <code>--backup-dir</code> moves deleted files to a specified folder instead of permanently deleting them — a useful safety net.</span>
+  </div>
+
+  <!-- ====== 9. 문제 해결 ====== -->
+  <h2 id="troubleshoot">9. 문제 해결 <span class="en">Troubleshooting</span></h2>
+
+  <h3>인증 토큰 만료 <span class="en">Auth token expired</span></h3>
+  <pre><code><span class="comment"># 토큰 재인증</span>
+rclone config reconnect gdrive:</code></pre>
+
+  <h3>Google Drive API 할당량 초과 <span class="en">Google Drive API quota exceeded</span></h3>
+  <pre><code><span class="comment"># 전송 속도와 동시 요청 수를 줄여 재시도</span>
+rclone sync /home/user/data gdrive:backup \
+  <span class="flag">--tpslimit</span> 5 \       <span class="comment"># API 초당 호출 수 제한</span>
+  <span class="flag">--transfers</span> 2        <span class="comment"># 동시 전송 수 감소</span></code></pre>
+
+  <h3>대용량 파일 업로드 실패 <span class="en">Large file upload failure</span></h3>
+  <pre><code><span class="comment"># 청크 크기를 늘리고 재시도 횟수 증가</span>
+rclone sync /home/user/data gdrive:backup \
+  <span class="flag">--drive-chunk-size</span> 512M \
+  <span class="flag">--retries</span> 5 \
+  <span class="flag">--low-level-retries</span> 10</code></pre>
+
+  <h3>동기화 상태 확인 <span class="en">Check sync status</span></h3>
+  <pre><code><span class="comment"># 양쪽 파일 차이 확인 (전송 없이)</span>
+rclone check /home/user/data gdrive:backup --one-way
+
+<span class="comment"># 마지막 로그 확인</span>
+tail -100 /var/log/rclone/sync.log</code></pre>
+
+  <h3>설정 파일 위치 확인 <span class="en">Config file location</span></h3>
+  <pre><code><span class="comment"># 설정 파일 경로 출력</span>
+rclone config file
+<span class="comment"># 일반적으로: ~/.config/rclone/rclone.conf</span></code></pre>
+
+  <!-- ====== 참고 자료 ====== -->
+  <div class="refs">
+    <h2 style="border-left:none; padding-left:0; font-size:1rem; color:#495057;">참고 자료 / References</h2>
+    <ul>
+      <li><a href="https://rclone.org/docs/" target="_blank">rclone 공식 문서 (Official Docs)</a></li>
+      <li><a href="https://rclone.org/drive/" target="_blank">rclone Google Drive 설정 가이드</a></li>
+      <li><a href="https://rclone.org/commands/rclone_sync/" target="_blank">rclone sync 명령어 레퍼런스</a></li>
+      <li><a href="https://rclone.org/filtering/" target="_blank">rclone 필터링(Filtering) 가이드</a></li>
+      <li><a href="https://cloud.google.com/iam/docs/service-accounts-create" target="_blank">Google Cloud 서비스 계정 생성 가이드</a></li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Generated by Claude Code &nbsp;|&nbsp; <span id="footer-time"></span>
+  </div>
+
+</div>
+
+<script>
+  function getLocalTimeString() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const yyyy = now.getFullYear();
+    const mm = pad(now.getMonth() + 1);
+    const dd = pad(now.getDate());
+    const hh = pad(now.getHours());
+    const mi = pad(now.getMinutes());
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi} (${tz})`;
+  }
+  const t = getLocalTimeString();
+  document.getElementById('created-time').textContent = '작성일 / Created: ' + t;
+  document.getElementById('footer-time').textContent = t;
+</script>
+</body>
+</html>

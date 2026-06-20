@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한국 주가지수 상승에 따른 글로벌 ETF 및 기금의 국가별 리밸런싱 변화</title>
+  <style>
+    :root {
+      --primary: #1a56a0;
+      --secondary: #0e7d5a;
+      --accent: #e05c2b;
+      --bg: #f7f8fa;
+      --card: #ffffff;
+      --text: #1e2430;
+      --muted: #5a6378;
+      --border: #dde2ec;
+      --tag-blue: #dbeafe;
+      --tag-blue-text: #1d4ed8;
+      --tag-green: #d1fae5;
+      --tag-green-text: #065f46;
+      --tag-orange: #ffedd5;
+      --tag-orange-text: #9a3412;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 0 0 60px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #0f2d5c 0%, #1a56a0 60%, #0e7d5a 100%);
+      color: white;
+      padding: 48px 32px 36px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .hero .subtitle {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-bottom: 18px;
+    }
+    .meta {
+      font-size: 0.82rem;
+      opacity: 0.7;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin: 28px 0;
+    }
+    .toc h3 { font-size: 0.9rem; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin: 5px 0; }
+    .toc a { color: var(--primary); text-decoration: none; font-size: 0.93rem; }
+    .toc a:hover { text-decoration: underline; }
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 22px;
+    }
+    .section h2 {
+      font-size: 1.25rem;
+      color: var(--primary);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section h3 {
+      font-size: 1.03rem;
+      color: var(--text);
+      margin: 20px 0 10px;
+      font-weight: 600;
+    }
+    .section p { margin-bottom: 12px; font-size: 0.95rem; }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .kpi {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .kpi .label { font-size: 0.78rem; color: var(--muted); margin-bottom: 5px; }
+    .kpi .value { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+    .kpi .sub { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+    .kpi.green .value { color: var(--secondary); }
+    .kpi.orange .value { color: var(--accent); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #eef1f8;
+      color: var(--primary);
+      padding: 9px 14px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #f9fafb; }
+    .tag {
+      display: inline-block;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.77rem;
+      font-weight: 600;
+    }
+    .tag-blue { background: var(--tag-blue); color: var(--tag-blue-text); }
+    .tag-green { background: var(--tag-green); color: var(--tag-green-text); }
+    .tag-orange { background: var(--tag-orange); color: var(--tag-orange-text); }
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: #eff4fc;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-size: 0.92rem;
+    }
+    .callout.warning { border-color: var(--accent); background: #fff5ef; }
+    .callout.success { border-color: var(--secondary); background: #f0faf5; }
+    .highlight { background: #fef9c3; padding: 1px 3px; border-radius: 3px; }
+    .bar-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; font-size: 0.88rem; }
+    .bar-label { width: 80px; color: var(--muted); flex-shrink: 0; }
+    .bar-track { flex: 1; background: #e8ecf4; border-radius: 4px; height: 18px; }
+    .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 6px; color: white; font-size: 0.75rem; font-weight: 600; }
+    .bar-pct { width: 44px; text-align: right; font-weight: 600; }
+    .sources {
+      background: #f1f3f8;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-top: 10px;
+    }
+    .sources h3 { font-size: 0.88rem; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .sources ul { list-style: none; padding: 0; }
+    .sources li { margin: 5px 0; font-size: 0.83rem; }
+    .sources a { color: var(--primary); text-decoration: none; }
+    .sources a:hover { text-decoration: underline; }
+    .arrow-up { color: #16a34a; font-weight: 700; }
+    .arrow-down { color: #dc2626; font-weight: 700; }
+    .timeline { border-left: 3px solid var(--primary); padding-left: 18px; margin: 14px 0; }
+    .timeline-item { margin-bottom: 14px; position: relative; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -23px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .timeline-date { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+    .timeline-text { font-size: 0.92rem; }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>한국 주가지수 상승에 따른<br>글로벌 ETF 및 기금의 국가별 리밸런싱 변화</h1>
+  <div class="subtitle">Changes in Country-Level Rebalancing of Global ETFs and Funds due to the Rise in Korean Stock Index</div>
+  <div class="meta">생성일시: 2026년 6월 20일 | 심층 리서치 보고서 | Deep Research Report</div>
+</div>
+
+<div class="container">
+
+  <div class="toc">
+    <h3>목차 / Table of Contents</h3>
+    <ol>
+      <li><a href="#s1">한국 주식시장 현황 (2025–2026)</a></li>
+      <li><a href="#s2">글로벌 ETF 리밸런싱 메커니즘</a></li>
+      <li><a href="#s3">주요 ETF별 한국 비중 변화</a></li>
+      <li><a href="#s4">국가별 리밸런싱 영향</a></li>
+      <li><a href="#s5">MSCI 선진국 시장 재분류 이슈</a></li>
+      <li><a href="#s6">투자 시사점 및 섹터별 영향</a></li>
+      <li><a href="#s7">최신 뉴스 및 데이터 (2025–2026)</a></li>
+      <li><a href="#sources">출처</a></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section" id="s1">
+    <h2>📈 1. 한국 주식시장 현황 (2025–2026)</h2>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="label">KOSPI (2026.06.18)</div>
+        <div class="value">9,063</div>
+        <div class="sub">사상 최고 종가</div>
+      </div>
+      <div class="kpi green">
+        <div class="label">KOSPI YTD 수익률 (2026)</div>
+        <div class="value">+110%</div>
+        <div class="sub">연초(4,309) → 9,000+</div>
+      </div>
+      <div class="kpi green">
+        <div class="label">KOSPI 2025 수익률</div>
+        <div class="value">+76%</div>
+        <div class="sub">글로벌 주요 지수 1위</div>
+      </div>
+      <div class="kpi orange">
+        <div class="label">KOSDAQ YTD (2026)</div>
+        <div class="value">+19.8%</div>
+        <div class="sub">주로 ETF 매수 주도</div>
+      </div>
+    </div>
+
+    <h3>주요 성과 하이라이트</h3>
+    <p>한국 KOSPI는 2025년 전 세계 주요 증시 중 <strong>가장 강한 수익률(+76%)</strong>을 기록했으며, 2025년 말 4,214.17로 마감했다. 2026년에는 1월 22일 5,019.54를 처음 돌파한 후, 6월 18일 <strong>9,063.84로 사상 최고 종가</strong>를 기록하며 9,000선을 돌파했다. 동기간 S&P 500은 +17%, 나스닥은 +22%에 그쳤다.</p>
+
+    <div class="callout success">
+      Goldman Sachs는 2026년 한국 기업 전체 이익 성장률을 <strong>+300%</strong>로 전망 — 1999년 아시아 금융위기 이후 아시아 시장 사상 최대 연간 이익 증가율
+    </div>
+
+    <h3>핵심 상승 동력</h3>
+    <table>
+      <tr>
+        <th>동력</th>
+        <th>세부 내용</th>
+        <th>영향</th>
+      </tr>
+      <tr>
+        <td><strong>AI 반도체 / HBM</strong></td>
+        <td>SK하이닉스 HBM(고대역폭메모리) 수요 폭발. Nvidia 등 AI 기업의 공급 부족 지속. SK하이닉스 HBM4E 샘플 출하(2026.6.18)</td>
+        <td>SK하이닉스 2025년 +274%, 2026년 추가 +200% 이상</td>
+      </tr>
+      <tr>
+        <td><strong>삼성전자</strong></td>
+        <td>2026년 1분기 영업이익 57.2조원 (전년 대비 8배). 시가총액 2,180조원 수준</td>
+        <td>KOSPI 비중 약 28% (삼성전자 보통주)</td>
+      </tr>
+      <tr>
+        <td><strong>SK하이닉스</strong></td>
+        <td>시가총액 2,000조원 돌파(2026.6.19 장중). 1분기 매출 50조원 최초 돌파, 영업이익률 72%</td>
+        <td>KOSPI 비중 약 27%</td>
+      </tr>
+      <tr>
+        <td><strong>밸류업 프로그램</strong></td>
+        <td>정부의 기업 가치제고 프로그램 시행. 자사주 소각 의무화, 배당 세제 개편, 이사 수탁자 의무 강화</td>
+        <td>코리아 디스카운트 해소. 밸류업 지수, KOSPI 대비 +30% 초과 수익</td>
+      </tr>
+      <tr>
+        <td><strong>공매도 재개</strong></td>
+        <td>2025년 3월 공매도 금지 해제 → 시장 신뢰도 상승, 외국인 투자 재개</td>
+        <td>외국인 보유 비중 확대</td>
+      </tr>
+    </table>
+
+    <div class="callout">
+      <strong>반도체 집중도:</strong> 삼성전자 + SK하이닉스가 KOSPI 시가총액의 약 48~55%를 차지하며, 2026년 KOSPI 상승분의 약 70%를 기여. 한국은 미국 이외 국가 중 최초로 시가총액 1조달러 기업을 2개 보유한 국가가 됨.
+    </div>
+
+    <h3>주요 지수 내 한국 비중 (2026년 5월 기준)</h3>
+    <table>
+      <tr>
+        <th>지수 / Index</th>
+        <th>한국 비중</th>
+        <th>비고</th>
+      </tr>
+      <tr>
+        <td>MSCI 이머징마켓 (EM)</td>
+        <td><strong>21%</strong></td>
+        <td>8개월 만에 2배 증가 (2025년 3분기 ~11% → 2026년 5월 21%)</td>
+      </tr>
+      <tr>
+        <td>iShares Core MSCI EM (IEMG)</td>
+        <td><strong>21%</strong></td>
+        <td>2026.5.26 기준 2위 국가</td>
+      </tr>
+      <tr>
+        <td>MSCI ACWI (All Country World)</td>
+        <td>약 2~3%</td>
+        <td>선진국 포함 글로벌 전체 (이머징 비중이 낮아 상대적으로 작음)</td>
+      </tr>
+      <tr>
+        <td>FTSE All-World / VWO</td>
+        <td><strong>0%</strong></td>
+        <td>FTSE는 한국을 선진국으로 분류 → 이머징 ETF 제외</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section" id="s2">
+    <h2>⚙️ 2. 글로벌 ETF 리밸런싱 메커니즘</h2>
+
+    <h3>패시브 ETF의 국가 비중 조정 원리</h3>
+    <p>글로벌 인덱스 ETF는 추종 지수(예: MSCI EM)의 국가별 시가총액 가중치를 실시간으로 반영한다. 한국처럼 특정 국가의 주가가 급등하면, 해당 국가의 시가총액이 커지면서 지수 내 비중이 자동으로 상승한다.</p>
+
+    <div class="callout">
+      <strong>핵심 메커니즘:</strong> ETF 순자산(NAV)의 변화 없이도, 지수 비중 변화 → ETF 운용사가 포트폴리오를 맞춰야 함 → 비중이 커진 국가의 주식을 추가 매수 / 줄어든 국가 주식을 매도. MSCI 전체 벤치마크 추종 자산은 약 <strong>15조 달러(2025년 기준)</strong>.
+    </div>
+
+    <h3>패시브 vs 액티브 펀드 비교</h3>
+    <table>
+      <tr>
+        <th>구분</th>
+        <th>패시브 ETF (Passive)</th>
+        <th>액티브 펀드 (Active)</th>
+      </tr>
+      <tr>
+        <td>리밸런싱 기준</td>
+        <td>지수 가중치 변화 → 자동 조정</td>
+        <td>펀드매니저 재량, 리서치 기반 결정</td>
+      </tr>
+      <tr>
+        <td>한국 비중 증가 시 반응</td>
+        <td>의무적으로 한국 주식 추가 매수</td>
+        <td>시장 전망, 밸류에이션에 따라 선택적 대응</td>
+      </tr>
+      <tr>
+        <td>리밸런싱 시점</td>
+        <td>분기별 정기 리뷰 + 지속적 추적</td>
+        <td>유연 (언제든 가능)</td>
+      </tr>
+      <tr>
+        <td>자금 흐름 예측 가능성</td>
+        <td>높음 (지수 가중치로 계산 가능)</td>
+        <td>낮음 (재량적)</td>
+      </tr>
+      <tr>
+        <td>대표 상품</td>
+        <td>IEMG, EEM, VWO</td>
+        <td>피델리티, 템플턴 이머징 펀드 등</td>
+      </tr>
+    </table>
+
+    <h3>ETF 내 한국 비중 확대가 야기하는 자금 흐름</h3>
+    <p>리테일 투자자가 IEMG 같은 EM ETF를 매수하면, 유동성 공급자(LP)는 기초 지수 구성 종목을 비중대로 매수해 헤지한다. 이 메커니즘이 대형주 집중 매수 압력을 만들고, 삼성전자·SK하이닉스 같은 한국 대형주는 ETF 유입 때마다 지속적 수급 지지를 받는다.</p>
+
+    <div class="callout warning">
+      <strong>역설적 현상:</strong> 2026년 5월 기준, 외국인 투자자들이 12거래일 연속 45.91조원 순매도했음에도 KOSPI는 같은 기간 +4.78% 상승. 이는 국내 리테일 ETF 매수(44.31조원)와 패시브 메커니즘이 외국인 매도 물량을 상쇄했기 때문.
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section" id="s3">
+    <h2>🗂️ 3. 주요 ETF별 한국 비중 변화</h2>
+
+    <h3>핵심 ETF 비교 (2026년 5~6월 기준)</h3>
+    <table>
+      <tr>
+        <th>ETF</th>
+        <th>추종 지수</th>
+        <th>한국 비중</th>
+        <th>한국 포함 여부</th>
+        <th>특이사항</th>
+      </tr>
+      <tr>
+        <td><strong>IEMG</strong><br>(iShares Core MSCI EM)</td>
+        <td>MSCI EM 지수</td>
+        <td><span class="tag tag-blue">21%</span></td>
+        <td>포함</td>
+        <td>한국이 2위 국가. 2025 3Q 대비 약 2배 증가</td>
+      </tr>
+      <tr>
+        <td><strong>EEM</strong><br>(iShares MSCI EM)</td>
+        <td>MSCI EM 지수</td>
+        <td><span class="tag tag-blue">~10~12%</span></td>
+        <td>포함</td>
+        <td>구형 ETF. 삼성전자 주요 보유. IEMG보다 운용비용 높음</td>
+      </tr>
+      <tr>
+        <td><strong>VWO</strong><br>(Vanguard FTSE EM)</td>
+        <td>FTSE EM 지수</td>
+        <td><span class="tag tag-orange">0%</span></td>
+        <td><strong>미포함</strong></td>
+        <td>FTSE가 한국을 선진국 분류 → 이머징 ETF에서 제외</td>
+      </tr>
+      <tr>
+        <td><strong>EWY</strong><br>(iShares MSCI Korea)</td>
+        <td>MSCI Korea 25/50</td>
+        <td><span class="tag tag-green">100%</span></td>
+        <td>한국 단일국가</td>
+        <td>삼성전자·SK하이닉스 집중. 비용비율 0.59%</td>
+      </tr>
+      <tr>
+        <td><strong>ACWI</strong><br>(iShares MSCI ACWI)</td>
+        <td>MSCI ACWI</td>
+        <td>약 2~3%</td>
+        <td>포함 (이머징 비중 통해)</td>
+        <td>선진국 중심이라 한국 비중은 작음</td>
+      </tr>
+    </table>
+
+    <h3>IEMG vs VWO 성과 격차의 핵심 — 한국 팩터</h3>
+    <p>2025~2026년 IEMG와 VWO의 성과 격차는 거의 전적으로 <strong>한국 포함 여부</strong>에서 비롯됐다. IEMG는 MSCI 지수를 추종하므로 한국을 21% 비중으로 담은 반면, VWO는 FTSE 기준으로 한국을 아예 제외한다. 한국이 EM 중 최강 수익률을 기록하면서 IEMG가 VWO 대비 큰 폭으로 아웃퍼폼했다.</p>
+
+    <div class="callout success">
+      <strong>투자 교훈:</strong> EM 지수 선택이 곧 한국 노출 여부를 결정한다. MSCI 추종 = 한국 포함, FTSE 추종 = 한국 제외. 2025~2026 한국 랠리 수혜는 MSCI 추종 ETF 투자자에게만 돌아갔다.
+    </div>
+
+    <h3>MSCI EM 내 국가별 비중 변화 (2025년 3분기 → 2026년 5월)</h3>
+
+    <p><strong>2025년 3분기 (Korea +10.97% 시점):</strong></p>
+    <div class="bar-row"><div class="bar-label">중국</div><div class="bar-track"><div class="bar-fill" style="width:78%;background:#e05c2b;">31.2%</div></div><div class="bar-pct">31.2%</div></div>
+    <div class="bar-row"><div class="bar-label">대만</div><div class="bar-track"><div class="bar-fill" style="width:48%;background:#1a56a0;">19.4%</div></div><div class="bar-pct">19.4%</div></div>
+    <div class="bar-row"><div class="bar-label">인도</div><div class="bar-track"><div class="bar-fill" style="width:38%;background:#0e7d5a;">15.2%</div></div><div class="bar-pct">15.2%</div></div>
+    <div class="bar-row"><div class="bar-label">한국</div><div class="bar-track"><div class="bar-fill" style="width:27%;background:#7c3aed;">10.97%</div></div><div class="bar-pct">10.97%</div></div>
+
+    <p style="margin-top:16px;"><strong>2026년 5월 (현재):</strong></p>
+    <div class="bar-row"><div class="bar-label">대만</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#1a56a0;">25%</div></div><div class="bar-pct">25%</div></div>
+    <div class="bar-row"><div class="bar-label">중국</div><div class="bar-track"><div class="bar-fill" style="width:88%;background:#e05c2b;">22%</div></div><div class="bar-pct">22%</div></div>
+    <div class="bar-row"><div class="bar-label">한국</div><div class="bar-track"><div class="bar-fill" style="width:84%;background:#7c3aed;">21%</div></div><div class="bar-pct">21% ▲</div></div>
+    <div class="bar-row"><div class="bar-label">인도</div><div class="bar-track"><div class="bar-fill" style="width:44%;background:#0e7d5a;">11%</div></div><div class="bar-pct">11% ▼</div></div>
+
+    <p style="font-size:0.82rem;color:var(--muted);margin-top:8px;">※ 출처: Seoul Economic Daily (2026.05.20), 지수 내 추정치</p>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section" id="s4">
+    <h2>🌏 4. 국가별 리밸런싱 영향</h2>
+
+    <h3>한국 비중 상승 시 손해 보는 국가</h3>
+    <p>MSCI EM 지수는 고정 합계(100%)를 유지하므로, 한국 비중이 오르면 다른 국가들의 비중이 상대적으로 줄어든다. 수동 지수 추종 펀드는 비중 감소 국가 주식을 매도하고 한국 주식을 매수해야 한다.</p>
+
+    <table>
+      <tr>
+        <th>국가</th>
+        <th>2025 3Q 비중</th>
+        <th>2026년 5월 비중</th>
+        <th>변화</th>
+        <th>영향</th>
+      </tr>
+      <tr>
+        <td>중국 (China)</td>
+        <td>31.2%</td>
+        <td>22%</td>
+        <td><span class="arrow-down">▼ -9.2%p</span></td>
+        <td>가장 큰 비중 손실. 패시브 매도 압력</td>
+      </tr>
+      <tr>
+        <td>인도 (India)</td>
+        <td>15.2%</td>
+        <td>11%</td>
+        <td><span class="arrow-down">▼ -4.2%p</span></td>
+        <td>비중 감소. 단, 한국 EM 졸업 시 최대 수혜국</td>
+      </tr>
+      <tr>
+        <td>대만 (Taiwan)</td>
+        <td>19.4%</td>
+        <td>25%</td>
+        <td><span class="arrow-up">▲ +5.6%p</span></td>
+        <td>TSMC AI 수요로 독립 상승. 한국과 동반 랠리</td>
+      </tr>
+      <tr>
+        <td>한국 (Korea)</td>
+        <td>10.97%</td>
+        <td>21%</td>
+        <td><span class="arrow-up">▲ +10%p</span></td>
+        <td>8개월 만에 비중 2배. 패시브 매수 수혜</td>
+      </tr>
+      <tr>
+        <td>브라질, 기타 EM</td>
+        <td>23.3%</td>
+        <td>21%</td>
+        <td><span class="arrow-down">▼ 소폭 감소</span></td>
+        <td>한국·대만 상승으로 상대적 비중 희석</td>
+      </tr>
+    </table>
+
+    <h3>역사적 선례 — 유사한 리밸런싱 이벤트</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2017~2019 — 중국 A주 MSCI 편입</div>
+        <div class="timeline-text">MSCI가 중국 A주를 단계적으로 EM 지수에 편입하면서 중국 비중이 급증. 브라질, 인도, 한국 등 기존 EM 국가의 비중이 희석됨. 수천억 달러의 패시브 자금이 중국 A주로 이동.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2019 — 사우디아라비아 MSCI EM 편입</div>
+        <div class="timeline-text">MSCI가 사우디아라비아를 EM에 편입. 기존 국가들의 상대 비중이 줄었고, 편입 전후 사우디 주식 급등.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2024 — 그리스 MSCI 선진국 승격</div>
+        <div class="timeline-text">MSCI가 그리스를 EM에서 선진국(DM)으로 재분류. 그리스는 EM 지수에서 제외되어 EM 패시브 펀드들이 그리스 주식을 매도. 소규모 국가였으므로 전체 시장 영향은 제한적.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025~2026 — 한국 AI 반도체 급등 현재 진행</div>
+        <div class="timeline-text">MSCI EM 내 한국 비중 10.97% → 21%로 8개월 만에 2배. 중국·인도 비중 상대적 희석. 패시브 펀드들이 한국 주식(특히 삼성전자·SK하이닉스) 의무 매수.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>특이점:</strong> 이번 한국 비중 확대는 지수 재구성(인위적 편입)이 아닌, 순수하게 시장 가격 상승으로 인한 시가총액 팽창에 의한 것. 이는 과거 중국 A주나 사우디 편입과 달리, 어떤 공식적인 리밸런싱 트리거 없이 자연스럽게 발생했다는 점이 주목할 만하다.
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section" id="s5">
+    <h2>🏷️ 5. MSCI 선진국 시장 재분류 이슈 (DM Reclassification)</h2>
+
+    <h3>현재 상황 (2025~2026)</h3>
+    <p>한국은 MSCI 이머징마켓(EM)에서 선진국(DM, Developed Market)으로의 승격을 수년간 추진해왔다. <strong>2025년 MSCI 연례 시장 분류 검토에서 한국은 워치리스트(watchlist) 등재에 실패</strong>했으며, 2014년 이후 계속 EM으로 남아있다.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi orange">
+        <div class="label">부적합 기준 수</div>
+        <div class="value">6개</div>
+        <div class="sub">18개 중 (전년 7개에서 개선)</div>
+      </div>
+      <div class="kpi">
+        <div class="label">DM 편입 예상 시점</div>
+        <div class="value">2028</div>
+        <div class="sub">최조 가능 연도 (워치리스트 → 1년 대기 필요)</div>
+      </div>
+      <div class="kpi green">
+        <div class="label">DM 편입 시 예상 패시브 유입</div>
+        <div class="value">$24B</div>
+        <div class="sub">UBS 추정 (약 34조원)</div>
+      </div>
+    </div>
+
+    <h3>주요 장벽 (2025년 MSCI 지적 사항)</h3>
+    <table>
+      <tr>
+        <th>장벽 항목</th>
+        <th>현황</th>
+      </tr>
+      <tr>
+        <td>원화 역외 시장 태환성 제한</td>
+        <td>가장 핵심 장벽. 원화의 역외 자유 유통 제한</td>
+      </tr>
+      <tr>
+        <td>옴니버스 계좌 및 OTC 거래 제한</td>
+        <td>외국인 투자 운영 효율성 저해</td>
+      </tr>
+      <tr>
+        <td>배당 확인 절차 미채택</td>
+        <td>상당수 기업이 여전히 미이행</td>
+      </tr>
+      <tr>
+        <td>외국인 투자자 등록 절차</td>
+        <td>간소화됐으나 추가 개선 필요</td>
+      </tr>
+    </table>
+
+    <h3>정부 개혁 로드맵 (2025~2026)</h3>
+    <p>한국 정부는 2025년 외환 및 자본시장 개혁 로드맵을 발표했다. 39개 과제 중 2026년 5월까지 25개 완료. 주요 조치:</p>
+    <ul style="margin: 10px 0 10px 20px; font-size: 0.93rem;">
+      <li>외환시장 거래 시간 연장</li>
+      <li>역외 원화 결제 서비스 허용</li>
+      <li>외국인 계좌 개설 절차 간소화</li>
+      <li>외환시장 24시간 거래 체제(2026년 7월 전환 예정)</li>
+    </ul>
+
+    <h3>DM 재분류 시 파급 효과</h3>
+    <div class="callout warning">
+      <strong>양면 효과 주의:</strong> 한국이 MSCI DM으로 편입되면, EM 지수에서 제외된다. 이 경우 EM 추종 패시브 펀드들이 한국 주식을 대규모 매도해야 한다 (~$350B 규모 EM 패시브). 반면 DM 추종 패시브 펀드들이 한국 주식을 새로 매수. 순효과는 UBS 기준 약 $24B 순유입. 하지만 전환 과정의 단기 변동성은 클 수 있다.
+    </div>
+
+    <table>
+      <tr>
+        <th>시나리오</th>
+        <th>예상 자금 흐름</th>
+        <th>수혜국</th>
+      </tr>
+      <tr>
+        <td>한국 MSCI DM 편입 (2028년+)</td>
+        <td>DM 패시브 순유입 $24B, EM 매도 부분 상쇄</td>
+        <td>인도 ($20B+ EM 패시브 유입 예상), 브라질, 대만</td>
+      </tr>
+      <tr>
+        <td>한국 MSCI DM 워치리스트 등재 (2026년 6월 가능)</td>
+        <td>선행 매수 수요 발생. 기대감 프리미엄</td>
+        <td>한국 대형주</td>
+      </tr>
+      <tr>
+        <td>현 EM 유지 (기본 시나리오)</td>
+        <td>시가총액 증가 → 자연적 EM 비중 확대 지속</td>
+        <td>한국 (현상 유지)</td>
+      </tr>
+    </table>
+
+    <p style="font-size:0.85rem;color:var(--muted);">
+      ※ 2026년 6월 23일 MSCI 연례 시장 분류 검토 결과 발표 예정. Hana Securities는 한국이 MSCI DM 워치리스트에 등재될 확률을 60% 이상으로 전망.
+    </p>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section" id="s6">
+    <h2>💡 6. 투자 시사점 및 섹터별 영향</h2>
+
+    <h3>패시브 자금 유입이 한국 주식에 미치는 영향</h3>
+    <p>글로벌 EM 패시브 펀드(약 $350B 추종 자산)의 한국 비중이 10.97% → 21%로 오른다는 것은, 동일한 펀드 규모 기준으로 한국 주식 보유 금액이 약 <strong>2배</strong>가 됨을 의미한다. 신규 ETF 자금 유입 시마다 비중에 따라 한국 주식이 자동 매수된다.</p>
+
+    <div class="callout success">
+      <strong>WGBI 채권 지수 효과 (주식과 별도):</strong> 2026년 4월부터 한국 국채가 WGBI(세계국채지수)에 편입 시작. 8개월간 단계적 편입. JP Morgan 추산 $50~60B, 최대 추정치 $70B의 패시브 채권 자금 유입 예상. KRW 강세 압력 → 외국인 한국 주식 환산 수익률 추가 개선 효과.
+    </div>
+
+    <h3>섹터별 투자 영향</h3>
+    <table>
+      <tr>
+        <th>섹터</th>
+        <th>대표 종목</th>
+        <th>영향</th>
+        <th>평가</th>
+      </tr>
+      <tr>
+        <td><strong>AI 메모리 반도체</strong></td>
+        <td>SK하이닉스, 삼성전자</td>
+        <td>ETF 비중 확대의 직접 수혜. HBM 수요 구조적 성장. SK하이닉스 영업이익률 72%(1Q26)</td>
+        <td><span class="tag tag-green">핵심 수혜</span></td>
+      </tr>
+      <tr>
+        <td><strong>반도체 장비·소재</strong></td>
+        <td>한미반도체, 원익IPS</td>
+        <td>HBM 생산 확장에 따른 간접 수혜</td>
+        <td><span class="tag tag-blue">수혜</span></td>
+      </tr>
+      <tr>
+        <td><strong>배터리 (2차전지)</strong></td>
+        <td>LG에너지솔루션, 삼성SDI</td>
+        <td>전기차 사이클 둔화로 상대적 부진. KOSPI 상승에서 소외</td>
+        <td><span class="tag tag-orange">혼조</span></td>
+      </tr>
+      <tr>
+        <td><strong>은행·금융</strong></td>
+        <td>KB금융, 신한지주</td>
+        <td>밸류업 프로그램 최대 수혜. 배당 확대, 자사주 소각. PBR 재평가</td>
+        <td><span class="tag tag-green">수혜</span></td>
+      </tr>
+      <tr>
+        <td><strong>K-콘텐츠·바이오</strong></td>
+        <td>HYBE, 셀트리온</td>
+        <td>한류 콘텐츠 글로벌 확산. 국내 성장 + 해외 수익 창출</td>
+        <td><span class="tag tag-blue">중립~수혜</span></td>
+      </tr>
+      <tr>
+        <td><strong>현대차·기아</strong></td>
+        <td>현대차, 기아</td>
+        <td>美 관세 리스크 있으나 전기차 전환 진행. KOSPI 상승 편승</td>
+        <td><span class="tag tag-orange">불확실</span></td>
+      </tr>
+    </table>
+
+    <h3>KRW/USD 환율 효과</h3>
+    <table>
+      <tr>
+        <th>요인</th>
+        <th>KRW 방향</th>
+        <th>외국인 투자자 영향</th>
+      </tr>
+      <tr>
+        <td>WGBI 채권 자금 유입 ($40~70B)</td>
+        <td><span class="arrow-up">원화 강세</span></td>
+        <td>한국 주식 달러 환산 수익률 추가 상승</td>
+      </tr>
+      <tr>
+        <td>주식 외국인 순매도 (94조원, 2026년)</td>
+        <td><span class="arrow-down">원화 약세 압력</span></td>
+        <td>달러로 환전 시 수익 환원</td>
+      </tr>
+      <tr>
+        <td>국내 패시브 매수 확대</td>
+        <td>원화 비중 확대</td>
+        <td>외국인 매도 상쇄</td>
+      </tr>
+      <tr>
+        <td>BNP Paribas 추산 "Buy KRW" 수요</td>
+        <td><span class="arrow-up">원화 강세</span></td>
+        <td>채권+주식+환 복합 투자 매력도 상승. $110B+ 원화 매수 수요</td>
+      </tr>
+    </table>
+
+    <div class="callout warning">
+      <strong>리스크 요인:</strong> (1) 반도체 집중도 과도 — 삼성+SK하이닉스가 KOSPI의 48~55%. AI 수요 꺾이면 지수 전체에 타격. (2) 한국 반도체 제외 실질 성장률은 1.1% (Barclays). (3) 개인 신용 융자(40.7조원, 2022년 12월 이후 최고)로 과열 우려. (4) MSCI DM 승격 시 EM 패시브 매도 물량 단기 충격 가능.
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section" id="s7">
+    <h2>📰 7. 최신 뉴스 및 데이터 타임라인 (2025–2026)</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2025년 3월</div>
+        <div class="timeline-text">한국 공매도 금지 전면 해제 → 외국인 투자자 한국 시장 재진입 시작. 시장 신뢰도 회복.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025년 하반기</div>
+        <div class="timeline-text">KOSPI 76% 상승, 글로벌 최고 수익률 달성. 연말 4,214.17 마감 (사상 최고 연말 종가). KOSPI MSCI EM 비중: ~11%.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2025년 6월</div>
+        <div class="timeline-text">MSCI 2025 연례 시장 분류 검토: 한국 워치리스트 등재 불발. 구체적 개선 로드맵 수립 촉구.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026년 1월</div>
+        <div class="timeline-text">KOSPI 5,019.54 돌파 (생애 최초 5,000선). 한국 NPS, 해외 주식 목표 비중 37.2% → 34.7%로 축소. 국내 주식 비중 확대 예고.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026년 4월</div>
+        <div class="timeline-text">한국 WGBI(세계국채지수) 편입 시작. 8개월 단계적 편입. 예상 패시브 채권 자금 $40~70B 유입 시작.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026년 5월 27일</div>
+        <div class="timeline-text">SK하이닉스 시가총액 $1조 달러 돌파 (CNBC). 이후 $1.32조까지 상승(6월).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026년 5월 28일</div>
+        <div class="timeline-text">한국 NPS, 국내 주식 목표 비중 14.9% → 20.8%로 상향 조정 (Bloomberg). KOSPI 연내 94% 상승 후 연금 리밸런싱 재조정.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026년 5월 기준</div>
+        <div class="timeline-text">MSCI EM 내 한국 비중 21%. 8개월 만에 2배 증가. 외국인 12거래일 연속 45.91조원 순매도에도 KOSPI +4.78% 상승. 국내 리테일 ETF 매수(44.31조원)가 외국인 매도 상쇄.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026년 6월 18일</div>
+        <div class="timeline-text">KOSPI 사상 최초 9,000선 돌파. SK하이닉스 HBM4E 샘플 출하 발표가 트리거. 종가 9,063.84 (+2.25%). 연초 대비 +110%.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2026년 6월 23일 (예정)</div>
+        <div class="timeline-text">MSCI 2026 연례 시장 분류 검토 결과 발표. Hana Securities는 한국 DM 워치리스트 등재 확률 60%+ 전망.</div>
+      </div>
+    </div>
+
+    <h3>국내 패시브 자금 흐름 요약</h3>
+    <table>
+      <tr>
+        <th>주체</th>
+        <th>동향</th>
+        <th>규모</th>
+      </tr>
+      <tr>
+        <td>NPS (국민연금)</td>
+        <td>KOSPI 급등으로 국내 주식 목표 비중 초과 → 정기 리밸런싱 매도. 이후 목표 상향(14.9% → 20.8%)</td>
+        <td>운용 자산 1,800조원+</td>
+      </tr>
+      <tr>
+        <td>국내 리테일 ETF</td>
+        <td>2026년 5월 12거래일간 44.31조원 순매수. ETF → 기초주식 헤지 메커니즘으로 삼성·SK하이닉스 집중 매수</td>
+        <td>44.31조원 (12일)</td>
+      </tr>
+      <tr>
+        <td>외국인 투자자</td>
+        <td>2026년 순매도 94조원. 그러나 외국인 보유 비중은 오히려 36.67% → 39.33%로 상승 (주가 상승으로 보유금액 증가)</td>
+        <td>보유 비중 39.33%</td>
+      </tr>
+      <tr>
+        <td>글로벌 패시브 ETF (IEMG 등)</td>
+        <td>EM 내 한국 비중 21%로 자동 상향 추종. 신규 자금 유입 시 21% 한국 배분 의무화</td>
+        <td>EM 패시브 ~$350B 추종</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="section" id="sources">
+    <h2>📚 출처 / Sources</h2>
+    <div class="sources">
+      <h3>한국 주식시장</h3>
+      <ul>
+        <li><a href="https://www.koreaherald.com/article/10646103" target="_blank">Kospi tops global markets with world's strongest gains in 2025 — Korea Herald</a></li>
+        <li><a href="https://www.kedglobal.com/korean-stock-market/newsView/ked202601220009" target="_blank">Kospi hits 5,000 as Korea discount fades — KED Global (2026.01)</a></li>
+        <li><a href="https://www.kedglobal.com/korean-stock-market/newsView/ked202512120005" target="_blank">After stellar 2025 performance, Kospi's bull run likely to hit 5,000 in 2026 — KED Global</a></li>
+        <li><a href="https://www.techtimes.com/articles/318619/20260618/kospi-9000-era-begins-sk-hynix-hbm4e-samples-drive-south-korea-record-high.htm" target="_blank">KOSPI 9,000 Era Begins: SK Hynix HBM4E Samples — TechTimes (2026.06.18)</a></li>
+        <li><a href="https://www.ebc.com/forex/kospi-hits-9000-milestone-ai-chip-rally" target="_blank">KOSPI Hits 9,000 Milestone as AI Chip Rally Extends Korea's Record Run — EBC Financial</a></li>
+        <li><a href="https://www.koreatimes.co.kr/economy/20260618/chip-giants-push-kospi-past-9000-masking-broader-market-weakness" target="_blank">Chip giants push KOSPI past 9,000, masking broader market weakness — Korea Times</a></li>
+        <li><a href="https://www.top1markets.com/news/kospi-2026-south-korea-ai-semiconductor-rally-analysis" target="_blank">KOSPI 2026: How South Korea's Index Doubled on the AI Chip Supercycle — Top1 Markets</a></li>
+      </ul>
+      <h3>반도체 / AI</h3>
+      <ul>
+        <li><a href="https://www.cnbc.com/2026/05/27/sk-hynix-shares-ai-chip-rally-1-trillion.html" target="_blank">SK Hynix hits $1 trillion valuation as AI boom lifts South Korean chip stocks — CNBC (2026.05.27)</a></li>
+        <li><a href="https://en.sedaily.com/finance/2026/05/31/sk-hynix-market-cap-closes-in-on-samsung-as-gap-hits-record-low" target="_blank">SK hynix Market Cap Closes In on Samsung — Seoul Economic Daily</a></li>
+        <li><a href="https://fxnewsgroup.com/forex-news/institutional/can-samsung-and-sk-hynix-keep-supporting-kospis-explosive-rise/" target="_blank">Can Samsung and SK Hynix Keep Supporting KOSPI's Explosive Rise? — FX News Group</a></li>
+      </ul>
+      <h3>MSCI 비중 및 ETF</h3>
+      <ul>
+        <li><a href="https://en.sedaily.com/finance/2026/05/20/koreas-msci-weighting-doubles-in-8-months-closing-in-on" target="_blank">Korea's MSCI Weighting Doubles in 8 Months, Closing In on China — Seoul Economic Daily (2026.05.20)</a></li>
+        <li><a href="https://etfdb.com/equity-etf-content-hub/korean-linchpin-iemg-outperforms-vwo-ytd/" target="_blank">The Korean Linchpin: Why IEMG Is Outperforming VWO YTD — ETF Database</a></li>
+        <li><a href="https://www.etftrends.com/etf-strategist-content-hub/iemg-vs-vwo-the-south-korea-factor/" target="_blank">IEMG vs VWO: The South Korea Factor — ETF Trends</a></li>
+        <li><a href="https://www.fool.com/investing/2026/02/17/how-vwo-compares-with-other-emerging-markets-etfs/" target="_blank">How VWO Compares With Other Emerging Markets ETFs — Motley Fool (2026.02)</a></li>
+        <li><a href="https://www.ishares.com/us/products/239681/ishares-msci-south-korea-capped-etf" target="_blank">iShares MSCI South Korea ETF (EWY) — iShares</a></li>
+      </ul>
+      <h3>MSCI 선진국 분류</h3>
+      <ul>
+        <li><a href="https://www.koreatimes.co.kr/economy/20260604/will-korea-finally-win-msci-developed-market-status" target="_blank">Will Korea finally win MSCI developed market status? — Korea Times (2026.06.04)</a></li>
+        <li><a href="https://www.kedglobal.com/markets/newsView/ked202506250006" target="_blank">MSCI maintains S.Korea's emerging-market status; level playing field eyed — KED Global (2025.06)</a></li>
+        <li><a href="https://www.ifre.com/people-and-markets/2370119/south-korea-edges-towards-msci-upgrade" target="_blank">South Korea edges towards MSCI upgrade — IFR</a></li>
+        <li><a href="https://investinglive.com/stock-market-update/south-korea-to-unveil-msci-developed-market-inclusion-roadmap-early-next-year-20251230/" target="_blank">South Korea to unveil MSCI Developed Market inclusion roadmap — InvestingLive (2025.12)</a></li>
+      </ul>
+      <h3>외국인 자금 흐름 / 패시브</h3>
+      <ul>
+        <li><a href="https://en.sedaily.com/markets/2026/05/23/kospi-defies-foreign-selling-as-etfs-reshape-market-flows" target="_blank">KOSPI Defies Foreign Selling as ETFs Reshape Market Flows — Seoul Economic Daily (2026.05.23)</a></li>
+        <li><a href="https://www.bloomberg.com/news/articles/2026-05-28/korea-s-pension-fund-raises-domestic-stock-target-as-kospi-soars" target="_blank">Korea's National Pension Service Raises Domestic Stock Target as Kospi Soars — Bloomberg (2026.05.28)</a></li>
+        <li><a href="https://www.bloomberg.com/news/articles/2026-01-26/korea-s-990-billion-pension-fund-to-cut-foreign-stock-exposure" target="_blank">South Korea's $990 Billion Pension Fund to Cut Foreign Stock Exposure — Bloomberg (2026.01)</a></li>
+        <li><a href="https://www.kedglobal.com/korean-stock-market/newsView/ked202510220006" target="_blank">Korea's Kospi swings from most heavily sold to market darling — KED Global (2025.10)</a></li>
+      </ul>
+      <h3>WGBI 채권 지수</h3>
+      <ul>
+        <li><a href="https://en.sedaily.com/news/2026/03/09/korea-set-to-receive-up-to-70b-inflows-on-wgbi-inclusion" target="_blank">Korea Set to Receive Up to $70B Inflows on WGBI Inclusion — Seoul Economic Daily (2026.03)</a></li>
+        <li><a href="https://en.sedaily.com/finance/2026/04/01/jp-morgan-wgbi-inclusion-to-drive-foreign-inflows-into-mid" target="_blank">JP Morgan: WGBI Inclusion to Drive Foreign Inflows — Seoul Economic Daily (2026.04)</a></li>
+        <li><a href="https://www.koreatimes.co.kr/economy/20260401/koreas-wgbi-inclusion-could-limit-further-rise-in-bond-yields-analysts" target="_blank">Korea's WGBI inclusion could limit further rise in bond yields — Korea Times (2026.04)</a></li>
+      </ul>
+      <h3>기업 지배구조 개혁 / 밸류업</h3>
+      <ul>
+        <li><a href="https://www.startcompanykorea.com/posts/korea-corporate-governance-reform-2026-foreign-investors/" target="_blank">Korea Corporate Governance Reform 2026: What Foreign Investors Need to Know</a></li>
+        <li><a href="https://amro-asia.org/narrowing-the-korea-discount-stock-market-reform-via-corporate-value-up" target="_blank">Narrowing the Korea Discount: Stock Market Reform via Corporate Value-up — AMRO</a></li>
+        <li><a href="https://am.vontobel.com/en/insights/vontobel/how-koreas-reforms-aim-to-close-the-valuation-discount" target="_blank">How Korea's reforms aim to close the valuation discount — Vontobel AM</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terra LUNA 사태 (Terra LUNA Collapse) 스터디 노트</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: white;
+      padding: 48px 40px 40px;
+      border-radius: 16px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '🌕';
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 80px;
+      opacity: 0.15;
+    }
+    header .tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: #a8d8ea;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    header h1 {
+      font-size: 2.2em;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    header .subtitle {
+      font-size: 1em;
+      color: #a8d8ea;
+      margin-bottom: 20px;
+    }
+    header .meta {
+      font-size: 0.85em;
+      color: rgba(255,255,255,0.6);
+    }
+    .toc {
+      background: white;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .toc h2 {
+      font-size: 1em;
+      font-weight: 700;
+      color: #495057;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .toc ol {
+      padding-left: 20px;
+      columns: 2;
+      column-gap: 32px;
+    }
+    .toc li {
+      margin: 4px 0;
+    }
+    .toc a {
+      color: #0f3460;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+    .toc a:hover { text-decoration: underline; }
+    .summary-box {
+      background: linear-gradient(135deg, #fff3cd, #ffeeba);
+      border-left: 5px solid #f0ad4e;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+    .summary-box h3 {
+      font-size: 1em;
+      font-weight: 700;
+      color: #856404;
+      margin-bottom: 10px;
+    }
+    .summary-box p {
+      color: #533f03;
+      font-size: 0.93em;
+    }
+    section {
+      background: white;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    section h2 {
+      font-size: 1.4em;
+      font-weight: 800;
+      color: #0f3460;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e9ecef;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    section h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: #0f3460;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.75em;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    section h3 {
+      font-size: 1.1em;
+      font-weight: 700;
+      color: #343a40;
+      margin: 22px 0 10px;
+    }
+    section h4 {
+      font-size: 0.95em;
+      font-weight: 700;
+      color: #495057;
+      margin: 16px 0 8px;
+    }
+    p { margin: 0 0 12px; color: #495057; }
+    ul, ol { padding-left: 22px; margin: 8px 0 12px; }
+    li { margin: 5px 0; color: #495057; }
+    strong { color: #212529; }
+    .en {
+      color: #868e96;
+      font-size: 0.88em;
+      font-style: italic;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9em;
+    }
+    th {
+      background: #0f3460;
+      color: white;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e9ecef;
+      color: #495057;
+    }
+    tr:nth-child(even) td { background: #f8f9fa; }
+    tr:hover td { background: #e8f4fd; }
+    .highlight {
+      background: #e8f4fd;
+      border-left: 4px solid #0f3460;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .danger {
+      background: #fff5f5;
+      border-left: 4px solid #dc3545;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .warning {
+      background: #fffbf0;
+      border-left: 4px solid #f0ad4e;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .success {
+      background: #f0fff4;
+      border-left: 4px solid #28a745;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .spiral {
+      background: #1a1a2e;
+      color: #a8d8ea;
+      border-radius: 12px;
+      padding: 24px;
+      font-family: monospace;
+      font-size: 0.95em;
+      margin: 16px 0;
+      text-align: center;
+      line-height: 2;
+    }
+    .spiral .arrow { color: #f0ad4e; font-size: 1.2em; }
+    .spiral .loop { color: #ff6b6b; }
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #dee2e6;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -22px;
+      top: 7px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #0f3460;
+      border: 2px solid white;
+      box-shadow: 0 0 0 2px #0f3460;
+    }
+    .timeline-item.danger::before { background: #dc3545; box-shadow: 0 0 0 2px #dc3545; }
+    .timeline-item.warning::before { background: #f0ad4e; box-shadow: 0 0 0 2px #f0ad4e; }
+    .timeline-date {
+      font-size: 0.8em;
+      font-weight: 700;
+      color: #868e96;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .timeline-title {
+      font-weight: 700;
+      color: #212529;
+      margin-bottom: 4px;
+    }
+    .timeline-body { color: #495057; font-size: 0.93em; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .stat-card {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+      border: 1px solid #e9ecef;
+    }
+    .stat-card .value {
+      font-size: 1.5em;
+      font-weight: 800;
+      color: #dc3545;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .stat-card .label {
+      font-size: 0.8em;
+      color: #868e96;
+    }
+    .person-card {
+      display: flex;
+      gap: 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 18px;
+      margin: 12px 0;
+      border: 1px solid #e9ecef;
+    }
+    .person-card .icon {
+      font-size: 2.5em;
+      flex-shrink: 0;
+    }
+    .person-card .info h4 { margin: 0 0 6px; }
+    .badge {
+      display: inline-block;
+      background: #0f3460;
+      color: white;
+      font-size: 0.75em;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 12px;
+      margin: 2px;
+    }
+    .badge.red { background: #dc3545; }
+    .badge.yellow { background: #f0ad4e; color: #533f03; }
+    .badge.green { background: #28a745; }
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .lesson-card {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 18px;
+      border: 1px solid #e9ecef;
+    }
+    .lesson-card .num {
+      font-size: 2em;
+      font-weight: 900;
+      color: #dee2e6;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .lesson-card h4 { color: #0f3460; font-size: 0.95em; margin-bottom: 6px; }
+    .lesson-card p { font-size: 0.88em; margin: 0; }
+    .sources {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-top: 32px;
+      border: 1px solid #e9ecef;
+    }
+    .sources h3 {
+      font-size: 1em;
+      font-weight: 700;
+      color: #495057;
+      margin-bottom: 14px;
+    }
+    .sources ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sources li {
+      padding: 4px 0;
+      font-size: 0.85em;
+    }
+    .sources a {
+      color: #0f3460;
+      text-decoration: none;
+    }
+    .sources a:hover { text-decoration: underline; }
+    footer {
+      text-align: center;
+      color: #adb5bd;
+      font-size: 0.82em;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #e9ecef;
+    }
+    @media (max-width: 640px) {
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .lesson-grid { grid-template-columns: 1fr; }
+      .toc ol { columns: 1; }
+      header h1 { font-size: 1.6em; }
+      section { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="tag">스터디 노트 · Study Note</div>
+    <h1>Terra LUNA 사태<br><span style="font-size:0.65em; font-weight:600; color:#a8d8ea;">The Terra LUNA / UST Collapse</span></h1>
+    <p class="subtitle">알고리즘 스테이블코인의 붕괴와 $40B 증발 사건 (2022)</p>
+    <p class="meta">작성일: 2026-06-12 (KST) &nbsp;|&nbsp; 대상 독자: 핀테크·블록체인 입문자~중급자</p>
+  </header>
+
+  <nav class="toc">
+    <h2>📋 목차 (Table of Contents)</h2>
+    <ol>
+      <li><a href="#overview">개요 및 배경</a></li>
+      <li><a href="#mechanism">알고리즘 스테이블코인 메커니즘</a></li>
+      <li><a href="#players">핵심 인물 및 조직</a></li>
+      <li><a href="#anchor">Anchor Protocol의 역할</a></li>
+      <li><a href="#timeline">붕괴 타임라인</a></li>
+      <li><a href="#spiral">데스 스파이럴 메커니즘</a></li>
+      <li><a href="#impact">재무적 피해 및 시장 전염</a></li>
+      <li><a href="#legal">법적 후속 조치</a></li>
+      <li><a href="#regulation">산업 규제 영향</a></li>
+      <li><a href="#lessons">교훈</a></li>
+    </ol>
+  </nav>
+
+  <div class="summary-box">
+    <h3>⚡ 핵심 요약 (Executive Summary)</h3>
+    <p>2022년 5월, 알고리즘 스테이블코인 UST와 그 담보 토큰 LUNA가 72시간 만에 <strong>$45 billion(약 58조 원)</strong>의 시가총액이 증발하는 역사상 가장 빠른 금융 붕괴 중 하나가 발생했다. "데스 스파이럴(Death Spiral)"로 불리는 자기파괴적 메커니즘과 Anchor Protocol의 지속 불가능한 20% 수익률이 결합되어, 28만여 명의 한국인 투자자를 포함한 전 세계 투자자들이 막대한 손실을 입었다. 창업자 권도형은 2025년 12월 징역 15년을 선고받았다.</p>
+  </div>
+
+  <!-- 1. 개요 -->
+  <section id="overview">
+    <h2><span class="num">1</span> 개요 및 배경 <span class="en">Overview &amp; Background</span></h2>
+
+    <h3>Terra 블록체인이란?</h3>
+    <p>
+      <strong>Terra</strong>는 2018년 권도형(Do Kwon)과 신현성(Daniel Shin)이 공동창업한 <strong>Terraform Labs</strong>가 개발한 레이어-1 블록체인 <span class="en">(Layer-1 Blockchain)</span>이다. Cosmos SDK 기반으로 구축되었으며, 결제·DeFi에 특화된 생태계를 지향했다.
+    </p>
+
+    <h3>두 개의 핵심 토큰 (Dual-Token System)</h3>
+    <table>
+      <thead>
+        <tr><th>토큰</th><th>영문명</th><th>역할</th><th>설계 의도</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LUNA</strong></td>
+          <td>Luna</td>
+          <td>기축 토큰 (Governance &amp; Staking Token)</td>
+          <td>변동성 흡수, 검증자(validator) 보상</td>
+        </tr>
+        <tr>
+          <td><strong>UST</strong></td>
+          <td>TerraUSD</td>
+          <td>알고리즘 스테이블코인 (Algorithmic Stablecoin)</td>
+          <td>1달러 페그 유지, 결제 수단</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>규모 (피크 시점 2022년 4월 기준)</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="value">$119</span>
+        <span class="label">LUNA 최고가<br>(2022.4.5)</span>
+      </div>
+      <div class="stat-card">
+        <span class="value">$18B</span>
+        <span class="label">UST 시가총액<br>(유통량 1위 알고리즘 스테이블코인)</span>
+      </div>
+      <div class="stat-card">
+        <span class="value">Top 10</span>
+        <span class="label">LUNA 시총 순위<br>(전체 암호화폐)</span>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>핵심 개념:</strong> UST는 법정화폐나 실물 자산으로 뒷받침되지 않았다. 대신 <strong>LUNA와의 교환 메커니즘</strong>만으로 1달러 페그를 유지하는 "알고리즘 스테이블코인"이었다. 이것이 붕괴의 근본 원인이 된다.
+    </div>
+  </section>
+
+  <!-- 2. 메커니즘 -->
+  <section id="mechanism">
+    <h2><span class="num">2</span> 알고리즘 스테이블코인 메커니즘 <span class="en">Algorithmic Stablecoin Mechanism</span></h2>
+
+    <h3>Burn &amp; Mint 균형 메커니즘 (Burn &amp; Mint Equilibrium)</h3>
+    <p>UST 페그는 <strong>차익거래(Arbitrage)</strong>에 의존했다. 시스템은 1 UST를 항상 $1 상당의 LUNA로 교환할 수 있게 보장했다.</p>
+
+    <table>
+      <thead>
+        <tr><th>상황</th><th>행동</th><th>결과</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>UST < $1</strong> (디페그 하락)</td>
+          <td>UST를 소각(burn) → LUNA 발행(mint)</td>
+          <td>UST 공급 ↓ → 가격 상승</td>
+        </tr>
+        <tr>
+          <td><strong>UST > $1</strong> (디페그 상승)</td>
+          <td>LUNA를 소각(burn) → UST 발행(mint)</td>
+          <td>UST 공급 ↑ → 가격 하락</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>이론과 현실의 괴리</h3>
+    <div class="warning">
+      <strong>⚠️ 구조적 취약성:</strong> 이 메커니즘은 <strong>LUNA 시가총액 > UST 시가총액</strong>일 때만 작동한다. 피크 시점에 UST $18B vs LUNA ~$30B로 비율이 위험할 만큼 좁혀진 상태였다. 패닉이 발생하면 이 비율은 순식간에 역전될 수 있었다.
+    </div>
+
+    <h3>담보형 스테이블코인과의 비교</h3>
+    <table>
+      <thead>
+        <tr><th>유형</th><th>예시</th><th>담보</th><th>특징</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>법정화폐 담보형</strong> <span class="en">(Fiat-collateralized)</span></td>
+          <td>USDT, USDC</td>
+          <td>달러·국채 100%</td>
+          <td>안정적, 중앙집중화</td>
+        </tr>
+        <tr>
+          <td><strong>암호화폐 담보형</strong> <span class="en">(Crypto-collateralized)</span></td>
+          <td>DAI</td>
+          <td>ETH 등 150%+ 초과담보</td>
+          <td>탈중앙화, 자본 비효율</td>
+        </tr>
+        <tr>
+          <td><strong>알고리즘형</strong> <span class="en">(Algorithmic)</span></td>
+          <td><strong style="color:#dc3545">UST ❌</strong></td>
+          <td>무담보 (LUNA 토큰)</td>
+          <td>자본 효율적, 뱅크런 취약</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 3. 핵심 인물 -->
+  <section id="players">
+    <h2><span class="num">3</span> 핵심 인물 및 조직 <span class="en">Key Players &amp; Organizations</span></h2>
+
+    <div class="person-card">
+      <div class="icon">👤</div>
+      <div class="info">
+        <h4>권도형 <span class="en">(Do Kwon)</span> — Terraform Labs CEO</h4>
+        <p>1991년 서울 출생. Stanford 컴퓨터과학 학사. Apple, Microsoft 재직 후 창업. "LUNAtics"라 불리는 열렬한 팬덤을 보유한 카리스마적 인물. 비판자들을 공개적으로 조롱하는 트윗으로 유명했다.</p>
+        <p><em class="en">"I don't debate the poor."</em> — 권도형의 유명한 트윗</p>
+        <span class="badge red">징역 15년 선고 (2025.12)</span>
+        <span class="badge yellow">몬테네그로 체포 (2023.3)</span>
+      </div>
+    </div>
+
+    <div class="person-card">
+      <div class="icon">🏢</div>
+      <div class="info">
+        <h4>Terraform Labs</h4>
+        <p>2018년 설립, 싱가포르 법인. Terra 블록체인, UST, LUNA 개발사. Coinbase Ventures, Galaxy Digital, Lightspeed 등으로부터 $2억+ 투자 유치. 전성기 시총 $50B+.</p>
+        <span class="badge red">2024.1 파산 신청 (Chapter 11)</span>
+      </div>
+    </div>
+
+    <div class="person-card">
+      <div class="icon">🛡️</div>
+      <div class="info">
+        <h4>Luna Foundation Guard <span class="en">(LFG)</span></h4>
+        <p>2022년 1월 설립된 싱가포르 비영리 법인. UST 페그 방어를 위해 비트코인 준비금을 축적했다. 붕괴 직전 <strong>BTC 80,394개 (약 $2.4~3B)</strong> 보유. 분기 내 $10B 달성이 목표였으나, 붕괴 후 <strong>313 BTC</strong>만 남았다.</p>
+        <span class="badge red">준비금 99.6% 소진</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Anchor Protocol -->
+  <section id="anchor">
+    <h2><span class="num">4</span> Anchor Protocol의 역할 <span class="en">The Role of Anchor Protocol</span></h2>
+
+    <p>Anchor Protocol은 Terra 생태계의 핵심 DeFi 애플리케이션으로, UST 예치 시 <strong>연 19.45~20% APY</strong>를 지급했다. 이 수익률이 UST 수요를 인위적으로 폭발시켰다.</p>
+
+    <div class="danger">
+      <strong>🚨 폰지 구조 경보:</strong> 20% APY는 실질 수익이 아니라 <strong>보조금(Subsidy)</strong>으로 지급됐다. 2022년 4월 기준 하루 <strong>$600만</strong>의 준비금이 소진됐다.
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>항목</th><th>실제 상황</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>이자 재원</td><td>준비금에서 보조금 지급 — 실질 수익 아님</td></tr>
+        <tr><td>이자 지출</td><td>하루 약 $600만 소진 (2022년 4월)</td></tr>
+        <tr><td>UST 집중도</td><td>전체 UST 유통량의 <strong>75%</strong>가 Anchor에 예치</td></tr>
+        <tr><td>지속가능성</td><td>수개월 내 준비금 고갈 예정 — 다수 분석가 경고</td></tr>
+        <tr><td>2022년 3월 위기</td><td>준비금 $320M → 고갈 위기 → Terraform Labs $450M 긴급 주입</td></tr>
+        <tr><td>2022년 5월 1일</td><td>이자율 인하 발표 → 사용자 탈출 가속화 계기</td></tr>
+      </tbody>
+    </table>
+
+    <div class="highlight">
+      <strong>분석:</strong> Anchor의 20% APY는 "신규 자금이 기존 예금자의 이자를 지급하는" 전형적인 폰지 역학(Ponzi Dynamics)이었다. UST 유통량의 75%가 단일 프로토콜에 집중된 것 자체가 치명적인 단일 장애점(Single Point of Failure)이었다.
+    </div>
+  </section>
+
+  <!-- 5. 타임라인 -->
+  <section id="timeline">
+    <h2><span class="num">5</span> 붕괴 타임라인 <span class="en">Collapse Timeline (May 2022)</span></h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2022년 4월 5일</div>
+        <div class="timeline-title">LUNA 사상 최고가 $119.18 기록</div>
+        <div class="timeline-body">Terra 생태계 시총 $50B 이상. 암호화폐 시총 10위권.</div>
+      </div>
+
+      <div class="timeline-item warning">
+        <div class="timeline-date">2022년 5월 1일</div>
+        <div class="timeline-title">Anchor Protocol 이자율 인하 시행</div>
+        <div class="timeline-body">이자율 인하 제안 시행 → 사용자 불안 고조, Anchor 이탈 시작. LFG, 추가 BTC 매입 (37,863 BTC).</div>
+      </div>
+
+      <div class="timeline-item danger">
+        <div class="timeline-date">2022년 5월 7일 (토요일) — D-Day</div>
+        <div class="timeline-title">첫 번째 대규모 디페그 발생 (First Depeg)</div>
+        <div class="timeline-body">
+          <ol>
+            <li>Terraform Labs가 Curve Finance 3pool에서 <strong>1.5억 UST 인출</strong> (유동성 감소)</li>
+            <li>첫 번째 대형 지갑: <strong>8,500만 UST → USDC 스왑</strong></li>
+            <li>두 번째 대형 지갑: 1시간 내 <strong>1억 UST → USDC 스왑</strong></li>
+            <li>Curve 풀 비율: 이상적인 50:50 → <strong>95:5</strong>로 왜곡</li>
+            <li>UST <strong>$0.985로 첫 디페그</strong>, 소셜미디어 패닉 확산</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="timeline-item danger">
+        <div class="timeline-date">2022년 5월 8~9일</div>
+        <div class="timeline-title">긴급 대응 및 가속화</div>
+        <div class="timeline-body">
+          LFG <strong>$1.5B 긴급 투입</strong> (BTC 준비금 매각). 권도형 트윗: <em>"Steady lads, deploying more capital"</em><br>
+          하루 만에 Anchor에서 <strong>50억 UST(전체의 35%) 인출</strong>. LFG, Gemini에 52,189 BTC, Binance에 28,205 BTC 전송.
+        </div>
+      </div>
+
+      <div class="timeline-item danger">
+        <div class="timeline-date">2022년 5월 10~11일</div>
+        <div class="timeline-title">임계점 붕괴 — 데스 스파이럴 진입</div>
+        <div class="timeline-body">
+          Anchor에서 총 <strong>110억 UST 이상</strong> 인출. LUNA 공급량 <strong>10억 개 → 6조 개</strong>로 폭발. LUNA 가격 급락 가속화.
+        </div>
+      </div>
+
+      <div class="timeline-item danger">
+        <div class="timeline-date">2022년 5월 12~13일</div>
+        <div class="timeline-title">완전 붕괴 (Total Collapse)</div>
+        <div class="timeline-body">
+          <strong>LUNA, 하루 96% 폭락, $0.10 이하.</strong> 다수 거래소 LUNA 거래 중단. UST <strong>$0.02 수준</strong>으로 붕괴.<br>
+          Terraform Labs, Terra 블록체인 <strong>전면 중단(halt)</strong>. LFG 남은 BTC 준비금: 겨우 <strong>313 BTC</strong>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 데스 스파이럴 -->
+  <section id="spiral">
+    <h2><span class="num">6</span> 데스 스파이럴 메커니즘 <span class="en">The Death Spiral Mechanism</span></h2>
+
+    <div class="spiral">
+      <div>UST 가격 하락 (Depeg)</div>
+      <div class="arrow">↓</div>
+      <div>차익거래자들: UST → LUNA 대량 교환 (Arbitrage)</div>
+      <div class="arrow">↓</div>
+      <div>LUNA 대량 발행 → 공급 폭증 (Hyperinflation)</div>
+      <div class="arrow">↓</div>
+      <div>LUNA 가격 급락 (Price Crash)</div>
+      <div class="arrow">↓</div>
+      <div>LUNA 시총 감소 → UST 담보력 약화</div>
+      <div class="arrow">↓</div>
+      <div>UST 신뢰 추가 상실 → 추가 이탈 가속</div>
+      <div class="arrow loop">↓ (반복 · Self-reinforcing Loop)</div>
+    </div>
+
+    <h3>데스 스파이럴의 규모</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="value">6,000배</span>
+        <span class="label">LUNA 공급량 팽창<br>(10억 → 6조 개)</span>
+      </div>
+      <div class="stat-card">
+        <span class="value">-99.9%</span>
+        <span class="label">LUNA 가격 하락<br>($80 → ~$0)</span>
+      </div>
+      <div class="stat-card">
+        <span class="value">72시간</span>
+        <span class="label">붕괴 소요 시간<br>(사상 최속 중 하나)</span>
+      </div>
+    </div>
+
+    <h3>공격 이론 vs. 구조적 붕괴 논쟁</h3>
+    <table>
+      <thead>
+        <tr><th>이론</th><th>주장</th><th>증거 여부</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>조직적 공격설</strong> <span class="en">(Coordinated Attack)</span></td>
+          <td>Citadel·BlackRock 등이 공매도 후 페그 공격</td>
+          <td><span style="color:#dc3545">❌ 증거 없음 — Citadel 공식 부인</span></td>
+        </tr>
+        <tr>
+          <td><strong>기회주의적 차익거래설</strong></td>
+          <td>대형 지갑이 유동성 취약점을 이용해 트리거 당김</td>
+          <td><span style="color:#f0ad4e">△ Chainalysis 온체인 데이터로 부분 확인</span></td>
+        </tr>
+        <tr>
+          <td><strong>유기적 뱅크런설</strong> <span class="en">(Bank Run)</span></td>
+          <td>Anchor 이자율 인하가 시스템 신뢰 붕괴 촉발</td>
+          <td><span style="color:#28a745">✅ Harvard Law/MIT Sloan 분석 지지</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>현재 학계 정설</strong>: 구조적 취약성이 근본 원인이며, 대형 거래들이 뱅크런의 방아쇠를 당겼을 뿐이다. "조직적 공격" 음모론은 근거 없음.</p>
+
+    <div class="warning">
+      <strong>DOJ 기소장 추가 사실:</strong> 권도형은 2021년 UST가 첫 디페그됐을 때, <strong>고빈도 거래 회사와 비밀 계약을 맺어 UST를 대량 매수해 가격을 인위적으로 지지</strong>했다. 이는 시스템의 "자연스러운 안정성"에 대한 주장이 허위였음을 시사한다.
+    </div>
+  </section>
+
+  <!-- 7. 재무 피해 -->
+  <section id="impact">
+    <h2><span class="num">7</span> 재무적 피해 및 시장 전염 <span class="en">Financial Damage &amp; Market Contagion</span></h2>
+
+    <h3>직접 손실 (Direct Losses)</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="value">~$45B</span>
+        <span class="label">Terra 생태계<br>직접 시총 손실</span>
+      </div>
+      <div class="stat-card">
+        <span class="value">28만 명</span>
+        <span class="label">한국 투자자<br>피해 추정</span>
+      </div>
+      <div class="stat-card">
+        <span class="value">$0.02</span>
+        <span class="label">UST 최저가<br>(98% 손실)</span>
+      </div>
+    </div>
+
+    <h3>시장 전염 — 도미노 붕괴 (Contagion &amp; Domino Effect)</h3>
+    <p>Terra 붕괴는 DeFi 레버리지 생태계의 상호 노출을 통해 연쇄 파산을 일으켰다.</p>
+
+    <div class="timeline">
+      <div class="timeline-item danger">
+        <div class="timeline-date">2022년 6월</div>
+        <div class="timeline-title">Three Arrows Capital (3AC) 파산</div>
+        <div class="timeline-body">Anchor Protocol에 대규모 포지션 보유. 마진콜 미납 후 청산. $10B 운용 헤지펀드 붕괴.</div>
+      </div>
+      <div class="timeline-item danger">
+        <div class="timeline-date">2022년 6~7월</div>
+        <div class="timeline-title">Celsius, Voyager, BlockFi 파산</div>
+        <div class="timeline-body">3AC 익스포져 및 Terra 손실로 연쇄 파산.</div>
+      </div>
+      <div class="timeline-item danger">
+        <div class="timeline-date">2022년 11월</div>
+        <div class="timeline-title">FTX/Alameda Research 붕괴</div>
+        <div class="timeline-body">Alameda의 Terra 손실 은폐를 위해 FTX 고객 자금 전용 → FTX 붕괴의 핵심 원인 중 하나.</div>
+      </div>
+    </div>
+
+    <div class="danger">
+      <strong>광범위한 시장 영향:</strong> Bitcoin $47,000 → $16,000 이하. 전체 암호화폐 시장 2022년 약세장 동안 <strong>$2조 달러 이상</strong> 손실.
+    </div>
+  </section>
+
+  <!-- 8. 법적 후속 -->
+  <section id="legal">
+    <h2><span class="num">8</span> 법적 후속 조치 <span class="en">Legal Aftermath</span></h2>
+
+    <table>
+      <thead>
+        <tr><th>날짜</th><th>사건</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2022년 9월</td>
+          <td>한국 검찰, 권도형 체포영장 발부</td>
+        </tr>
+        <tr>
+          <td>2023년 2월</td>
+          <td><strong>SEC, Terraform Labs·권도형 증권사기 혐의로 민사 제소</strong></td>
+        </tr>
+        <tr>
+          <td>2023년 3월 23일</td>
+          <td>권도형, <strong>몬테네그로 포드고리차 공항에서 위조 여권</strong>(코스타리카, 벨기에) 사용 시도 중 체포</td>
+        </tr>
+        <tr>
+          <td>2024년 1월</td>
+          <td>Terraform Labs <strong>Chapter 11 파산 신청</strong></td>
+        </tr>
+        <tr>
+          <td>2024년 4월 5일</td>
+          <td>뉴욕 배심원단, <strong>SEC 민사소송에서 Terraform Labs·권도형 사기 책임 인정</strong></td>
+        </tr>
+        <tr>
+          <td>2024년 6월</td>
+          <td>SEC 사기 판결 관련 <strong>$4.5 billion 배상 판결</strong></td>
+        </tr>
+        <tr>
+          <td>2024년 12월 31일</td>
+          <td>권도형, <strong>미국으로 송환(Extradition)</strong></td>
+        </tr>
+        <tr>
+          <td>2025년 8월</td>
+          <td>사기 공모·전신사기 <strong>유죄 인정(Guilty Plea)</strong> — $19M 몰수 합의</td>
+        </tr>
+        <tr>
+          <td><strong>2025년 12월 11일</strong></td>
+          <td>연방지법, <strong>징역 15년 선고</strong> — 판사: "epic, generational scale의 사기"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>형사 기소 내용 (DOJ 9개 항목)</h3>
+    <ul>
+      <li>증권사기 2건 <span class="en">(Securities Fraud)</span></li>
+      <li>전신사기 2건 <span class="en">(Wire Fraud)</span></li>
+      <li>상품사기 2건 <span class="en">(Commodity Fraud)</span></li>
+      <li>공모 2건 + 자금세탁공모 1건</li>
+    </ul>
+
+    <div class="highlight">
+      <strong>핵심 사기 혐의:</strong>
+      <ol>
+        <li>UST 안정성에 대한 <strong>허위 진술</strong></li>
+        <li>Chai 결제 앱의 실사용에 대한 <strong>허위 마케팅</strong></li>
+        <li>2021년 UST 디페그 당시 <strong>비밀 가격 조작 계약</strong> (고빈도 거래사와)</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 9. 규제 영향 -->
+  <section id="regulation">
+    <h2><span class="num">9</span> 산업 규제 영향 <span class="en">Industry &amp; Regulatory Impact</span></h2>
+
+    <h3>글로벌 규제 반응</h3>
+
+    <h4>🇺🇸 미국</h4>
+    <ul>
+      <li>재무부·연준·SEC 등 스테이블코인 규제 논의 급가속화</li>
+      <li>SEC의 암호화폐 시장 전반 집행 강화 (Ripple, Binance, Coinbase 등)</li>
+      <li>스테이블코인 = 증권(Security) 가능성 입장 확립에 기여</li>
+    </ul>
+
+    <h4>🇪🇺 유럽 — MiCA (Markets in Crypto-Assets Regulation)</h4>
+    <ul>
+      <li>Terra 붕괴가 MiCA 스테이블코인 규정 강화의 <strong>직접적 촉매</strong></li>
+      <li><strong>알고리즘 스테이블코인은 MiCA에서 사실상 금지</strong> — 실질 담보 없이는 발행 불가</li>
+      <li>EMT(전자화폐형 토큰): 준비금 100% 규제 금융기관 예치 의무</li>
+      <li>대규모 스테이블코인(일일 거래량 €200M 초과): ECB 감독 대상</li>
+    </ul>
+
+    <h4>🇰🇷 한국</h4>
+    <ul>
+      <li><strong>가상자산이용자보호법 제정 (2024년 시행)</strong> — Terra 사태가 핵심 입법 계기</li>
+      <li>별도 한국 형사 재판 진행 예정 (15년 형 선고 이후에도)</li>
+    </ul>
+
+    <h3>다른 스테이블코인에 대한 영향</h3>
+    <table>
+      <thead>
+        <tr><th>스테이블코인</th><th>변화</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>USDC / USDT</td><td>준비금 투명성 요구 강화, 정기 감사 압력</td></tr>
+        <tr><td>DAI (MakerDAO)</td><td>알고리즘 비중 축소, 실물자산(RWA) 담보 비중 확대</td></tr>
+        <tr><td>FRAX</td><td>알고리즘 비중 감소, 완전 담보화 방향 전환</td></tr>
+        <tr><td>순수 알고리즘 스테이블코인</td><td>업계에서 사실상 퇴출</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 10. 교훈 -->
+  <section id="lessons">
+    <h2><span class="num">10</span> 교훈 <span class="en">Lessons Learned</span></h2>
+
+    <div class="lesson-grid">
+      <div class="lesson-card">
+        <div class="num">01</div>
+        <h4>알고리즘 스테이블코인의 구조적 한계</h4>
+        <p>담보 없는 신뢰 기반 페그는 패닉 시 뱅크런에 본질적으로 취약하다. LUNA 시총 > UST 시총 조건이 깨지면 즉시 붕괴한다.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="num">02</div>
+        <h4>지속 불가능한 수익률 경계</h4>
+        <p>연 20% APY는 실질 수익이 아닌 보조금이었다. "어디서 이 돈이 오는가?"를 묻지 않은 것이 치명적이었다.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="num">03</div>
+        <h4>집중 위험 (Concentration Risk)</h4>
+        <p>UST 유통량의 75%가 단일 프로토콜(Anchor)에 집중된 것 자체가 단일 장애점이었다.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="num">04</div>
+        <h4>준비금 규모의 현실</h4>
+        <p>$3B BTC 준비금도 $18B UST 시총의 17%에 불과했다. 실제 뱅크런 방어에는 역부족이었다.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="num">05</div>
+        <h4>"탈중앙화"는 책임 면제가 아님</h4>
+        <p>권도형의 15년 형이 확립한 법리: 프로토콜이 탈중앙화를 표방해도 창업자는 사기 책임을 진다.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="num">06</div>
+        <h4>온체인 독립 검증의 중요성</h4>
+        <p>비밀 가격 조작 계약, Chai 허위 홍보 등 — 투자자는 창업자의 말이 아닌 온체인 데이터로 검증해야 한다.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="num">07</div>
+        <h4>카리스마 리더 리스크</h4>
+        <p>팬덤(LUNAtics)이 비판을 억압하고 구조적 위험 경고를 무시하게 만들었다. 리더의 권위보다 메커니즘을 신뢰하라.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="num">08</div>
+        <h4>DeFi 상호연결성 위험</h4>
+        <p>Terra → 3AC → Celsius → FTX의 도미노는 레버리지 생태계의 상호 노출이 얼마나 치명적인지 보여줬다.</p>
+      </div>
+    </div>
+
+    <div class="success">
+      <strong>✅ 결론:</strong> Terra LUNA 사태는 "훌륭한 기술"과 "지속 가능한 금융 메커니즘"은 별개임을 증명했다. 블록체인 기술적 혁신성이 아무리 뛰어나도, 경제적 인센티브 구조가 자기파괴적이면 붕괴는 필연이다. 이 사건은 암호화폐 역사상 가장 중요한 규제 반면교사가 되었다.
+    </div>
+  </section>
+
+  <!-- 핵심 수치 요약 -->
+  <section>
+    <h2><span class="num">★</span> 핵심 수치 요약 <span class="en">Key Statistics Summary</span></h2>
+    <table>
+      <thead>
+        <tr><th>항목</th><th>수치</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>LUNA 최고가</td><td><strong>$119.18</strong> (2022.4.5)</td></tr>
+        <tr><td>LUNA 최저가</td><td><strong>~$0.0001</strong> (사실상 0)</td></tr>
+        <tr><td>UST 최저가</td><td><strong>$0.02</strong> (98% 손실)</td></tr>
+        <tr><td>Terra 생태계 직접 손실</td><td><strong>~$45 billion</strong></td></tr>
+        <tr><td>LFG BTC 준비금 소진</td><td><strong>80,394 BTC → 313 BTC</strong> (99.6% 소진)</td></tr>
+        <tr><td>Anchor Protocol 이탈</td><td>140억 UST 중 <strong>110억 UST</strong> 인출 (9일 내)</td></tr>
+        <tr><td>LUNA 공급량 팽창</td><td><strong>10억 → 6조 개</strong> (6,000배)</td></tr>
+        <tr><td>붕괴 소요 시간</td><td><strong>72시간</strong></td></tr>
+        <tr><td>한국 피해자 추정</td><td><strong>약 28만 명</strong></td></tr>
+        <tr><td>권도형 징역</td><td><strong>15년</strong> (2025.12.11 선고)</td></tr>
+        <tr><td>SEC 민사 배상</td><td><strong>$4.5 billion</strong></td></tr>
+        <tr><td>몰수액</td><td><strong>$19 million</strong></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 출처 -->
+  <div class="sources">
+    <h3>📚 참고 자료 (References)</h3>
+    <ul>
+      <li>📄 <a href="https://corpgov.law.harvard.edu/2023/05/22/anatomy-of-a-run-the-terra-luna-crash/" target="_blank">Anatomy of a Run: The Terra Luna Crash — Harvard Law / MIT Sloan (2023)</a></li>
+      <li>📄 <a href="https://en.wikipedia.org/wiki/Terra_(blockchain)" target="_blank">Terra (blockchain) — Wikipedia</a></li>
+      <li>📄 <a href="https://www.chainalysis.com/blog/how-terrausd-collapsed/" target="_blank">How TerraUSD Collapsed — Chainalysis</a></li>
+      <li>📄 <a href="https://www.justice.gov/usao-sdny/pr/crypto-enabled-fraudster-sentenced-orchestrating-40-billion-fraud" target="_blank">Do Kwon Sentenced to 15 Years — DOJ SDNY (2025.12)</a></li>
+      <li>📄 <a href="https://blockchain.bakermckenzie.com/2025/08/13/the-rise-and-fall-of-do-kwon-and-the-ust-stablecoin-from-crypto-visionary-to-convicted-fraudster/" target="_blank">The Rise and Fall of Do Kwon — Baker McKenzie (2025)</a></li>
+      <li>📄 <a href="https://www.coindesk.com/policy/2024/04/05/new-york-jury-finds-do-kwon-terraform-labs-liable-for-fraud-in-sec-case" target="_blank">New York Jury Finds Terraform Labs Liable — CoinDesk (2024)</a></li>
+      <li>📄 <a href="https://www.coindesk.com/business/2022/05/16/luna-foundation-guard-left-with-313-bitcoin-after-ust-crash/" target="_blank">LFG Reserves Dwindle to 313 Bitcoin — CoinDesk (2022)</a></li>
+      <li>📄 <a href="https://www.bitstamp.net/en-gb/learn/crypto-101/terra-network-collapse/" target="_blank">Terra Luna Crash Timeline — Bitstamp</a></li>
+      <li>📄 <a href="https://www.bloomberg.com/news/articles/2025-12-11/do-kwon-gets-15-years-in-prison-for-40-billion-terraform-fraud" target="_blank">Do Kwon Gets 15 Years in Prison — Bloomberg (2025)</a></li>
+      <li>📄 <a href="https://decrypt.co/117420/story-of-the-year-crypto-contagion-terra-ftx" target="_blank">Crypto Contagion: From Terra to FTX — Decrypt</a></li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>생성일시: 2026-06-12 (KST) &nbsp;|&nbsp; 작성: Claude Sonnet 4.6 (Claude Code)</p>
+    <p style="margin-top:6px;">본 문서는 교육 목적으로 작성되었습니다. 투자 조언이 아닙니다.</p>
+  </footer>
+
+</div>
+</body>
+</html>

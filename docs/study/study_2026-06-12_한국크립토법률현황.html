@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한국 크립토 관련 법 현황 및 진행 중인 법</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+      padding: 0;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      color: #ffffff;
+      padding: 48px 40px 36px;
+    }
+    .header .lang-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      font-size: 11px;
+      padding: 2px 8px;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .header h1 .en {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      display: block;
+      margin-top: 4px;
+    }
+    .header .meta {
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+    .header .meta span { margin-right: 20px; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 36px 24px; }
+
+    /* Summary bar */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .summary-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 4px solid;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .summary-card.active { border-color: #22c55e; }
+    .summary-card.pending { border-color: #f59e0b; }
+    .summary-card.deferred { border-color: #ef4444; }
+    .summary-card.upcoming { border-color: #3b82f6; }
+    .summary-card .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #888; margin-bottom: 6px; }
+    .summary-card .value { font-size: 1.5rem; font-weight: 800; }
+    .summary-card .desc { font-size: 12px; color: #666; margin-top: 4px; }
+    .summary-card.active .value { color: #22c55e; }
+    .summary-card.pending .value { color: #f59e0b; }
+    .summary-card.deferred .value { color: #ef4444; }
+    .summary-card.upcoming .value { color: #3b82f6; }
+
+    /* Sections */
+    .section { margin-bottom: 40px; }
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title .en-sub {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #9ca3af;
+      margin-left: 4px;
+    }
+    .section-title .badge {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .badge-active { background: #dcfce7; color: #15803d; }
+    .badge-pending { background: #fef9c3; color: #a16207; }
+    .badge-deferred { background: #fee2e2; color: #b91c1c; }
+    .badge-upcoming { background: #dbeafe; color: #1d4ed8; }
+
+    /* Law cards */
+    .law-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      border: 1px solid #e5e7eb;
+    }
+    .law-card .law-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .law-name { font-size: 1.1rem; font-weight: 800; color: #1a1a2e; }
+    .law-name .en { font-size: 0.8rem; font-weight: 500; color: #9ca3af; display: block; margin-top: 2px; }
+    .law-date { font-size: 12px; background: #f3f4f6; padding: 4px 12px; border-radius: 20px; color: #555; font-weight: 600; white-space: nowrap; }
+
+    /* Info table */
+    .info-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    .info-table th {
+      background: #f8fafc;
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 700;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+      width: 160px;
+    }
+    .info-table td {
+      padding: 10px 14px;
+      border: 1px solid #e5e7eb;
+      color: #4b5563;
+    }
+    .info-table tr:hover td { background: #fafafa; }
+
+    /* Key points */
+    .key-points { margin-top: 14px; }
+    .key-points-title { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 8px; }
+    .key-points ul { list-style: none; padding: 0; }
+    .key-points ul li {
+      padding: 6px 0 6px 20px;
+      position: relative;
+      font-size: 14px;
+      color: #4b5563;
+      border-bottom: 1px dashed #f0f0f0;
+    }
+    .key-points ul li:last-child { border-bottom: none; }
+    .key-points ul li::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      color: #3b82f6;
+      font-size: 10px;
+      top: 8px;
+    }
+
+    /* Four pillars */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .pillar {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 16px;
+      border-top: 3px solid #3b82f6;
+    }
+    .pillar:nth-child(2) { border-top-color: #8b5cf6; }
+    .pillar:nth-child(3) { border-top-color: #ef4444; }
+    .pillar:nth-child(4) { border-top-color: #f59e0b; }
+    .pillar-num { font-size: 11px; font-weight: 700; color: #9ca3af; letter-spacing: 1px; margin-bottom: 4px; }
+    .pillar-title { font-size: 14px; font-weight: 800; color: #1f2937; margin-bottom: 8px; }
+    .pillar ul { list-style: none; padding: 0; }
+    .pillar ul li { font-size: 12px; color: #6b7280; padding: 3px 0; padding-left: 12px; position: relative; }
+    .pillar ul li::before { content: '·'; position: absolute; left: 0; color: #9ca3af; font-size: 16px; top: -1px; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 32px; margin-top: 14px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #e5e7eb; }
+    .timeline-item { position: relative; margin-bottom: 18px; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3b82f6;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+    .timeline-item.done::before { background: #22c55e; box-shadow: 0 0 0 2px #22c55e; }
+    .timeline-item.future::before { background: #9ca3af; box-shadow: 0 0 0 2px #9ca3af; }
+    .timeline-date { font-size: 12px; font-weight: 700; color: #3b82f6; margin-bottom: 2px; }
+    .timeline-item.done .timeline-date { color: #22c55e; }
+    .timeline-item.future .timeline-date { color: #9ca3af; }
+    .timeline-text { font-size: 14px; color: #374151; }
+
+    /* Comparison table */
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
+    .compare-table th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 700;
+    }
+    .compare-table th:first-child { border-radius: 8px 0 0 0; }
+    .compare-table th:last-child { border-radius: 0 8px 0 0; }
+    .compare-table td { padding: 10px 16px; border: 1px solid #e5e7eb; color: #4b5563; }
+    .compare-table tr:nth-child(even) td { background: #f9fafb; }
+
+    /* Issue cards */
+    .issue-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+    .issue-card {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .issue-card .issue-title { font-size: 14px; font-weight: 800; color: #92400e; margin-bottom: 8px; }
+    .issue-card .issue-text { font-size: 13px; color: #78350f; line-height: 1.6; }
+
+    /* Regulator table */
+    .regulator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 14px; }
+    .regulator-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .regulator-card .reg-name { font-size: 14px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
+    .regulator-card .reg-en { font-size: 11px; color: #9ca3af; margin-bottom: 10px; }
+    .regulator-card ul { list-style: none; padding: 0; }
+    .regulator-card ul li { font-size: 13px; color: #6b7280; padding: 4px 0 4px 14px; position: relative; }
+    .regulator-card ul li::before { content: '–'; position: absolute; left: 0; color: #d1d5db; }
+
+    /* Overall status table */
+    .status-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
+    .status-table th {
+      background: #f8fafc;
+      padding: 10px 16px;
+      text-align: left;
+      font-weight: 700;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+    .status-table td { padding: 10px 16px; border: 1px solid #e5e7eb; color: #4b5563; }
+    .status-table tr:hover td { background: #f0f9ff; }
+    .status-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .pill-active { background: #dcfce7; color: #15803d; }
+    .pill-deferred { background: #fee2e2; color: #b91c1c; }
+    .pill-preview { background: #e0e7ff; color: #4338ca; }
+    .pill-pending { background: #fef9c3; color: #a16207; }
+    .pill-discuss { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+    /* Source section */
+    .sources { background: #f8fafc; border-radius: 10px; padding: 20px 24px; margin-top: 12px; }
+    .sources h4 { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 10px; }
+    .sources ul { list-style: none; padding: 0; }
+    .sources ul li { font-size: 12px; color: #6b7280; padding: 4px 0; }
+    .sources ul li a { color: #3b82f6; text-decoration: none; }
+    .sources ul li a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .header h1 { font-size: 1.4rem; }
+      .issue-cards { grid-template-columns: 1fr; }
+      .pillars-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="lang-tag">Study Note · 스터디 노트</div>
+  <h1>
+    한국 크립토 관련 법 현황 및 진행 중인 법
+    <span class="en">Korean Cryptocurrency Regulatory Landscape &amp; Pending Legislation</span>
+  </h1>
+  <div class="meta">
+    <span>📅 작성일 (Created): <strong id="created-date"></strong></span>
+    <span>🏛️ 기준일 (Reference Date): 2026년 6월 12일</span>
+    <span>📚 대상 독자: 블록체인·핀테크 실무자, 투자자, 정책 관심자</span>
+  </div>
+</div>
+
+<script>
+  const d = new Date();
+  const opts = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
+  document.getElementById('created-date').textContent = d.toLocaleString('ko-KR', opts);
+</script>
+
+<div class="container">
+
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <div class="summary-card active">
+      <div class="label">시행 중 · In Force</div>
+      <div class="value">2건</div>
+      <div class="desc">특금법, 가상자산이용자보호법</div>
+    </div>
+    <div class="summary-card deferred">
+      <div class="label">유예 중 · Deferred</div>
+      <div class="value">1건</div>
+      <div class="desc">가상자산 소득과세 (2027년 예정)</div>
+    </div>
+    <div class="summary-card pending">
+      <div class="label">국회 계류 · Pending</div>
+      <div class="value">8건+</div>
+      <div class="desc">디지털자산기본법 등</div>
+    </div>
+    <div class="summary-card upcoming">
+      <div class="label">논의 중 · Discussed</div>
+      <div class="value">2건</div>
+      <div class="desc">스테이블코인 규제, 신용정보법 개정</div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 1: 현재 시행 중인 법률 ===== -->
+  <div class="section">
+    <div class="section-title">
+      1. 현재 시행 중인 법률
+      <span class="en-sub">Currently Enforced Laws</span>
+      <span class="badge badge-active">시행 중</span>
+    </div>
+
+    <!-- 특금법 -->
+    <div class="law-card">
+      <div class="law-header">
+        <div class="law-name">
+          특정금융거래정보의 보고 및 이용 등에 관한 법률 (특금법)
+          <span class="en">Act on Reporting and Using Specified Financial Transaction Information (ARUSFTI / 특금법)</span>
+        </div>
+        <div class="law-date">시행: 2021년 3월 25일</div>
+      </div>
+      <table class="info-table">
+        <tr><th>영문명 (English Name)</th><td>Act on Reporting and Using Specified Financial Transaction Information</td></tr>
+        <tr><th>소관 부처 (Regulator)</th><td>금융정보분석원 (KoFIU – Korea Financial Intelligence Unit)</td></tr>
+        <tr><th>규제 대상 (Subject)</th><td>가상자산사업자 (VASP – Virtual Asset Service Provider): 거래소, 지갑·보관업자, 중개업자 등</td></tr>
+        <tr><th>배경 (Background)</th><td>FATF(국제자금세탁방지기구) 권고 이행, AML/CFT 의무 부과</td></tr>
+      </table>
+      <div class="key-points">
+        <div class="key-points-title">핵심 의무사항 (Key Obligations)</div>
+        <ul>
+          <li>KoFIU 신고 후 영업 가능 — 미신고 영업 시 형사처벌 (Mandatory registration with KoFIU before operations)</li>
+          <li>실명확인 입출금 계정 의무 — 은행과 실명계좌 연결 (Real-name verified bank account linkage for KRW deposits/withdrawals)</li>
+          <li>의심거래보고(STR) 및 고액현금거래보고(CTR) 의무 (Suspicious Transaction Report &amp; Currency Transaction Report)</li>
+          <li>FATF 트래블룰 준수 — 100만 원 이상 가상자산 이전 시 송수신자 정보 전송 (Travel Rule: transfer sender/receiver info for transactions ≥ ₩1M)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 가상자산이용자보호법 -->
+    <div class="law-card">
+      <div class="law-header">
+        <div class="law-name">
+          가상자산 이용자 보호 등에 관한 법률 (가상자산이용자보호법)
+          <span class="en">Act on Protection of Virtual Asset Users (VPUA / 가상자산이용자보호법)</span>
+        </div>
+        <div class="law-date">시행: 2024년 7월 19일</div>
+      </div>
+      <table class="info-table">
+        <tr><th>영문명 (English Name)</th><td>Act on the Protection of Virtual Asset Users</td></tr>
+        <tr><th>제정일 (Enacted)</th><td>2023년 7월 18일</td></tr>
+        <tr><th>시행일 (Effective)</th><td><strong>2024년 7월 19일</strong></td></tr>
+        <tr><th>소관 부처 (Regulator)</th><td>금융위원회(FSC), 금융감독원(FSS)</td></tr>
+        <tr><th>입법 취지 (Purpose)</th><td>FTX·루나 사태 이후 이용자 자산 보호 및 불공정거래 규제 강화</td></tr>
+        <tr><th>벤치마크 (Benchmark)</th><td>EU MiCA 1단계, 자본시장법 일부 준용</td></tr>
+      </table>
+
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-num">PILLAR 01</div>
+          <div class="pillar-title">이용자 예치금 보호<br><small style="font-weight:400;color:#9ca3af">User Deposit Protection</small></div>
+          <ul>
+            <li>은행을 통한 예치금 분리 보관 의무</li>
+            <li>이용자 예치금 이용료 지급 의무</li>
+          </ul>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">PILLAR 02</div>
+          <div class="pillar-title">이용자 가상자산 보호<br><small style="font-weight:400;color:#9ca3af">Asset Safeguarding</small></div>
+          <ul>
+            <li>자기·이용자 가상자산 분리 보관</li>
+            <li>동종·동량 실질 보유 의무</li>
+            <li>해킹·전산장애 대비 의무보험 가입</li>
+          </ul>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">PILLAR 03</div>
+          <div class="pillar-title">불공정거래행위 금지<br><small style="font-weight:400;color:#9ca3af">Market Manipulation Ban</small></div>
+          <ul>
+            <li>시세조종 금지 (Market manipulation)</li>
+            <li>미공개정보 이용 금지 (Insider trading)</li>
+            <li>부정거래행위 금지 (Fraudulent trading)</li>
+            <li>형사처벌 + 과징금 부과</li>
+          </ul>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">PILLAR 04</div>
+          <div class="pillar-title">금융당국 감독·제재<br><small style="font-weight:400;color:#9ca3af">Regulatory Oversight</small></div>
+          <ul>
+            <li>금융감독원 검사권 부여</li>
+            <li>금융위원회 시정명령·영업정지·과태료</li>
+            <li>불공정거래 조사·조치권</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: 가상자산 소득 과세 ===== -->
+  <div class="section">
+    <div class="section-title">
+      2. 가상자산 소득세 (유예 중)
+      <span class="en-sub">Virtual Asset Income Tax (Deferred)</span>
+      <span class="badge badge-deferred">3차 유예</span>
+    </div>
+    <div class="law-card">
+      <div class="law-header">
+        <div class="law-name">
+          소득세법 — 가상자산 소득 과세 조항
+          <span class="en">Income Tax Act — Virtual Asset Income Tax Provision</span>
+        </div>
+        <div class="law-date">시행 예정: 2027년 1월 1일</div>
+      </div>
+      <table class="info-table">
+        <tr><th>과세 유형 (Tax Type)</th><td>기타소득 분리과세 (Separate taxation as other income)</td></tr>
+        <tr><th>세율 (Rate)</th><td>20% (지방소득세 포함 22%)</td></tr>
+        <tr><th>기본공제 (Deduction)</th><td>연 250만 원 (₩2.5M annual deduction)</td></tr>
+        <tr><th>과세 범위 (Taxable)</th><td>가상자산 양도·대여 소득 (Transfer &amp; rental income)</td></tr>
+        <tr><th>미비 사항 (Gap)</th><td>에어드랍·스테이킹·채굴 등 소득형태 세부규정 미비</td></tr>
+      </table>
+
+      <div class="key-points">
+        <div class="key-points-title">유예 연혁 (Deferral History)</div>
+        <ul>
+          <li>2020년: 소득세법 개정으로 과세 입법화 (Originally enacted 2020)</li>
+          <li><strong>1차 유예:</strong> 2022년 1월 → 2023년 1월</li>
+          <li><strong>2차 유예:</strong> 2023년 1월 → 2025년 1월</li>
+          <li><strong>3차 유예:</strong> 2025년 1월 → <strong>2027년 1월 1일</strong></li>
+          <li>⚠️ 2026년 5월 기준, <strong>4차 유예 가능성</strong> 논의 중 (7월 세법개정안 제외 보도)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3: 국회 계류 법안 ===== -->
+  <div class="section">
+    <div class="section-title">
+      3. 국회 계류 중인 주요 법안 (2단계 입법)
+      <span class="en-sub">Pending Legislation — Phase 2 Regulatory Framework</span>
+      <span class="badge badge-pending">심사 중</span>
+    </div>
+
+    <div class="law-card">
+      <div class="law-header">
+        <div class="law-name">
+          디지털자산기본법 / 가상자산업권법
+          <span class="en">Digital Asset Basic Act / Virtual Asset Industry Act</span>
+        </div>
+        <div class="law-date">8건+ 계류 중</div>
+      </div>
+      <table class="info-table">
+        <tr><th>대표 발의 (Key Bill)</th><td>민병덕 의원(더불어민주당) 발의, 2025년 6월 10일</td></tr>
+        <tr><th>총 계류 건수 (Total Bills)</th><td>8건 이상 (여야 합산)</td></tr>
+        <tr><th>벤치마크 (Benchmark)</th><td>EU MiCA (Markets in Crypto-Assets Regulation), 자본시장법</td></tr>
+        <tr><th>시행 목표 (Target)</th><td>2026년 하반기 이후 (Fast-track 시 2026년 상반기)</td></tr>
+      </table>
+
+      <div class="key-points" style="margin-bottom: 16px;">
+        <div class="key-points-title">주요 규율 내용 (Key Provisions)</div>
+        <ul>
+          <li><strong>디지털자산 정의 (Definition):</strong> 분산원장기술로 생성·저장된 경제적 가치 있는 재산 (전자화폐 제외)</li>
+          <li><strong>3단계 진입규제 (Tiered Licensing):</strong> 인가(Authorization) / 등록(Registration) / 신고(Notification) — 업종별 차등</li>
+          <li><strong>ICO 규율:</strong> 자산연계형 → 인가 필요; 일반 디지털자산 → 법정 공시 양식 신고</li>
+          <li><strong>거래지원(상장) 규제:</strong> 평가위원회 설치, 상장·상장폐지 의사결정 체계화</li>
+          <li><strong>공시 의무화:</strong> 백서 자율공시 → 법정 의무공시 전환</li>
+          <li><strong>불공정거래:</strong> 내부자거래·시세조종·사기적 부정거래 명시적 금지, 안정화·시장조성 행위는 예외</li>
+        </ul>
+      </div>
+
+      <div class="key-points-title" style="font-size:13px;font-weight:700;color:#374151;margin-bottom:8px;">1단계 vs 2단계 비교 (Phase 1 vs Phase 2)</div>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>1단계 — 가상자산이용자보호법 (현행)</th>
+            <th>2단계 — 디지털자산기본법 (예정)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>초점</strong></td>
+            <td>이용자 보호, 불공정거래 규제</td>
+            <td>산업 전반 인프라 구축</td>
+          </tr>
+          <tr>
+            <td><strong>주요 내용</strong></td>
+            <td>예치금·자산 보호, 시장감시</td>
+            <td>사업자 분류, 발행·상장·공시, ICO 규율</td>
+          </tr>
+          <tr>
+            <td><strong>사업자 분류</strong></td>
+            <td>특금법상 VASP 단일 구분</td>
+            <td>인가·등록·신고 3단계 분류</td>
+          </tr>
+          <tr>
+            <td><strong>발행 규율</strong></td>
+            <td>없음 (No ICO rules)</td>
+            <td>자산연계형 ICO 인가제</td>
+          </tr>
+          <tr>
+            <td><strong>감독 주체</strong></td>
+            <td>FSC, FSS</td>
+            <td>FSC, FSS (+ 한국은행 협의)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 스테이블코인 -->
+    <div class="law-card">
+      <div class="law-header">
+        <div class="law-name">
+          스테이블코인 규제 입법 (최대 쟁점)
+          <span class="en">Stablecoin Regulation — Most Contentious Issue</span>
+        </div>
+        <div class="law-date">2026년 상반기 발의 목표</div>
+      </div>
+      <table class="info-table">
+        <tr><th>정치적 배경</th><td>2025년 6월 대선에서 이재명 후보 원화 기반 스테이블코인 제도화 핵심 공약 → 당선 후 입법 가속화</td></tr>
+        <tr><th>목표 일정</th><td>2026년 1~2월 발의 → 2026년 2월 임시국회 심사</td></tr>
+      </table>
+
+      <div class="issue-cards">
+        <div class="issue-card">
+          <div class="issue-title">⚔️ 핵심 쟁점: 발행 주체 (Issuer Eligibility)</div>
+          <div class="issue-text">
+            <strong>한국은행:</strong> 시중은행 과반(51%) 지분 컨소시엄만 허용<br>
+            <strong>금융위원회:</strong> 지분율 법정화 반대, 핀테크·결제사업자 참여 허용 주장
+          </div>
+        </div>
+        <div class="issue-card">
+          <div class="issue-title">⚔️ 핵심 쟁점: 감독 권한 (Supervisory Authority)</div>
+          <div class="issue-text">
+            <strong>한국은행:</strong> 인가 단계부터 한은 실질 관여 요구<br>
+            <strong>금융위원회:</strong> FSC 일원화 감독 체계 고수
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 신용정보법 개정 -->
+    <div class="law-card">
+      <div class="law-header">
+        <div class="law-name">
+          신용정보법 시행령 개정 (입법예고)
+          <span class="en">Credit Information Act Enforcement Decree Amendment (Pre-announcement)</span>
+        </div>
+        <div class="law-date">입법예고: 2025년 11월 10일</div>
+      </div>
+      <table class="info-table">
+        <tr><th>핵심 변경 (Key Change)</th><td>가상자산 거래정보를 신용정보 범위에 포함</td></tr>
+        <tr><th>대상 사업자 (Subject)</th><td>가상자산사업자 → 신용정보제공·이용자에 포함</td></tr>
+        <tr><th>의의 (Significance)</th><td>가상자산 거래이력이 신용평가에 반영될 법적 근거 마련 (Trading history may affect credit scores)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4: 규제 동향 ===== -->
+  <div class="section">
+    <div class="section-title">
+      4. 2025–2026년 주요 규제 동향
+      <span class="en-sub">Key Regulatory Trends 2025–2026</span>
+    </div>
+
+    <!-- 법인 참여 로드맵 -->
+    <div class="law-card">
+      <div class="law-header">
+        <div class="law-name">
+          법인의 가상자산시장 참여 로드맵
+          <span class="en">Corporate Access to Virtual Asset Markets — Phased Roadmap</span>
+        </div>
+        <div class="law-date">발표: 2025년 2월 13일</div>
+      </div>
+      <p style="font-size:13px;color:#6b7280;margin-bottom:14px;">금융위원회 제3차 가상자산위원회(2025.02.13) 에서 단계적 법인 시장 참여 허용 방안 발표</p>
+      <table class="compare-table">
+        <thead>
+          <tr><th>단계 (Phase)</th><th>시기 (Timing)</th><th>허용 대상 (Eligible Entities)</th><th>계좌 유형 (Account Type)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Phase 1</strong></td>
+            <td>2025년 상반기</td>
+            <td>비영리법인(법인세법상 기부금단체), 가상자산거래소</td>
+            <td>매도 전용 실명계좌 (Sell-only)</td>
+          </tr>
+          <tr>
+            <td><strong>Phase 2</strong></td>
+            <td>2025년 하반기</td>
+            <td>전문투자자(금융회사 제외), 등록 전문투자자 법인</td>
+            <td>매매용 실명계좌 (Buy &amp; Sell)</td>
+          </tr>
+          <tr>
+            <td><strong>Phase 3</strong></td>
+            <td>중장기</td>
+            <td>일반 법인 전면 허용</td>
+            <td>매매용 (입법·세금·외환제도 정비 후)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FSS/FSC 2026 계획 -->
+    <div class="law-card">
+      <div class="law-header">
+        <div class="law-name">
+          금융감독원(FSS) 2026년 가상자산 감독 계획
+          <span class="en">FSS 2026 Virtual Asset Supervisory Plan</span>
+        </div>
+        <div class="law-date">발표: 2026년 1월</div>
+      </div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>과제 (Task)</th><th>내용 (Content)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>이용자 보호</strong></td><td>디지털자산기본법 도입 준비반 운영, 2단계 법안 이행 준비</td></tr>
+          <tr><td><strong>불공정거래 단속</strong></td><td>AI 활용 이상급등 자동분석, 대형고래 시세조종·가두리수법·경주마방식 기획조사</td></tr>
+          <tr><td><strong>투명성 강화</strong></td><td>거래소 수수료 항목 세분화 및 공시 강화</td></tr>
+          <tr><td><strong>금융-가상자산 연계</strong></td><td>신용카드사 스테이블코인 지원 (분리원칙 완화 신호)</td></tr>
+          <tr><td><strong>IT 보안</strong></td><td>금융권 수준 정보보안 규제 가상자산사업자에 적용</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 5: 입법 타임라인 ===== -->
+  <div class="section">
+    <div class="section-title">
+      5. 2단계 입법 진행 타임라인
+      <span class="en-sub">Phase 2 Legislation Timeline</span>
+    </div>
+    <div class="law-card">
+      <div class="timeline">
+        <div class="timeline-item done">
+          <div class="timeline-date">2021년 3월</div>
+          <div class="timeline-text">특금법 가상자산 조항 본격 시행 — VASP 신고 의무, AML/CFT 적용</div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">2023년 7월</div>
+          <div class="timeline-text">가상자산이용자보호법 제정 (법안 통과)</div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">2024년 7월 19일</div>
+          <div class="timeline-text">가상자산이용자보호법 <strong>시행</strong> — FSC·FSS 감독권, 불공정거래 규제, 이용자 자산 보호 의무화</div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">2025년 2월</div>
+          <div class="timeline-text">법인 가상자산시장 참여 로드맵 발표 (3단계, 금융위원회 제3차 가상자산위원회)</div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">2025년 5월</div>
+          <div class="timeline-text">제4차 가상자산위원회 — 거래지원(상장) 기준 강화 발표, 비영리법인 가이드라인 확정</div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">2025년 6월 10일</div>
+          <div class="timeline-text">민병덕 의원 디지털자산기본법 발의 (2단계 핵심 법안, 더불어민주당)</div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">2025년 11월</div>
+          <div class="timeline-text">신용정보법 시행령 개정 입법예고 — 가상자산 거래이력 신용평가 반영 근거 마련</div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">2025년 12월</div>
+          <div class="timeline-text">여야 TF, 정부안 지연으로 자체 발의 추진 결정 (한국은행-금융위 스테이블코인 이견 지속)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026년 1~2월 (목표)</div>
+          <div class="timeline-text">민주당 2단계 법안 발의 → 2월 임시국회 심사 목표 (스테이블코인 규제 포함)</div>
+        </div>
+        <div class="timeline-item future">
+          <div class="timeline-date">2026년 하반기 (전망)</div>
+          <div class="timeline-text">디지털자산기본법 실질 시행 전망 (빠를 경우 2026년 상반기)</div>
+        </div>
+        <div class="timeline-item future">
+          <div class="timeline-date">2027년 1월 1일 (예정)</div>
+          <div class="timeline-text">가상자산 소득세 시행 예정 (4차 유예 여부 미확정)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 6: 감독 체계 ===== -->
+  <div class="section">
+    <div class="section-title">
+      6. 금융당국 감독 체계
+      <span class="en-sub">Financial Regulatory Structure</span>
+    </div>
+    <div class="regulator-grid">
+      <div class="regulator-card">
+        <div class="reg-name">금융위원회 (FSC)</div>
+        <div class="reg-en">Financial Services Commission</div>
+        <ul>
+          <li>가상자산 정책 총괄, 법령 입안</li>
+          <li>가상자산위원회 운영 (분기별 정책 발표)</li>
+          <li>인허가·등록·취소</li>
+          <li>시정명령·영업정지·과태료 부과</li>
+          <li>디지털자산기본법 주무부처</li>
+        </ul>
+      </div>
+      <div class="regulator-card">
+        <div class="reg-name">금융감독원 (FSS)</div>
+        <div class="reg-en">Financial Supervisory Service</div>
+        <ul>
+          <li>가상자산사업자 현장 검사권</li>
+          <li>불공정거래 조사 (AI 자동분석 도입)</li>
+          <li>이용자 민원 처리</li>
+          <li>IT 보안 감독</li>
+          <li>거래소 수수료 공시 감독</li>
+        </ul>
+      </div>
+      <div class="regulator-card">
+        <div class="reg-name">금융정보분석원 (KoFIU)</div>
+        <div class="reg-en">Korea Financial Intelligence Unit</div>
+        <ul>
+          <li>AML/CFT 감독 주관</li>
+          <li>특금법상 VASP 신고 수리</li>
+          <li>의심거래보고(STR) 접수</li>
+          <li>트래블룰 준수 감독</li>
+          <li>FATF 국제 협력</li>
+        </ul>
+      </div>
+      <div class="regulator-card">
+        <div class="reg-name">한국은행 (BOK)</div>
+        <div class="reg-en">Bank of Korea</div>
+        <ul>
+          <li>스테이블코인 감독권 주장 (쟁점)</li>
+          <li>CBDC 연구·개발</li>
+          <li>디지털자산 금융 안정 모니터링</li>
+          <li>시중은행 51% 룰 지지 입장</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 7: 종합 현황표 ===== -->
+  <div class="section">
+    <div class="section-title">
+      7. 종합 현황표
+      <span class="en-sub">Overview Summary Table</span>
+    </div>
+    <div class="law-card" style="padding: 0; overflow: hidden;">
+      <table class="status-table" style="margin:0;">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>법률/정책 (Law/Policy)</th>
+            <th>영문명 (English)</th>
+            <th>상태 (Status)</th>
+            <th>시행(예정)일 (Effective Date)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>시행 중</td>
+            <td><strong>특금법 (가상자산 조항)</strong></td>
+            <td>ARUSFTI (Virtual Asset provisions)</td>
+            <td><span class="status-pill pill-active">시행 중</span></td>
+            <td>2021.03.25</td>
+          </tr>
+          <tr>
+            <td>시행 중</td>
+            <td><strong>가상자산이용자보호법</strong></td>
+            <td>Act on Protection of Virtual Asset Users</td>
+            <td><span class="status-pill pill-active">시행 중</span></td>
+            <td>2024.07.19</td>
+          </tr>
+          <tr>
+            <td>유예 중</td>
+            <td><strong>가상자산 소득세</strong></td>
+            <td>Virtual Asset Income Tax</td>
+            <td><span class="status-pill pill-deferred">3차 유예</span></td>
+            <td>2027.01.01 (예정)</td>
+          </tr>
+          <tr>
+            <td>입법예고</td>
+            <td><strong>신용정보법 시행령 개정</strong></td>
+            <td>Credit Information Act Enforcement Decree</td>
+            <td><span class="status-pill pill-preview">입법예고</span></td>
+            <td>미정</td>
+          </tr>
+          <tr>
+            <td>국회 계류</td>
+            <td><strong>디지털자산기본법 (8건+)</strong></td>
+            <td>Digital Asset Basic Act</td>
+            <td><span class="status-pill pill-pending">심사 중</span></td>
+            <td>2026년 하반기 이후 전망</td>
+          </tr>
+          <tr>
+            <td>논의 중</td>
+            <td><strong>스테이블코인 규제 법안</strong></td>
+            <td>Stablecoin Regulation Bill</td>
+            <td><span class="status-pill pill-discuss">발의 목표</span></td>
+            <td>2026년 1~2월 발의 목표</td>
+          </tr>
+          <tr>
+            <td>시행 중</td>
+            <td><strong>법인 참여 로드맵 Phase 1</strong></td>
+            <td>Corporate Market Access Roadmap</td>
+            <td><span class="status-pill pill-active">Phase 1 진행</span></td>
+            <td>2025년 상반기~</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== Sources ===== -->
+  <div class="section">
+    <div class="section-title">참고 자료 (References)</div>
+    <div class="sources">
+      <h4>공식 자료 (Official Sources)</h4>
+      <ul>
+        <li>📌 <a href="https://www.fsc.go.kr/no010101/81680" target="_blank">금융위원회 — 가상자산이용자보호법 시행(7.19) 보도자료</a></li>
+        <li>📌 <a href="https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=261099" target="_blank">국가법령정보센터 — 가상자산 이용자 보호 등에 관한 법률</a></li>
+        <li>📌 <a href="https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=40370&cntntsId=238935" target="_blank">국세청 — 가상자산 소득 과세 안내</a></li>
+      </ul>
+      <h4 style="margin-top: 12px;">법률 전문 자료 (Legal Research)</h4>
+      <ul>
+        <li>📖 <a href="https://www.kimchang.com/ko/insights/detail.kc?sch_section=4&idx=34323" target="_blank">김·장 법률사무소 — 2026년 금융위원회·금융감독원 업무계획 가상자산 관련 내용</a></li>
+        <li>📖 <a href="https://www.kimchang.com/ko/insights/detail.kc?sch_section=4&idx=32237" target="_blank">김·장 법률사무소 — 2025년 2분기 금융당국 가상자산 정책 동향</a></li>
+        <li>📖 <a href="https://www.shinkim.com/kor/media/newsletter/2859" target="_blank">신김앤장 — 디지털자산기본법 국회 발의</a></li>
+        <li>📖 <a href="https://journal.kiso.or.kr/?p=12709" target="_blank">KISO저널 — 가상자산이용자보호법 주요 내용과 관련 쟁점</a></li>
+      </ul>
+      <h4 style="margin-top: 12px;">언론 및 기타 (Media &amp; Other)</h4>
+      <ul>
+        <li>🗞️ <a href="https://zdnet.co.kr/view/?no=20251211103935" target="_blank">ZDNet Korea — 가상자산 2단계 입법 쟁점</a></li>
+        <li>🗞️ <a href="https://www.hankyung.com/article/2025121186771" target="_blank">한국경제 — 여당 가상자산 2단계 법안 발의</a></li>
+        <li>🗞️ <a href="https://www.lawtimes.co.kr/news/articleView.html?idxno=206001" target="_blank">법률신문 — 법인 가상자산시장 참여 로드맵</a></li>
+        <li>🗞️ <a href="https://law.asia/ko/korea-stablecoin-regulation-framework/" target="_blank">law.asia — 한국 스테이블코인 규제 프레임워크 2026</a></li>
+        <li>🗞️ <a href="https://www.lawtimes.co.kr/LawFirm-NewsLetter/213197" target="_blank">법률신문 — 신용정보법 시행령 개정 입법예고</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="text-align:center; font-size:12px; color:#bbb; padding: 24px 0 40px;">
+    이 문서는 공개된 자료를 바탕으로 작성된 스터디 노트입니다. 법률 자문이 아니며, 최신 법령은 국가법령정보센터를 통해 확인하시기 바랍니다.<br>
+    This document is a study note based on publicly available sources and does not constitute legal advice.
+  </div>
+
+</div>
+</body>
+</html>

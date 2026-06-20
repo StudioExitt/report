@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports</title>
+  <style>
+    :root {
+      --primary: #1a56a0;
+      --primary-dark: #0f2d5c;
+      --secondary: #0e7d5a;
+      --accent: #e05c2b;
+      --bg: #f4f6fa;
+      --card: #ffffff;
+      --text: #1e2430;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --study-color: #1a56a0;
+      --study-bg: #eff6ff;
+      --daily-color: #0e7d5a;
+      --daily-bg: #ecfdf5;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .site-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--secondary) 100%);
+      color: white;
+      padding: 56px 24px 48px;
+      text-align: center;
+    }
+    .site-header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+    .site-header p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    /* Nav tabs */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 28px 24px 0;
+    }
+    .tab-btn {
+      padding: 9px 24px;
+      border: none;
+      border-radius: 9999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--card);
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+    .tab-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-hover); }
+    .tab-btn.active[data-cat="all"]    { background: var(--text); color: white; }
+    .tab-btn.active[data-cat="study"]  { background: var(--study-color); color: white; }
+    .tab-btn.active[data-cat="daily"]  { background: var(--daily-color); color: white; }
+
+    /* Stats bar */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 24px 24px 4px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .stats span strong {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-right: 4px;
+    }
+
+    /* Main layout */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 24px 64px;
+    }
+
+    /* Section title */
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 32px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .section-title .dot.study { background: var(--study-color); }
+    .section-title .dot.daily { background: var(--daily-color); }
+
+    /* Card list */
+    .card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Card */
+    .card {
+      display: flex;
+      align-items: center;
+      background: var(--card);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.18s;
+      border: 1.5px solid transparent;
+      gap: 16px;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border);
+    }
+    .card.study:hover { border-color: #bfdbfe; }
+    .card.daily:hover { border-color: #a7f3d0; }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .card.study .card-icon { background: var(--study-bg); }
+    .card.daily .card-icon { background: var(--daily-bg); }
+
+    .card-body { flex: 1; min-width: 0; }
+    .card-title {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 3px;
+    }
+    .card-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .badge.study { background: var(--study-bg); color: var(--study-color); }
+    .badge.daily { background: var(--daily-bg); color: var(--daily-color); }
+
+    .card-arrow {
+      color: var(--border);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      transition: color 0.18s, transform 0.18s;
+    }
+    .card:hover .card-arrow { color: var(--muted); transform: translateX(3px); }
+
+    /* NEW badge */
+    .new-badge {
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Empty state */
+    .empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .empty .emoji { font-size: 2.5rem; margin-bottom: 12px; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 28px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Hide/show logic */
+    .section-block { }
+    .section-block.hidden { display: none; }
+
+    @media (max-width: 600px) {
+      .site-header h1 { font-size: 1.7rem; }
+      .card-title { font-size: 0.9rem; }
+      .stats { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>PSB Reports</h1>
+  <p>스터디 노트 &amp; 데일리 뉴스 아카이브</p>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-cat="all">전체</button>
+  <button class="tab-btn" data-cat="study">Study</button>
+  <button class="tab-btn" data-cat="daily">Daily</button>
+</nav>
+
+<div class="stats">
+  <span><strong id="total-count">0</strong>개 문서</span>
+  <span><strong id="study-count">0</strong>개 스터디</span>
+  <span><strong id="daily-count">0</strong>개 데일리</span>
+</div>
+
+<main id="main-content">
+
+  <!-- STUDY section -->
+  <div class="section-block" id="section-study">
+    <div class="section-title">
+      <span class="dot study"></span>Study
+    </div>
+    <div class="card-list" id="list-study"></div>
+  </div>
+
+  <!-- DAILY section -->
+  <div class="section-block" id="section-daily">
+    <div class="section-title">
+      <span class="dot daily"></span>Daily
+    </div>
+    <div class="card-list" id="list-daily">
+      <div class="empty">
+        <div class="emoji">📭</div>
+        데일리 뉴스가 아직 없습니다.
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 PSB Reports &middot; 마지막 업데이트: <span id="last-updated"></span>
+</footer>
+
+<script>
+  // ─── Data ───────────────────────────────────────────────────────────────
+  const TODAY = '2026-06-20';
+
+  const studyItems = [
+    {
+      date: '2026-06-20',
+      title: '한국 주가지수 상승에 따른 글로벌 ETF 및 기금의 국가별 리밸런싱 변화',
+      file: 'study/study_2026-06-20_한국주가지수상승_글로벌ETF_리밸런싱.html',
+    },
+    {
+      date: '2026-06-19',
+      title: 'GitHub Repository Docs 페이지 구성 & GitHub.io 차이점',
+      file: 'study/study_2026-06-19_GitHub_Docs_페이지_구성.html',
+    },
+    {
+      date: '2026-06-19',
+      title: 'React에서 공유 가능한 URL 만들기 가이드',
+      file: 'study/study_2026-06-19_React-Shareable-URL-Guide.html',
+    },
+    {
+      date: '2026-06-12',
+      title: 'Tailscale 방식과 다른 VPN과의 차이점',
+      file: 'study/study_2026-06-12_Tailscale_VPN_비교.html',
+    },
+    {
+      date: '2026-06-12',
+      title: 'Terra LUNA 사태 (Terra LUNA Collapse) 스터디 노트',
+      file: 'study/study_2026-06-12_Terra_LUNA_사태.html',
+    },
+    {
+      date: '2026-06-12',
+      title: 'Linux 서버 파일을 Google Drive로 rclone 동기화하기',
+      file: 'study/study_2026-06-12_rclone-linux-to-google-drive.html',
+    },
+    {
+      date: '2026-06-12',
+      title: '크립토 투자 방식 — 현물, 선물, 예금 등',
+      file: 'study/study_2026-06-12_크립토 투자 방식, 현물,선물,예금 등.html',
+    },
+    {
+      date: '2026-06-12',
+      title: '탈중앙화 거래소(DEX)의 거래 상대방 매칭 원리',
+      file: 'study/study_2026-06-12_탈중앙화거래소DEX_거래상대방매칭.html',
+    },
+    {
+      date: '2026-06-12',
+      title: '한국 크립토 관련 법 현황 및 진행 중인 법',
+      file: 'study/study_2026-06-12_한국크립토법률현황.html',
+    },
+  ];
+
+  const dailyItems = [];
+
+  // ─── Render ─────────────────────────────────────────────────────────────
+  const icons = { study: '📚', daily: '📰' };
+
+  function isNew(dateStr) {
+    const diff = (new Date(TODAY) - new Date(dateStr)) / 86400000;
+    return diff <= 3;
+  }
+
+  function renderCard(item, cat) {
+    const newBadge = isNew(item.date)
+      ? '<span class="new-badge">NEW</span>'
+      : '';
+    return `
+      <a href="${item.file}" class="card ${cat}">
+        <div class="card-icon">${icons[cat]}</div>
+        <div class="card-body">
+          <div class="card-title">${item.title}</div>
+          <div class="card-meta">
+            <span class="badge ${cat}">${cat === 'study' ? 'Study' : 'Daily'}</span>
+            <span>${item.date}</span>
+            ${newBadge}
+          </div>
+        </div>
+        <span class="card-arrow">›</span>
+      </a>`;
+  }
+
+  function init() {
+    // Populate study
+    const studyEl = document.getElementById('list-study');
+    if (studyItems.length) {
+      studyEl.innerHTML = studyItems.map(i => renderCard(i, 'study')).join('');
+    } else {
+      studyEl.innerHTML = '<div class="empty"><div class="emoji">📭</div>스터디 노트가 아직 없습니다.</div>';
+    }
+
+    // Populate daily
+    const dailyEl = document.getElementById('list-daily');
+    if (dailyItems.length) {
+      dailyEl.innerHTML = dailyItems.map(i => renderCard(i, 'daily')).join('');
+    }
+
+    // Stats
+    document.getElementById('total-count').textContent = studyItems.length + dailyItems.length;
+    document.getElementById('study-count').textContent = studyItems.length;
+    document.getElementById('daily-count').textContent = dailyItems.length;
+
+    // Last updated
+    document.getElementById('last-updated').textContent = TODAY;
+  }
+
+  // ─── Tab logic ──────────────────────────────────────────────────────────
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      document.getElementById('section-study').classList.toggle('hidden', cat === 'daily');
+      document.getElementById('section-daily').classList.toggle('hidden', cat === 'study');
+    });
+  });
+
+  init();
+</script>
+</body>
+</html>

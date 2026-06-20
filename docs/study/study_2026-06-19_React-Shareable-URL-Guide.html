@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React에서 공유 가능한 URL 만들기 가이드</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --primary: #2563eb;
+      --primary-light: #dbeafe;
+      --accent: #7c3aed;
+      --accent-light: #ede9fe;
+      --success: #059669;
+      --success-light: #d1fae5;
+      --warn: #d97706;
+      --warn-light: #fef3c7;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    header .subtitle { font-size: 1rem; opacity: 0.85; }
+    header .meta { font-size: 0.82rem; opacity: 0.7; margin-top: 1rem; }
+
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+    nav a { color: var(--primary); text-decoration: none; font-size: 0.88rem; font-weight: 500; }
+    nav a:hover { text-decoration: underline; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    section { margin-bottom: 3rem; }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      border-left: 4px solid var(--primary);
+      padding-left: 0.75rem;
+      margin-bottom: 1.25rem;
+      margin-top: 0.5rem;
+    }
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 1.5rem 0 0.75rem;
+    }
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 1.2rem 0 0.5rem;
+    }
+
+    p { margin-bottom: 0.9rem; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .info-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .warn-box {
+      background: var(--warn-light);
+      border-left: 4px solid var(--warn);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .success-box {
+      background: var(--success-light);
+      border-left: 4px solid var(--success);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+
+    code {
+      font-family: 'Fira Code', 'Consolas', monospace;
+      background: #f1f5f9;
+      padding: 0.15em 0.45em;
+      border-radius: 4px;
+      font-size: 0.88em;
+      color: var(--accent);
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .keyword { color: #93c5fd; }
+    .string { color: #86efac; }
+    .comment { color: #94a3b8; font-style: italic; }
+    .fn { color: #fde68a; }
+    .tag { color: #f9a8d4; }
+    .attr { color: #c4b5fd; }
+    .value { color: #86efac; }
+
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+    th {
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); }
+    tr:hover td { background: var(--primary-light); }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2em 0.7em;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+    .badge-blue { background: var(--primary-light); color: var(--primary); }
+    .badge-purple { background: var(--accent-light); color: var(--accent); }
+    .badge-green { background: var(--success-light); color: var(--success); }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    .step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      min-width: 2rem;
+      height: 2rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .step-content { flex: 1; }
+
+    .flow-chart {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .flow-item {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      padding: 0.5rem 1.25rem;
+      font-weight: 600;
+      margin: 0.3rem;
+    }
+    .flow-arrow { color: var(--text-secondary); margin: 0 0.25rem; font-size: 1.2rem; }
+
+    ul, ol { padding-left: 1.5rem; margin-bottom: 0.9rem; }
+    li { margin-bottom: 0.35rem; }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    .summary-table td:first-child { font-weight: 600; color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>React에서 공유 가능한 URL 만들기</h1>
+  <div class="subtitle">React Shareable URL — Complete Guide to Unique Page URLs</div>
+  <div class="meta">
+    생성일시: <span id="timestamp"></span> &nbsp;|&nbsp; 작성자: Claude Sonnet 4.6 &nbsp;|&nbsp; 대상: React 개발자 (초중급)
+  </div>
+</header>
+
+<nav>
+  <ul>
+    <li><a href="#overview">개요</a></li>
+    <li><a href="#router-basics">라우터 기초</a></li>
+    <li><a href="#url-params">URL 파라미터</a></li>
+    <li><a href="#query-string">쿼리스트링</a></li>
+    <li><a href="#state-in-url">URL에 상태 저장</a></li>
+    <li><a href="#history-api">History API</a></li>
+    <li><a href="#nested-routes">중첩 라우트</a></li>
+    <li><a href="#advanced">고급 패턴</a></li>
+    <li><a href="#checklist">체크리스트</a></li>
+    <li><a href="#references">참고자료</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- ===== 1. 개요 ===== -->
+  <section id="overview">
+    <h2>1. 개요 (Overview)</h2>
+    <div class="card">
+      <p>
+        React는 기본적으로 SPA(Single Page Application)로 동작합니다.
+        <strong>SPA에서는 JavaScript가 DOM을 직접 교체</strong>하기 때문에,
+        사용자가 페이지를 이동해도 브라우저의 URL이 바뀌지 않습니다.
+        이를 해결하지 않으면 <strong>공유, 북마크, 뒤로가기</strong>가 모두 깨집니다.
+      </p>
+      <p>
+        <em>(React is a SPA by default — without proper routing, all users land on the same URL regardless of what they're viewing.)</em>
+      </p>
+    </div>
+
+    <h3>왜 URL이 중요한가? (Why URL Matters)</h3>
+    <div class="two-col">
+      <div class="card">
+        <h4>문제 상황</h4>
+        <ul>
+          <li>모든 페이지가 <code>/</code> 하나로만 접근됨</li>
+          <li>링크 공유 시 항상 홈으로 이동</li>
+          <li>뒤로가기/앞으로가기 동작 안 함</li>
+          <li>검색엔진 크롤링 불가 (SEO 손해)</li>
+          <li>사용자가 특정 상태로 돌아올 수 없음</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>해결 후 이점</h4>
+        <ul>
+          <li>각 화면마다 고유 URL 보유</li>
+          <li>북마크 · 링크 공유 완벽 동작</li>
+          <li>브라우저 히스토리 정상 동작</li>
+          <li>필터/검색 조건도 URL에 유지</li>
+          <li>SEO 및 접근성 향상</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>핵심 개념 (Key Concept):</strong> React에서 URL을 관리하는 것 = <strong>브라우저 History API를 React 컴포넌트 트리와 연결하는 것</strong>입니다.
+    </div>
+  </section>
+
+  <!-- ===== 2. 라우터 기초 ===== -->
+  <section id="router-basics">
+    <h2>2. React Router 기초 (React Router Basics)</h2>
+
+    <div class="card">
+      <p>
+        <strong>React Router</strong>는 React에서 URL 라우팅을 담당하는 사실상의 표준 라이브러리입니다.
+        2024년 기준 <strong>v6</strong>이 최신이며, <strong>Remix</strong>(현 React Router v7)도 같은 생태계입니다.
+      </p>
+    </div>
+
+    <h3>설치 (Installation)</h3>
+    <pre><code><span class="comment"># npm</span>
+npm install react-router-dom
+
+<span class="comment"># yarn</span>
+yarn add react-router-dom
+
+<span class="comment"># pnpm</span>
+pnpm add react-router-dom</code></pre>
+
+    <h3>BrowserRouter vs HashRouter</h3>
+    <table>
+      <tr>
+        <th>종류</th>
+        <th>URL 형태</th>
+        <th>서버 설정 필요</th>
+        <th>추천 상황</th>
+      </tr>
+      <tr>
+        <td><code>BrowserRouter</code></td>
+        <td><code>/users/123</code></td>
+        <td>필요 (fallback 설정)</td>
+        <td>일반적인 웹앱 (권장)</td>
+      </tr>
+      <tr>
+        <td><code>HashRouter</code></td>
+        <td><code>/#/users/123</code></td>
+        <td>불필요</td>
+        <td>정적 파일 호스팅 (GitHub Pages 등)</td>
+      </tr>
+      <tr>
+        <td><code>MemoryRouter</code></td>
+        <td>URL 변경 없음</td>
+        <td>불필요</td>
+        <td>테스트, React Native</td>
+      </tr>
+    </table>
+
+    <div class="warn-box">
+      <strong>BrowserRouter 사용 시 주의:</strong> Nginx/Apache 등에서 <code>try_files $uri /index.html</code> 설정이 필요합니다. 없으면 새로고침 시 404 오류가 발생합니다.
+    </div>
+
+    <h3>기본 라우팅 구성 (Basic Routing Setup)</h3>
+    <pre><code><span class="comment">// src/main.tsx (또는 index.tsx)</span>
+<span class="keyword">import</span> { <span class="fn">StrictMode</span> } <span class="keyword">from</span> <span class="string">'react'</span>
+<span class="keyword">import</span> { <span class="fn">createRoot</span> } <span class="keyword">from</span> <span class="string">'react-dom/client'</span>
+<span class="keyword">import</span> { <span class="fn">BrowserRouter</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+<span class="keyword">import</span> <span class="fn">App</span> <span class="keyword">from</span> <span class="string">'./App'</span>
+
+<span class="fn">createRoot</span>(document.<span class="fn">getElementById</span>(<span class="string">'root'</span>)!).<span class="fn">render</span>(
+  &lt;<span class="tag">StrictMode</span>&gt;
+    &lt;<span class="tag">BrowserRouter</span>&gt;
+      &lt;<span class="tag">App</span> /&gt;
+    &lt;/<span class="tag">BrowserRouter</span>&gt;
+  &lt;/<span class="tag">StrictMode</span>&gt;
+)</code></pre>
+
+    <pre><code><span class="comment">// src/App.tsx</span>
+<span class="keyword">import</span> { <span class="fn">Routes</span>, <span class="fn">Route</span>, <span class="fn">Link</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+<span class="keyword">import</span> <span class="fn">HomePage</span> <span class="keyword">from</span> <span class="string">'./pages/HomePage'</span>
+<span class="keyword">import</span> <span class="fn">UserPage</span> <span class="keyword">from</span> <span class="string">'./pages/UserPage'</span>
+<span class="keyword">import</span> <span class="fn">NotFoundPage</span> <span class="keyword">from</span> <span class="string">'./pages/NotFoundPage'</span>
+
+<span class="keyword">function</span> <span class="fn">App</span>() {
+  <span class="keyword">return</span> (
+    &lt;&gt;
+      &lt;<span class="tag">nav</span>&gt;
+        <span class="comment">{/* Link는 &lt;a&gt; 태그를 사용하지만 페이지 새로고침 없이 이동 */}</span>
+        &lt;<span class="tag">Link</span> <span class="attr">to</span>=<span class="value">"/"</span>&gt;홈&lt;/<span class="tag">Link</span>&gt;
+        &lt;<span class="tag">Link</span> <span class="attr">to</span>=<span class="value">"/users"</span>&gt;사용자 목록&lt;/<span class="tag">Link</span>&gt;
+      &lt;/<span class="tag">nav</span>&gt;
+
+      &lt;<span class="tag">Routes</span>&gt;
+        &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"/"</span>        <span class="attr">element</span>=<span class="value">{&lt;HomePage /&gt;}</span> /&gt;
+        &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"/users"</span>   <span class="attr">element</span>=<span class="value">{&lt;UserListPage /&gt;}</span> /&gt;
+        &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"/users/:id"</span> <span class="attr">element</span>=<span class="value">{&lt;UserPage /&gt;}</span> /&gt;
+        &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"*"</span>        <span class="attr">element</span>=<span class="value">{&lt;NotFoundPage /&gt;}</span> /&gt;
+      &lt;/<span class="tag">Routes</span>&gt;
+    &lt;/&gt;
+  )
+}
+
+<span class="keyword">export default</span> <span class="fn">App</span></code></pre>
+  </section>
+
+  <!-- ===== 3. URL 파라미터 ===== -->
+  <section id="url-params">
+    <h2>3. URL 파라미터 (URL Parameters / Dynamic Segments)</h2>
+
+    <div class="card">
+      <p>
+        URL 파라미터는 경로에 <strong>:변수명</strong> 형태로 포함되는 동적 값입니다.
+        리소스를 식별하는 데 사용됩니다.
+      </p>
+      <p><em>(URL parameters are dynamic segments in the path that identify a specific resource.)</em></p>
+      <p>예시: <code>/users/<strong>42</strong></code>, <code>/posts/<strong>hello-world</strong></code>, <code>/products/<strong>iphone-15-pro</strong></code></p>
+    </div>
+
+    <h3>useParams 훅 사용 (Using useParams Hook)</h3>
+    <pre><code><span class="comment">// src/pages/UserPage.tsx</span>
+<span class="keyword">import</span> { <span class="fn">useParams</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+
+<span class="keyword">function</span> <span class="fn">UserPage</span>() {
+  <span class="comment">// Route path="/users/:userId" 로 정의했을 때</span>
+  <span class="keyword">const</span> { userId } = <span class="fn">useParams</span>&lt;{ userId: <span class="keyword">string</span> }&gt;()
+
+  <span class="keyword">return</span> &lt;<span class="tag">div</span>&gt;사용자 ID: {userId}&lt;/<span class="tag">div</span>&gt;
+}
+
+<span class="comment">// 중첩 파라미터 예시: /teams/:teamId/members/:memberId</span>
+<span class="keyword">function</span> <span class="fn">MemberPage</span>() {
+  <span class="keyword">const</span> { teamId, memberId } = <span class="fn">useParams</span>()
+  <span class="keyword">return</span> &lt;<span class="tag">div</span>&gt;팀 {teamId}의 멤버 {memberId}&lt;/<span class="tag">div</span>&gt;
+}</code></pre>
+
+    <h3>프로그래매틱 네비게이션 (Programmatic Navigation)</h3>
+    <pre><code><span class="keyword">import</span> { <span class="fn">useNavigate</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+
+<span class="keyword">function</span> <span class="fn">UserCard</span>({ user }) {
+  <span class="keyword">const</span> navigate = <span class="fn">useNavigate</span>()
+
+  <span class="keyword">const</span> <span class="fn">handleClick</span> = () => {
+    <span class="comment">// 문자열로 이동</span>
+    navigate(<span class="string">`/users/${user.id}`</span>)
+
+    <span class="comment">// 객체 형태 (replace: true → 히스토리 교체)</span>
+    navigate({ pathname: <span class="string">`/users/${user.id}`</span> }, { replace: <span class="keyword">true</span> })
+
+    <span class="comment">// 뒤로가기</span>
+    navigate(-<span class="value">1</span>)
+  }
+
+  <span class="keyword">return</span> &lt;<span class="tag">button</span> <span class="attr">onClick</span>={handleClick}&gt;{user.name} 보기&lt;/<span class="tag">button</span>&gt;
+}</code></pre>
+
+    <div class="success-box">
+      <strong>베스트 프랙티스:</strong> URL 파라미터에는 <strong>리소스 식별자</strong>만 넣으세요. 예) ID, slug. 표시 옵션(정렬, 필터 등)은 쿼리스트링을 사용합니다.
+    </div>
+  </section>
+
+  <!-- ===== 4. 쿼리스트링 ===== -->
+  <section id="query-string">
+    <h2>4. 쿼리스트링 (Query String / Search Params)</h2>
+
+    <div class="card">
+      <p>
+        쿼리스트링은 URL에서 <code>?</code> 뒤에 오는 <code>key=value</code> 형태의 파라미터입니다.
+        <strong>검색, 필터, 정렬, 페이지네이션</strong> 등 UI 상태를 URL에 담을 때 사용합니다.
+      </p>
+      <p>예시: <code>/products?<strong>category=shoes&amp;sort=price&amp;page=2</strong></code></p>
+    </div>
+
+    <h3>useSearchParams 훅 사용 (React Router v6)</h3>
+    <pre><code><span class="keyword">import</span> { <span class="fn">useSearchParams</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+
+<span class="keyword">function</span> <span class="fn">ProductListPage</span>() {
+  <span class="comment">// useState와 유사한 인터페이스!</span>
+  <span class="keyword">const</span> [searchParams, setSearchParams] = <span class="fn">useSearchParams</span>()
+
+  <span class="comment">// 읽기</span>
+  <span class="keyword">const</span> category = searchParams.<span class="fn">get</span>(<span class="string">'category'</span>) ?? <span class="string">'all'</span>
+  <span class="keyword">const</span> sort     = searchParams.<span class="fn">get</span>(<span class="string">'sort'</span>)     ?? <span class="string">'newest'</span>
+  <span class="keyword">const</span> page     = Number(searchParams.<span class="fn">get</span>(<span class="string">'page'</span>)  ?? <span class="string">'1'</span>)
+
+  <span class="comment">// 쓰기 (기존 파라미터 유지하면서 일부만 변경)</span>
+  <span class="keyword">const</span> <span class="fn">handleCategoryChange</span> = (newCategory: <span class="keyword">string</span>) => {
+    <span class="fn">setSearchParams</span>(prev => {
+      prev.<span class="fn">set</span>(<span class="string">'category'</span>, newCategory)
+      prev.<span class="fn">set</span>(<span class="string">'page'</span>, <span class="string">'1'</span>) <span class="comment">// 필터 변경 시 첫 페이지로</span>
+      <span class="keyword">return</span> prev
+    })
+  }
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">select</span> <span class="attr">value</span>={category} <span class="attr">onChange</span>={e => <span class="fn">handleCategoryChange</span>(e.target.value)}&gt;
+        &lt;<span class="tag">option</span> <span class="attr">value</span>=<span class="value">"all"</span>&gt;전체&lt;/<span class="tag">option</span>&gt;
+        &lt;<span class="tag">option</span> <span class="attr">value</span>=<span class="value">"shoes"</span>&gt;신발&lt;/<span class="tag">option</span>&gt;
+      &lt;/<span class="tag">select</span>&gt;
+      <span class="comment">{/* 현재 URL: /products?category=shoes&page=1 */}</span>
+    &lt;/<span class="tag">div</span>&gt;
+  )
+}</code></pre>
+
+    <h3>커스텀 훅으로 추상화 (Custom Hook Pattern)</h3>
+    <pre><code><span class="comment">// hooks/useQueryParam.ts</span>
+<span class="keyword">import</span> { <span class="fn">useSearchParams</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+
+<span class="comment">/**
+ * 단일 쿼리 파라미터를 useState처럼 사용하는 훅
+ * A hook that manages a single query param like useState
+ */</span>
+<span class="keyword">export function</span> <span class="fn">useQueryParam</span>(key: <span class="keyword">string</span>, defaultValue = <span class="string">''</span>) {
+  <span class="keyword">const</span> [searchParams, setSearchParams] = <span class="fn">useSearchParams</span>()
+  <span class="keyword">const</span> value = searchParams.<span class="fn">get</span>(key) ?? defaultValue
+
+  <span class="keyword">const</span> <span class="fn">setValue</span> = (newValue: <span class="keyword">string</span>) => {
+    <span class="fn">setSearchParams</span>(prev => {
+      <span class="keyword">if</span> (newValue === defaultValue) {
+        prev.<span class="fn">delete</span>(key) <span class="comment">// 기본값이면 URL에서 제거 (깔끔한 URL)</span>
+      } <span class="keyword">else</span> {
+        prev.<span class="fn">set</span>(key, newValue)
+      }
+      <span class="keyword">return</span> prev
+    }, { replace: <span class="keyword">true</span> }) <span class="comment">// 히스토리 쌓지 않음</span>
+  }
+
+  <span class="keyword">return</span> [value, setValue] <span class="keyword">as const</span>
+}
+
+<span class="comment">// 사용 예시</span>
+<span class="keyword">function</span> <span class="fn">SearchPage</span>() {
+  <span class="keyword">const</span> [query, setQuery] = <span class="fn">useQueryParam</span>(<span class="string">'q'</span>)
+  <span class="keyword">const</span> [sort, setSort]   = <span class="fn">useQueryParam</span>(<span class="string">'sort'</span>, <span class="string">'newest'</span>)
+
+  <span class="keyword">return</span> &lt;<span class="tag">input</span> <span class="attr">value</span>={query} <span class="attr">onChange</span>={e => <span class="fn">setQuery</span>(e.target.value)} /&gt;
+}</code></pre>
+
+    <div class="info-box">
+      <strong>replace vs push:</strong> 검색어 입력처럼 히스토리가 쌓이면 안 되는 경우 <code>replace: true</code>를 사용하세요. 필터 변경처럼 뒤로가기로 돌아와야 하면 기본값(push)을 사용하세요.
+    </div>
+  </section>
+
+  <!-- ===== 5. URL에 상태 저장 ===== -->
+  <section id="state-in-url">
+    <h2>5. URL에 상태 저장하기 (Storing State in URL)</h2>
+
+    <h3>어떤 상태를 URL에 넣어야 할까? (What State Belongs in the URL?)</h3>
+
+    <div class="two-col">
+      <div class="card">
+        <h4>✅ URL에 넣어야 하는 것</h4>
+        <ul>
+          <li>검색 키워드 (<code>?q=react</code>)</li>
+          <li>필터 조건 (<code>?status=active</code>)</li>
+          <li>정렬 기준 (<code>?sort=price&amp;order=asc</code>)</li>
+          <li>페이지 번호 (<code>?page=3</code>)</li>
+          <li>선택된 탭/뷰 (<code>?tab=settings</code>)</li>
+          <li>모달/다이얼로그 ID (<code>?modal=invite</code>)</li>
+          <li>날짜 범위 (<code>?from=2024-01&amp;to=2024-03</code>)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>❌ URL에 넣지 말아야 하는 것</h4>
+        <ul>
+          <li>민감 정보 (토큰, 비밀번호)</li>
+          <li>임시 UI 상태 (hover, focus)</li>
+          <li>매우 복잡한 객체 (너무 길어짐)</li>
+          <li>자주 바뀌는 값 (스크롤 위치)</li>
+          <li>인증 세션 정보</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>복잡한 상태의 직렬화 (Serializing Complex State)</h3>
+    <pre><code><span class="comment">// 여러 필터를 하나의 URL로 관리</span>
+<span class="keyword">interface</span> <span class="fn">FilterState</span> {
+  categories: <span class="keyword">string</span>[]
+  priceRange: [<span class="keyword">number</span>, <span class="keyword">number</span>]
+  inStock: <span class="keyword">boolean</span>
+}
+
+<span class="keyword">function</span> <span class="fn">useFilterState</span>() {
+  <span class="keyword">const</span> [searchParams, setSearchParams] = <span class="fn">useSearchParams</span>()
+
+  <span class="keyword">const</span> filters: <span class="fn">FilterState</span> = {
+    <span class="comment">// 배열: ?cat=shoes&cat=bags (반복)</span>
+    categories: searchParams.<span class="fn">getAll</span>(<span class="string">'cat'</span>),
+    <span class="comment">// 범위: ?minPrice=10000&maxPrice=50000</span>
+    priceRange: [
+      Number(searchParams.<span class="fn">get</span>(<span class="string">'minPrice'</span>) ?? <span class="string">'0'</span>),
+      Number(searchParams.<span class="fn">get</span>(<span class="string">'maxPrice'</span>) ?? <span class="string">'999999'</span>),
+    ],
+    inStock: searchParams.<span class="fn">get</span>(<span class="string">'inStock'</span>) === <span class="string">'true'</span>,
+  }
+
+  <span class="keyword">const</span> <span class="fn">setFilters</span> = (newFilters: <span class="fn">FilterState</span>) => {
+    <span class="fn">setSearchParams</span>({
+      <span class="comment">// 배열은 여러 번 append</span>
+      ...Object.<span class="fn">fromEntries</span>(
+        newFilters.categories.<span class="fn">map</span>(c => [<span class="string">'cat'</span>, c])
+      ),
+      minPrice: String(newFilters.priceRange[<span class="value">0</span>]),
+      maxPrice: String(newFilters.priceRange[<span class="value">1</span>]),
+      ...(newFilters.inStock ? { inStock: <span class="string">'true'</span> } : {}),
+    })
+  }
+
+  <span class="keyword">return</span> { filters, setFilters }
+}</code></pre>
+
+    <h3>nuqs 라이브러리 (nuqs Library)</h3>
+    <div class="card">
+      <p>복잡한 URL 상태 관리에는 <strong>nuqs</strong> 라이브러리를 추천합니다. 타입 안전한 URL 상태 관리를 제공합니다.</p>
+      <pre style="margin-top: 0.75rem;"><code>npm install nuqs
+
+<span class="comment">// 사용 예시</span>
+<span class="keyword">import</span> { <span class="fn">useQueryState</span>, <span class="fn">parseAsInteger</span>, <span class="fn">parseAsArrayOf</span>, <span class="fn">parseAsString</span> } <span class="keyword">from</span> <span class="string">'nuqs'</span>
+
+<span class="keyword">function</span> <span class="fn">ProductPage</span>() {
+  <span class="keyword">const</span> [page, setPage]           = <span class="fn">useQueryState</span>(<span class="string">'page'</span>, <span class="fn">parseAsInteger</span>.<span class="fn">withDefault</span>(<span class="value">1</span>))
+  <span class="keyword">const</span> [tags, setTags]           = <span class="fn">useQueryState</span>(<span class="string">'tags'</span>, <span class="fn">parseAsArrayOf</span>(<span class="fn">parseAsString</span>))
+  <span class="keyword">const</span> [search, setSearch]       = <span class="fn">useQueryState</span>(<span class="string">'q'</span>)
+
+  <span class="comment">// page는 자동으로 number 타입!</span>
+  <span class="keyword">return</span> &lt;<span class="tag">button</span> <span class="attr">onClick</span>={() => <span class="fn">setPage</span>(page + <span class="value">1</span>)}&gt;다음 페이지&lt;/<span class="tag">button</span>&gt;
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- ===== 6. History API ===== -->
+  <section id="history-api">
+    <h2>6. History API와 라우터 동작 원리 (History API Internals)</h2>
+
+    <div class="card">
+      <p>
+        브라우저의 <strong>History API</strong>는 URL을 변경하면서도 페이지 새로고침을 하지 않는 핵심 기술입니다.
+        React Router는 이 위에 구축되어 있습니다.
+      </p>
+    </div>
+
+    <div class="flow-chart">
+      <div class="flow-item">사용자 클릭 or navigate()</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">history.pushState()</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">URL 변경</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">React Router 감지</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">컴포넌트 리렌더</div>
+    </div>
+
+    <h3>주요 History 메서드 (Key History Methods)</h3>
+    <pre><code><span class="comment">// 히스토리 스택에 새 항목 추가 (뒤로가기 가능)</span>
+history.<span class="fn">pushState</span>(state, title, url)
+
+<span class="comment">// 현재 항목 교체 (뒤로가기 불가)</span>
+history.<span class="fn">replaceState</span>(state, title, url)
+
+<span class="comment">// 앞/뒤 이동</span>
+history.<span class="fn">go</span>(-<span class="value">1</span>)  <span class="comment">// 뒤로</span>
+history.<span class="fn">go</span>(<span class="value">1</span>)   <span class="comment">// 앞으로</span>
+
+<span class="comment">// React Router에서 state 전달 (URL에 표시 안 됨)</span>
+navigate(<span class="string">'/order-complete'</span>, {
+  state: { orderId: <span class="string">'abc123'</span>, total: <span class="value">29000</span> }
+})
+
+<span class="comment">// 받는 쪽</span>
+<span class="keyword">import</span> { <span class="fn">useLocation</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+<span class="keyword">const</span> location = <span class="fn">useLocation</span>()
+<span class="keyword">const</span> { orderId } = location.state ?? {}</code></pre>
+
+    <div class="warn-box">
+      <strong>location.state 주의:</strong> 히스토리 state는 새로고침하면 사라집니다. 공유 가능한 데이터는 반드시 URL에 명시적으로 포함해야 합니다.
+    </div>
+
+    <h3>현재 위치 정보 (Current Location Info)</h3>
+    <pre><code><span class="keyword">import</span> { <span class="fn">useLocation</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+
+<span class="keyword">function</span> <span class="fn">DebugLocation</span>() {
+  <span class="keyword">const</span> location = <span class="fn">useLocation</span>()
+  <span class="comment">/*
+    location = {
+      pathname: '/users/42',      // 경로
+      search:   '?tab=posts',     // 쿼리스트링 (? 포함)
+      hash:     '#comments',      // 해시 (# 포함)
+      state:    { from: '/' },    // 히스토리 state
+      key:      'abc123'          // 고유 키
+    }
+  */</span>
+  <span class="keyword">return</span> &lt;<span class="tag">pre</span>&gt;{JSON.<span class="fn">stringify</span>(location, <span class="keyword">null</span>, <span class="value">2</span>)}&lt;/<span class="tag">pre</span>&gt;
+}</code></pre>
+  </section>
+
+  <!-- ===== 7. 중첩 라우트 ===== -->
+  <section id="nested-routes">
+    <h2>7. 중첩 라우트 (Nested Routes / Layouts)</h2>
+
+    <div class="card">
+      <p>
+        중첩 라우트를 사용하면 <strong>공통 레이아웃을 유지하면서 하위 콘텐츠만 교체</strong>할 수 있습니다.
+        대시보드처럼 사이드바는 고정하고 메인 영역만 바뀌는 패턴에 이상적입니다.
+      </p>
+    </div>
+
+    <pre><code><span class="comment">// App.tsx — 중첩 라우트 구성</span>
+&lt;<span class="tag">Routes</span>&gt;
+  <span class="comment">{/* 공통 레이아웃 */}</span>
+  &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"/"</span> <span class="attr">element</span>=<span class="value">{&lt;RootLayout /&gt;}</span>&gt;
+    &lt;<span class="tag">Route</span> <span class="attr">index</span>            <span class="attr">element</span>=<span class="value">{&lt;HomePage /&gt;}</span> /&gt;
+    &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"dashboard"</span> <span class="attr">element</span>=<span class="value">{&lt;DashboardLayout /&gt;}</span>&gt;
+      &lt;<span class="tag">Route</span> <span class="attr">index</span>             <span class="attr">element</span>=<span class="value">{&lt;DashboardHome /&gt;}</span> /&gt;
+      &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"analytics"</span>  <span class="attr">element</span>=<span class="value">{&lt;AnalyticsPage /&gt;}</span> /&gt;
+      &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"settings"</span>   <span class="attr">element</span>=<span class="value">{&lt;SettingsPage /&gt;}</span> /&gt;
+    &lt;/<span class="tag">Route</span>&gt;
+  &lt;/<span class="tag">Route</span>&gt;
+&lt;/<span class="tag">Routes</span>&gt;
+
+<span class="comment">// RootLayout.tsx — 자식 라우트가 렌더될 위치를 Outlet으로 지정</span>
+<span class="keyword">import</span> { <span class="fn">Outlet</span> } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>
+
+<span class="keyword">function</span> <span class="fn">RootLayout</span>() {
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">Header</span> /&gt;          {/* 항상 보임 */}
+      &lt;<span class="tag">Outlet</span> /&gt;         {/* 자식 라우트 컴포넌트가 여기에 렌더 */}
+      &lt;<span class="tag">Footer</span> /&gt;          {/* 항상 보임 */}
+    &lt;/<span class="tag">div</span>&gt;
+  )
+}</code></pre>
+
+    <h3>결과 URL 구조</h3>
+    <table>
+      <tr><th>URL</th><th>렌더 컴포넌트</th></tr>
+      <tr><td><code>/</code></td><td>RootLayout → HomePage</td></tr>
+      <tr><td><code>/dashboard</code></td><td>RootLayout → DashboardLayout → DashboardHome</td></tr>
+      <tr><td><code>/dashboard/analytics</code></td><td>RootLayout → DashboardLayout → AnalyticsPage</td></tr>
+      <tr><td><code>/dashboard/settings</code></td><td>RootLayout → DashboardLayout → SettingsPage</td></tr>
+    </table>
+  </section>
+
+  <!-- ===== 8. 고급 패턴 ===== -->
+  <section id="advanced">
+    <h2>8. 고급 패턴 (Advanced Patterns)</h2>
+
+    <h3>8-1. 모달을 URL로 관리 (URL-based Modals)</h3>
+    <div class="card">
+      <p>
+        모달을 URL에 연결하면 <strong>모달 열린 상태로 링크 공유</strong>가 가능하고, 뒤로가기로 모달을 닫을 수 있습니다.
+        Instagram의 사진 상세보기와 같은 패턴입니다.
+      </p>
+    </div>
+    <pre><code><span class="comment">// 방법 1: 쿼리스트링으로 모달 상태 관리</span>
+<span class="keyword">function</span> <span class="fn">UserListPage</span>() {
+  <span class="keyword">const</span> [searchParams, setSearchParams] = <span class="fn">useSearchParams</span>()
+  <span class="keyword">const</span> modalUserId = searchParams.<span class="fn">get</span>(<span class="string">'modal'</span>)
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      {users.<span class="fn">map</span>(user => (
+        &lt;<span class="tag">button</span> <span class="attr">key</span>={user.id}
+          <span class="attr">onClick</span>={() => <span class="fn">setSearchParams</span>({ modal: user.id })}&gt;
+          {user.name}
+        &lt;/<span class="tag">button</span>&gt;
+      ))}
+
+      {modalUserId &amp;&amp; (
+        &lt;<span class="tag">Modal</span> <span class="attr">onClose</span>={() => <span class="fn">setSearchParams</span>({})}&gt;
+          &lt;<span class="tag">UserDetail</span> <span class="attr">userId</span>={modalUserId} /&gt;
+        &lt;/<span class="tag">Modal</span>&gt;
+      )}
+    &lt;/<span class="tag">div</span>&gt;
+  )
+}
+<span class="comment">// URL: /users?modal=42 → 사용자 42번 상세 모달 열림</span></code></pre>
+
+    <h3>8-2. 코드 스플리팅과 라우트 (Code Splitting)</h3>
+    <pre><code><span class="keyword">import</span> { <span class="fn">lazy</span>, <span class="fn">Suspense</span> } <span class="keyword">from</span> <span class="string">'react'</span>
+
+<span class="comment">// 라우트별로 번들을 분리 (초기 로드 성능 향상)</span>
+<span class="keyword">const</span> <span class="fn">DashboardPage</span> = <span class="fn">lazy</span>(() => <span class="keyword">import</span>(<span class="string">'./pages/DashboardPage'</span>))
+<span class="keyword">const</span> <span class="fn">SettingsPage</span>  = <span class="fn">lazy</span>(() => <span class="keyword">import</span>(<span class="string">'./pages/SettingsPage'</span>))
+
+<span class="keyword">function</span> <span class="fn">App</span>() {
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">Suspense</span> <span class="attr">fallback</span>=<span class="value">{&lt;div&gt;로딩 중...&lt;/div&gt;}</span>&gt;
+      &lt;<span class="tag">Routes</span>&gt;
+        &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"/dashboard"</span> <span class="attr">element</span>=<span class="value">{&lt;DashboardPage /&gt;}</span> /&gt;
+        &lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"/settings"</span>  <span class="attr">element</span>=<span class="value">{&lt;SettingsPage /&gt;}</span> /&gt;
+      &lt;/<span class="tag">Routes</span>&gt;
+    &lt;/<span class="tag">Suspense</span>&gt;
+  )
+}</code></pre>
+
+    <h3>8-3. 인증 보호 라우트 (Protected Routes)</h3>
+    <pre><code><span class="keyword">function</span> <span class="fn">ProtectedRoute</span>({ children }: { children: <span class="fn">ReactNode</span> }) {
+  <span class="keyword">const</span> { isAuthenticated } = <span class="fn">useAuth</span>()
+  <span class="keyword">const</span> location = <span class="fn">useLocation</span>()
+
+  <span class="keyword">if</span> (!isAuthenticated) {
+    <span class="comment">// 로그인 후 원래 페이지로 돌아오도록 현재 경로를 state에 저장</span>
+    <span class="keyword">return</span> &lt;<span class="tag">Navigate</span> <span class="attr">to</span>=<span class="value">"/login"</span> <span class="attr">state</span>={{ from: location }} <span class="attr">replace</span> /&gt;
+  }
+
+  <span class="keyword">return</span> children
+}
+
+<span class="comment">// 로그인 후 리다이렉트</span>
+<span class="keyword">function</span> <span class="fn">LoginPage</span>() {
+  <span class="keyword">const</span> navigate = <span class="fn">useNavigate</span>()
+  <span class="keyword">const</span> location = <span class="fn">useLocation</span>()
+  <span class="keyword">const</span> from = location.state?.from?.pathname ?? <span class="string">'/'</span>
+
+  <span class="keyword">const</span> <span class="fn">handleLogin</span> = <span class="keyword">async</span> () => {
+    <span class="keyword">await</span> <span class="fn">login</span>()
+    navigate(from, { replace: <span class="keyword">true</span> }) <span class="comment">// 원래 페이지로 복귀</span>
+  }
+
+  <span class="keyword">return</span> &lt;<span class="tag">button</span> <span class="attr">onClick</span>={handleLogin}&gt;로그인&lt;/<span class="tag">button</span>&gt;
+}
+
+<span class="comment">// 라우트 구성</span>
+&lt;<span class="tag">Route</span> <span class="attr">path</span>=<span class="value">"/dashboard"</span> <span class="attr">element</span>=<span class="value">{
+  &lt;ProtectedRoute&gt;&lt;DashboardPage /&gt;&lt;/ProtectedRoute&gt;
+}</span> /&gt;</code></pre>
+
+    <h3>8-4. 병렬 라우트 / 인터셉트 라우트 (Parallel / Intercept Routes)</h3>
+    <div class="card">
+      <p>
+        <strong>Next.js App Router</strong>를 사용하는 경우, <code>@slot</code> 패턴(Parallel Routes)과 <code>(..)</code> 패턴(Intercepting Routes)으로
+        Instagram 피드 + 모달 동시 표시 같은 복잡한 UI를 구현할 수 있습니다.
+      </p>
+      <pre style="margin-top: 0.75rem;"><code><span class="comment">// app/layout.tsx — 병렬 슬롯 정의</span>
+<span class="keyword">export default function</span> <span class="fn">Layout</span>({ children, modal }) {
+  <span class="keyword">return</span> (
+    &lt;&gt;
+      {children}   <span class="comment">{/* 기본 페이지 */}</span>
+      {modal}      <span class="comment">{/* @modal 슬롯 → 모달 레이어 */}</span>
+    &lt;/&gt;
+  )
+}
+<span class="comment">// /photo/123 접근 시 피드 + 모달 동시 렌더
+// 직접 접근 시 전체 화면 사진 페이지 렌더</span></code></pre>
+    </div>
+
+    <h3>8-5. URL 공유 시 상태 복원 (State Restoration from URL)</h3>
+    <pre><code><span class="comment">// URL에서 초기 상태를 읽어 컴포넌트 초기화</span>
+<span class="keyword">function</span> <span class="fn">SearchPage</span>() {
+  <span class="keyword">const</span> [searchParams] = <span class="fn">useSearchParams</span>()
+
+  <span class="comment">// URL → 상태 초기값으로 활용</span>
+  <span class="keyword">const</span> [filters, setFilters] = useState(() => ({
+    query:    searchParams.<span class="fn">get</span>(<span class="string">'q'</span>)      ?? <span class="string">''</span>,
+    category: searchParams.<span class="fn">get</span>(<span class="string">'cat'</span>)    ?? <span class="string">'all'</span>,
+    page:     Number(searchParams.<span class="fn">get</span>(<span class="string">'page'</span>) ?? <span class="string">'1'</span>),
+  }))
+
+  <span class="comment">// 상태 변경 시 URL에 동기화</span>
+  <span class="keyword">const</span> [,setSearchParams] = <span class="fn">useSearchParams</span>()
+
+  useEffect(() => {
+    <span class="fn">setSearchParams</span>({
+      ...(filters.query    ? { q: filters.query }       : {}),
+      ...(filters.category !== <span class="string">'all'</span> ? { cat: filters.category } : {}),
+      ...(filters.page     !== <span class="value">1</span>     ? { page: String(filters.page) } : {}),
+    }, { replace: <span class="keyword">true</span> })
+  }, [filters])
+}</code></pre>
+  </section>
+
+  <!-- ===== 9. 서버 설정 ===== -->
+  <section>
+    <h2>9. 서버 설정 (Server Configuration for BrowserRouter)</h2>
+
+    <div class="card">
+      <p>
+        <code>BrowserRouter</code>를 사용할 때, 사용자가 <code>/users/42</code>를 직접 입력하거나 새로고침하면
+        서버가 해당 경로에서 <code>index.html</code>을 반환해야 합니다.
+      </p>
+    </div>
+
+    <h3>Nginx</h3>
+    <pre><code>server {
+    listen 80;
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        <span class="comment"># 파일이 없으면 index.html로 fallback</span>
+        try_files $uri $uri/ /index.html;
+    }
+}</code></pre>
+
+    <h3>Apache (.htaccess)</h3>
+    <pre><code>Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]</code></pre>
+
+    <h3>Vite / CRA 개발 서버</h3>
+    <pre><code><span class="comment">// vite.config.ts — 개발 서버에서는 자동 처리됨</span>
+<span class="keyword">export default</span> {
+  server: {
+    historyApiFallback: <span class="keyword">true</span>, <span class="comment">// 기본 활성화</span>
+  }
+}</code></pre>
+
+    <h3>Vercel / Netlify</h3>
+    <pre><code><span class="comment">// vercel.json</span>
+{
+  <span class="string">"rewrites"</span>: [{ <span class="string">"source"</span>: <span class="string">"/(.*)"</span>, <span class="string">"destination"</span>: <span class="string">"/index.html"</span> }]
+}
+
+<span class="comment">// netlify.toml</span>
+[[redirects]]
+  from = <span class="string">"/*"</span>
+  to = <span class="string">"/index.html"</span>
+  status = 200</code></pre>
+  </section>
+
+  <!-- ===== 10. 체크리스트 ===== -->
+  <section id="checklist">
+    <h2>10. 구현 체크리스트 (Implementation Checklist)</h2>
+
+    <div class="card">
+      <h3>기본 설정</h3>
+      <ul>
+        <li>☐ <code>react-router-dom</code> 설치 및 <code>BrowserRouter</code>로 앱 감싸기</li>
+        <li>☐ 모든 화면 이동에 <code>&lt;a href&gt;</code> 대신 <code>&lt;Link to&gt;</code> 사용</li>
+        <li>☐ 서버에서 모든 경로가 <code>index.html</code>을 반환하도록 설정</li>
+        <li>☐ 404 페이지 <code>&lt;Route path="*"&gt;</code> 추가</li>
+      </ul>
+
+      <h3 style="margin-top: 1rem;">URL 설계</h3>
+      <ul>
+        <li>☐ 리소스 식별에는 URL 파라미터 (<code>/users/:id</code>) 사용</li>
+        <li>☐ 필터/정렬/페이지는 쿼리스트링 (<code>?sort=price</code>) 사용</li>
+        <li>☐ 모달/다이얼로그 상태도 URL에 반영 (<code>?modal=invite</code>)</li>
+        <li>☐ 불필요한 기본값은 URL에서 제거 (깔끔한 URL 유지)</li>
+        <li>☐ 민감한 정보는 절대 URL에 포함하지 않기</li>
+      </ul>
+
+      <h3 style="margin-top: 1rem;">사용자 경험</h3>
+      <ul>
+        <li>☐ 새로고침 후 동일한 화면이 보이는지 확인</li>
+        <li>☐ 뒤로가기/앞으로가기 정상 동작 확인</li>
+        <li>☐ URL 직접 입력 시 정상 렌더 확인</li>
+        <li>☐ 링크 공유 후 받은 사람이 동일한 상태 확인</li>
+        <li>☐ 라우트 전환 시 로딩 상태 처리</li>
+      </ul>
+
+      <h3 style="margin-top: 1rem;">성능 최적화</h3>
+      <ul>
+        <li>☐ 라우트별 코드 스플리팅 (<code>React.lazy</code>) 적용</li>
+        <li>☐ 빠른 네비게이션을 위한 링크 프리패칭 고려</li>
+        <li>☐ 검색 입력에 <code>replace: true</code> 사용 (히스토리 오염 방지)</li>
+      </ul>
+    </div>
+
+    <h3>라이브러리 선택 가이드</h3>
+    <table class="summary-table">
+      <tr>
+        <th>상황</th>
+        <th>권장 도구</th>
+        <th>비고</th>
+      </tr>
+      <tr>
+        <td>일반 React SPA</td>
+        <td>React Router v6</td>
+        <td>사실상 표준</td>
+      </tr>
+      <tr>
+        <td>Next.js 사용</td>
+        <td>Next.js App Router</td>
+        <td>파일 기반 라우팅 내장</td>
+      </tr>
+      <tr>
+        <td>복잡한 URL 상태</td>
+        <td>nuqs</td>
+        <td>타입 안전 + 직렬화 자동</td>
+      </tr>
+      <tr>
+        <td>타입 안전 라우팅</td>
+        <td>TanStack Router</td>
+        <td>완전 타입 안전, 검색 파라미터 포함</td>
+      </tr>
+      <tr>
+        <td>정적 사이트</td>
+        <td>HashRouter</td>
+        <td>서버 설정 불필요</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ===== 참고자료 ===== -->
+  <section id="references">
+    <h2>참고자료 (References)</h2>
+    <div class="card">
+      <ul>
+        <li>
+          <strong>React Router 공식 문서</strong><br />
+          <a href="https://reactrouter.com/en/main" target="_blank">https://reactrouter.com/en/main</a> — v6 가이드, API 레퍼런스
+        </li>
+        <li style="margin-top: 0.75rem;">
+          <strong>TanStack Router</strong><br />
+          <a href="https://tanstack.com/router/latest" target="_blank">https://tanstack.com/router/latest</a> — 완전 타입 안전 라우터
+        </li>
+        <li style="margin-top: 0.75rem;">
+          <strong>nuqs — Next.js URL Query String</strong><br />
+          <a href="https://nuqs.47ng.com" target="_blank">https://nuqs.47ng.com</a> — 타입 안전한 URL 상태 관리
+        </li>
+        <li style="margin-top: 0.75rem;">
+          <strong>MDN — History API</strong><br />
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/History_API</a> — 브라우저 History API 원리
+        </li>
+        <li style="margin-top: 0.75rem;">
+          <strong>Next.js App Router — Routing</strong><br />
+          <a href="https://nextjs.org/docs/app/building-your-application/routing" target="_blank">https://nextjs.org/docs/app/building-your-application/routing</a> — 파일 기반 라우팅
+        </li>
+        <li style="margin-top: 0.75rem;">
+          <strong>Patterns for URL State Management</strong><br />
+          <a href="https://www.patterns.dev/vanilla/routing" target="_blank">https://www.patterns.dev/vanilla/routing</a> — 라우팅 패턴 개요
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>생성일시: <span id="footer-timestamp"></span></p>
+  <p>React Shareable URL Guide &nbsp;|&nbsp; Generated by Claude Sonnet 4.6</p>
+</footer>
+
+<script>
+  function formatLocal(d) {
+    const pad = n => String(n).padStart(2, '0')
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ` +
+           `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+  }
+  const now = new Date()
+  const ts = formatLocal(now)
+  document.getElementById('timestamp').textContent = ts
+  document.getElementById('footer-timestamp').textContent = ts
+</script>
+
+</body>
+</html>

@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Repository Docs 페이지 구성 & GitHub.io 차이점</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.7;
+    }
+    .header {
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+      color: #e6edf3;
+      padding: 48px 40px 36px;
+      border-bottom: 3px solid #238636;
+    }
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+    .header .subtitle {
+      font-size: 1rem;
+      color: #8b949e;
+      margin-bottom: 8px;
+    }
+    .header .meta {
+      font-size: 0.85rem;
+      color: #6e7681;
+    }
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 24px 60px;
+    }
+    .toc {
+      background: #ffffff;
+      border: 1px solid #d0d7de;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .toc h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #24292f;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .toc ol {
+      padding-left: 20px;
+    }
+    .toc li {
+      margin: 6px 0;
+    }
+    .toc a {
+      color: #0969da;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .toc a:hover { text-decoration: underline; }
+    .section {
+      background: #ffffff;
+      border: 1px solid #d0d7de;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin-bottom: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .section h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0d1117;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e6edf3;
+    }
+    .section h2 .num {
+      display: inline-block;
+      background: #238636;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 28px;
+      font-size: 0.85rem;
+      margin-right: 10px;
+    }
+    .section h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0d1117;
+      margin: 24px 0 12px;
+    }
+    .section p {
+      color: #444d56;
+      margin-bottom: 14px;
+      font-size: 0.97rem;
+    }
+    .term {
+      font-weight: 700;
+      color: #0d1117;
+    }
+    .en {
+      font-style: italic;
+      color: #6e7681;
+      font-size: 0.88em;
+    }
+    .highlight-box {
+      background: #f0f6ff;
+      border-left: 4px solid #0969da;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+      color: #0d1117;
+    }
+    .warning-box {
+      background: #fff8f0;
+      border-left: 4px solid #d97706;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+      color: #0d1117;
+    }
+    .success-box {
+      background: #f0fdf4;
+      border-left: 4px solid #238636;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+      color: #0d1117;
+    }
+    code {
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 0.88em;
+      color: #cf222e;
+    }
+    pre {
+      background: #0d1117;
+      color: #e6edf3;
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+      overflow-x: auto;
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: #e6edf3;
+      font-size: 1em;
+    }
+    .keyword { color: #ff7b72; }
+    .string { color: #a5d6ff; }
+    .comment { color: #8b949e; }
+    .value { color: #79c0ff; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.93rem;
+    }
+    th {
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      color: #24292f;
+    }
+    td {
+      border: 1px solid #d0d7de;
+      padding: 10px 14px;
+      color: #444d56;
+      vertical-align: top;
+    }
+    tr:hover td { background: #f8f9fa; }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .badge-blue { background: #ddf4ff; color: #0969da; }
+    .badge-green { background: #dafbe1; color: #1a7f37; }
+    .badge-orange { background: #fff1e5; color: #bc4c00; }
+    .badge-purple { background: #fbefff; color: #8250df; }
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 14px;
+    }
+    li {
+      margin: 6px 0;
+      color: #444d56;
+      font-size: 0.97rem;
+    }
+    .step {
+      counter-increment: step-counter;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin: 18px 0;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      background: #0969da;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .step-content { flex: 1; }
+    .step-content strong { display: block; margin-bottom: 4px; color: #0d1117; }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .comparison-card {
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .comparison-card .card-header {
+      padding: 12px 16px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .comparison-card .card-body {
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      color: #444d56;
+    }
+    .card-blue .card-header { background: #ddf4ff; color: #0969da; }
+    .card-green .card-header { background: #dafbe1; color: #1a7f37; }
+    .card-body li { margin: 5px 0; }
+    .sources {
+      background: #ffffff;
+      border: 1px solid #d0d7de;
+      border-radius: 12px;
+      padding: 28px 36px;
+      margin-top: 36px;
+    }
+    .sources h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0d1117;
+      margin-bottom: 16px;
+    }
+    .sources ul { list-style: none; padding: 0; }
+    .sources li { margin: 8px 0; }
+    .sources a {
+      color: #0969da;
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .sources a:hover { text-decoration: underline; }
+    .footer {
+      text-align: center;
+      color: #8b949e;
+      font-size: 0.82rem;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e6edf3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📄 GitHub Repository Docs 페이지 구성 & GitHub.io 차이점</h1>
+  <div class="subtitle">How to Set Up Docs Pages in a GitHub Repository and Differences from GitHub.io</div>
+  <div class="meta">스터디 노트 · 작성일: <span id="created-at"></span></div>
+</div>
+
+<div class="container">
+
+  <div class="toc">
+    <h2>📋 목차 (Table of Contents)</h2>
+    <ol>
+      <li><a href="#overview">개요 — GitHub Pages란?</a></li>
+      <li><a href="#repo-docs">Repository 내 Docs 페이지 구성하기</a></li>
+      <li><a href="#github-io">GitHub.io (사용자/조직 페이지) 구성하기</a></li>
+      <li><a href="#differences">핵심 차이점 비교</a></li>
+      <li><a href="#when-to-use">어떤 방식을 선택해야 할까?</a></li>
+      <li><a href="#custom-domain">커스텀 도메인 설정</a></li>
+      <li><a href="#jekyll-actions">Jekyll & GitHub Actions 자동화</a></li>
+      <li><a href="#tips">실전 팁 & 주의사항</a></li>
+    </ol>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section" id="overview">
+    <h2><span class="num">1</span> 개요 — GitHub Pages란? <span class="en">(What is GitHub Pages?)</span></h2>
+    <p>
+      <span class="term">GitHub Pages</span>는 GitHub 저장소에서 직접 정적 웹사이트를 호스팅할 수 있는 서비스입니다.
+      별도의 서버 비용 없이, 마크다운(Markdown)이나 HTML 파일만으로 문서 사이트·프로젝트 소개 페이지를 만들 수 있습니다.
+    </p>
+    <div class="highlight-box">
+      💡 <strong>핵심 개념:</strong> GitHub Pages는 <em>정적 파일(static files)</em>만 호스팅합니다.
+      서버사이드 코드(PHP, Node.js 등)는 실행되지 않으며, 데이터베이스도 사용할 수 없습니다.
+    </div>
+    <p>GitHub Pages를 사용할 수 있는 방법은 크게 두 가지입니다:</p>
+    <ul>
+      <li><strong>① Repository Docs 페이지</strong> — 프로젝트 저장소 안에 docs 폴더나 특정 브랜치를 지정해 문서를 게시</li>
+      <li><strong>② GitHub.io 페이지</strong> — <code>username.github.io</code> 형식의 전용 저장소를 만들어 사용자/조직 사이트를 운영</li>
+    </ul>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section" id="repo-docs">
+    <h2><span class="num">2</span> Repository 내 Docs 페이지 구성하기 <span class="en">(Setting Up Docs Pages in a Repository)</span></h2>
+
+    <h3>2-1. 소스(Source) 옵션 선택</h3>
+    <p>프로젝트 저장소에서 GitHub Pages를 활성화하려면 <strong>Settings → Pages</strong>로 이동합니다.
+    "Build and deployment" 섹션에서 소스를 선택할 수 있습니다.</p>
+
+    <table>
+      <tr>
+        <th>소스 옵션</th>
+        <th>설명</th>
+        <th>추천 상황</th>
+      </tr>
+      <tr>
+        <td><code>main</code> 브랜치 / <code>root</code></td>
+        <td>저장소 루트의 모든 파일을 웹사이트로 제공</td>
+        <td>문서만 있는 저장소</td>
+      </tr>
+      <tr>
+        <td><code>main</code> 브랜치 / <code>/docs</code></td>
+        <td>저장소 루트의 <code>docs/</code> 폴더 내용만 게시</td>
+        <td>코드와 문서를 한 저장소에 같이 둘 때 <span class="badge badge-green">가장 일반적</span></td>
+      </tr>
+      <tr>
+        <td><code>gh-pages</code> 브랜치</td>
+        <td>별도의 브랜치를 생성해 빌드 결과물만 게시</td>
+        <td>CI/CD 자동화로 빌드 후 배포할 때</td>
+      </tr>
+      <tr>
+        <td>GitHub Actions</td>
+        <td>워크플로우가 직접 Pages에 배포</td>
+        <td>복잡한 빌드 파이프라인 (Next.js, Astro 등)</td>
+      </tr>
+    </table>
+
+    <h3>2-2. /docs 폴더 방식 (Step-by-step)</h3>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>저장소에 <code>docs/</code> 폴더 생성</strong>
+        <p>저장소 루트에 <code>docs/index.html</code> 또는 <code>docs/index.md</code> 파일을 만듭니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Settings → Pages 설정</strong>
+        <p>Branch를 <code>main</code>, 폴더를 <code>/docs</code>로 선택 후 저장합니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>자동 배포 확인</strong>
+        <p>몇 분 내로 <code>https://username.github.io/repository-name/</code> 주소로 접근 가능합니다.</p>
+      </div>
+    </div>
+
+    <h3>2-3. 생성되는 URL 구조</h3>
+    <pre><code><span class="comment"># 프로젝트 저장소 docs 페이지 URL 패턴</span>
+https://<span class="keyword">username</span>.github.io/<span class="value">repository-name</span>/
+
+<span class="comment"># 예시: octocat 사용자의 my-project 저장소</span>
+https://octocat.github.io/my-project/</code></pre>
+
+    <h3>2-4. Jekyll 자동 처리</h3>
+    <p>GitHub Pages는 기본적으로 <span class="term">Jekyll</span> <span class="en">(static site generator)</span>을 사용하여 마크다운 파일을 자동으로 HTML로 변환합니다.
+    <code>_config.yml</code> 파일로 테마와 설정을 커스터마이즈할 수 있습니다.</p>
+
+    <pre><code><span class="comment"># docs/_config.yml 예시</span>
+<span class="keyword">title</span>: <span class="string">"My Project Documentation"</span>
+<span class="keyword">description</span>: <span class="string">"프로젝트 공식 문서"</span>
+<span class="keyword">theme</span>: <span class="string">minima</span>
+<span class="keyword">remote_theme</span>: <span class="string">just-the-docs/just-the-docs</span>  <span class="comment"># 문서에 최적화된 테마</span>
+
+<span class="keyword">nav_enabled</span>: <span class="value">true</span>
+<span class="keyword">search_enabled</span>: <span class="value">true</span></code></pre>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section" id="github-io">
+    <h2><span class="num">3</span> GitHub.io 페이지 구성하기 <span class="en">(Setting Up GitHub.io — User/Organization Pages)</span></h2>
+
+    <p>
+      <span class="term">GitHub.io 페이지</span>는 특별한 이름 규칙(<code>username.github.io</code>)을 가진 저장소를 만들어
+      운영하는 <strong>사용자 또는 조직 전용 사이트</strong>입니다.
+    </p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>저장소 이름을 정확히 <code>username.github.io</code>로 생성</strong>
+        <p>예: GitHub 아이디가 <code>octocat</code>이라면 저장소명은 <code>octocat.github.io</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>루트에 <code>index.html</code> 또는 <code>index.md</code> 생성</strong>
+        <p>별도의 Pages 설정 없이 <code>main</code> 브랜치 푸시만으로 자동 게시됩니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>접근 URL 확인</strong>
+        <p><code>https://username.github.io</code> — 경로 없이 루트로 접근 가능</p>
+      </div>
+    </div>
+
+    <pre><code><span class="comment"># GitHub.io 저장소 URL 패턴</span>
+https://<span class="keyword">username</span>.github.io/
+
+<span class="comment"># 예시</span>
+https://octocat.github.io/
+
+<span class="comment"># 조직(Organization) 페이지</span>
+https://<span class="keyword">org-name</span>.github.io/</code></pre>
+
+    <div class="success-box">
+      ✅ <strong>포트폴리오·개인 블로그에 이상적:</strong> 루트 도메인을 사용하므로 깔끔한 URL을 제공합니다.
+      커스텀 도메인 연결 시 가장 간단한 설정으로 운영할 수 있습니다.
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section" id="differences">
+    <h2><span class="num">4</span> 핵심 차이점 비교 <span class="en">(Key Differences)</span></h2>
+
+    <div class="comparison-grid">
+      <div class="comparison-card card-blue">
+        <div class="card-header">📁 Repository Docs 페이지</div>
+        <div class="card-body">
+          <ul>
+            <li>일반 저장소 안에 <code>/docs</code> 폴더 또는 <code>gh-pages</code> 브랜치 사용</li>
+            <li>URL에 저장소 이름이 포함됨: <code>.../repo-name/</code></li>
+            <li>코드 + 문서를 하나의 저장소에서 관리</li>
+            <li>프로젝트별 독립된 문서 관리에 적합</li>
+            <li>Pages 소스를 수동으로 설정해야 함</li>
+          </ul>
+        </div>
+      </div>
+      <div class="comparison-card card-green">
+        <div class="card-header">🌐 GitHub.io (사용자/조직 페이지)</div>
+        <div class="card-body">
+          <ul>
+            <li>저장소명 = <code>username.github.io</code> (고정 규칙)</li>
+            <li>루트 URL 사용: <code>https://username.github.io</code></li>
+            <li>개인 포트폴리오·블로그·조직 메인 사이트에 적합</li>
+            <li>계정당 1개만 생성 가능</li>
+            <li>별도 Pages 설정 없이 자동 활성화</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>항목</th>
+        <th>Repository Docs 페이지</th>
+        <th>GitHub.io 페이지</th>
+      </tr>
+      <tr>
+        <td><strong>저장소 이름</strong></td>
+        <td>자유롭게 지정 가능</td>
+        <td>반드시 <code>username.github.io</code></td>
+      </tr>
+      <tr>
+        <td><strong>URL 형식</strong></td>
+        <td><code>username.github.io/repo-name/</code></td>
+        <td><code>username.github.io/</code></td>
+      </tr>
+      <tr>
+        <td><strong>URL 경로 깊이</strong></td>
+        <td>서브패스 포함 (하위 경로 존재)</td>
+        <td>루트 경로 (최상위)</td>
+      </tr>
+      <tr>
+        <td><strong>개수 제한</strong></td>
+        <td>계정당 무제한 (저장소 수만큼)</td>
+        <td>계정당 <strong>1개</strong>만</td>
+      </tr>
+      <tr>
+        <td><strong>Pages 활성화</strong></td>
+        <td>Settings에서 수동 설정 필요</td>
+        <td>저장소 생성만으로 자동 활성화</td>
+      </tr>
+      <tr>
+        <td><strong>소스 위치</strong></td>
+        <td><code>/docs</code> 폴더, <code>gh-pages</code> 브랜치, Actions 등 선택</td>
+        <td><code>main</code> 브랜치 루트 (기본)</td>
+      </tr>
+      <tr>
+        <td><strong>주요 용도</strong></td>
+        <td>프로젝트 API 문서, 라이브러리 가이드</td>
+        <td>개인 포트폴리오, 블로그, 조직 메인</td>
+      </tr>
+      <tr>
+        <td><strong>Jekyll 처리</strong></td>
+        <td>기본 지원 (비활성화 가능)</td>
+        <td>기본 지원 (비활성화 가능)</td>
+      </tr>
+      <tr>
+        <td><strong>커스텀 도메인</strong></td>
+        <td>지원 (CNAME 파일 사용)</td>
+        <td>지원 (가장 일반적인 설정)</td>
+      </tr>
+      <tr>
+        <td><strong>공개/비공개</strong></td>
+        <td>무료 플랜 = 공개 저장소만 무료</td>
+        <td>동일</td>
+      </tr>
+    </table>
+
+    <div class="warning-box">
+      ⚠️ <strong>경로(Path) 문제 주의:</strong> Repository Docs 페이지는 URL에 <code>/repo-name/</code>이 포함됩니다.
+      HTML의 절대경로(<code>/style.css</code>)를 사용하면 깨집니다. Jekyll의 <code>{{ site.baseurl }}</code>
+      또는 상대경로(<code>./style.css</code>)를 사용하세요.
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="section" id="when-to-use">
+    <h2><span class="num">5</span> 어떤 방식을 선택해야 할까? <span class="en">(Which One Should You Choose?)</span></h2>
+
+    <h3>Repository Docs 페이지를 선택하세요 — 이런 경우</h3>
+    <ul>
+      <li>오픈소스 라이브러리나 프레임워크의 <strong>공식 문서</strong>를 만들 때</li>
+      <li>코드와 문서를 <strong>같은 저장소</strong>에서 버전 관리할 때</li>
+      <li>여러 프로젝트가 각각 독립된 문서 사이트가 필요할 때</li>
+      <li>API 레퍼런스, 튜토리얼을 프로젝트 단위로 관리할 때</li>
+    </ul>
+
+    <h3>GitHub.io 페이지를 선택하세요 — 이런 경우</h3>
+    <ul>
+      <li><strong>개인 포트폴리오</strong>나 이력서 사이트를 만들 때</li>
+      <li><strong>기술 블로그</strong>를 운영할 때 (Jekyll, Hugo 활용)</li>
+      <li>조직의 <strong>메인 랜딩 페이지</strong>가 필요할 때</li>
+      <li>깔끔한 루트 URL(<code>username.github.io</code>)이 필요할 때</li>
+    </ul>
+
+    <div class="success-box">
+      💡 <strong>병행 사용 가능:</strong> <code>username.github.io</code> (개인 사이트) +
+      <code>username.github.io/project-docs/</code> (프로젝트 문서)를 함께 운영할 수 있습니다.
+      서로 독립적으로 관리되며 충돌하지 않습니다.
+    </div>
+  </div>
+
+  <!-- Section 6 -->
+  <div class="section" id="custom-domain">
+    <h2><span class="num">6</span> 커스텀 도메인 설정 <span class="en">(Custom Domain Setup)</span></h2>
+
+    <h3>6-1. CNAME 파일 추가</h3>
+    <p>저장소 루트(또는 <code>docs/</code> 폴더)에 <code>CNAME</code> 파일을 생성하고 도메인을 입력합니다.</p>
+    <pre><code><span class="comment"># CNAME 파일 내용 (확장자 없음)</span>
+<span class="string">www.mydomain.com</span></code></pre>
+
+    <h3>6-2. DNS 설정</h3>
+    <table>
+      <tr>
+        <th>도메인 유형</th>
+        <th>DNS 레코드 타입</th>
+        <th>값</th>
+      </tr>
+      <tr>
+        <td>Apex 도메인 (<code>mydomain.com</code>)</td>
+        <td>A 레코드</td>
+        <td>185.199.108.153 (외 3개 GitHub IP)</td>
+      </tr>
+      <tr>
+        <td>서브도메인 (<code>www.mydomain.com</code>)</td>
+        <td>CNAME 레코드</td>
+        <td><code>username.github.io</code></td>
+      </tr>
+    </table>
+
+    <div class="highlight-box">
+      🔒 커스텀 도메인 설정 후 Settings → Pages에서 <strong>Enforce HTTPS</strong>를 활성화하면
+      Let's Encrypt 인증서가 자동으로 발급됩니다.
+    </div>
+  </div>
+
+  <!-- Section 7 -->
+  <div class="section" id="jekyll-actions">
+    <h2><span class="num">7</span> Jekyll & GitHub Actions 자동화 <span class="en">(Jekyll & GitHub Actions Automation)</span></h2>
+
+    <h3>7-1. GitHub Actions로 Docs 빌드 자동화</h3>
+    <p>더 복잡한 문서 사이트(Docusaurus, MkDocs, VitePress 등)는 GitHub Actions로 빌드 후 배포합니다.</p>
+
+    <pre><code><span class="comment"># .github/workflows/deploy-docs.yml</span>
+<span class="keyword">name</span>: <span class="string">Deploy Docs</span>
+<span class="keyword">on</span>:
+  <span class="keyword">push</span>:
+    <span class="keyword">branches</span>: [<span class="string">main</span>]
+
+<span class="keyword">jobs</span>:
+  <span class="keyword">deploy</span>:
+    <span class="keyword">runs-on</span>: <span class="string">ubuntu-latest</span>
+    <span class="keyword">permissions</span>:
+      <span class="keyword">contents</span>: <span class="string">write</span>
+    <span class="keyword">steps</span>:
+      - <span class="keyword">uses</span>: <span class="string">actions/checkout@v4</span>
+      - <span class="keyword">name</span>: <span class="string">Setup Node</span>
+        <span class="keyword">uses</span>: <span class="string">actions/setup-node@v4</span>
+        <span class="keyword">with</span>:
+          <span class="keyword">node-version</span>: <span class="value">20</span>
+      - <span class="keyword">run</span>: <span class="string">npm ci && npm run docs:build</span>
+      - <span class="keyword">name</span>: <span class="string">Deploy to GitHub Pages</span>
+        <span class="keyword">uses</span>: <span class="string">peaceiris/actions-gh-pages@v3</span>
+        <span class="keyword">with</span>:
+          <span class="keyword">github_token</span>: <span class="string">${{ secrets.GITHUB_TOKEN }}</span>
+          <span class="keyword">publish_dir</span>: <span class="string">./docs/.vitepress/dist</span></code></pre>
+
+    <h3>7-2. Jekyll 비활성화 (<code>.nojekyll</code>)</h3>
+    <p>Next.js, Vue Press 등 자체 빌드 도구를 사용할 때는 Jekyll 처리를 꺼야 합니다.</p>
+    <pre><code><span class="comment"># 루트 또는 docs/ 폴더에 빈 파일 생성</span>
+touch .nojekyll</code></pre>
+  </div>
+
+  <!-- Section 8 -->
+  <div class="section" id="tips">
+    <h2><span class="num">8</span> 실전 팁 & 주의사항 <span class="en">(Practical Tips & Caveats)</span></h2>
+
+    <h3>✅ 알아두면 좋은 것들</h3>
+    <ul>
+      <li>
+        <span class="term">빌드 시간 제한 (Build time limit):</span> GitHub Pages 빌드는 10분 제한이 있습니다.
+        대용량 사이트는 Actions로 빌드하고 결과물만 배포하세요.
+      </li>
+      <li>
+        <span class="term">용량 제한 (Storage limit):</span> 저장소 크기 1GB, 배포된 사이트 크기 1GB, 월 대역폭 100GB 소프트 제한이 있습니다.
+      </li>
+      <li>
+        <span class="term">Private 저장소 (Private repositories):</span> 무료 플랜(Free plan)에서는 공개 저장소만 Pages를 무료로 사용할 수 있습니다.
+        비공개 저장소는 GitHub Pro/Team/Enterprise 플랜이 필요합니다.
+      </li>
+      <li>
+        <span class="term">캐싱 (Caching):</span> 배포 후 변경사항이 바로 반영되지 않을 수 있습니다. 브라우저 캐시를 지우거나 강력 새로고침(<code>Ctrl+Shift+R</code>)을 시도하세요.
+      </li>
+      <li>
+        <span class="term">서버사이드 불가 (No server-side processing):</span> PHP, Python 서버, DB 연결 등은 사용 불가합니다.
+        폼 처리는 Formspree 같은 외부 서비스를 사용하세요.
+      </li>
+    </ul>
+
+    <h3>⚠️ 흔한 실수들</h3>
+    <ul>
+      <li>Repository Docs 페이지에서 절대경로(<code>/assets/img.png</code>) 사용 — <code>baseurl</code>을 설정하지 않으면 이미지/CSS가 깨짐</li>
+      <li><code>username.github.io</code> 저장소를 Private으로 만들면 Pages가 비활성화됨</li>
+      <li>Jekyll이 처리하지 않길 원하는데 <code>.nojekyll</code> 파일을 빠뜨리는 경우</li>
+      <li><code>gh-pages</code> 브랜치 보호 규칙(branch protection)을 설정하면 자동 배포가 막힐 수 있음</li>
+    </ul>
+
+    <h3>📦 추천 도구들 (Recommended Tools)</h3>
+    <table>
+      <tr>
+        <th>도구</th>
+        <th>용도</th>
+        <th>특징</th>
+      </tr>
+      <tr>
+        <td><strong>Jekyll</strong> + Just the Docs</td>
+        <td>프로젝트 문서</td>
+        <td>GitHub Pages 기본 지원, Ruby 기반</td>
+      </tr>
+      <tr>
+        <td><strong>MkDocs</strong> + Material</td>
+        <td>기술 문서</td>
+        <td>Python 기반, 검색 내장, 깔끔한 UI</td>
+      </tr>
+      <tr>
+        <td><strong>Docusaurus</strong></td>
+        <td>오픈소스 프로젝트 문서</td>
+        <td>React 기반, 버전 관리 지원</td>
+      </tr>
+      <tr>
+        <td><strong>VitePress</strong></td>
+        <td>Vue 생태계 문서</td>
+        <td>빠른 빌드, Vite 기반</td>
+      </tr>
+      <tr>
+        <td><strong>Hugo</strong></td>
+        <td>블로그·포트폴리오</td>
+        <td>Go 기반, 매우 빠른 빌드 속도</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Sources -->
+  <div class="sources">
+    <h2>📚 참고 자료 (References)</h2>
+    <ul>
+      <li>🔗 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank">GitHub Docs — About GitHub Pages</a></li>
+      <li>🔗 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank">GitHub Docs — Creating a GitHub Pages site</a></li>
+      <li>🔗 <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site" target="_blank">GitHub Docs — Configuring a custom domain for your GitHub Pages site</a></li>
+      <li>🔗 <a href="https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll" target="_blank">GitHub Docs — About GitHub Pages and Jekyll</a></li>
+      <li>🔗 <a href="https://pages.github.com/" target="_blank">GitHub Pages 공식 사이트</a></li>
+      <li>🔗 <a href="https://just-the-docs.com/" target="_blank">Just the Docs — Jekyll 문서 테마</a></li>
+      <li>🔗 <a href="https://docusaurus.io/" target="_blank">Docusaurus — 오픈소스 문서 사이트 생성기</a></li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>스터디 노트 · GitHub Repository Docs & GitHub.io 비교 · 생성: <span id="footer-time"></span></p>
+  </div>
+
+</div>
+
+<script>
+  function getLocalTimeString() {
+    const now = new Date();
+    const options = {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: false
+    };
+    return now.toLocaleString('ko-KR', options);
+  }
+  document.getElementById('created-at').textContent = getLocalTimeString();
+  document.getElementById('footer-time').textContent = getLocalTimeString();
+</script>
+
+</body>
+</html>

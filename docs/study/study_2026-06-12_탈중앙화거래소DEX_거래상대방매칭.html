@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>탈중앙화 거래소(DEX)의 거래 상대방 매칭 원리</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 48px 56px;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: #868e96;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: #495057;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #e9ecef;
+    }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 40px 0 16px;
+      padding-left: 12px;
+      border-left: 4px solid #4263eb;
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #343a40;
+      margin: 28px 0 10px;
+    }
+    h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #495057;
+      margin: 20px 0 8px;
+    }
+    p { margin-bottom: 14px; }
+    ul, ol {
+      margin: 10px 0 14px 24px;
+    }
+    li { margin-bottom: 6px; }
+    .term {
+      display: inline-block;
+      background: #e7f5ff;
+      color: #1971c2;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    .term-en {
+      font-size: 0.85em;
+      color: #74c0fc;
+      font-style: italic;
+    }
+    .box {
+      background: #f1f3f5;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .box-blue {
+      background: #e7f5ff;
+      border-left: 4px solid #339af0;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .box-green {
+      background: #ebfbee;
+      border-left: 4px solid #40c057;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .box-yellow {
+      background: #fff9db;
+      border-left: 4px solid #fcc419;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .box-red {
+      background: #fff5f5;
+      border-left: 4px solid #fa5252;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    .compare-table th {
+      background: #4263eb;
+      color: white;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 700;
+    }
+    .compare-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .compare-table tr:nth-child(even) td {
+      background: #f8f9fa;
+    }
+    .formula {
+      font-family: 'Courier New', monospace;
+      background: #1a1a2e;
+      color: #74c0fc;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-size: 1rem;
+      overflow-x: auto;
+    }
+    .tag {
+      display: inline-block;
+      background: #e9ecef;
+      color: #495057;
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 0.8rem;
+      margin: 2px;
+      font-weight: 600;
+    }
+    .section-intro {
+      color: #495057;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      padding: 16px 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      margin: 10px 0;
+    }
+    .flow-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #4263eb;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-right: 12px;
+      margin-top: 2px;
+    }
+    .toc {
+      background: #f1f3f5;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 24px 0 36px;
+    }
+    .toc h3 { margin-top: 0; margin-bottom: 12px; }
+    .toc ol { margin-left: 20px; }
+    .toc a { color: #4263eb; text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+    .ref-list { margin-top: 8px; }
+    .ref-list li { font-size: 0.9rem; margin-bottom: 8px; }
+    .ref-list a { color: #4263eb; }
+    hr { border: none; border-top: 1px solid #e9ecef; margin: 36px 0; }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .badge-blue { background: #4263eb; color: white; }
+    .badge-green { background: #40c057; color: white; }
+    .badge-orange { background: #fd7e14; color: white; }
+    .callout {
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .callout-title { font-weight: 700; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta">스터디 노트 · 생성: <span id="gentime"></span></div>
+  <h1>탈중앙화 거래소(DEX)의 거래 상대방 매칭 원리</h1>
+  <p class="subtitle">
+    <em>How Decentralized Exchanges (DEX) Match Trading Counterparties</em><br>
+    대상 독자: 블록체인/DeFi에 관심 있는 개발자 및 금융 종사자 | 난이도: 중급
+  </p>
+
+  <div class="toc">
+    <h3>목차 (Table of Contents)</h3>
+    <ol>
+      <li><a href="#s1">DEX란 무엇인가?</a></li>
+      <li><a href="#s2">CEX vs DEX: 매칭 구조의 근본적 차이</a></li>
+      <li><a href="#s3">매칭 메커니즘 1 — 자동화 시장 조성자 (AMM)</a></li>
+      <li><a href="#s4">매칭 메커니즘 2 — 온체인 오더북 (On-Chain Order Book)</a></li>
+      <li><a href="#s5">매칭 메커니즘 3 — RFQ / P2P 방식</a></li>
+      <li><a href="#s6">주요 DEX 비교</a></li>
+      <li><a href="#s7">DEX의 핵심 문제: 슬리피지, MEV, 유동성 단편화</a></li>
+      <li><a href="#s8">최신 트렌드와 발전 방향</a></li>
+      <li><a href="#s9">핵심 용어 정리</a></li>
+      <li><a href="#s10">참고 자료</a></li>
+    </ol>
+  </div>
+
+  <!-- ===== SECTION 1 ===== -->
+  <h2 id="s1">1. DEX란 무엇인가?</h2>
+  <p class="section-intro">
+    탈중앙화 거래소(<span class="term">DEX</span> <span class="term-en">Decentralized Exchange</span>)는 중앙 관리자 없이 스마트 컨트랙트(Smart Contract)를 통해 토큰을 교환할 수 있는 프로토콜입니다.
+  </p>
+  <p>
+    중앙화 거래소(CEX)가 "회사의 서버"에 자산을 맡기고 매칭 엔진이 거래를 체결하는 반면,
+    DEX는 <strong>블록체인 위에서 코드(스마트 컨트랙트)가 직접 규칙을 집행</strong>합니다.
+    사용자는 자신의 지갑(Wallet)을 연결하여 자산을 보관하고, 원하는 시점에 직접 컨트랙트와 상호작용합니다.
+  </p>
+  <div class="box-blue">
+    <strong>핵심 원칙</strong><br>
+    "Not your keys, not your coins" — DEX에서는 개인 키(Private Key)를 사용자가 보유하므로
+    거래소 해킹이나 파산에도 자산이 안전합니다.
+  </div>
+
+  <!-- ===== SECTION 2 ===== -->
+  <h2 id="s2">2. CEX vs DEX: 매칭 구조의 근본적 차이</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>구분</th>
+        <th>중앙화 거래소 (CEX)</th>
+        <th>탈중앙화 거래소 (DEX)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>자산 보관</strong></td>
+        <td>거래소 지갑 (커스터디)</td>
+        <td>사용자 지갑 (셀프 커스터디)</td>
+      </tr>
+      <tr>
+        <td><strong>매칭 엔진</strong></td>
+        <td>중앙 서버의 오더북 엔진</td>
+        <td>스마트 컨트랙트 (AMM 등)</td>
+      </tr>
+      <tr>
+        <td><strong>거래 체결</strong></td>
+        <td>오프체인 → 내부 DB 반영</td>
+        <td>온체인 트랜잭션으로 블록에 기록</td>
+      </tr>
+      <tr>
+        <td><strong>속도</strong></td>
+        <td>밀리초(ms) 단위</td>
+        <td>블록 생성 주기(초~분)</td>
+      </tr>
+      <tr>
+        <td><strong>신뢰 모델</strong></td>
+        <td>거래소 신뢰 필요</td>
+        <td>코드(Contract) 신뢰</td>
+      </tr>
+      <tr>
+        <td><strong>규제/KYC</strong></td>
+        <td>필수</td>
+        <td>대부분 불필요</td>
+      </tr>
+      <tr>
+        <td><strong>유동성 공급자</strong></td>
+        <td>마켓 메이커 (MM)</td>
+        <td>유동성 공급자 (LP)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ===== SECTION 3 ===== -->
+  <h2 id="s3">3. 매칭 메커니즘 1 — 자동화 시장 조성자 (AMM)</h2>
+  <p class="section-intro">
+    현재 DEX 거래량의 대부분을 차지하는 방식으로, 별도의 "매도자"가 없어도 수학 공식이 가격을 결정합니다.
+    <span class="term">AMM</span> <span class="term-en">Automated Market Maker</span>
+  </p>
+
+  <h3>3-1. 핵심 아이디어: 유동성 풀 <span class="term-en">(Liquidity Pool)</span></h3>
+  <p>
+    전통적인 거래소에서는 "나는 1 ETH를 3,000 USDC에 팔겠다"는 <strong>지정가 주문</strong>이 필요하지만,
+    AMM에서는 <strong>유동성 공급자(LP, Liquidity Provider)</strong>가 두 토큰을 동시에 예치하여 풀(Pool)을 만듭니다.
+    거래자는 이 풀과 직접 교환합니다 — 상대방 찾기가 필요 없습니다.
+  </p>
+
+  <h3>3-2. 상수 곱 공식 <span class="term-en">(Constant Product Formula)</span></h3>
+  <p>Uniswap V2의 핵심 공식:</p>
+  <div class="formula">x · y = k</div>
+  <ul>
+    <li><code>x</code> = 풀 내 토큰 A의 수량</li>
+    <li><code>y</code> = 풀 내 토큰 B의 수량</li>
+    <li><code>k</code> = 상수 (불변량, Invariant)</li>
+  </ul>
+
+  <div class="box-green">
+    <strong>예시 (Example)</strong><br>
+    풀에 ETH 100개, USDC 300,000개가 있다면 k = 30,000,000.<br>
+    사용자가 ETH 1개를 사려면: (100 - 1) · (300,000 + δ) = 30,000,000<br>
+    → δ = 30,000,000 / 99 − 300,000 ≈ <strong>3,030.3 USDC</strong> 지불<br>
+    (수수료 제외 기준. 풀 크기에 따라 가격 충격(Price Impact)이 달라집니다)
+  </div>
+
+  <h3>3-3. 매칭은 어떻게 이루어지는가?</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div>사용자가 스마트 컨트랙트에 토큰 A를 전송</div></div>
+  <div class="flow-step"><div class="flow-num">2</div><div>컨트랙트가 x·y=k 공식으로 수령할 토큰 B의 수량 계산</div></div>
+  <div class="flow-step"><div class="flow-num">3</div><div>풀의 준비금(Reserve) 업데이트 후 토큰 B를 사용자에게 자동 전송</div></div>
+  <div class="flow-step"><div class="flow-num">4</div><div>블록체인에 트랜잭션 기록 — 체결 완료</div></div>
+  <p style="margin-top:16px;">
+    즉, <strong>상대방이 존재하지 않습니다.</strong> 유동성 풀이 항상 "상대방" 역할을 합니다.
+  </p>
+
+  <h3>3-4. AMM의 발전 유형</h3>
+  <table class="compare-table">
+    <thead>
+      <tr><th>유형</th><th>공식/방식</th><th>대표 프로토콜</th><th>특징</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>CPMM</strong><br><small>Constant Product</small></td>
+        <td>x·y = k</td>
+        <td>Uniswap V1/V2</td>
+        <td>단순, 모든 가격대 지원</td>
+      </tr>
+      <tr>
+        <td><strong>Stableswap</strong></td>
+        <td>혼합 공식 (StableSwap invariant)</td>
+        <td>Curve Finance</td>
+        <td>스테이블코인 간 낮은 슬리피지</td>
+      </tr>
+      <tr>
+        <td><strong>CLMM</strong><br><small>Concentrated Liquidity</small></td>
+        <td>지정 범위 내 집중</td>
+        <td>Uniswap V3, Ambient</td>
+        <td>자본 효율 대폭 향상</td>
+      </tr>
+      <tr>
+        <td><strong>TWAMM</strong></td>
+        <td>시간 가중 평균</td>
+        <td>FranklinDAO, Paradigm</td>
+        <td>대규모 주문의 가격 충격 완화</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box-yellow">
+    <strong>비영구적 손실 (Impermanent Loss, IL)</strong><br>
+    LP는 두 토큰 가격의 상대 변동이 클수록 단순 보유 대비 손실이 발생합니다.
+    가격이 원래대로 돌아오면 손실도 사라지기 때문에 "비영구적"이라 부릅니다.
+  </div>
+
+  <!-- ===== SECTION 4 ===== -->
+  <h2 id="s4">4. 매칭 메커니즘 2 — 온체인 오더북 (On-Chain Order Book)</h2>
+  <p class="section-intro">
+    전통 거래소처럼 매수/매도 주문을 블록체인에 기록하고 매칭하는 방식.
+    <span class="term">Order Book DEX</span>
+  </p>
+
+  <h3>4-1. 순수 온체인 오더북의 한계</h3>
+  <div class="box-red">
+    <strong>문제점</strong>: 주문 등록·취소·매칭을 모두 온체인으로 처리하면<br>
+    → 이더리움 기준 트랜잭션당 수 달러의 가스비 + 12초 이상 지연<br>
+    → 고빈도 시장 조성(Market Making) 불가능
+  </div>
+
+  <h3>4-2. 하이브리드 해결책: 오프체인 오더북 + 온체인 결제</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div>오프체인 매칭 엔진이 주문을 수집·매칭 (빠름)</div></div>
+  <div class="flow-step"><div class="flow-num">2</div><div>체결된 트레이드만 온체인 스마트 컨트랙트로 결제 (Settlement)</div></div>
+  <div class="flow-step"><div class="flow-num">3</div><div>자산은 항상 사용자 지갑에 보관 → 커스터디 리스크 없음</div></div>
+
+  <h3>4-3. 고성능 L1/L2 기반 온체인 오더북</h3>
+  <p>
+    Solana (400ms 블록), Sui, Aptos 등 고성능 블록체인에서는
+    온체인에서도 CEX에 근접한 오더북 DEX 운영이 가능합니다.
+  </p>
+  <table class="compare-table">
+    <thead>
+      <tr><th>프로토콜</th><th>방식</th><th>블록체인</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>dYdX v4</td><td>오프체인 오더북 + 자체 L1 결제</td><td>Cosmos (dYdX Chain)</td></tr>
+      <tr><td>Serum (OpenBook)</td><td>중앙 한도 오더북(CLOB)</td><td>Solana</td></tr>
+      <tr><td>Drift Protocol</td><td>JIT + VAMM 혼합</td><td>Solana</td></tr>
+      <tr><td>0x Protocol</td><td>오프체인 주문 + 온체인 결제</td><td>Ethereum (멀티체인)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ===== SECTION 5 ===== -->
+  <h2 id="s5">5. 매칭 메커니즘 3 — RFQ / P2P 방식</h2>
+  <p class="section-intro">
+    특정 거래자가 가격을 "요청"하면 전문 마켓 메이커가 응답하는 방식.
+    <span class="term">RFQ</span> <span class="term-en">Request for Quote</span>
+  </p>
+
+  <h3>5-1. RFQ 작동 흐름</h3>
+  <div class="flow-step"><div class="flow-num">1</div><div>사용자가 "1 ETH를 USDC로 바꾸고 싶다" 요청 전송 (오프체인)</div></div>
+  <div class="flow-step"><div class="flow-num">2</div><div>등록된 마켓 메이커들이 경쟁적으로 견적 제시 (수 밀리초 내)</div></div>
+  <div class="flow-step"><div class="flow-num">3</div><div>최적 견적 선택 → 사용자가 서명(Signature) 제출</div></div>
+  <div class="flow-step"><div class="flow-num">4</div><div>스마트 컨트랙트에서 원자적(Atomic) 스왑 실행</div></div>
+
+  <div class="box-green">
+    <strong>장점</strong>: 슬리피지 없음, 가스 효율적, 기관 수준의 가격 제공<br>
+    <strong>단점</strong>: 마켓 메이커의 온라인 상태 필요, 부분적 신뢰 필요<br>
+    <strong>대표 사례</strong>: 1inch Fusion, Uniswap X, Paraswap Augustus
+  </div>
+
+  <h3>5-2. DEX 어그리게이터 <span class="term-en">(DEX Aggregator)</span></h3>
+  <p>
+    여러 DEX의 가격을 동시에 조회하고 최적 경로로 스왑을 분할 실행합니다.
+    사용자 입장에서는 "한 번의 트랜잭션"이지만 내부적으로는 여러 풀에서 동시에 체결됩니다.
+  </p>
+  <div class="box-blue">
+    <strong>예시</strong>: 1 ETH → USDC 교환 시,<br>
+    70%는 Uniswap V3에서, 20%는 Curve에서, 10%는 Balancer에서 동시 체결
+    → 각 풀의 가격 충격을 분산하여 최적가 달성
+  </div>
+
+  <!-- ===== SECTION 6 ===== -->
+  <h2 id="s6">6. 주요 DEX 비교</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>DEX</th>
+        <th>매칭 방식</th>
+        <th>체인</th>
+        <th>특징</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Uniswap V3/V4</strong></td>
+        <td>CLMM AMM</td>
+        <td>Ethereum + L2</td>
+        <td>집중 유동성, Hooks(V4)</td>
+      </tr>
+      <tr>
+        <td><strong>Curve Finance</strong></td>
+        <td>Stableswap AMM</td>
+        <td>멀티체인</td>
+        <td>스테이블/피그드 자산 특화</td>
+      </tr>
+      <tr>
+        <td><strong>Balancer</strong></td>
+        <td>가중 풀 AMM</td>
+        <td>Ethereum + L2</td>
+        <td>다중 토큰 풀, 커스텀 가중치</td>
+      </tr>
+      <tr>
+        <td><strong>dYdX v4</strong></td>
+        <td>CLOB (오프체인 매칭)</td>
+        <td>dYdX Chain</td>
+        <td>영구 선물(Perp), CEX 수준 속도</td>
+      </tr>
+      <tr>
+        <td><strong>Raydium</strong></td>
+        <td>AMM + CLOB 혼합</td>
+        <td>Solana</td>
+        <td>OpenBook 오더북 공유</td>
+      </tr>
+      <tr>
+        <td><strong>1inch</strong></td>
+        <td>Aggregator + RFQ (Fusion)</td>
+        <td>멀티체인</td>
+        <td>최적 라우팅, MEV 보호</td>
+      </tr>
+      <tr>
+        <td><strong>CoW Protocol</strong></td>
+        <td>배치 경매 (Batch Auction)</td>
+        <td>Ethereum</td>
+        <td>CoW(거래 상호 매칭)으로 MEV 방어</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ===== SECTION 7 ===== -->
+  <h2 id="s7">7. DEX의 핵심 문제</h2>
+
+  <h3>7-1. 슬리피지 <span class="term-en">(Slippage)</span></h3>
+  <p>
+    주문 제출 시점과 체결 시점 사이의 가격 변동으로 인한 불리한 체결을 말합니다.
+    AMM에서는 거래 규모가 클수록 풀 비율이 크게 변하여 슬리피지가 커집니다.
+  </p>
+  <div class="box-yellow">
+    <strong>대응책</strong>: 슬리피지 허용치(Slippage Tolerance) 설정, 분산 체결, CLMM 집중 유동성
+  </div>
+
+  <h3>7-2. MEV <span class="term-en">(Maximal/Miner Extractable Value)</span></h3>
+  <p>
+    블록 생성자(검증자)나 봇이 사용자의 미체결 트랜잭션(Mempool)을 보고
+    유리한 순서로 자신의 트랜잭션을 끼워넣어 이익을 추출하는 행위입니다.
+  </p>
+  <ul>
+    <li><strong>프론트런닝(Front-running)</strong>: 대형 매수 주문 앞에 동일 매수 삽입</li>
+    <li><strong>샌드위치 공격(Sandwich Attack)</strong>: 매수 → 피해자 거래 → 매도로 차익</li>
+    <li><strong>백런닝(Back-running)</strong>: 가격 차익 발생 직후 아비트라지</li>
+  </ul>
+  <div class="box-green">
+    <strong>대응 기술</strong>: Flashbots SUAVE, Commit-Reveal, Private Mempool (Uniswap X, 1inch Fusion),
+    CoW Protocol의 배치 경매
+  </div>
+
+  <h3>7-3. 유동성 단편화 <span class="term-en">(Liquidity Fragmentation)</span></h3>
+  <p>
+    같은 토큰 쌍이 수십 개의 DEX와 체인에 흩어져 있어 각 풀의 깊이(Depth)가 얕아지는 현상.
+    어그리게이터가 부분적 해결책을 제공하지만, 크로스체인 매칭은 여전히 과제입니다.
+  </p>
+
+  <!-- ===== SECTION 8 ===== -->
+  <h2 id="s8">8. 최신 트렌드와 발전 방향</h2>
+
+  <h3>8-1. 의도 기반 거래 <span class="term-en">(Intent-Based Trading)</span></h3>
+  <p>
+    사용자가 "어떻게"가 아니라 "무엇을 원하는지(의도)"만 선언하면,
+    경쟁하는 솔버(Solver)들이 최적 경로를 찾아 체결합니다.
+  </p>
+  <div class="box-blue">
+    <strong>예시</strong>: "30분 내에 최소 3,000 USDC를 받고 1 ETH를 팔아라"<br>
+    → 여러 솔버가 DEX, RFQ, 크로스체인 브릿지 등을 조합하여 경쟁적으로 체결
+    <br><br><strong>대표 프로토콜</strong>: UniswapX, 1inch Fusion, CoW Protocol, SUAVE
+  </div>
+
+  <h3>8-2. 크로스체인 DEX <span class="term-en">(Cross-Chain DEX)</span></h3>
+  <p>
+    서로 다른 블록체인의 자산을 단일 트랜잭션으로 교환하는 기술.
+    브릿지 리스크를 최소화하기 위해 해시 타임락(HTLC), ZK 증명, 낙관적 검증 등을 활용합니다.
+  </p>
+
+  <h3>8-3. Uniswap V4 Hooks</h3>
+  <p>
+    스왑 전후 사용자 정의 로직을 실행할 수 있는 훅(Hook) 시스템.
+    동적 수수료, TWAP 오더, 온체인 한도 주문 등이 단일 풀 컨트랙트에서 구현 가능합니다.
+  </p>
+
+  <h3>8-4. ZK-Rollup 기반 DEX</h3>
+  <p>
+    zkSync, StarkEx 위의 DEX는 오프체인에서 수천 건의 거래를 배치로 처리하고
+    ZK 증명 하나만 이더리움에 제출하여 보안과 속도를 모두 확보합니다.
+  </p>
+
+  <!-- ===== SECTION 9 ===== -->
+  <h2 id="s9">9. 핵심 용어 정리</h2>
+
+  <div class="box">
+    <table style="width:100%; border-collapse: collapse;">
+      <tr style="border-bottom:1px solid #dee2e6">
+        <td style="padding:8px 12px; width:30%; font-weight:700; color:#4263eb">AMM</td>
+        <td style="padding:8px 12px">자동화 시장 조성자 (Automated Market Maker). 수학 공식으로 가격을 결정하는 DEX</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dee2e6; background:#f8f9fa">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">Liquidity Pool</td>
+        <td style="padding:8px 12px">유동성 풀. LP들이 예치한 두 토큰이 보관된 스마트 컨트랙트</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dee2e6">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">LP Token</td>
+        <td style="padding:8px 12px">유동성 공급자가 풀 지분을 증명하기 위해 받는 토큰</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dee2e6; background:#f8f9fa">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">Slippage</td>
+        <td style="padding:8px 12px">기대 가격과 실제 체결 가격의 차이</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dee2e6">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">Impermanent Loss</td>
+        <td style="padding:8px 12px">비영구적 손실. LP가 단순 보유 대비 입는 기회비용적 손실</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dee2e6; background:#f8f9fa">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">MEV</td>
+        <td style="padding:8px 12px">최대 추출 가능 가치. 블록 순서 조작으로 추출 가능한 이익</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dee2e6">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">CLOB</td>
+        <td style="padding:8px 12px">중앙 한도 오더북 (Central Limit Order Book)</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dee2e6; background:#f8f9fa">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">RFQ</td>
+        <td style="padding:8px 12px">견적 요청 방식 (Request for Quote). 마켓 메이커에게 가격 요청</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dee2e6">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">Intent</td>
+        <td style="padding:8px 12px">의도 기반 거래. 결과만 명시하고 실행은 솔버에게 위임</td>
+      </tr>
+      <tr style="background:#f8f9fa">
+        <td style="padding:8px 12px; font-weight:700; color:#4263eb">Solver</td>
+        <td style="padding:8px 12px">의도 기반 시스템에서 최적 체결 경로를 찾아 실행하는 주체</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ===== SECTION 10 ===== -->
+  <h2 id="s10">10. 참고 자료</h2>
+
+  <ul class="ref-list">
+    <li>
+      <strong>Uniswap V2 백서</strong> — 상수 곱 AMM 원리<br>
+      <a href="https://uniswap.org/whitepaper.pdf" target="_blank">https://uniswap.org/whitepaper.pdf</a>
+    </li>
+    <li>
+      <strong>Uniswap V3 백서</strong> — 집중 유동성(CLMM)<br>
+      <a href="https://uniswap.org/whitepaper-v3.pdf" target="_blank">https://uniswap.org/whitepaper-v3.pdf</a>
+    </li>
+    <li>
+      <strong>Curve Finance 백서</strong> — StableSwap 불변량<br>
+      <a href="https://curve.fi/files/stableswap-paper.pdf" target="_blank">https://curve.fi/files/stableswap-paper.pdf</a>
+    </li>
+    <li>
+      <strong>Flashbots — MEV와 다크 포레스트</strong><br>
+      <a href="https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest" target="_blank">https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest</a>
+    </li>
+    <li>
+      <strong>CoW Protocol — 배치 경매와 CoW 메커니즘</strong><br>
+      <a href="https://docs.cow.fi/overview/introduction" target="_blank">https://docs.cow.fi/overview/introduction</a>
+    </li>
+    <li>
+      <strong>1inch Fusion — Intent-Based RFQ</strong><br>
+      <a href="https://docs.1inch.io/docs/fusion-swap/introduction" target="_blank">https://docs.1inch.io/docs/fusion-swap/introduction</a>
+    </li>
+    <li>
+      <strong>dYdX v4 백서</strong> — 완전 탈중앙화 Perp DEX<br>
+      <a href="https://dydx.exchange/whitepaper" target="_blank">https://dydx.exchange/whitepaper</a>
+    </li>
+    <li>
+      <strong>Paradigm Research — TWAMM</strong><br>
+      <a href="https://www.paradigm.xyz/2021/07/twamm" target="_blank">https://www.paradigm.xyz/2021/07/twamm</a>
+    </li>
+  </ul>
+
+  <hr>
+  <p style="font-size:0.85rem; color:#868e96; text-align:center;">
+    생성: <span id="gentime2"></span> · 스터디 노트 자동 생성
+  </p>
+
+</div>
+
+<script>
+  const now = new Date();
+  const fmt = now.toLocaleString('ko-KR', {
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false
+  });
+  document.getElementById('gentime').textContent = fmt;
+  document.getElementById('gentime2').textContent = fmt;
+</script>
+</body>
+</html>
