@@ -57,14 +57,23 @@ class TitleExtractor(HTMLParser):
 
 
 def extract_title(html_path: Path) -> str:
-    """HTML 파일에서 제목을 추출합니다."""
+    """HTML 파일에서 제목을 추출합니다.
+
+    daily 파일은 <title>이 날짜 형식의 범용 제목이므로 파일명을 우선 사용.
+    study 파일은 <title> → <h1> → 파일명 순으로 시도.
+    """
+    stem_title = stem_to_title(html_path.stem)
+    # daily: 파일명에 실제 내용이 담겨 있으므로 바로 반환
+    if html_path.parent.name == "daily":
+        return stem_title
+
     parser = TitleExtractor()
     try:
         text = html_path.read_text(encoding="utf-8", errors="ignore")
         parser.feed(text)
     except Exception:
         pass
-    return parser.title or parser.h1 or stem_to_title(html_path.stem)
+    return parser.title or parser.h1 or stem_title
 
 
 def stem_to_title(stem: str) -> str:
@@ -173,6 +182,21 @@ def update_index(docs_dir: Path, index_path: Path) -> None:
         existing_files = {item["file"] for item in existing}
 
         new_from_scan = scanned.get(cat, [])
+        scanned_by_file = {item["file"]: item for item in new_from_scan}
+
+        # 기존 항목: 제목/날짜를 스캔 결과로 갱신
+        updated_existing = []
+        for item in existing:
+            fresh = scanned_by_file.get(item["file"])
+            if fresh and fresh["title"] != item.get("title"):
+                report_lines.append(f"[{cat}] 제목 갱신: {item['file']}")
+                report_lines.append(f"  전: {item.get('title')}")
+                report_lines.append(f"  후: {fresh['title']}")
+                updated_existing.append(fresh)
+                changed = True
+            else:
+                updated_existing.append(item)
+
         added = []
         for item in new_from_scan:
             if item["file"] not in existing_files:
@@ -184,7 +208,7 @@ def update_index(docs_dir: Path, index_path: Path) -> None:
                 report_lines.append(f"  + {a['file']}  ({a['date']}) {a['title']}")
             changed = True
 
-        merged = existing + added
+        merged = updated_existing + added
         # 날짜 내림차순 정렬, 같은 날짜면 파일명 역순
         merged.sort(key=lambda x: (x.get("date", ""), x.get("file", "")), reverse=True)
 
