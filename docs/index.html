@@ -347,7 +347,7 @@
   const dailyItems = [
     {
       date: '2026-06-20',
-      title: '뉴스 요약 — 2026-06-20',
+      title: '중동전쟁·AI랠리·코스피9000돌파',
       file: 'daily/news_2026-06-20_중동전쟁·AI랠리·코스피9000돌파.html',
     },
 ];
@@ -368,12 +368,12 @@
       <a href="${item.file}" class="card ${cat}">
         <div class="card-icon">${icons[cat]}</div>
         <div class="card-body">
-          <div class="card-title">${item.title}</div>
           <div class="card-meta">
-            <span class="badge ${cat}">${cat === 'study' ? 'Study' : 'Daily'}</span>
             <span>${item.date}</span>
+            <span class="badge ${cat}">${cat === 'study' ? 'Study' : 'Daily'}</span>
             ${newBadge}
           </div>
+          <div class="card-title">${item.title}</div>
         </div>
         <span class="card-arrow">›</span>
       </a>`;
