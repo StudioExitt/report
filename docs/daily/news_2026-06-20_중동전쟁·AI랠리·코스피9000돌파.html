@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>뉴스 요약 — 2026-06-20</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+      background: #f5f6f8;
+      color: #1a1a2e;
+      line-height: 1.7;
+      padding: 24px 16px 64px;
+    }
+    .container { max-width: 860px; margin: 0 auto; }
+
+    /* 헤더 */
+    header {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 28px 32px 22px;
+      margin-bottom: 24px;
+      border-left: 5px solid #2563eb;
+      box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    }
+    header h1 { font-size: 1.6rem; font-weight: 700; color: #111827; }
+    header .meta { font-size: .85rem; color: #6b7280; margin-top: 6px; }
+    header .lead {
+      margin-top: 14px;
+      font-size: .97rem;
+      color: #374151;
+      background: #f0f4ff;
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+
+    /* 섹션 카드 */
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    }
+    .card h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e40af;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card h3 {
+      font-size: .93rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 14px 0 6px;
+    }
+    .card p { font-size: .92rem; color: #374151; margin-bottom: 8px; }
+    .card ul { padding-left: 18px; font-size: .92rem; color: #374151; }
+    .card ul li { margin-bottom: 5px; }
+
+    /* 태그 배지 */
+    .badge {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .badge-red    { background: #fee2e2; color: #991b1b; }
+    .badge-blue   { background: #dbeafe; color: #1e3a8a; }
+    .badge-green  { background: #dcfce7; color: #166534; }
+    .badge-yellow { background: #fef9c3; color: #854d0e; }
+    .badge-purple { background: #ede9fe; color: #5b21b6; }
+
+    /* 숫자 하이라이트 */
+    .num { font-weight: 700; color: #111827; }
+    .up   { color: #dc2626; }
+    .down { color: #2563eb; }
+
+    /* 시황 그리드 */
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .market-item {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .market-item .label { font-size: .78rem; color: #6b7280; margin-bottom: 4px; }
+    .market-item .value { font-size: 1.1rem; font-weight: 700; color: #111827; }
+    .market-item .change { font-size: .8rem; margin-top: 2px; }
+
+    /* 주목 포인트 */
+    .highlight {
+      background: #fefce8;
+      border-left: 4px solid #eab308;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      margin: 14px 0 4px;
+      font-size: .9rem;
+      color: #374151;
+    }
+
+    /* 푸터 */
+    footer {
+      text-align: center;
+      font-size: .78rem;
+      color: #9ca3af;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <header>
+    <h1>오늘의 경제·금융 뉴스 요약</h1>
+    <div class="meta">생성일시: 2026년 6월 20일 (토)  &nbsp;|&nbsp; 기준: 국내 KST 기준</div>
+    <div class="lead">
+      코스피가 사상 처음으로 9,000선을 돌파하며 반도체 주도 랠리가 이어지는 가운데,
+      미 연준은 이란 전쟁發 인플레이션 우려로 금리 인상 가능성을 시사했습니다.
+      글로벌 AI 투자 붐과 중동 지정학 리스크가 동시에 시장을 지배하고 있습니다.
+    </div>
+  </header>
+
+  <!-- 주요 시황 -->
+  <div class="card">
+    <h2>📊 주요 시장 지표 (6월 18~20일 기준)</h2>
+    <div class="market-grid">
+      <div class="market-item">
+        <div class="label">코스피</div>
+        <div class="value up">9,063</div>
+        <div class="change up">▲ +2.25% (6/18 마감)</div>
+      </div>
+      <div class="market-item">
+        <div class="label">S&amp;P 500</div>
+        <div class="value up">7,609</div>
+        <div class="change up">▲ 사상 최고치 갱신</div>
+      </div>
+      <div class="market-item">
+        <div class="label">원/달러 환율</div>
+        <div class="value">~1,538원</div>
+        <div class="change" style="color:#6b7280;">6월 평균 전망치</div>
+      </div>
+      <div class="market-item">
+        <div class="label">브렌트유</div>
+        <div class="value">$86/배럴</div>
+        <div class="change up">▲ 연 평균 전망 (+24% YoY)</div>
+      </div>
+      <div class="market-item">
+        <div class="label">美 기준금리</div>
+        <div class="value">3.50–3.75%</div>
+        <div class="change" style="color:#6b7280;">6/17 FOMC 동결</div>
+      </div>
+      <div class="market-item">
+        <div class="label">韓 기준금리</div>
+        <div class="value">2.50%</div>
+        <div class="change" style="color:#6b7280;">동결 (다음 회의 7/16)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 코스피 9000 돌파 -->
+  <div class="card">
+    <h2>🇰🇷 코스피, 사상 첫 9,000선 돌파</h2>
+    <span class="badge badge-red">Breaking</span>
+    <span class="badge badge-blue">국내증시</span>
+    <p style="margin-top:12px;">
+      코스피가 6월 18일 전일 대비 <span class="num up">+199.60p(+2.25%)</span> 오른
+      <span class="num">9,063.84</span>에 마감하며 역사상 처음으로 9,000선을 돌파했습니다.
+      5월 26일 8,000선 돌파 이후 <span class="num">16거래일</span> 만의 기록입니다.
+    </p>
+
+    <h3>상승 배경</h3>
+    <ul>
+      <li>글로벌 AI 인프라 투자 확대에 따른 <strong>HBM 메모리 반도체 수요 급증</strong></li>
+      <li>외국인 투자자의 대형 반도체주 집중 매수</li>
+      <li>삼성전자·SK하이닉스 2분기 실적 서프라이즈 기대</li>
+      <li>6월 1~10일 반도체 수출 <span class="num up">+205.8% (YoY)</span>, 수출 비중 38.7%</li>
+    </ul>
+
+    <div class="highlight">
+      ⚠️ <strong>쏠림 경보:</strong> 코스피가 6거래일 연속 상승하는 동안 상승 종목 수는 110개 미만,
+      전체 종목의 84.1%가 하락했습니다. 반도체 대형주를 제외한 중소형주 소외 현상이 심화되고 있습니다.
+    </div>
+
+    <h3>한국 무역 (6월 1~10일 잠정)</h3>
+    <ul>
+      <li>수출 <span class="num up">286억 달러</span> (YoY <span class="up">+85.9%</span>)</li>
+      <li>수입 234억 달러 (YoY +35.6%) → 무역수지 <span class="num up">+53억 달러 흑자</span></li>
+      <li>5월 월간 수출 877억 달러 — 역대 월별 최대</li>
+      <li>주요 수출 증가국: 대만 +134.0%, 중국 +101.4%, 베트남 +102.9%</li>
+    </ul>
+  </div>
+
+  <!-- 미국 연준 -->
+  <div class="card">
+    <h2>🏦 미 연준(FOMC) 6월 회의 — 동결·인상 가능성 시사</h2>
+    <span class="badge badge-yellow">통화정책</span>
+    <span class="badge badge-blue">미국</span>
+    <p style="margin-top:12px;">
+      케빈 워시(Kevin Warsh) 의장 취임 후 첫 FOMC(6월 17일)에서
+      기준금리를 <span class="num">3.50~3.75%</span>로 만장일치 동결했습니다.
+    </p>
+
+    <h3>핵심 변화: 금리 인하 → 인상 가능성</h3>
+    <ul>
+      <li>연내 금리 인하 전망 <strong>완전 철회</strong>, 2027~2028년으로 이연</li>
+      <li>점도표(Dot Plot) 연말 중앙값: <span class="num up">3.8%</span> → 인상 여지 반영</li>
+      <li>10월 인상 가능성을 시장은 <span class="num">60.7%</span>로 반영 중</li>
+      <li>인플레이션 전망 상향: 헤드라인 <span class="num up">3.6%</span>, 코어 <span class="num up">3.3%</span></li>
+    </ul>
+
+    <h3>워시 의장 특이 행보</h3>
+    <ul>
+      <li>워시 의장 본인은 SEP(경제전망요약) <strong>불참</strong> — 선제적 가이던스 불제공 선언</li>
+      <li>연준 5개 태스크포스 구성, 통화정책 운영체계 전면 재검토 착수</li>
+      <li>"AI의 생산성 향상이 장기적 디스인플레이션 역할" 긍정적 견해 표명</li>
+    </ul>
+
+    <div class="highlight">
+      💡 <strong>시사점:</strong> 이란 전쟁發 에너지·물가 충격이 해소되기 전까지 미 연준의 인하 전환은
+      2027년 이후로 지연될 가능성이 높습니다. 한국은행 추가 인하 여력도 제약됩니다.
+    </div>
+  </div>
+
+  <!-- 중동·이란 전쟁 -->
+  <div class="card">
+    <h2>⚔️ 중동 분쟁 — 이란 전쟁 경제 영향</h2>
+    <span class="badge badge-red">지정학</span>
+    <span class="badge badge-yellow">에너지</span>
+    <p style="margin-top:12px;">
+      2026년 2월 28일 미국·이스라엘의 이란 공습으로 시작된 분쟁이 4개월째 이어지고 있습니다.
+      호르무즈 해협 봉쇄(전 세계 원유 교역의 약 20%)로 글로벌 에너지 시장이 크게 흔들렸습니다.
+    </p>
+
+    <h3>에너지 가격</h3>
+    <ul>
+      <li>분쟁 직후 유가 8% 급등, 4월 말 최고점은 분쟁 전 대비 <span class="num up">+60%</span></li>
+      <li>5월 말~6월 초: 전략비축유(SPR) 방출·수요 둔화로 조정</li>
+      <li>6월 초 미-이란 <strong>잠정 합의</strong>, 호르무즈 통항 재개 — 유가 하향 안정 진행 중</li>
+      <li>2026년 연간 브렌트유 평균 전망: <span class="num">$86/배럴</span> (전년 $69 → +24%)</li>
+    </ul>
+
+    <h3>한국 경제 영향</h3>
+    <ul>
+      <li>에너지 수입 비용 6월 1~10일 기준 <span class="num up">+39.9% (YoY)</span></li>
+      <li>석유화학·건설업 원가 부담 지속, 가동률 회복 지연</li>
+      <li>호르무즈 의존도가 높아 원유 수급 불안 리스크 상존</li>
+    </ul>
+
+    <div class="highlight">
+      💡 <strong>시사점:</strong> 잠정 합의로 원유 공급이 일부 회복됐지만 분쟁 재점화 리스크는 잔존합니다.
+      에너지 수입 의존도가 높은 한국은 환율·물가 이중 압박을 계속 받을 수 있습니다.
+    </div>
+  </div>
+
+  <!-- 미국 주식·AI 랠리 -->
+  <div class="card">
+    <h2>🤖 미국 증시 — AI 랠리와 버블 경계</h2>
+    <span class="badge badge-purple">AI·기술</span>
+    <span class="badge badge-blue">글로벌증시</span>
+    <p style="margin-top:12px;">
+      S&amp;P 500이 <span class="num">7,609</span>로 사상 최고치를 경신했으며
+      AI 관련주가 지수 시가총액의 <span class="num">45%</span>를 차지합니다.
+    </p>
+
+    <h3>주요 동향</h3>
+    <ul>
+      <li>AI 주식 제외 시 S&amp;P 500은 2월 이후 <strong>사실상 제자리</strong> — 랠리의 편중 심화</li>
+      <li>Micron Technology 시총 <span class="num">$1조</span> 돌파 (50거래일 만에 $5천억 → $1조)</li>
+      <li>Nvidia, PC용 신형 프로세서 발표 후 <span class="num up">+6%</span> 급등</li>
+      <li>2026년 클라우드 3사(MS·아마존·구글) AI 설비 투자 합산 <span class="num">$6,700억</span></li>
+      <li>S&amp;P 500 CAPE 지수 40 이상 — 닷컴 버블 수준 근접</li>
+    </ul>
+
+    <div class="highlight">
+      ⚠️ <strong>밸류에이션 경고:</strong> Capital Economics는 AI 랠리가 가장 투기적 국면에 진입했다고 경고했습니다.
+      AI 주식이 S&amp;P 500 이익 성장의 40%를 담당할 것으로 예상되는 만큼, 실적이 기대에 못 미칠 경우
+      충격이 클 수 있습니다.
+    </div>
+  </div>
+
+  <!-- 글로벌 경제 전망 -->
+  <div class="card">
+    <h2>🌐 글로벌 경제 전망</h2>
+    <span class="badge badge-green">거시경제</span>
+
+    <h3>세계은행 (June 2026 GEP)</h3>
+    <ul>
+      <li>2026년 세계 경제 성장률: <span class="num">2.5%</span> (2025년 2.9% → 코로나 이후 최저)</li>
+      <li>에너지 수입 의존국 및 중동 분쟁 직접 피해국이 가장 큰 타격</li>
+      <li>유로존 일부 국가 스태그플레이션 가능성 경고</li>
+    </ul>
+
+    <h3>한국 경제 전망</h3>
+    <ul>
+      <li>2026년 GDP 성장률 <span class="num">+2.5%</span> 전망 — 반도체 수출·내수 개선이 견인</li>
+      <li>한국은행 기준금리: 현재 <span class="num">2.5%</span>, 4분기 2.13% 수준 예상 (1~2회 추가 인하)</li>
+      <li>원/달러 환율: 4분기 1,340원 전망 (분쟁 완화·경기 회복 반영)</li>
+      <li>2026년 수출 7,110억 달러 (+1.0%), 무역흑자 780억 달러 전망</li>
+    </ul>
+  </div>
+
+  <!-- 핵심 요약 -->
+  <div class="card">
+    <h2>📌 오늘의 핵심 요약</h2>
+    <ul>
+      <li><strong>코스피 9,000 돌파</strong> — 반도체 AI 수요 호황이 사상 최초 기록 견인. 단, 84% 종목 하락이라는 쏠림 장세.</li>
+      <li><strong>미 연준 동결 + 인상 카드 꺼내</strong> — 워시 체제 첫 회의에서 연내 인하 전망 완전 삭제, 10월 인상 가능성 60%.</li>
+      <li><strong>이란 전쟁 잠정 합의</strong> — 유가 안정화 신호. 그러나 중동 리스크 완전 해소까지는 시간이 필요.</li>
+      <li><strong>AI 랠리 vs. 버블 논쟁</strong> — S&amp;P 500 CAPE 40 이상, AI 주식 쏠림. 실적 미달 시 급락 리스크 상존.</li>
+      <li><strong>한국 수출 호조</strong> — 6월 상순 수출 86% 급증, 5월 월간 역대 최대. 반도체가 전체 수출의 40% 육박.</li>
+    </ul>
+  </div>
+
+  <footer>
+    뉴스 요약본은 공개된 보도자료 및 웹 검색 결과를 기반으로 작성되었으며, 투자 조언이 아닙니다.<br/>
+    생성: 2026-06-20 &nbsp;|&nbsp; Claude Code (claude-sonnet-4-6)
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이스라엘-레바논 분쟁: 원인과 정치적 관계도</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      background-color: #f8f9fa;
+      color: #2c3e50;
+      line-height: 1.75;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a3a5c 0%, #2e6da4 100%);
+      color: white;
+      padding: 36px 40px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+    }
+    .header h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .header .subtitle {
+      font-size: 1rem;
+      opacity: 0.85;
+      font-style: italic;
+    }
+    .meta {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+      font-size: 0.82rem;
+      opacity: 0.75;
+    }
+    section {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #1a3a5c;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e3eaf3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2 .icon { font-size: 1.3rem; }
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #2e6da4;
+      margin: 20px 0 8px;
+    }
+    p { margin-bottom: 12px; }
+    .en {
+      display: inline;
+      font-size: 0.88em;
+      color: #7f8c8d;
+      font-style: italic;
+    }
+    .en-block {
+      display: block;
+      font-size: 0.88em;
+      color: #7f8c8d;
+      font-style: italic;
+      margin-top: 2px;
+      margin-bottom: 8px;
+    }
+    .timeline {
+      border-left: 3px solid #2e6da4;
+      padding-left: 24px;
+      margin: 16px 0;
+    }
+    .timeline-item {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: #2e6da4;
+      border-radius: 50%;
+      position: absolute;
+      left: -30px;
+      top: 5px;
+    }
+    .timeline-year {
+      font-weight: 800;
+      color: #1a3a5c;
+      font-size: 1rem;
+    }
+    .source-link {
+      font-size: 0.78rem;
+      color: #2e6da4;
+      text-decoration: none;
+      border-bottom: 1px dotted #2e6da4;
+    }
+    .source-link:hover { color: #1a3a5c; }
+    .source-inline {
+      font-size: 0.78rem;
+      color: #95a5a6;
+      margin-left: 4px;
+    }
+    .highlight-box {
+      background: #eaf3fb;
+      border-left: 4px solid #2e6da4;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+    .warn-box {
+      background: #fff8e1;
+      border-left: 4px solid #f39c12;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+    /* 관계도 */
+    .relation-diagram {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .actor-card {
+      border-radius: 10px;
+      padding: 14px 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+    .actor-israel { background: #dbeafe; color: #1d4ed8; border: 2px solid #3b82f6; }
+    .actor-hezbollah { background: #fef2f2; color: #b91c1c; border: 2px solid #ef4444; }
+    .actor-iran { background: #fdf4ff; color: #7e22ce; border: 2px solid #a855f7; }
+    .actor-lebanon { background: #f0fdf4; color: #166534; border: 2px solid #22c55e; }
+    .actor-us { background: #fefce8; color: #854d0e; border: 2px solid #eab308; }
+    .actor-hamas { background: #fff7ed; color: #9a3412; border: 2px solid #f97316; }
+    .actor-un { background: #f8fafc; color: #475569; border: 2px solid #94a3b8; }
+    .actor-saudi { background: #fffbeb; color: #92400e; border: 2px solid #d97706; }
+    .actor-syria { background: #f5f3ff; color: #5b21b6; border: 2px solid #8b5cf6; }
+    .relation-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .relation-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      background: #f8f9fa;
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+    .rel-from { font-weight: 700; min-width: 90px; }
+    .rel-arrow { color: #94a3b8; font-size: 1.2rem; }
+    .rel-type {
+      font-size: 0.78rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+      min-width: 70px;
+      text-align: center;
+    }
+    .rel-support { background: #dcfce7; color: #166534; }
+    .rel-conflict { background: #fee2e2; color: #991b1b; }
+    .rel-neutral { background: #f1f5f9; color: #475569; }
+    .rel-proxy { background: #fef3c7; color: #92400e; }
+    .rel-to { font-weight: 600; color: #374151; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin: 16px 0;
+    }
+    th {
+      background: #1a3a5c;
+      color: white;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    tr:nth-child(even) td { background: #f8f9fa; }
+    .tag {
+      display: inline-block;
+      background: #e3eaf3;
+      color: #1a3a5c;
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin: 2px;
+    }
+    .footer {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.8rem;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <h1>이스라엘-레바논 분쟁</h1>
+    <div class="subtitle">Israel-Lebanon Conflict: Causes and Political Relationship Map</div>
+    <div class="meta">
+      <span>📅 작성일: <span id="created-date"></span></span>
+      <span>🎯 대상: 중동 지정학에 관심 있는 일반 독자</span>
+      <span>📖 분류: 국제정치 / 지역분쟁</span>
+    </div>
+  </div>
+
+  <!-- 개요 -->
+  <section>
+    <h2><span class="icon">📌</span> 개요 <span class="en">(Overview)</span></h2>
+    <p>
+      이스라엘과 레바논의 갈등은 단순한 두 나라의 국경 분쟁이 아닙니다. 이 분쟁은
+      <strong>종교·민족 갈등, 팔레스타인 문제, 이란의 지역 패권 전략</strong>이
+      복잡하게 얽혀 있는 중동의 대표적 복합 분쟁입니다.
+      <span class="en-block">This is not a simple border dispute, but a complex conflict entangled with sectarian tensions, the Palestinian issue, and Iran's regional hegemony strategy.</span>
+    </p>
+    <div class="highlight-box">
+      <strong>핵심 구도</strong>: 이스라엘 ↔ 헤즈볼라(레바논 내 시아파 무장정치조직) ↔ 이란(배후 지원)<br>
+      <span class="en-block">Core dynamic: Israel ↔ Hezbollah (Shia armed political group in Lebanon) ↔ Iran (state sponsor)</span>
+      레바논 정부는 헤즈볼라를 실질적으로 통제하지 못하며, 이스라엘은 레바논 국가와 싸운다기보다 헤즈볼라와 싸우는 구도입니다.
+      <span class="en-block">The Lebanese government has little effective control over Hezbollah; Israel is effectively fighting Hezbollah, not the Lebanese state.</span>
+    </div>
+  </section>
+
+  <!-- 분쟁의 뿌리: 역사적 배경 -->
+  <section>
+    <h2><span class="icon">📜</span> 분쟁의 역사적 배경 <span class="en">(Historical Background)</span></h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-year">1948 — 이스라엘 건국과 1차 중동전쟁</div>
+        <span class="en-block">Israeli Independence and First Arab-Israeli War</span>
+        <p>
+          이스라엘이 독립을 선포하자 아랍 연합군(레바논 포함)이 공격하며 1차 중동전쟁이 발발했습니다.
+          이 전쟁으로 약 70만 명의 팔레스타인 아랍인이 난민이 됐으며(<strong>나크바, Nakba</strong>),
+          일부는 레바논으로 피란했습니다.
+          <span class="source-inline">출처: <a class="source-link" href="https://www.britannica.com/event/Arab-Israeli-wars" target="_blank">Britannica - Arab-Israeli Wars</a></span>
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">1975–1990 — 레바논 내전</div>
+        <span class="en-block">Lebanese Civil War</span>
+        <p>
+          기독교 마론파, 수니파 무슬림, 시아파, PLO(팔레스타인해방기구) 등 다양한 세력이 충돌한 내전.
+          레바논에서 활동하던 PLO가 이스라엘을 공격하면서 이스라엘의 군사 개입 빌미가 됐습니다.
+          <span class="source-inline">출처: <a class="source-link" href="https://www.britannica.com/event/Lebanese-Civil-War" target="_blank">Britannica - Lebanese Civil War</a></span>
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">1978 — 1차 이스라엘의 레바논 침공</div>
+        <span class="en-block">First Israeli Invasion of Lebanon</span>
+        <p>
+          팔레스타인 무장세력이 레바논에서 이스라엘 해안도로(코스탈 로드)를 습격해 민간인 38명이 사망한
+          <strong>코스탈 로드 학살</strong> 이후, 이스라엘은 남부 레바논을 침공해 PLO를 리타니 강 북쪽으로
+          밀어내려 했습니다. 이 침공으로 레바논인 1,100~2,000명이 사망하고 최대 25만 명이 피란했습니다.
+          <span class="source-inline">출처: <a class="source-link" href="https://en.wikipedia.org/wiki/1978_South_Lebanon_conflict" target="_blank">Wikipedia - 1978 South Lebanon conflict</a></span>
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">1982 — 2차 침공과 헤즈볼라 탄생</div>
+        <span class="en-block">Second Invasion and Birth of Hezbollah</span>
+        <p>
+          이스라엘은 PLO를 완전히 레바논에서 축출하기 위해 대규모 침공을 감행했고 베이루트까지 진격했습니다.
+          PLO는 레바논에서 퇴거했지만, 이 침공은 오히려 더 강력한 적을 낳는 결과를 불렀습니다.
+          이란 혁명수비대의 지원 아래 레바논 시아파 성직자들이 <strong>헤즈볼라(Hezbollah, "신의 당")</strong>를
+          창설했습니다.
+          <span class="source-inline">출처: <a class="source-link" href="https://ko.wikipedia.org/wiki/%ED%97%A4%EC%A6%88%EB%B3%BC%EB%9D%BC" target="_blank">위키백과 - 헤즈볼라</a></span>
+        </p>
+        <div class="warn-box">
+          <strong>핵심 포인트</strong>: 헤즈볼라는 이스라엘 침공에 대한 저항 운동으로 출발했기 때문에,
+          이스라엘 침공 자체가 헤즈볼라라는 더 강력한 위협을 만들어낸 역설적 결과를 낳았습니다.
+          <span class="en-block">Key insight: The Israeli invasion inadvertently created the very threat (Hezbollah) that now poses a far greater challenge — a classic case of strategic blowback.</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">1985–2000 — 남부 레바논 점령과 게릴라전</div>
+        <span class="en-block">Israeli Occupation of South Lebanon and Guerrilla Warfare</span>
+        <p>
+          이스라엘은 남부 레바논의 "보안지대(Security Zone)"를 점령하고, 친이스라엘 민병대 남레바논군(SLA)을
+          육성했습니다. 헤즈볼라는 15년간 게릴라 전술로 이스라엘 점령군을 공격했고,
+          결국 2000년 이스라엘은 레바논에서 완전 철수했습니다.
+          <span class="source-inline">출처: <a class="source-link" href="https://ko.wikipedia.org/wiki/%EB%82%A8%EB%B6%80_%EB%A0%88%EB%B0%94%EB%85%BC_%EB%B6%84%EC%9F%81_(1985%EB%85%84~2000%EB%85%84)" target="_blank">위키백과 - 남부 레바논 분쟁</a></span>
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2006 — 2차 레바논 전쟁 (34일 전쟁)</div>
+        <span class="en-block">Second Lebanon War (34-Day War)</span>
+        <p>
+          헤즈볼라가 이스라엘 국경을 넘어 이스라엘 병사 2명을 납치하고 8명을 사살하자, 이스라엘이 레바논
+          전역을 공습하고 지상전에 돌입했습니다. 34일간의 전쟁 후 UN 결의 1701호에 따라 휴전했으나,
+          양측 모두 전략적 목표를 달성하지 못한 채 끝났습니다.
+          헤즈볼라는 이 전쟁에서 이스라엘에 패배하지 않았음을 "신의 승리"라 선전하며
+          레바논 내 정치적 입지를 강화했습니다.
+          <span class="source-inline">출처: <a class="source-link" href="https://www.aljazeera.com/news/2024/9/18/hezbollah-and-israel-a-timeline-of-conflict" target="_blank">Al Jazeera - Hezbollah and Israel: A Timeline</a></span>
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2023–2024 — 가자 전쟁 연동과 전면전</div>
+        <span class="en-block">Gaza War Linkage and Full-Scale War</span>
+        <p>
+          2023년 10월 7일 하마스의 이스라엘 기습 공격 다음날, 헤즈볼라는 "하마스와의 연대"를 선언하며
+          이스라엘 북부에 로켓을 발사하기 시작했습니다.
+          2024년 9월 이스라엘은 레바논 전역에 대규모 공습을 개시했고, 9월 27일 헤즈볼라 수장
+          <strong>하산 나스랄라(Hassan Nasrallah)</strong>를 폭사시켰습니다.
+          10월 1일에는 지상군을 남부 레바논에 투입했습니다.
+          <span class="source-inline">출처: <a class="source-link" href="https://en.wikipedia.org/wiki/2024_Lebanon_war" target="_blank">Wikipedia - 2024 Lebanon War</a></span>
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2024년 11월 — 휴전, 그리고 2026년 재발</div>
+        <span class="en-block">Ceasefire, Then Re-escalation in 2026</span>
+        <p>
+          미국의 중재로 2024년 11월 27일 60일 휴전이 발효됐습니다. 협정 내용은 헤즈볼라가 리타니 강 북쪽으로
+          철수하고, 이스라엘도 레바논에서 철수하는 것이었으나, 이스라엘은 2025년 1월과 2월 철수 시한을
+          지키지 않고 남부 레바논 주요 고지대 5개 거점을 계속 점령했습니다.
+          2026년 4월 이스라엘-이란 전쟁이 확대되면서 레바논에 대한 공습이 재개됐고,
+          2026년 6월 새로운 휴전 합의가 도출됐습니다.
+          <span class="source-inline">출처: <a class="source-link" href="https://en.wikipedia.org/wiki/2026_Israel%E2%80%93Lebanon_ceasefire" target="_blank">Wikipedia - 2026 Israel–Lebanon ceasefire</a> / <a class="source-link" href="https://www.aljazeera.com/news/2026/6/4/israel-and-lebanon-agree-to-conditional-ceasefire" target="_blank">Al Jazeera (2026.6.4)</a></span>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 분쟁의 핵심 원인 -->
+  <section>
+    <h2><span class="icon">⚡</span> 분쟁의 핵심 원인 <span class="en">(Root Causes of Conflict)</span></h2>
+
+    <h3>1. 팔레스타인 난민 문제 <span class="en">(Palestinian Refugee Crisis)</span></h3>
+    <p>
+      1948년 이후 약 30만 명 이상의 팔레스타인 난민이 레바논에 유입됐습니다.
+      이들은 레바논 내에서 PLO의 무장 활동 기반이 됐고, 이것이 이스라엘의 레바논 개입을 촉발하는
+      직접적 원인이 됐습니다.
+      <span class="en-block">Over 300,000 Palestinian refugees flooded into Lebanon after 1948, providing a base for PLO armed operations — which directly triggered Israeli military interventions.</span>
+    </p>
+
+    <h3>2. 레바논의 취약한 국가 구조 <span class="en">(Lebanon's Weak State Structure)</span></h3>
+    <p>
+      레바논은 <strong>종파주의 권력분배(Confessionalism)</strong> 시스템을 채택합니다.
+      대통령은 마론파 기독교인, 총리는 수니파 무슬림, 국회의장은 시아파 무슬림으로 고정됩니다.
+      <span class="source-inline">출처: <a class="source-link" href="https://www.cfr.org/backgrounders/lebanon-how-israel-hezbollah-and-regional-powers-are-shaping-its-future" target="_blank">CFR - Lebanon Backgrounder</a></span>
+    </p>
+    <p>
+      이 경직된 시스템과 만성적 부패로 레바논 중앙정부는 매우 취약합니다.
+      결과적으로 헤즈볼라가 남부 레바논을 사실상 독자 통치하는 "국가 안의 국가(State within a State)"
+      구조가 형성됐습니다.
+      <span class="en-block">This rigid sectarian system and endemic corruption left the central government too weak to control its own territory, allowing Hezbollah to operate as a "state within a state" in southern Lebanon.</span>
+    </p>
+
+    <h3>3. 이란의 대리전 전략 <span class="en">(Iran's Proxy War Strategy)</span></h3>
+    <p>
+      이란은 이스라엘과 직접 충돌하는 대신, 헤즈볼라에 자금·무기·훈련을 제공해 이스라엘을 간접적으로
+      압박하는 전략을 수십 년째 구사하고 있습니다.
+      헤즈볼라는 이란 이슬람혁명수비대(IRGC)의 직접 지도 아래 육성됐습니다.
+      이란이 헤즈볼라를 "저항의 축(Axis of Resistance)"의 핵심 파트너로 간주한다고
+      <a class="source-link" href="https://www.congress.gov/crs-product/IF12770" target="_blank">미국 의회조사국(CRS)</a>은 분석합니다.
+      <span class="en-block">Iran funds, arms, and trains Hezbollah as a forward deterrent against Israel — a long-running proxy strategy that avoids direct confrontation while maintaining strategic pressure.</span>
+    </p>
+
+    <h3>4. 영토 분쟁 <span class="en">(Territorial Disputes)</span></h3>
+    <p>
+      이스라엘과 레바논은 <strong>셰바 농장(Shebaa Farms)</strong> 지역을 두고 영토 분쟁을 벌이고 있습니다.
+      이스라엘은 이 지역이 골란 고원의 일부(시리아 영토)라며 UN 결의에 따라 점령 중이라고 주장하고,
+      레바논과 헤즈볼라는 이 지역이 레바논 영토라고 주장합니다.
+      헤즈볼라는 이 분쟁을 "저항"의 정당성 근거로 활용합니다.
+      <span class="en-block">The disputed Shebaa Farms area gives Hezbollah a pretext to maintain its armed presence even after Israel withdrew from most of Lebanon in 2000.</span>
+    </p>
+
+    <h3>5. 하마스-헤즈볼라 연대와 가자 전쟁 연동 <span class="en">(Hamas-Hezbollah Solidarity)</span></h3>
+    <p>
+      헤즈볼라는 이란이 구축한 "저항의 축"의 일원으로, 하마스(가자), 후티(예멘)와 함께 이스라엘에
+      동시 다면 압박을 가하는 연대 구조를 형성합니다.
+      2023년 10월 7일 가자 전쟁 발발 직후 헤즈볼라의 레바논 전선 개방은 이 연대 전략의 직접적 발현입니다.
+      <span class="en-block">Hezbollah's "northern front" activation after October 7, 2023 exemplifies Iran's "multi-front" strategy — coordinating Hamas (Gaza), Hezbollah (Lebanon), and Houthis (Yemen) to stretch Israeli defense simultaneously.</span>
+    </p>
+  </section>
+
+  <!-- 정치적 관계도 -->
+  <section>
+    <h2><span class="icon">🗺️</span> 정치적 관계도 <span class="en">(Political Relationship Map)</span></h2>
+
+    <h3>주요 행위자 <span class="en">(Key Actors)</span></h3>
+    <div class="relation-diagram">
+      <div class="actor-card actor-israel">🇮🇱 이스라엘<br><small>Israel</small></div>
+      <div class="actor-card actor-hezbollah">🔴 헤즈볼라<br><small>Hezbollah</small></div>
+      <div class="actor-card actor-iran">🇮🇷 이란<br><small>Iran</small></div>
+      <div class="actor-card actor-lebanon">🇱🇧 레바논 정부<br><small>Lebanese Govt.</small></div>
+      <div class="actor-card actor-hamas">🟠 하마스<br><small>Hamas (Gaza)</small></div>
+      <div class="actor-card actor-us">🇺🇸 미국<br><small>United States</small></div>
+      <div class="actor-card actor-un">🌐 유엔/UNIFIL<br><small>UN / UNIFIL</small></div>
+      <div class="actor-card actor-saudi">🇸🇦 사우디<br><small>Saudi Arabia</small></div>
+      <div class="actor-card actor-syria">🇸🇾 시리아<br><small>Syria</small></div>
+    </div>
+
+    <h3>주요 관계 <span class="en">(Key Relationships)</span></h3>
+    <div class="relation-row">
+      <div class="relation-item">
+        <span class="rel-from">🇮🇷 이란</span>
+        <span class="rel-arrow">→</span>
+        <span class="rel-type rel-support">자금·무기 지원</span>
+        <span class="rel-to">🔴 헤즈볼라</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">이란이 IRGC를 통해 헤즈볼라를 창설·육성. 연간 수억 달러 지원 추정</span>
+      </div>
+      <div class="relation-item">
+        <span class="rel-from">🔴 헤즈볼라</span>
+        <span class="rel-arrow">↔</span>
+        <span class="rel-type rel-conflict">적대·무력충돌</span>
+        <span class="rel-to">🇮🇱 이스라엘</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">1982년 이래 지속적 무장 대립. 2006년, 2024년 전면전</span>
+      </div>
+      <div class="relation-item">
+        <span class="rel-from">🔴 헤즈볼라</span>
+        <span class="rel-arrow">↔</span>
+        <span class="rel-type rel-support">연대·협력</span>
+        <span class="rel-to">🟠 하마스</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">"저항의 축" 공동 전선. 가자 전쟁 연동 북부 전선 개방</span>
+      </div>
+      <div class="relation-item">
+        <span class="rel-from">🇱🇧 레바논 정부</span>
+        <span class="rel-arrow">→</span>
+        <span class="rel-type rel-neutral">통제 불능</span>
+        <span class="rel-to">🔴 헤즈볼라</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">헤즈볼라는 레바논 내각에 참여하면서도 독자 군사력 보유. "국가 안의 국가"</span>
+      </div>
+      <div class="relation-item">
+        <span class="rel-from">🇺🇸 미국</span>
+        <span class="rel-arrow">→</span>
+        <span class="rel-type rel-support">군사·외교 지원</span>
+        <span class="rel-to">🇮🇱 이스라엘</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">연간 수십억 달러 군사 원조. 휴전 협상 중재자 역할</span>
+      </div>
+      <div class="relation-item">
+        <span class="rel-from">🇮🇷 이란</span>
+        <span class="rel-arrow">↔</span>
+        <span class="rel-type rel-conflict">적대·대립</span>
+        <span class="rel-to">🇮🇱 이스라엘</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">이란 핵개발 vs 이스라엘 선제타격 위협. 2026년 직접 충돌로 확대</span>
+      </div>
+      <div class="relation-item">
+        <span class="rel-from">🌐 UN/UNIFIL</span>
+        <span class="rel-arrow">→</span>
+        <span class="rel-type rel-neutral">완충·감시</span>
+        <span class="rel-to">🇱🇧 남부 레바논</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">UN 결의 1701호에 따른 UNIFIL 남부 레바논 주둔. 실효적 억지력은 제한적</span>
+      </div>
+      <div class="relation-item">
+        <span class="rel-from">🇸🇾 시리아</span>
+        <span class="rel-arrow">→</span>
+        <span class="rel-type rel-proxy">무기 이송 통로</span>
+        <span class="rel-to">🔴 헤즈볼라</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">이란 무기가 시리아를 경유해 헤즈볼라로 전달. 이스라엘이 시리아 내 보급로 공습</span>
+      </div>
+      <div class="relation-item">
+        <span class="rel-from">🇸🇦 사우디</span>
+        <span class="rel-arrow">↔</span>
+        <span class="rel-type rel-conflict">지역 패권 경쟁</span>
+        <span class="rel-to">🇮🇷 이란</span>
+        <span style="color:#6b7280;font-size:0.82rem;margin-left:auto;">수니파(사우디) vs 시아파(이란) 대리전. 레바논의 March 8/14 연합 분열에 영향</span>
+      </div>
+    </div>
+    <p style="margin-top:12px; font-size:0.85rem; color:#6b7280;">
+      출처: <a class="source-link" href="https://www.cfr.org/backgrounders/lebanon-how-israel-hezbollah-and-regional-powers-are-shaping-its-future" target="_blank">CFR - Lebanon Backgrounder</a> /
+      <a class="source-link" href="https://en.wikipedia.org/wiki/Iran%E2%80%93Israel_proxy_conflict" target="_blank">Wikipedia - Iran-Israel Proxy Conflict</a>
+    </p>
+  </section>
+
+  <!-- 레바논 정치 구조 -->
+  <section>
+    <h2><span class="icon">🏛️</span> 레바논 정치 구조 이해 <span class="en">(Lebanon's Political System)</span></h2>
+
+    <p>
+      레바논의 독특한 정치 구조는 이 분쟁을 이해하는 데 필수적입니다.
+      <span class="en-block">Understanding Lebanon's unique political system is essential to understanding why Hezbollah can operate independently of the state.</span>
+    </p>
+
+    <table>
+      <tr>
+        <th>직위</th>
+        <th>종파 배분</th>
+        <th>이유</th>
+      </tr>
+      <tr>
+        <td><strong>대통령</strong></td>
+        <td>마론파 기독교인 (Maronite Christian)</td>
+        <td rowspan="3">1943년 국가 독립 당시 인구 비율 기반 권력 분배 합의.<br>현재 인구 구조와 불일치해 구조적 갈등 유발.</td>
+      </tr>
+      <tr>
+        <td><strong>총리</strong></td>
+        <td>수니파 무슬림 (Sunni Muslim)</td>
+      </tr>
+      <tr>
+        <td><strong>국회의장</strong></td>
+        <td>시아파 무슬림 (Shia Muslim)</td>
+      </tr>
+    </table>
+
+    <div class="highlight-box">
+      <strong>March 8 연합 vs March 14 연합</strong>
+      <span class="en-block">Lebanon's two main political blocs</span>
+      <ul style="margin-top:8px; padding-left:20px; font-size:0.92rem;">
+        <li><strong>March 8 연합</strong>: 헤즈볼라 + 기독교 FPM(자유애국운동) 등. 이란·시리아와 친밀. <span class="en">(Pro-Iran/Syria bloc)</span></li>
+        <li><strong>March 14 연합</strong>: 사아드 하리리의 미래 운동 등. 미국·프랑스·사우디 지지. <span class="en">(Pro-West/Saudi bloc)</span></li>
+      </ul>
+      <span style="font-size:0.8rem;color:#6b7280;">출처: <a class="source-link" href="https://worldpeacefoundation.org/blog/the-ruination-of-lebanon/" target="_blank">World Peace Foundation - The Ruination of Lebanon</a></span>
+    </div>
+
+    <p>
+      헤즈볼라는 레바논 의회에서 의석을 갖고 내각에도 참여하는 <strong>합법적 정당인 동시에</strong>,
+      레바논군을 압도하는 독자 군사력을 보유한 <strong>무장조직</strong>입니다.
+      미국·EU·영국 등은 헤즈볼라를 테러 조직으로 지정하고 있지만, 레바논 내에서는 정치 세력입니다.
+      <span class="en-block">Hezbollah occupies a dual role: a legitimate political party with parliamentary seats, and a heavily armed militia that outguns the Lebanese Armed Forces — classified as a terrorist organization by the US, EU, and UK, yet a mainstream political actor within Lebanon.</span>
+    </p>
+  </section>
+
+  <!-- 현재 상황 -->
+  <section>
+    <h2><span class="icon">📡</span> 현재 상황 (2026년 6월 기준) <span class="en">(Current Situation, June 2026)</span></h2>
+
+    <div class="warn-box">
+      <strong>2026년 4~6월 급격한 확대:</strong> 이란-이스라엘 직접 충돌(2026 이란 전쟁)이 발발하면서
+      레바논 전선도 재점화됐습니다. 2026년 4월 이스라엘의 레바논 공습이 재개됐고,
+      2026년 6월 4일 미국의 중재로 새 휴전 합의가 이루어졌습니다.
+      <span class="en-block">The Iran-Israel direct confrontation (2026 Iran War) reignited the Lebanon front in April 2026. A new US-brokered ceasefire was reached on June 4, 2026.</span>
+      <span style="font-size:0.8rem;color:#6b7280;">출처: <a class="source-link" href="https://www.aljazeera.com/news/2026/6/4/israel-and-lebanon-agree-to-conditional-ceasefire" target="_blank">Al Jazeera - 2026.6.4</a> / <a class="source-link" href="https://en.wikipedia.org/wiki/2026_Israel%E2%80%93Lebanon_ceasefire" target="_blank">Wikipedia - 2026 ceasefire</a></span>
+    </div>
+
+    <h3>주요 현안 <span class="en">(Key Issues)</span></h3>
+    <ul style="padding-left:20px; font-size:0.93rem;">
+      <li style="margin-bottom:8px;">
+        <strong>이스라엘의 남부 레바논 일부 거점 유지</strong>: 2024년 11월 휴전 후에도 이스라엘은 전략적 고지대 5개 거점을 계속 점령 중.
+        <span class="en-block">Israel retained five strategic hilltop positions in southern Lebanon despite ceasefire deadlines (Jan and Feb 2025).</span>
+      </li>
+      <li style="margin-bottom:8px;">
+        <strong>헤즈볼라의 재건과 리타니 강 복귀 여부</strong>: 협정상 헤즈볼라는 리타니 강 북쪽으로 물러나야 하나, 실제 이행이 불확실.
+        <span class="en-block">Hezbollah is required to withdraw north of the Litani River (~30km from Israeli border) but compliance remains uncertain.</span>
+      </li>
+      <li style="margin-bottom:8px;">
+        <strong>레바논 재건과 국가 역량 강화</strong>: 전쟁 피해 복구와 레바논군의 남부 통제권 실질 확보가 향후 안정의 관건.
+        <span class="en-block">Post-war reconstruction and strengthening Lebanese Armed Forces' actual control over the south are key to long-term stability.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 핵심 용어 정리 -->
+  <section>
+    <h2><span class="icon">📚</span> 핵심 용어 정리 <span class="en">(Key Terms)</span></h2>
+    <table>
+      <tr>
+        <th>용어</th>
+        <th>설명</th>
+        <th>영어</th>
+      </tr>
+      <tr>
+        <td><strong>헤즈볼라</strong></td>
+        <td>1982년 이란의 지원으로 창설된 레바논 시아파 무장정치조직. "신의 당(Party of God)" 의미.</td>
+        <td>Hezbollah ("Party of God")</td>
+      </tr>
+      <tr>
+        <td><strong>나크바</strong></td>
+        <td>1948년 이스라엘 건국 당시 팔레스타인인 대규모 추방·피난. 아랍어로 "재앙".</td>
+        <td>Nakba ("Catastrophe")</td>
+      </tr>
+      <tr>
+        <td><strong>IRGC</strong></td>
+        <td>이란 이슬람혁명수비대. 헤즈볼라 창설·지원의 핵심 주체.</td>
+        <td>Islamic Revolutionary Guard Corps</td>
+      </tr>
+      <tr>
+        <td><strong>리타니 강</strong></td>
+        <td>이스라엘 국경에서 약 30km 북쪽에 위치한 레바논 강. 헤즈볼라 철수 기준선.</td>
+        <td>Litani River</td>
+      </tr>
+      <tr>
+        <td><strong>저항의 축</strong></td>
+        <td>이란 주도의 반이스라엘 동맹. 헤즈볼라·하마스·후티 등 포함.</td>
+        <td>Axis of Resistance</td>
+      </tr>
+      <tr>
+        <td><strong>종파주의 (콘페셔널리즘)</strong></td>
+        <td>종교 공동체별로 정치 권력을 분배하는 레바논의 독특한 정치 체제.</td>
+        <td>Confessionalism</td>
+      </tr>
+      <tr>
+        <td><strong>UNIFIL</strong></td>
+        <td>UN 레바논 임시군. 1978년 창설. 남부 레바논 완충·감시 역할.</td>
+        <td>UN Interim Force in Lebanon</td>
+      </tr>
+      <tr>
+        <td><strong>셰바 농장</strong></td>
+        <td>이스라엘-레바논-시리아 국경 교차점의 분쟁 지역. 헤즈볼라 저항 명분.</td>
+        <td>Shebaa Farms</td>
+      </tr>
+    </table>
+  </section>
+
+  <div class="footer">
+    <p>생성일시: <span id="footer-date"></span> | 이 문서는 공개된 언론 보도 및 위키피디아 등을 참고하여 작성되었습니다.</p>
+  </div>
+
+</div>
+
+<script>
+  function formatKST(date) {
+    return date.toLocaleString('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: false
+    });
+  }
+  const now = new Date();
+  document.getElementById('created-date').textContent = formatKST(now);
+  document.getElementById('footer-date').textContent = formatKST(now);
+</script>
+</body>
+</html>
