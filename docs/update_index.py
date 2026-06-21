@@ -20,12 +20,13 @@ from typing import Optional
 DOCS_DIR = Path(__file__).parent
 INDEX_PATH = DOCS_DIR / "index.html"
 EXCLUDE_FILES = {"index.html"}
-KNOWN_CATEGORIES = {"study", "daily"}
+KNOWN_CATEGORIES = ["daily", "study", "tech"]
 
 # 카테고리별 JS 변수명 매핑
 CATEGORY_VAR = {
-    "study": "studyItems",
     "daily": "dailyItems",
+    "study": "studyItems",
+    "tech":  "techItems",
 }
 
 
@@ -64,7 +65,7 @@ def extract_title(html_path: Path) -> str:
     """
     stem_title = stem_to_title(html_path.stem)
     # daily: 파일명에 실제 내용이 담겨 있으므로 바로 반환
-    if html_path.parent.name == "daily":
+    if html_path.parent.name in ("daily",):
         return stem_title
 
     parser = TitleExtractor()

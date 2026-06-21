@@ -20,6 +20,8 @@
       --study-bg: #eff6ff;
       --daily-color: #0e7d5a;
       --daily-bg: #ecfdf5;
+      --tech-color: #7c3aed;
+      --tech-bg: #f5f3ff;
       --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
       --shadow-hover: 0 4px 12px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
     }
@@ -73,8 +75,9 @@
     }
     .tab-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-hover); }
     .tab-btn.active[data-cat="all"]    { background: var(--text); color: white; }
-    .tab-btn.active[data-cat="study"]  { background: var(--study-color); color: white; }
     .tab-btn.active[data-cat="daily"]  { background: var(--daily-color); color: white; }
+    .tab-btn.active[data-cat="study"]  { background: var(--study-color); color: white; }
+    .tab-btn.active[data-cat="tech"]   { background: var(--tech-color); color: white; }
 
     /* Stats bar */
     .stats {
@@ -121,6 +124,7 @@
     }
     .section-title .dot.study { background: var(--study-color); }
     .section-title .dot.daily { background: var(--daily-color); }
+    .section-title .dot.tech  { background: var(--tech-color); }
 
     /* Card list */
     .card-list {
@@ -150,6 +154,7 @@
     }
     .card.study:hover { border-color: #bfdbfe; }
     .card.daily:hover { border-color: #a7f3d0; }
+    .card.tech:hover  { border-color: #ddd6fe; }
 
     .card-icon {
       width: 44px;
@@ -163,6 +168,7 @@
     }
     .card.study .card-icon { background: var(--study-bg); }
     .card.daily .card-icon { background: var(--daily-bg); }
+    .card.tech  .card-icon { background: var(--tech-bg); }
 
     .card-body { flex: 1; min-width: 0; }
     .card-title {
@@ -191,6 +197,7 @@
     }
     .badge.study { background: var(--study-bg); color: var(--study-color); }
     .badge.daily { background: var(--daily-bg); color: var(--daily-color); }
+    .badge.tech  { background: var(--tech-bg);  color: var(--tech-color); }
 
     .card-arrow {
       color: var(--border);
@@ -249,14 +256,16 @@
 
 <nav class="tab-nav">
   <button class="tab-btn active" data-cat="all">전체</button>
-  <button class="tab-btn" data-cat="study">Study</button>
   <button class="tab-btn" data-cat="daily">Daily</button>
+  <button class="tab-btn" data-cat="study">Study</button>
+  <button class="tab-btn" data-cat="tech">Tech</button>
 </nav>
 
 <div class="stats">
   <span><strong id="total-count">0</strong>개 문서</span>
-  <span><strong id="study-count">0</strong>개 스터디</span>
   <span><strong id="daily-count">0</strong>개 데일리</span>
+  <span><strong id="study-count">0</strong>개 스터디</span>
+  <span><strong id="tech-count">0</strong>개 테크</span>
 </div>
 
 <main id="main-content">
@@ -280,6 +289,14 @@
       <span class="dot study"></span>Study
     </div>
     <div class="card-list" id="list-study"></div>
+  </div>
+
+  <!-- TECH section -->
+  <div class="section-block" id="section-tech">
+    <div class="section-title">
+      <span class="dot tech"></span>Tech
+    </div>
+    <div class="card-list" id="list-tech"></div>
   </div>
 
 </main>
@@ -352,14 +369,43 @@
 
   const dailyItems = [
     {
+      date: '2026-06-21',
+      title: '미국이란종전 FOMC금리동결 청년미래적금',
+      file: 'daily/news_2026-06-21_미국이란종전_FOMC금리동결_청년미래적금.html',
+    },
+    {
       date: '2026-06-20',
       title: '중동전쟁·AI랠리·코스피9000돌파',
       file: 'daily/news_2026-06-20_중동전쟁·AI랠리·코스피9000돌파.html',
     },
 ];
 
+  const techItems = [
+    {
+      date: '2026-06-19',
+      title: 'React에서 공유 가능한 URL 만들기 가이드',
+      file: 'tech/study_2026-06-19_React-Shareable-URL-Guide.html',
+    },
+    {
+      date: '2026-06-19',
+      title: 'GitHub Repository Docs 페이지 구성 & GitHub.io 차이점',
+      file: 'tech/study_2026-06-19_GitHub_Docs_페이지_구성.html',
+    },
+    {
+      date: '2026-06-12',
+      title: 'Linux 서버 파일을 Google Drive로 rclone 동기화하기',
+      file: 'tech/study_2026-06-12_rclone-linux-to-google-drive.html',
+    },
+    {
+      date: '2026-06-12',
+      title: 'Tailscale 방식과 다른 VPN과의 차이점',
+      file: 'tech/study_2026-06-12_Tailscale_VPN_비교.html',
+    },
+];
+
   // ─── Render ─────────────────────────────────────────────────────────────
-  const icons = { study: '📚', daily: '📰' };
+  const icons = { study: '📚', daily: '📰', tech: '💻' };
+  const labels = { study: 'Study', daily: 'Daily', tech: 'Tech' };
 
   function isNew(dateStr) {
     const diff = (new Date(TODAY) - new Date(dateStr)) / 86400000;
@@ -376,7 +422,7 @@
         <div class="card-body">
           <div class="card-meta">
             <span>${item.date}</span>
-            <span class="badge ${cat}">${cat === 'study' ? 'Study' : 'Daily'}</span>
+            <span class="badge ${cat}">${labels[cat]}</span>
             ${newBadge}
           </div>
           <div class="card-title">${item.title}</div>
@@ -400,10 +446,19 @@
       dailyEl.innerHTML = dailyItems.map(i => renderCard(i, 'daily')).join('');
     }
 
+    // Populate tech
+    const techEl = document.getElementById('list-tech');
+    if (techItems.length) {
+      techEl.innerHTML = techItems.map(i => renderCard(i, 'tech')).join('');
+    } else {
+      techEl.innerHTML = '<div class="empty"><div class="emoji">📭</div>테크 노트가 아직 없습니다.</div>';
+    }
+
     // Stats
-    document.getElementById('total-count').textContent = studyItems.length + dailyItems.length;
-    document.getElementById('study-count').textContent = studyItems.length;
+    document.getElementById('total-count').textContent = studyItems.length + dailyItems.length + techItems.length;
     document.getElementById('daily-count').textContent = dailyItems.length;
+    document.getElementById('study-count').textContent = studyItems.length;
+    document.getElementById('tech-count').textContent = techItems.length;
 
     // Last updated
     document.getElementById('last-updated').textContent = TODAY;
@@ -415,8 +470,9 @@
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const cat = btn.dataset.cat;
-      document.getElementById('section-study').classList.toggle('hidden', cat === 'daily');
-      document.getElementById('section-daily').classList.toggle('hidden', cat === 'study');
+      ['study', 'daily', 'tech'].forEach(c => {
+        document.getElementById(`section-${c}`).classList.toggle('hidden', cat !== 'all' && cat !== c);
+      });
     });
   });
 
