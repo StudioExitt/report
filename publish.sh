@@ -16,7 +16,7 @@ fi
 
 TODAY=$(date +%Y-%m-%d)
 git add .
-git commit -m "update : ($TODAY)"
+git commit -m "update : ($TODAY) $@"
 
 echo ""
 echo "=== GitHub에 푸시 ==="
