@@ -185,9 +185,14 @@ def update_index(docs_dir: Path, index_path: Path) -> None:
         new_from_scan = scanned.get(cat, [])
         scanned_by_file = {item["file"]: item for item in new_from_scan}
 
-        # 기존 항목: 제목/날짜를 스캔 결과로 갱신
+        # 기존 항목: 실제 파일 없으면 제거, 제목 변경 시 갱신
         updated_existing = []
         for item in existing:
+            actual = docs_dir / item["file"]
+            if not actual.exists():
+                report_lines.append(f"[{cat}] 파일 없음 → 삭제: {item['file']}")
+                changed = True
+                continue
             fresh = scanned_by_file.get(item["file"])
             if fresh and fresh["title"] != item.get("title"):
                 report_lines.append(f"[{cat}] 제목 갱신: {item['file']}")
