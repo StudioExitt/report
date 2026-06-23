@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>뉴스 요약 | 2026-06-24</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+      padding: 24px 16px 48px;
+    }
+    .container { max-width: 860px; margin: 0 auto; }
+    header {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 28px 32px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+      border-left: 5px solid #d63031;
+    }
+    header h1 { font-size: 1.5rem; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
+    header .meta { font-size: 0.85rem; color: #666; }
+    .section {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    }
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #3a5bd9;
+      border-bottom: 2px solid #e8ecf8;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title .icon { font-size: 1.15rem; }
+    .news-item {
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed #e5e5e5;
+    }
+    .news-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .news-item h3 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 5px;
+    }
+    .news-item p { font-size: 0.91rem; color: #333; margin-bottom: 4px; }
+    .source { font-size: 0.78rem; color: #888; margin-top: 4px; }
+    .source a { color: #3a5bd9; text-decoration: none; }
+    .source a:hover { text-decoration: underline; }
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .badge-hot { background: #ffe0e0; color: #c0392b; }
+    .badge-new { background: #e0f0ff; color: #1565c0; }
+    .badge-economy { background: #e8f5e9; color: #2e7d32; }
+    .badge-watch { background: #fff3e0; color: #e65100; }
+    .badge-geo { background: #f3e5f5; color: #6a1b9a; }
+    .badge-up { background: #e8f5e9; color: #1b5e20; }
+    .badge-down { background: #ffebee; color: #b71c1c; }
+    .summary-box {
+      background: #fff5f5;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      font-size: 0.92rem;
+      color: #5c2020;
+      border-left: 4px solid #d63031;
+    }
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .data-card {
+      background: #f9f9fc;
+      border-radius: 8px;
+      padding: 12px 14px;
+      text-align: center;
+      border: 1px solid #e8ecf8;
+    }
+    .data-card .label { font-size: 0.75rem; color: #888; margin-bottom: 4px; }
+    .data-card .value { font-size: 1.1rem; font-weight: 700; }
+    .value-down { color: #d63031; }
+    .value-up { color: #00897b; }
+    .value-neutral { color: #1a1a2e; }
+    .key-point {
+      background: #f0f4ff;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: #2c3e7a;
+      margin-top: 10px;
+      border-left: 3px solid #3a5bd9;
+    }
+    footer {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.8rem;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>오늘의 뉴스 요약</h1>
+    <div class="meta">
+      <span id="report-date"></span> &nbsp;|&nbsp; 국내외 경제·금융 동향
+    </div>
+  </header>
+
+  <!-- 오늘의 핵심 요약 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚡</span> 오늘의 핵심 요약</div>
+    <div class="summary-box">
+      6월 23일(화) 코스피가 역대 최대 낙폭을 기록하며 서킷브레이커와 매도 사이드카가 연속 발동됐습니다. 미국 나스닥(-4.18%)·필라델피아 반도체지수(-10.26%)의 폭락이 국내 시장을 강타한 가운데, 미 연준 신임 의장 케빈 워시의 첫 FOMC에서 나온 매파적 신호와 예상치를 크게 웃돈 미 고용지표가 직접적 원인으로 지목됩니다. 한편 미국-이란 이슬라마바드 MoU 체결(6/17) 이후 60일 협상 기간이 진행 중이며, 호르무즈 해협 기뢰 제거 작업이 이어지고 있습니다.
+    </div>
+  </div>
+
+  <!-- 국내 금융시장 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🇰🇷</span> 국내 금융시장</div>
+
+    <div class="data-grid">
+      <div class="data-card">
+        <div class="label">코스피 (6/23)</div>
+        <div class="value value-down">▼ 8%대 급락</div>
+      </div>
+      <div class="data-card">
+        <div class="label">서킷브레이커</div>
+        <div class="value value-down">발동 (올해 최초)</div>
+      </div>
+      <div class="data-card">
+        <div class="label">USD/KRW</div>
+        <div class="value value-down">1,531.25 원</div>
+      </div>
+      <div class="data-card">
+        <div class="label">반도체주</div>
+        <div class="value value-down">대형주 급락</div>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-hot">속보</span>코스피, 역대 최대 낙폭… 서킷브레이커·사이드카 연속 발동</h3>
+      <p>6월 23일 오후 2시 33분, 코스피가 장중 8% 이상 급락하며 서킷브레이커 1단계가 발동됐습니다. 이어 매도 사이드카도 가동되며 올해 코스피 27번째, 코스닥 15번째 사이드카 발동이 기록됐습니다. 장중 지수는 7,400대까지 하락했으며, 이는 단일 거래일 기준 역대 최대 낙폭에 해당합니다.</p>
+      <p>급락의 주요 원인은 미국 필라델피아 반도체지수(-10.26%) 및 나스닥(-4.18%) 폭락의 여파로, 국내 반도체 대형주를 중심으로 차익실현 매물이 쏟아졌습니다.</p>
+      <div class="source">출처: <a href="https://imnews.imbc.com/replay/2026/nwdesk/article/6828243_37004.html" target="_blank">MBC 뉴스 – 반도체주 폭락에 환율도 급등‥'검은 월요일' 오나</a> &nbsp;|&nbsp; <a href="https://www.fnnews.com/news/202606231602307695" target="_blank">파이낸셜뉴스 – '검은 화요일' 맞은 코스피</a> &nbsp;|&nbsp; <a href="https://www.news1.kr/finance/general-stock/6205989" target="_blank">뉴스1 – 코스피 10% 급락 '안전판' 줄가동</a></div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-watch">환율</span>원·달러 환율 1,531원대… 중동 불확실성 지속</h3>
+      <p>6월 21일 기준 USD/KRW는 1,531.25원(전일比 +0.27%)을 기록했으며, 6월 평균 1,538원·월말 1,554원이 예상됩니다. 미국-이란 협상 진행 중 유가 변동과 호르무즈 해협 불확실성이 원화 약세 압력으로 작용하고 있습니다. 지난 12개월 원화는 달러 대비 11.67% 하락했습니다.</p>
+      <div class="source">출처: <a href="https://ko.tradingeconomics.com/south-korea/currency" target="_blank">Trading Economics – 대한민국 원 환율</a></div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-economy">수출</span>6월 1~20일 수출 620억달러… 역대 최대·전년比 +60.4%</h3>
+      <p>관세청 발표에 따르면 6월 1~20일 누적 수출액은 620억달러로 전년 동기 대비 60.4% 증가, 역대 같은 기간 최고치를 기록했습니다. 반도체 수출만 255억달러로 전년比 188.4% 급증하며 전체 수출 비중 41.2%를 차지했습니다(전년 22.9%). AI 서버용 고대역폭메모리(HBM) 수요 폭발이 핵심 동력으로 분석됩니다.</p>
+      <div class="source">출처: <a href="https://www.etoday.co.kr/news/view/2595807" target="_blank">이투데이 – 6월 중순 수출 60.4%↑ '역대 최대'⋯반도체 188.4% 증가</a> &nbsp;|&nbsp; <a href="https://www.tfmedia.co.kr/news/article.html?no=205264" target="_blank">조세금융신문 – 6월 20일 누적 수출 60%↑</a></div>
+    </div>
+    <div class="key-point">💡 수출 호조에도 미 증시 충격과 금리인상 우려가 국내 증시를 압박하는 '펀더멘털과 시장 심리의 괴리' 국면이 지속되고 있습니다.</div>
+  </div>
+
+  <!-- 글로벌 금융시장 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🌐</span> 글로벌 금융시장</div>
+
+    <div class="data-grid">
+      <div class="data-card">
+        <div class="label">나스닥 (6/23)</div>
+        <div class="value value-down">▼ 4.18%</div>
+      </div>
+      <div class="data-card">
+        <div class="label">필라델피아 반도체</div>
+        <div class="value value-down">▼ 10.26%</div>
+      </div>
+      <div class="data-card">
+        <div class="label">마이크론 (MU)</div>
+        <div class="value value-down">▼ 13.25%</div>
+      </div>
+      <div class="data-card">
+        <div class="label">S&amp;P 500 (6/22)</div>
+        <div class="value value-down">▼ 0.53%</div>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-hot">폭락</span>미국 나스닥·반도체주 급락… 예상 2배 웃돈 고용 지표가 방아쇠</h3>
+      <p>6월 하반기 미국 증시에서 AI·반도체 주도주들이 급락했습니다. 발단은 미국의 5월 비농업 부문 신규 고용이 17만 2천 명으로 시장 예상치의 두 배 이상을 기록한 것입니다. 강한 고용은 미 연준이 금리를 추가 인상할 수 있다는 전망을 강화시키며 그동안 고평가 논란을 받아온 기술주 매도를 촉발했습니다.</p>
+      <p>나스닥은 4.18%, 필라델피아 반도체지수는 10.26% 하락했으며, 마이크론 테크놀로지(-13.25%) 등 메모리 반도체 기업들의 낙폭이 특히 컸습니다.</p>
+      <div class="source">출처: <a href="https://www.g-enews.com/article/Global-Biz/2026/06/202606071956239446906806b77b_1" target="_blank">글로벌이코노믹 – 느닷없는 반도체 주가 폭락과 블랙먼데이</a> &nbsp;|&nbsp; <a href="https://kr.investing.com/analysis/article-200457630" target="_blank">Investing.com – AI와 반도체로의 극단적 쏠림이 만든 대혼란 장세</a></div>
+    </div>
+  </div>
+
+  <!-- 미 연준(Fed) -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🏦</span> 미 연준(Fed) — 워시 의장 체제 첫 FOMC</div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-watch">매파</span>FOMC 금리 동결(3.50~3.75%)… 연내 인상 가능성 시사</h3>
+      <p>6월 17일(현지시각) 케빈 워시 신임 의장 체제에서 첫 FOMC가 열렸습니다. 연방기금금리는 만장일치로 3.50~3.75%에 동결됐으나, 워시 의장은 물가 2% 목표 달성을 위한 강경한 입장을 밝혔습니다.</p>
+      <p>성명서는 130단어로 대폭 축소됐고(전 회의 341단어), 금리 인하 편향 문구가 삭제됐습니다. 점도표(dot plot)에서는 18명 중 9명이 연내 금리 인상을 전망했으며, 6명은 25bp 인상 2회를 예상했습니다.</p>
+      <p>5월 CPI는 전년比 4.2% 상승(에너지·유가 급등 주도)으로 인플레이션 압력이 지속되고 있습니다.</p>
+      <div class="source">출처: <a href="https://www.cnbc.com/2026/06/17/fed-interest-rate-decision-june-2026.html" target="_blank">CNBC – Fed holds rates steady</a> &nbsp;|&nbsp; <a href="https://www.npr.org/2026/06/17/nx-s1-5860084/fed-chief-warsh-first-fomc-meeting" target="_blank">NPR – Federal Reserve holds interest rates steady</a> &nbsp;|&nbsp; <a href="https://www.chase.com/personal/investments/learning-and-insights/article/kevin-warsh-june-2026-federal-reserve-meeting-key-takeaways" target="_blank">Chase – Warsh's First Fed Meeting: 3 Key Takeaways</a></div>
+    </div>
+    <div class="key-point">💡 연내 금리 인상 가능성이 다시 부각되며 미 국채 금리 상승 → 기술주 밸류에이션 압박이 이어지는 구조입니다. 다음 FOMC는 7월 예정.</div>
+  </div>
+
+  <!-- 중동·지정학 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🌍</span> 지정학 &amp; 국제 정세</div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-geo">중동</span>미국-이란 이슬라마바드 MoU 체결… 60일 협상 기간 진행 중</h3>
+      <p>6월 17일(현지시각) 트럼프 대통령과 이란 페제시키안 대통령이 이슬라마바드 MoU에 원격 서명했습니다(트럼프는 베르사유궁 G7 만찬 중). 합의는 60일 휴전 프레임워크로, 호르무즈 해협 재개방, 미국의 이란 항구 해상봉쇄 해제, 25억달러 동결자산 해제 협의, 이란 재건 기금 300억달러 조성 등을 포함합니다.</p>
+      <p>다만 이란 핵 농축 수준·고농축 우라늄 재고 처리 문제는 미해결 상태로, 이란은 최대 5년 농축 중단에 개방적 입장을 보이고 있습니다.</p>
+      <div class="source">출처: <a href="https://www.npr.org/2026/06/19/nx-s1-5863544/trump-us-iran-agreement" target="_blank">NPR – U.S.-Iran 합의 내용</a> &nbsp;|&nbsp; <a href="https://time.com/article/2026/06/19/iran-united-states-agreement-nuclear-program-war-israel-lebanon/" target="_blank">TIME – 60일 테스트: 미국-이란 합의의 의미</a></div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-watch">호르무즈</span>해협 재개방 진행 중… 선박 500여 척 대기, 기뢰 제거 작업 지속</h3>
+      <p>협정에 따라 호르무즈 해협이 순차 재개방 중이지만, 대기 선박 500여 척의 통항 순서 및 안전 확보 문제가 남아 있습니다. 해협 내 이란군 부설 기뢰의 제거 작업이 수 주가 소요될 전망이며, 선사들은 안전 절차 미비를 우려하고 있습니다.</p>
+      <p>IEA에 따르면 봉쇄 기간 동안 하루 1,400만 배럴 공급 부족이 발생했습니다.</p>
+      <div class="source">출처: <a href="https://www.aljazeera.com/economy/2026/6/17/oil-prices-continue-slide-amid-hopes-for-peace-opening-of-strait-of-hormuz" target="_blank">Al Jazeera – 호르무즈 재개방 기대에 유가 하락</a> &nbsp;|&nbsp; <a href="https://www.cnbc.com/2026/06/19/oil-prices-wti-brent-crude-us-iran-deal-strait-hormuz-shipping-recovery.html" target="_blank">CNBC – 제네바 평화 협상 연기 후 유가 반등</a></div>
+    </div>
+  </div>
+
+  <!-- 국제 유가 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🛢️</span> 국제 유가 동향</div>
+
+    <div class="data-grid">
+      <div class="data-card">
+        <div class="label">브렌트유 (최근)</div>
+        <div class="value value-down">$77~80/bbl</div>
+      </div>
+      <div class="data-card">
+        <div class="label">협정 직후 낙폭</div>
+        <div class="value value-down">~5%/일 (2일 연속)</div>
+      </div>
+      <div class="data-card">
+        <div class="label">IEA 공급 부족</div>
+        <div class="value value-neutral">1,400만 bbl/일</div>
+      </div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-economy">유가</span>브렌트유 $77~80 수준… 협정 이후 낙폭 지속, 레바논 재발화로 반등도</h3>
+      <p>미국-이란 협정 서명 이후 브렌트유는 이틀 연속 약 5%씩 하락해 80달러 밑으로 떨어졌습니다. 다만 6월 19일 레바논 전투 재발화 소식에 유가가 반등했고, 제네바 후속 협상이 갑작스럽게 연기되자 재차 상승하는 등 변동성이 높은 상황입니다. 호르무즈 해협의 완전한 정상화까지는 수 주가 소요될 전망으로, 에너지 공급 불확실성은 당분간 지속됩니다.</p>
+      <div class="source">출처: <a href="https://www.aljazeera.com/economy/2026/6/18/oil-prices-fall-stocks-rally-as-us-iran-sign-framework-to-end-war" target="_blank">Al Jazeera – 협정 서명 후 유가 하락·증시 반등</a> &nbsp;|&nbsp; <a href="https://www.aljazeera.com/economy/2026/6/19/oil-prices-rise-as-lebanon-fighting-erupts-and-hormuz-traffic-still-slow" target="_blank">Al Jazeera – 레바논 전투 재발화에 유가 반등</a></div>
+    </div>
+    <div class="key-point">💡 유가 하락은 한국 에너지 수입 비용 절감과 인플레이션 완화에 긍정적이나, 정상화 지연 시 에너지 비용 변동성 리스크는 남아 있습니다.</div>
+  </div>
+
+  <!-- 글로벌 경제 전망 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span> 글로벌 경제 전망</div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-down">하향</span>세계은행: 2026년 글로벌 성장률 2.5% 전망… 팬데믹 이후 최저</h3>
+      <p>세계은행(World Bank)은 6월 글로벌 경제 전망 보고서에서 2026년 세계 경제성장률을 2025년 2.9%에서 2.5%로 하향 조정했습니다. 이는 코로나19 팬데믹 이후 가장 낮은 수준으로, 중동 분쟁 여파로 에너지 가격이 상승하고 에너지 수입 의존 경제권의 타격이 집중됐습니다.</p>
+      <p>IMF도 4월 전망에서 지정학 리스크를 '다시 시험대에 오른 글로벌 경제'로 표현하며 하방 리스크를 강조했습니다.</p>
+      <div class="source">출처: <a href="https://thedocs.worldbank.org/en/doc/2b672b3b0415d6b66c45b66579db4ef5-0050012026/original/GEP-Jun-2026.pdf" target="_blank">World Bank – Global Economic Prospects June 2026</a> &nbsp;|&nbsp; <a href="https://www.imf.org/-/media/files/publications/weo/2026/april/english/ch1.pdf" target="_blank">IMF – World Economic Outlook April 2026</a></div>
+    </div>
+
+    <div class="news-item">
+      <h3><span class="badge badge-watch">신흥국</span>신흥국 부채·금융비용 부담 급증… 자본 유출 경계</h3>
+      <p>글로벌 금리 상승과 달러 강세 지속으로 신흥국의 채무 상환 부담이 커지고 있습니다. 투자자들은 신흥국의 국가부채 수준, 통화 안정성, 자본 흐름을 면밀히 주시하고 있으며, 에너지 수입 의존도가 높은 국가들의 경상수지 악화가 우려됩니다.</p>
+      <div class="source">출처: <a href="https://www.ifminvestors.com/news-and-insights/thought-leadership/economic-update-june-2026/" target="_blank">IFM Investors – Economic Update June 2026</a></div>
+    </div>
+  </div>
+
+  <!-- 정부·정책 일정 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🗓️</span> 주요 정책·일정 (6월 22~26일)</div>
+    <div class="news-item">
+      <h3><span class="badge badge-new">일정</span>이번 주 주요 정부 일정</h3>
+      <p>▸ 국회 연금개혁 특별위원회 범부처 지원TF 제2차 회의 개최<br>
+         ▸ 국가경쟁력 정책협의회 개최<br>
+         ▸ 중동 전쟁 이후 공급망 정책 간담회 (6/24, 재경부 2차관 참석)<br>
+         ▸ 2026년 4월 인구동향 및 5월 국내인구이동통계 발표<br>
+         ▸ OECD 통계정책위원회 제23차 회의 참가</p>
+      <div class="source">출처: <a href="https://www.etoday.co.kr/news/view/2595604" target="_blank">이투데이 – 정부 주요 일정 (6월 22~26일)</a></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>생성: <span id="gen-time"></span> &nbsp;|&nbsp; 본 리포트는 공개 언론·기관 자료를 바탕으로 AI가 요약한 정보이며 투자 조언이 아닙니다.</p>
+  </footer>
+
+</div>
+
+<script>
+  (function() {
+    const now = new Date();
+    const dateOpts = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+    const timeOpts = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    const locale = 'ko-KR';
+    document.getElementById('report-date').textContent = now.toLocaleDateString(locale, dateOpts);
+    document.getElementById('gen-time').textContent =
+      now.toLocaleDateString(locale, dateOpts) + ' ' + now.toLocaleTimeString(locale, timeOpts);
+  })();
+</script>
+</body>
+</html>
