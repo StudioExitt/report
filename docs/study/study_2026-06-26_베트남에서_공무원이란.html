@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>베트남에서 공무원이란? | Study Note</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Segoe UI', Arial, sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.7;
+      padding: 0 16px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 40px auto 60px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 48px 56px;
+    }
+    .meta {
+      font-size: 0.82rem;
+      color: #868e96;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: #6c757d;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .divider {
+      border: none;
+      border-top: 2px solid #e9ecef;
+      margin: 32px 0;
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 40px 0 14px;
+      padding-bottom: 6px;
+      border-bottom: 3px solid #4361ee;
+      display: inline-block;
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #343a40;
+      margin: 24px 0 10px;
+    }
+    h4 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: #495057;
+      margin: 18px 0 8px;
+    }
+    p {
+      margin-bottom: 12px;
+      font-size: 0.97rem;
+    }
+    .en {
+      font-size: 0.84rem;
+      color: #6c757d;
+      font-style: italic;
+      margin-left: 4px;
+    }
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 12px;
+    }
+    li {
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+    .card {
+      background: #f1f3f5;
+      border-left: 4px solid #4361ee;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .card-green { border-left-color: #2f9e44; background: #ebfbee; }
+    .card-orange { border-left-color: #e8590c; background: #fff4e6; }
+    .card-purple { border-left-color: #7048e8; background: #f3f0ff; }
+    .card-red { border-left-color: #c92a2a; background: #fff5f5; }
+    .badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .badge-blue { background: #d0ebff; color: #1864ab; }
+    .badge-green { background: #d3f9d8; color: #1b5e20; }
+    .badge-orange { background: #ffe8cc; color: #7c4a00; }
+    .badge-purple { background: #e5dbff; color: #4a1f8a; }
+    .source {
+      font-size: 0.78rem;
+      color: #868e96;
+    }
+    .source a {
+      color: #4361ee;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #4361ee;
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #e9ecef;
+    }
+    tr:nth-child(even) td { background: #f8f9fa; }
+    .highlight {
+      background: #fff3bf;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    .timeline {
+      border-left: 3px solid #4361ee;
+      padding-left: 20px;
+      margin: 16px 0;
+    }
+    .timeline-item {
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: #4361ee;
+      border-radius: 50%;
+      position: absolute;
+      left: -27px;
+      top: 5px;
+    }
+    .timeline-year {
+      font-weight: 700;
+      color: #4361ee;
+      font-size: 0.9rem;
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .compare-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 16px;
+      border-top: 3px solid #4361ee;
+    }
+    .compare-card h4 { margin-top: 0; }
+    @media (max-width: 600px) {
+      .container { padding: 24px 18px; }
+      .compare-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta">Study Note · 2026-06-26 (KST)</div>
+  <h1>베트남에서 공무원이란?</h1>
+  <p class="subtitle">What Are Civil Servants in Vietnam? — 법적 정의, 분류 체계, 급여 및 최신 개혁 동향</p>
+  <hr class="divider">
+
+  <!-- 개요 -->
+  <h2>1. 개요 <span class="en">Overview</span></h2>
+  <p>베트남의 공무원 제도는 <strong>사회주의 체제의 특수성</strong>을 반영하며, 공산당·국가·사회정치단체를 아우르는 넓은 의미의 "정치 시스템"을 기반으로 운영됩니다. 한국의 공무원 개념과는 달리, 베트남은 <span class="highlight">세 가지 독립된 법적 지위</span>로 공직자를 구분합니다.</p>
+  <div class="card">
+    <strong>핵심 법령 <span class="en">Key Legislation</span></strong><br>
+    <span class="source">「간부 및 공무원에 관한 법률」 (Law No. 22/2008/QH12, 2010.1.1 시행) → 2025년 법률 No. 80/2025/QH15로 전면 개정, 2025.7.1 시행</span>
+  </div>
+
+  <!-- 세 가지 범주 -->
+  <h2>2. 공직자의 세 가지 범주 <span class="en">Three Categories of Public Officials</span></h2>
+  <p>베트남은 공직자를 크게 세 가지로 구분합니다. 이 구분은 임용 방식과 재원 출처에 따라 명확히 다릅니다.</p>
+  <span class="source">출처: <a href="https://vietnamlawmagazine.vn/institutions-on-civil-servants-in-vietnam-4478.html" target="_blank">Vietnam Law Magazine – Institutions on civil servants in Vietnam</a></span>
+
+  <h3>① 깐보 (Cán Bộ, 간부) <span class="badge badge-blue">선출·임명직</span></h3>
+  <div class="card card-green">
+    <p><strong>정의:</strong> 선거, 승인, 임명, 지정 등을 통해 <strong>일정 임기</strong>의 직위를 맡은 베트남 시민</p>
+    <p><strong>소속:</strong> 공산당·국가·베트남 조국전선(Vietnam Fatherland Front)·사회정치단체 (중앙~읍면동 수준)</p>
+    <p><strong>재원:</strong> 국가 예산 (State budget)</p>
+    <ul>
+      <li>임기가 정해져 있으며 선거직·당직 포함</li>
+      <li>예: 국회의원, 당 지역위원회 서기, 성(省) 인민위원장</li>
+    </ul>
+    <span class="source">출처: <a href="https://vietanlaw.com/vietnam-law-on-cadres-and-civil-servants-2025/" target="_blank">Viet An Law – Vietnam Law on Cadres and Civil Servants 2025</a></span>
+  </div>
+
+  <h3>② 공쯔 (Công Chức, 공무원) <span class="badge badge-orange">채용·상시직</span></h3>
+  <div class="card card-orange">
+    <p><strong>정의:</strong> 시험 또는 채용 절차를 통해 <strong>국가기관의 직위</strong>에 채용된 베트남 시민</p>
+    <p><strong>소속:</strong> 공산당·국가기관·조국전선·사회정치단체, 인민군·공안(비간부 직위), 암호기관(비암호 직위)</p>
+    <p><strong>재원:</strong> 국가 예산 (State budget)</p>
+    <ul>
+      <li>임기 없이 상시 근무 (깐보와 차이점)</li>
+      <li>전문 자격과 능력에 의한 채용이 원칙</li>
+      <li>예: 중앙부처 행정직원, 세무·관세 공무원</li>
+    </ul>
+    <span class="source">출처: <a href="https://moj.gov.vn/vbpq/en/lists/vn%20bn%20php%20lut/view_detail.aspx?itemid=10505" target="_blank">Ministry of Justice – Law on Cadres and Civil Servants</a></span>
+  </div>
+
+  <h3>③ 비엔쯔 (Viên Chức, 공공직원) <span class="badge badge-purple">계약직·공공기관</span></h3>
+  <div class="card card-purple">
+    <p><strong>정의:</strong> <strong>공공 비영리기관</strong>(병원·학교·연구소 등)에 고용계약으로 근무하는 베트남 시민</p>
+    <p><strong>소속:</strong> 국립병원, 국립학교, 공공연구기관 등 공공 비사업 단위 (Public non-business units)</p>
+    <p><strong>재원:</strong> 해당 기관의 급여 펀드 (기관 수익 포함, 국가 예산 아님)</p>
+    <ul>
+      <li>근로계약에 기반한 고용 (Employment contract)</li>
+      <li>공무원(Công Chức)과 달리 공공서비스 전문직 성격</li>
+      <li>예: 국립병원 의사, 국립대 교수, 공공연구소 연구원</li>
+    </ul>
+    <span class="source">출처: <a href="https://vietnamlawmagazine.vn/institutions-on-civil-servants-in-vietnam-4478.html" target="_blank">Vietnam Law Magazine</a></span>
+  </div>
+
+  <!-- 비교표 -->
+  <h3>세 범주 비교 요약 <span class="en">Comparison Summary</span></h3>
+  <table>
+    <tr>
+      <th>구분</th>
+      <th>깐보 (Cán Bộ)</th>
+      <th>공쯔 (Công Chức)</th>
+      <th>비엔쯔 (Viên Chức)</th>
+    </tr>
+    <tr>
+      <td><strong>임용 방식</strong></td>
+      <td>선출·임명 (임기제)</td>
+      <td>채용 (상시)</td>
+      <td>고용계약</td>
+    </tr>
+    <tr>
+      <td><strong>소속 기관</strong></td>
+      <td>당·국가·사회정치단체</td>
+      <td>국가기관·당기관</td>
+      <td>공공 비영리기관</td>
+    </tr>
+    <tr>
+      <td><strong>재원</strong></td>
+      <td>국가 예산</td>
+      <td>국가 예산</td>
+      <td>기관 급여 펀드</td>
+    </tr>
+    <tr>
+      <td><strong>한국 유사 개념</strong></td>
+      <td>정무직·선출직</td>
+      <td>일반직 공무원</td>
+      <td>공공기관 직원</td>
+    </tr>
+  </table>
+
+  <!-- 법적 체계 -->
+  <h2>3. 법적 연혁 <span class="en">Legal History</span></h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">2008.11.13</div>
+      <p>「간부 및 공무원에 관한 법률」 제정 (법률 제22/2008/QH12호) – 2010.1.1 시행</p>
+      <span class="source">출처: <a href="https://thuvienphapluat.vn/van-ban/EN/Bo-may-hanh-chinh/Law-80-2025-QH15-cadres-and-civil-servants/666975/tieng-anh.aspx" target="_blank">Thư viện pháp luật</a></span>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2010.11.15</div>
+      <p>「공공직원에 관한 법률」 제정 – 2012.1.1 시행 (Viên Chức 별도 법제화)</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2019</div>
+      <p>법률 제52/2019/QH14호 개정 – 반부패 강화, 재산신고 의무 확대</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2025.06.24</div>
+      <p><strong>법률 제80/2025/QH15호 제정</strong> – 2025.7.1 시행. 디지털 행정 통합, 성과 기반 평가 기준 도입, 윤리 의무 강화</p>
+      <span class="source">출처: <a href="https://vietanlaw.com/vietnam-law-on-cadres-and-civil-servants-2025/" target="_blank">Viet An Law</a></span>
+    </div>
+  </div>
+
+  <!-- 직급 체계 -->
+  <h2>4. 직급 및 급여 체계 <span class="en">Grade & Salary System</span></h2>
+
+  <h3>전통적 직급 체계 (Ngạch, 등급) <span class="en">Traditional Rank System</span></h3>
+  <p>공무원은 <strong>학력·전문 훈련·근무 연수</strong>에 따라 직급이 결정됩니다.</p>
+  <table>
+    <tr>
+      <th>등급 (Grade)</th>
+      <th>호봉 수 (Steps)</th>
+      <th>승급 주기</th>
+    </tr>
+    <tr>
+      <td>D등급 (Grade D)</td>
+      <td>12호봉</td>
+      <td>2년마다 자동 승급</td>
+    </tr>
+    <tr>
+      <td>C등급 (Grade C)</td>
+      <td>9호봉</td>
+      <td>3년마다 자동 승급</td>
+    </tr>
+    <tr>
+      <td>B등급 (Grade B)</td>
+      <td>8호봉</td>
+      <td>3년마다 자동 승급</td>
+    </tr>
+    <tr>
+      <td>A등급 (Grade A)</td>
+      <td>6호봉</td>
+      <td>3년마다 자동 승급</td>
+    </tr>
+  </table>
+  <span class="source">출처: <a href="https://www.vietnam.vn/en/xep-luong-doi-voi-nguoi-duoc-tuyen-dung-vao-cong-chuc-ap-dung-tu-1-3-2026" target="_blank">Vietnam.vn – Salary classification for newly recruited civil servants</a></span>
+
+  <h3>새로운 성과 기반 급여제 (2026.7.1 시행) <span class="en">Performance-Based Salary System</span></h3>
+  <div class="card card-red">
+    <strong>핵심 변화:</strong> 연공서열(근무연수) 중심 → <strong>직위 + 성과</strong> 중심으로 전환
+    <ul style="margin-top:10px;">
+      <li><span class="badge badge-green">우수 (Excellent)</span> 최고 수준 급여</li>
+      <li><span class="badge badge-blue">양호 (Good)</span></li>
+      <li><span class="badge badge-orange">보통 (Satisfactory)</span></li>
+      <li><span class="badge badge-purple">미흡 (Unsatisfactory)</span> 최저 수준 또는 퇴직 대상</li>
+    </ul>
+    <p style="margin-top:8px; font-size:0.88rem; color:#555;">각 기관은 2026.7.1까지 직위별 직무기술서와 급여 기준을 완비해야 합니다.</p>
+    <span class="source">출처: <a href="https://www.vietnam.vn/en/co-che-tien-luong-moi-cho-vien-chuc-tu-ngay-1-7-2026" target="_blank">Vietnam.vn – New salary mechanism effective July 1, 2026</a></span>
+  </div>
+
+  <!-- 채용 절차 -->
+  <h2>5. 채용 절차 <span class="en">Recruitment Process</span></h2>
+  <p>2024년 개정 기준, 공무원 채용은 <strong>6단계, 최장 190 근무일</strong> 이내에 완료됩니다.</p>
+  <span class="source">출처: <a href="https://www.vietnam.vn/en/thu-tuc-thi-tuyen-cong-chuc-moi-gom-6-buoc" target="_blank">Vietnam.vn – New civil servant recruitment procedure</a></span>
+
+  <ol>
+    <li>
+      <strong>지원서 접수</strong> – 방문 제출, 이메일, 전자 포털 등 다양한 방식 허용
+    </li>
+    <li>
+      <strong>1차 시험 (컴퓨터 객관식)</strong> – 일반 지식, 국가행정, 공무원 권리·의무, 공직 윤리, 사회·문화·역사 등 60문항
+    </li>
+    <li>
+      <strong>2차 시험 (전문 과목)</strong> – 해당 직위의 전문 업무 능력 평가
+    </li>
+    <li>
+      <strong>결과 집계</strong> – 2차 시험 완료 후 5 근무일 이내 합산; 권한 있는 장이 5 근무일 이내 승인
+    </li>
+    <li>
+      <strong>서류 제출</strong> – 합격자는 결과 발표 후 20일 이내 채용 서류 제출
+    </li>
+    <li>
+      <strong>임용 결정</strong> – 권한 기관이 임용 여부 최종 결정
+    </li>
+  </ol>
+
+  <h3>임용 요건 <span class="en">Eligibility Requirements</span></h3>
+  <ul>
+    <li>베트남 시민권 보유</li>
+    <li>우수한 정치적·도덕적 품성</li>
+    <li>결격 전력 없음 (범죄 기록 등)</li>
+  </ul>
+
+  <!-- 권리와 의무 -->
+  <h2>6. 공무원의 권리와 의무 <span class="en">Rights & Obligations</span></h2>
+
+  <h3>의무 <span class="en">Obligations</span></h3>
+  <div class="card">
+    <h4>① 국가·당에 대한 의무</h4>
+    <ul>
+      <li>공산당과 사회주의 베트남 공화국에 충성</li>
+      <li>당의 방침·정책·원칙 엄수</li>
+      <li>국가 이익 및 조국의 명예 수호</li>
+    </ul>
+
+    <h4>② 인민에 대한 의무</h4>
+    <ul>
+      <li>시민의 인권 및 권리 존중·보호</li>
+      <li>인민에 헌신하고 민의 청취</li>
+      <li>인민의 감시 수용</li>
+    </ul>
+
+    <h4>③ 직무 수행 의무</h4>
+    <ul>
+      <li>부여된 임무 성실히 수행, 결과에 책임</li>
+      <li>동료와 협력, 기관 내 단결 유지</li>
+      <li>국가 자산 관리·보호 및 효율적 활용</li>
+      <li>직무의 공개성·투명성 확보</li>
+    </ul>
+  </div>
+
+  <h3>금지 행위 <span class="en">Prohibited Conduct</span></h3>
+  <div class="card card-red">
+    <ul>
+      <li>직위·권한·공공 정보를 이용한 사익 추구</li>
+      <li>국가 기밀 누설</li>
+      <li>이해충돌이 발생하는 생산·사업 활동 참여</li>
+      <li>반부패 규정 위반 행위</li>
+    </ul>
+  </div>
+
+  <h3>권리 <span class="en">Rights</span></h3>
+  <ul>
+    <li>학습 및 과학 연구 권리</li>
+    <li>경제·사회 활동 참여 권리</li>
+    <li>주택·교통·사회보험·건강보험 혜택</li>
+    <li>연차 휴가, 공휴일, 경조사 휴가 (노동법 기준)</li>
+  </ul>
+
+  <!-- 규모 및 개혁 -->
+  <h2>7. 베트남 공무원 규모 및 최근 개혁 동향 <span class="en">Scale & Reform</span></h2>
+
+  <h3>규모 <span class="en">Scale</span></h3>
+  <div class="card card-green">
+    <ul>
+      <li><strong>약 200만 명</strong>이 공공 부문에 종사 (2022년 정부 발표 기준)</li>
+      <li>ILO 추정치는 이보다 상당히 높음</li>
+    </ul>
+    <span class="source">출처: <a href="https://journals.sagepub.com/doi/10.1177/0734371X13484831" target="_blank">SAGE Journals – State of Civil Service Systems in Asia-Pacific</a></span>
+  </div>
+
+  <h3>2025~2026년 구조 개혁 <span class="en">Ongoing Reform</span></h3>
+  <div class="card card-orange">
+    <ul>
+      <li><strong>2025.7.31까지</strong> 공무원·공공직원 약 <strong>9만 명 감축</strong> (정원 20% 감소 목표)</li>
+      <li>Decree No. 335/2025/ND-CP: 2026년부터 새로운 성과 평가·분류 기준 적용</li>
+      <li>읍면동 단위로 <strong>4,000명 재배치</strong> (행정 구조 개편)</li>
+      <li>"무능한 공무원의 안전지대 제거"가 핵심 목표</li>
+    </ul>
+    <span class="source">출처: <a href="https://vietnamnet.vn/en/vietnam-streamlines-nearly-90-000-public-employees-in-bold-reform-move-2433449.html" target="_blank">VietnamNet – Vietnam streamlines nearly 90,000 public employees</a></span>
+  </div>
+
+  <!-- 국제 비교 -->
+  <h2>8. 다른 나라와의 비교 <span class="en">International Comparison</span></h2>
+  <p>베트남의 공무원 체계는 <strong>사회주의 전환기(socialist transitional)</strong> 유형으로 분류되며, 중국·캄보디아와 유사한 범주에 속합니다.</p>
+  <span class="source">출처: <a href="https://journals.sagepub.com/doi/10.1177/0734371X13484831" target="_blank">SAGE Journals – State of Civil Service Systems in Asia-Pacific</a></span>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4>🇻🇳 베트남 vs 🇨🇳 중국</h4>
+      <ul>
+        <li>능력주의 개혁 방향 유사</li>
+        <li>당-국가 일체 구조 공통</li>
+        <li>베트남 법제 개혁이 약 5년 후행</li>
+      </ul>
+      <span class="source">출처: <a href="https://www.tandfonline.com/doi/abs/10.1080/13876988.2021.2000334" target="_blank">Taylor & Francis – Vietnam and China Civil Service Comparison</a></span>
+    </div>
+    <div class="compare-card">
+      <h4>🇻🇳 베트남 vs 🇰🇷 한국</h4>
+      <ul>
+        <li>한국: 고시 제도, 체계적 경쟁시험</li>
+        <li>베트남: 역사적으로 지배층 중심, 덜 형식화</li>
+        <li>최근 베트남도 공개시험 강화 추세</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h4>🇻🇳 베트남 vs 서구권</h4>
+      <ul>
+        <li>서구: 정치중립 강조, 당 분리</li>
+        <li>베트남: 공산당 충성이 핵심 의무</li>
+        <li>당직자(Cán Bộ)도 공직자로 포함</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 핵심 요약 -->
+  <h2>9. 핵심 요약 <span class="en">Key Takeaways</span></h2>
+  <div class="card">
+    <ol>
+      <li><strong>베트남 공무원은 단일 개념이 아니다</strong> — Cán Bộ(간부), Công Chức(공무원), Viên Chức(공공직원) 세 범주로 법적 구분</li>
+      <li><strong>당과 국가의 일체화</strong> — 공산당 직위자도 공직자로 분류, 국가예산으로 급여 지급</li>
+      <li><strong>2025년 법 전면 개정</strong> — 디지털 행정, 성과 평가, 윤리 강화 방향으로 현대화</li>
+      <li><strong>2026년 급여 혁신</strong> — 연공서열 → 직위·성과 기반으로 대전환 (한국 직무급제와 유사한 방향)</li>
+      <li><strong>대규모 감축 진행 중</strong> — 9만 명 감축, 정원 20% 절감 목표로 효율화 개혁 중</li>
+    </ol>
+  </div>
+
+  <hr class="divider">
+  <p style="font-size:0.8rem; color:#adb5bd; text-align:center;">
+    Generated by Claude Code · 2026-06-26 · 베트남 공무원 제도 스터디 노트
+  </p>
+
+</div>
+</body>
+</html>
