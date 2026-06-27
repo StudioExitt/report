@@ -18,6 +18,8 @@ TODAY=$(date +%Y-%m-%d)
 git add .
 git commit -m "update : ($TODAY) $@"
 
+git pull origin develop --rebase
+
 echo ""
 echo "=== GitHub에 푸시 ==="
 git push origin develop
