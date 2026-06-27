@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+#set -euo pipefail
 
-echo "=== index.html 업데이트 ==="
-cd "$REPO_ROOT/report/docs"
-
-python3 update_index.py
+REPO_ROOT="$(cd "$(dirname "$0")/." && pwd)"
 
 if git diff --quiet && git diff --cached --quiet; then
   echo ""
@@ -14,9 +10,14 @@ if git diff --quiet && git diff --cached --quiet; then
   exit 0
 fi
 
+echo "=== index.html 업데이트 ==="
+cd "$REPO_ROOT/docs"
+
+python3 update_index.py
+
 TODAY=$(date +%Y-%m-%d)
 git add .
-git commit -m "update : ($TODAY) $@"
+git commit -am "update : ($TODAY) $@"
 
 git pull origin develop --rebase
 
