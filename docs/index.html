@@ -117,6 +117,16 @@
       display: inline-block;
       background: var(--cat-color);
     }
+    .section-title .section-more {
+      margin-left: auto;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--cat-color);
+      text-decoration: none;
+    }
+    .section-title .section-more:hover { text-decoration: underline; }
 
     /* Card list */
     .card-list {
@@ -457,6 +467,7 @@
       section.innerHTML = `
         <div class="section-title">
           <span class="dot" style="--cat-color:${meta.color};"></span>${meta.label}
+          <a href="${cat}/index.html" class="section-more" style="--cat-color:${meta.color};">전체 보기 →</a>
         </div>
         <div class="card-list" id="list-${cat}"></div>`;
       main.appendChild(section);

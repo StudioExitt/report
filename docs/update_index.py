@@ -239,6 +239,162 @@ def render_data_block(today_str: str, meta: dict[str, dict], items_by_cat: dict[
     return "\n".join(lines)
 
 
+CATEGORY_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{label} · Reports</title>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <style>
+    :root {{
+      --primary: #1a56a0;
+      --primary-dark: #0f2d5c;
+      --secondary: #0e7d5a;
+      --bg: #f4f6fa;
+      --card: #ffffff;
+      --text: #1e2430;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --cat-color: {color};
+      --cat-bg: {bg};
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+    }}
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    body {{
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }}
+    .site-header {{
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--secondary) 100%);
+      color: white;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }}
+    .site-header .back {{
+      display: inline-block;
+      margin-bottom: 14px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+    }}
+    .site-header .back:hover {{ text-decoration: underline; }}
+    .site-header h1 {{
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }}
+    .stats {{
+      display: flex;
+      justify-content: center;
+      padding: 24px 24px 4px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }}
+    .stats strong {{ font-size: 1.1rem; font-weight: 700; color: var(--text); margin-right: 4px; }}
+    main {{ max-width: 860px; margin: 0 auto; padding: 24px 24px 64px; }}
+    .card-list {{ display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }}
+    .card {{
+      display: flex;
+      align-items: center;
+      background: var(--card);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.18s;
+      border: 1.5px solid transparent;
+      gap: 16px;
+    }}
+    .card:hover {{ transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--cat-bg); }}
+    .card-icon {{
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0; background: var(--cat-bg);
+    }}
+    .card-body {{ flex: 1; min-width: 0; }}
+    .card-title {{
+      font-size: 0.97rem; font-weight: 600; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px;
+    }}
+    .card-meta {{ font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }}
+    .new-badge {{
+      background: #fef3c7; color: #92400e; font-size: 0.68rem; font-weight: 800;
+      padding: 1px 7px; border-radius: 9999px; letter-spacing: 0.05em;
+    }}
+    .card-arrow {{ color: var(--border); font-size: 1.1rem; flex-shrink: 0; transition: color 0.18s, transform 0.18s; }}
+    .card:hover .card-arrow {{ color: var(--muted); transform: translateX(3px); }}
+    .empty {{ text-align: center; padding: 48px 24px; color: var(--muted); font-size: 0.9rem; }}
+    .empty .emoji {{ font-size: 2.5rem; margin-bottom: 12px; }}
+    footer {{ text-align: center; padding: 28px; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border); }}
+    @media (max-width: 600px) {{ .site-header h1 {{ font-size: 1.5rem; }} .card-title {{ font-size: 0.9rem; }} }}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a class="back" href="../index.html">&larr; 전체 보기</a>
+  <h1>{icon} {label}</h1>
+</header>
+<div class="stats"><strong>{count}</strong>개 문서</div>
+<main>
+  <div class="card-list">
+{cards}
+  </div>
+</main>
+<footer>&copy; 2026 StudioExitt Reports &middot; 마지막 업데이트: {today}</footer>
+</body>
+</html>
+"""
+
+
+def is_new(item_date: str, today_str: str) -> bool:
+    d1 = datetime.strptime(today_str, "%Y-%m-%d")
+    d2 = datetime.strptime(item_date, "%Y-%m-%d")
+    return (d1 - d2).days <= 3
+
+
+def render_category_card(item: dict, meta: dict, today_str: str) -> str:
+    filename = item["file"].split("/", 1)[1]
+    new_badge = '<span class="new-badge">NEW</span>' if is_new(item["date"], today_str) else ""
+    return f"""    <a href="{filename}" class="card">
+      <div class="card-icon">{meta['icon']}</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>{item['date']}</span>
+          {new_badge}
+        </div>
+        <div class="card-title">{item['title']}</div>
+      </div>
+      <span class="card-arrow">&rsaquo;</span>
+    </a>"""
+
+
+def render_category_page(cat: str, meta: dict, items: list[dict], today_str: str) -> str:
+    if items:
+        cards = "\n".join(render_category_card(item, meta, today_str) for item in items)
+    else:
+        cards = f'    <div class="empty"><div class="emoji">📭</div>{meta["label"]} 문서가 아직 없습니다.</div>'
+    return CATEGORY_PAGE_TEMPLATE.format(
+        label=meta["label"], icon=meta["icon"], color=meta["color"], bg=meta["bg"],
+        count=len(items), cards=cards, today=today_str,
+    )
+
+
+def write_category_pages(docs_dir: Path, meta: dict[str, dict], items_by_cat: dict[str, list[dict]],
+                          today_str: str, report_lines: list) -> None:
+    for cat, items in items_by_cat.items():
+        page_path = docs_dir / cat / "index.html"
+        new_html = render_category_page(cat, meta[cat], items, today_str)
+        if not page_path.exists() or page_path.read_text(encoding="utf-8") != new_html:
+            page_path.write_text(new_html, encoding="utf-8")
+            report_lines.append(f"[{cat}] {page_path.relative_to(docs_dir)} 갱신")
+
+
 def update_index(docs_dir: Path, index_path: Path) -> None:
     index_html = index_path.read_text(encoding="utf-8")
     today_str = date.today().strftime("%Y-%m-%d")
@@ -291,6 +447,7 @@ def update_index(docs_dir: Path, index_path: Path) -> None:
             report_lines.append(f"[{cat}] 항목이 모두 사라져 카테고리를 제거합니다.")
 
     meta = build_meta(list(items_by_cat.keys()), existing_meta)
+    write_category_pages(docs_dir, meta, items_by_cat, today_str, report_lines)
     new_data_block = "\n" + render_data_block(today_str, meta, items_by_cat) + "\n  "
 
     changed = new_data_block.strip() != data_block.strip() or bool(report_lines)

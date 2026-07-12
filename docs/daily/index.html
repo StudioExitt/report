@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily · Reports</title>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <style>
+    :root {
+      --primary: #1a56a0;
+      --primary-dark: #0f2d5c;
+      --secondary: #0e7d5a;
+      --bg: #f4f6fa;
+      --card: #ffffff;
+      --text: #1e2430;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --cat-color: #0e7d5a;
+      --cat-bg: #ecfdf5;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .site-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--secondary) 100%);
+      color: white;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+    .site-header .back {
+      display: inline-block;
+      margin-bottom: 14px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+    }
+    .site-header .back:hover { text-decoration: underline; }
+    .site-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      padding: 24px 24px 4px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .stats strong { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-right: 4px; }
+    main { max-width: 860px; margin: 0 auto; padding: 24px 24px 64px; }
+    .card-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .card {
+      display: flex;
+      align-items: center;
+      background: var(--card);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.18s;
+      border: 1.5px solid transparent;
+      gap: 16px;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--cat-bg); }
+    .card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0; background: var(--cat-bg);
+    }
+    .card-body { flex: 1; min-width: 0; }
+    .card-title {
+      font-size: 0.97rem; font-weight: 600; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px;
+    }
+    .card-meta { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+    .new-badge {
+      background: #fef3c7; color: #92400e; font-size: 0.68rem; font-weight: 800;
+      padding: 1px 7px; border-radius: 9999px; letter-spacing: 0.05em;
+    }
+    .card-arrow { color: var(--border); font-size: 1.1rem; flex-shrink: 0; transition: color 0.18s, transform 0.18s; }
+    .card:hover .card-arrow { color: var(--muted); transform: translateX(3px); }
+    .empty { text-align: center; padding: 48px 24px; color: var(--muted); font-size: 0.9rem; }
+    .empty .emoji { font-size: 2.5rem; margin-bottom: 12px; }
+    footer { text-align: center; padding: 28px; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border); }
+    @media (max-width: 600px) { .site-header h1 { font-size: 1.5rem; } .card-title { font-size: 0.9rem; } }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a class="back" href="../index.html">&larr; 전체 보기</a>
+  <h1>📰 Daily</h1>
+</header>
+<div class="stats"><strong>7</strong>개 문서</div>
+<main>
+  <div class="card-list">
+    <a href="news_2026-06-27_미이란종전협상_연준매파동결_반도체슈퍼사이클_에너지충격.html" class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>2026-06-27</span>
+          
+        </div>
+        <div class="card-title">미이란종전협상 연준매파동결 반도체슈퍼사이클 에너지충격</div>
+      </div>
+      <span class="card-arrow">&rsaquo;</span>
+    </a>
+    <a href="news_2026-06-26_마이크론실적서프라이즈_반도체반등_MSCI편입불발.html" class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>2026-06-26</span>
+          
+        </div>
+        <div class="card-title">마이크론실적서프라이즈 반도체반등 MSCI편입불발</div>
+      </div>
+      <span class="card-arrow">&rsaquo;</span>
+    </a>
+    <a href="news_2026-06-25_마이크론쇼크_반도체급락_연준매파_원화약세.html" class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>2026-06-25</span>
+          
+        </div>
+        <div class="card-title">마이크론쇼크 반도체급락 연준매파 원화약세</div>
+      </div>
+      <span class="card-arrow">&rsaquo;</span>
+    </a>
+    <a href="news_2026-06-24_코스피_서킷브레이커_미연준_매파_이란협정60일.html" class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>2026-06-24</span>
+          
+        </div>
+        <div class="card-title">코스피 서킷브레이커 미연준 매파 이란협정60일</div>
+      </div>
+      <span class="card-arrow">&rsaquo;</span>
+    </a>
+    <a href="news_2026-06-21_코스피9천돌파_월드컵진행중_중동에너지위기.html" class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>2026-06-21</span>
+          
+        </div>
+        <div class="card-title">코스피9천돌파 월드컵진행중 중동에너지위기</div>
+      </div>
+      <span class="card-arrow">&rsaquo;</span>
+    </a>
+    <a href="news_2026-06-21_미국이란종전_FOMC금리동결_청년미래적금.html" class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>2026-06-21</span>
+          
+        </div>
+        <div class="card-title">미국이란종전 FOMC금리동결 청년미래적금</div>
+      </div>
+      <span class="card-arrow">&rsaquo;</span>
+    </a>
+    <a href="news_2026-06-20_중동전쟁·AI랠리·코스피9000돌파.html" class="card">
+      <div class="card-icon">📰</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>2026-06-20</span>
+          
+        </div>
+        <div class="card-title">중동전쟁·AI랠리·코스피9000돌파</div>
+      </div>
+      <span class="card-arrow">&rsaquo;</span>
+    </a>
+  </div>
+</main>
+<footer>&copy; 2026 StudioExitt Reports &middot; 마지막 업데이트: 2026-07-12</footer>
+</body>
+</html>
