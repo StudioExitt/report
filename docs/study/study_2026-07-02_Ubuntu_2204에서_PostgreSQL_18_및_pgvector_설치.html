@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ubuntu 22.04에서 PostgreSQL 18 및 pgvector 설치 | Study Note</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Segoe UI', Arial, sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.7;
+      padding: 0 16px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 40px auto 60px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 48px 56px;
+    }
+    .meta {
+      font-size: 0.82rem;
+      color: #868e96;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: #6c757d;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .divider {
+      border: none;
+      border-top: 2px solid #e9ecef;
+      margin: 32px 0;
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 40px 0 14px;
+      padding-bottom: 6px;
+      border-bottom: 3px solid #4361ee;
+      display: inline-block;
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #343a40;
+      margin: 24px 0 10px;
+    }
+    h4 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: #495057;
+      margin: 18px 0 8px;
+    }
+    p {
+      margin-bottom: 12px;
+      font-size: 0.97rem;
+    }
+    .en {
+      font-size: 0.84rem;
+      color: #6c757d;
+      font-style: italic;
+      margin-left: 4px;
+    }
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 12px;
+    }
+    li {
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+    .card {
+      background: #f1f3f5;
+      border-left: 4px solid #4361ee;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .card-green { border-left-color: #2f9e44; background: #ebfbee; }
+    .card-orange { border-left-color: #e8590c; background: #fff4e6; }
+    .card-purple { border-left-color: #7048e8; background: #f3f0ff; }
+    .card-red { border-left-color: #c92a2a; background: #fff5f5; }
+    .badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .badge-blue { background: #d0ebff; color: #1864ab; }
+    .badge-green { background: #d3f9d8; color: #1b5e20; }
+    .badge-orange { background: #ffe8cc; color: #7c4a00; }
+    .badge-purple { background: #e5dbff; color: #4a1f8a; }
+    .source {
+      font-size: 0.78rem;
+      color: #868e96;
+    }
+    .source a {
+      color: #4361ee;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #4361ee;
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #e9ecef;
+    }
+    tr:nth-child(even) td { background: #f8f9fa; }
+    .highlight {
+      background: #fff3bf;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    .timeline {
+      border-left: 3px solid #4361ee;
+      padding-left: 20px;
+      margin: 16px 0;
+    }
+    .timeline-item {
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: #4361ee;
+      border-radius: 50%;
+      position: absolute;
+      left: -27px;
+      top: 5px;
+    }
+    .timeline-year {
+      font-weight: 700;
+      color: #4361ee;
+      font-size: 0.9rem;
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .compare-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 16px;
+      border-top: 3px solid #4361ee;
+    }
+    .compare-card h4 { margin-top: 0; }
+    pre {
+      background: #212529;
+      color: #f8f9fa;
+      padding: 16px 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      margin: 12px 0 16px;
+      line-height: 1.55;
+    }
+    code {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    p code, li code, td code {
+      background: #f1f3f5;
+      color: #c2255c;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 24px 18px; }
+      .compare-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta">Study Note · 2026-07-02 (KST)</div>
+  <h1>Ubuntu 22.04에서 PostgreSQL 18 및 pgvector 설치</h1>
+  <p class="subtitle">Installing PostgreSQL 18 and pgvector on Ubuntu 22.04 — 공식 PGDG 저장소를 이용한 설치부터 벡터 검색 확장까지</p>
+  <hr class="divider">
+
+  <!-- 개요 -->
+  <h2>1. 개요 <span class="en">Overview</span></h2>
+  <p>이 문서는 <strong>Ubuntu 22.04 LTS (Jammy Jellyfish)</strong> 환경에 <strong>PostgreSQL 18</strong>을 설치하고, 벡터 유사도 검색(vector similarity search)을 지원하는 확장 모듈인 <strong>pgvector</strong>를 함께 구성하는 방법을 정리한 스터디 노트입니다. 대상 독자는 AI/RAG(Retrieval-Augmented Generation) 애플리케이션이나 임베딩 기반 검색 시스템을 위해 Postgres를 벡터 데이터베이스로 활용하려는 백엔드/인프라 엔지니어입니다.</p>
+  <div class="card">
+    <strong>왜 지금 PostgreSQL 18인가? <span class="en">Why PostgreSQL 18?</span></strong><br>
+    PostgreSQL 18은 2025년 9월 정식 릴리스되었으며, 비동기 I/O(AIO) 서브시스템 도입으로 순차/랜덤 읽기 성능이 크게 개선되고, B-tree 스킵 스캔(skip scan) 등 다양한 성능 개선이 포함되었습니다.
+    <span class="source">출처: <a href="https://www.postgresql.org/about/news/postgresql-18-released-3142/" target="_blank">PostgreSQL 공식 블로그 – PostgreSQL 18 Released</a></span>
+  </div>
+
+  <!-- 핵심 개념 -->
+  <h2>2. 핵심 개념 정의 <span class="en">Key Concepts</span></h2>
+  <table>
+    <tr>
+      <th>용어</th>
+      <th>정의</th>
+    </tr>
+    <tr>
+      <td><strong>PGDG</strong><br><span class="en">PostgreSQL Global Development Group</span></td>
+      <td>PostgreSQL 공식 apt 저장소를 관리하는 그룹. Ubuntu 기본 저장소보다 최신 메이저 버전을 제공</td>
+    </tr>
+    <tr>
+      <td><strong>pgvector</strong></td>
+      <td>PostgreSQL에서 벡터(embedding) 데이터 타입과 <span class="highlight">코사인 유사도, L2 거리, 내적</span> 등 벡터 연산 및 근사 최근접 이웃(ANN) 인덱스를 제공하는 오픈소스 확장</td>
+    </tr>
+    <tr>
+      <td><strong>PGXS</strong><br><span class="en">PostgreSQL Extension Building Infrastructure</span></td>
+      <td>C로 작성된 PostgreSQL 확장을 소스 빌드할 때 사용하는 공식 빌드 인프라. <code>postgresql-server-dev-*</code> 패키지에 포함</td>
+    </tr>
+    <tr>
+      <td><strong>HNSW / IVFFlat</strong></td>
+      <td>pgvector가 지원하는 두 가지 ANN 인덱스 알고리즘. HNSW는 검색 정확도·속도가 우수하고, IVFFlat은 빌드가 빠르고 메모리 사용량이 적음</td>
+    </tr>
+  </table>
+
+  <!-- 사전 준비 -->
+  <h2>3. 사전 준비 <span class="en">Prerequisites</span></h2>
+  <ul>
+    <li>Ubuntu 22.04 LTS 서버 (root 또는 sudo 권한)</li>
+    <li>인터넷 접속 가능 환경 (apt 저장소 접근)</li>
+    <li>기존 PostgreSQL 설치 여부 확인 — Ubuntu 22.04 기본 저장소는 <span class="highlight">PostgreSQL 14</span>까지만 제공하므로 PGDG 저장소 추가가 필수</li>
+  </ul>
+  <span class="source">출처: <a href="https://www.postgresql.org/download/linux/ubuntu/" target="_blank">PostgreSQL 공식 문서 – Linux downloads (Ubuntu)</a></span>
+
+  <!-- PostgreSQL 18 설치 -->
+  <h2>4. PostgreSQL 18 설치 <span class="en">Installing PostgreSQL 18</span></h2>
+  <p>PGDG 저장소를 등록하는 방법은 두 가지입니다. 자동 스크립트를 이용하는 방법을 권장합니다.</p>
+
+  <h3>방법 A. 자동 설정 스크립트 (권장) <span class="en">Automated Setup (Recommended)</span></h3>
+  <div class="card card-green">
+    <p>PostgreSQL 팀이 제공하는 <code>postgresql-common</code> 패키지의 셋업 스크립트를 사용하면 OS 버전을 자동 감지하여 저장소를 구성합니다.</p>
+  </div>
+<pre><code># 1) postgresql-common 설치
+sudo apt update
+sudo apt install -y postgresql-common
+
+# 2) PGDG 저장소 자동 등록 스크립트 실행
+sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+
+# 3) 패키지 목록 갱신 및 PostgreSQL 18 설치
+sudo apt update
+sudo apt install -y postgresql-18</code></pre>
+
+  <h3>방법 B. 수동 설정 <span class="en">Manual Setup</span></h3>
+  <p>스크립트를 신뢰하기 어려운 보안 정책 환경이거나 세부 제어가 필요한 경우 수동으로 구성할 수 있습니다.</p>
+<pre><code># 1) 필수 패키지 설치
+sudo apt install -y curl ca-certificates
+
+# 2) PGDG 서명 키 다운로드
+sudo install -d /usr/share/postgresql-common/pgdg
+sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc \
+  --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+# 3) DEB822 형식 소스 파일 생성 (Ubuntu 22.04 = jammy)
+sudo tee /etc/apt/sources.list.d/pgdg.sources > /dev/null <<'EOF'
+Types: deb deb-src
+URIs: https://apt.postgresql.org/pub/repos/apt
+Suites: jammy-pgdg
+Architectures: amd64
+Components: main
+Signed-By: /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc
+EOF
+
+# 4) 패키지 목록 갱신 및 설치
+sudo apt update
+sudo apt install -y postgresql-18</code></pre>
+  <span class="source">출처: <a href="https://www.postgresql.org/download/linux/ubuntu/" target="_blank">PostgreSQL 공식 문서 – Linux downloads (Ubuntu)</a></span>
+
+  <h3>설치 확인 <span class="en">Verify Installation</span></h3>
+<pre><code>sudo systemctl status postgresql
+sudo -u postgres psql -c "SELECT version();"</code></pre>
+  <div class="card">
+    <p>정상 설치 시 <code>PostgreSQL 18.x</code>가 포함된 버전 문자열이 출력됩니다. 서비스는 설치와 동시에 자동으로 활성화·시작됩니다.</p>
+  </div>
+
+  <!-- pgvector 설치 -->
+  <h2>5. pgvector 설치 <span class="en">Installing pgvector</span></h2>
+  <p>pgvector는 Postgres 13 이상을 지원하며, 설치 방법은 <strong>apt 패키지 설치</strong>와 <strong>소스 빌드</strong> 두 가지가 있습니다.</p>
+  <span class="source">출처: <a href="https://github.com/pgvector/pgvector" target="_blank">GitHub – pgvector/pgvector</a></span>
+
+  <h3>방법 A. apt 패키지로 설치 (권장) <span class="en">APT Package (Recommended)</span></h3>
+  <div class="card card-green">
+    <p>PGDG 저장소에는 PostgreSQL 각 메이저 버전에 대응하는 pgvector 패키지가 미리 빌드되어 제공됩니다. 버전 번호(<code>18</code>)를 설치한 PostgreSQL 버전에 맞춰 지정합니다.</p>
+  </div>
+<pre><code>sudo apt install -y postgresql-18-pgvector</code></pre>
+
+  <h3>방법 B. 소스에서 빌드 <span class="en">Build from Source</span></h3>
+  <p>apt 패키지가 없는 환경이거나 최신 개발 버전을 사용하려는 경우 소스 빌드를 사용합니다.</p>
+<pre><code># 1) 빌드 도구 및 PostgreSQL 서버 개발 헤더 설치
+sudo apt install -y build-essential git postgresql-server-dev-18
+
+# 2) 소스 클론 (안정 버전 태그 기준)
+cd /tmp
+git clone --branch v0.8.4 https://github.com/pgvector/pgvector.git
+cd pgvector
+
+# 3) 빌드 및 설치
+make
+sudo make install</code></pre>
+  <div class="card card-orange">
+    <strong>주의 <span class="en">Note</span></strong>
+    <p><code>postgresql-server-dev-18</code> 패키지가 설치되어 있어야 <code>pg_config</code>를 통해 올바른 PostgreSQL 버전의 헤더/라이브러리 경로를 자동으로 찾습니다. 여러 버전의 PostgreSQL이 설치된 경우 <code>PG_CONFIG</code> 환경변수로 명시적으로 지정할 수 있습니다.</p>
+<pre><code>make PG_CONFIG=/usr/lib/postgresql/18/bin/pg_config
+sudo make install PG_CONFIG=/usr/lib/postgresql/18/bin/pg_config</code></pre>
+  </div>
+  <span class="source">출처: <a href="https://github.com/pgvector/pgvector#installation" target="_blank">GitHub – pgvector Installation Notes</a></span>
+
+  <!-- 확장 활성화 -->
+  <h2>6. 확장 활성화 및 검증 <span class="en">Enable & Verify the Extension</span></h2>
+  <p>pgvector는 데이터베이스마다 개별적으로 활성화해야 합니다. 슈퍼유저 또는 <code>CREATE</code> 권한이 필요합니다.</p>
+<pre><code># 데이터베이스 접속
+sudo -u postgres psql -d mydb
+
+-- 확장 활성화
+CREATE EXTENSION vector;
+
+-- 설치 확인
+\dx vector</code></pre>
+
+  <h3>간단한 사용 예시 <span class="en">Basic Usage Example</span></h3>
+<pre><code>-- 3차원 벡터 컬럼을 가진 테이블 생성
+CREATE TABLE items (
+  id bigserial PRIMARY KEY,
+  embedding vector(3)
+);
+
+-- 데이터 삽입
+INSERT INTO items (embedding) VALUES
+  ('[1,2,3]'), ('[4,5,6]'), ('[1,1,2]');
+
+-- 코사인 거리 기준 최근접 이웃 3개 조회
+SELECT id, embedding
+FROM items
+ORDER BY embedding &lt;=&gt; '[1,2,3]'
+LIMIT 3;</code></pre>
+  <div class="card">
+    <strong>거리 연산자 <span class="en">Distance Operators</span></strong>
+    <table>
+      <tr><th>연산자</th><th>의미</th></tr>
+      <tr><td><code>&lt;-&gt;</code></td><td>L2(유클리드) 거리</td></tr>
+      <tr><td><code>&lt;=&gt;</code></td><td>코사인 거리 (1 - 코사인 유사도)</td></tr>
+      <tr><td><code>&lt;#&gt;</code></td><td>음의 내적 (negative inner product)</td></tr>
+    </table>
+  </div>
+
+  <h3>대규모 검색을 위한 인덱스 생성 <span class="en">Indexing for Large-Scale Search</span></h3>
+<pre><code>-- HNSW 인덱스 (정확도·속도 우수, 권장)
+CREATE INDEX ON items USING hnsw (embedding vector_cosine_ops);
+
+-- 또는 IVFFlat 인덱스 (빌드 속도 빠름, 대량 데이터에 적합)
+CREATE INDEX ON items USING ivfflat (embedding vector_cosine_ops)
+WITH (lists = 100);</code></pre>
+  <span class="source">출처: <a href="https://github.com/pgvector/pgvector#indexing" target="_blank">GitHub – pgvector Indexing Guide</a></span>
+
+  <!-- 트러블슈팅 -->
+  <h2>7. 자주 발생하는 문제 <span class="en">Common Issues</span></h2>
+  <table>
+    <tr>
+      <th>증상</th>
+      <th>원인 및 해결</th>
+    </tr>
+    <tr>
+      <td><code>could not open extension control file</code></td>
+      <td>pgvector가 설치된 PostgreSQL 버전과 실제 실행 중인 서버 버전이 불일치. <code>pg_lsclusters</code>로 클러스터 버전 확인 후 재설치</td>
+    </tr>
+    <tr>
+      <td><code>permission denied to create extension</code></td>
+      <td>슈퍼유저 권한 필요. <code>sudo -u postgres psql</code>로 접속하거나 대상 유저에 필요한 권한 부여</td>
+    </tr>
+    <tr>
+      <td>여러 PostgreSQL 버전 충돌</td>
+      <td>Ubuntu는 동일 머신에 여러 메이저 버전 동시 설치 가능. <code>pg_lsclusters</code>, <code>pg_ctlcluster</code>로 버전별 클러스터 관리</td>
+    </tr>
+  </table>
+
+  <!-- 핵심 요약 -->
+  <h2>8. 핵심 요약 <span class="en">Key Takeaways</span></h2>
+  <div class="card">
+    <ol>
+      <li><strong>Ubuntu 22.04 기본 저장소는 PostgreSQL 14까지만 제공</strong> — PostgreSQL 18을 쓰려면 반드시 PGDG 공식 저장소 등록 필요</li>
+      <li><strong>자동 설정 스크립트(<code>apt.postgresql.org.sh</code>)가 가장 간단하고 실수가 적은 방법</strong></li>
+      <li><strong>pgvector는 <code>postgresql-18-pgvector</code> apt 패키지로 손쉽게 설치 가능</strong> — 소스 빌드는 최신 버전이 필요하거나 apt 패키지가 없을 때만 사용</li>
+      <li><strong>확장은 데이터베이스 단위로 <code>CREATE EXTENSION vector;</code> 실행 필요</strong> — 클러스터 전체가 아닌 개별 DB마다 활성화</li>
+      <li><strong>대량 데이터는 HNSW 또는 IVFFlat 인덱스 필수</strong> — 인덱스 없이는 순차 스캔으로 성능 저하</li>
+    </ol>
+  </div>
+
+  <!-- 참고 자료 -->
+  <h2>9. 참고 자료 <span class="en">References</span></h2>
+  <ul>
+    <li><a href="https://www.postgresql.org/download/linux/ubuntu/" target="_blank">PostgreSQL 공식 문서 – Linux downloads (Ubuntu)</a></li>
+    <li><a href="https://www.postgresql.org/about/news/postgresql-18-released-3142/" target="_blank">PostgreSQL 18 Released – 공식 릴리스 노트</a></li>
+    <li><a href="https://github.com/pgvector/pgvector" target="_blank">GitHub – pgvector/pgvector</a></li>
+    <li><a href="https://linuxcapable.com/how-to-install-postgresql-18-on-ubuntu-linux/" target="_blank">LinuxCapable – How to Install PostgreSQL 18 on Ubuntu</a></li>
+  </ul>
+
+  <hr class="divider">
+  <p style="font-size:0.8rem; color:#adb5bd; text-align:center;">
+    Generated by Claude Code · 2026-07-02 21:46 KST · Ubuntu 22.04 PostgreSQL 18 & pgvector 설치 스터디 노트
+  </p>
+
+</div>
+</body>
+</html>

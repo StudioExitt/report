@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows Git Bash에서 rsync로 Linux 파일 동기화 | Study Note</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Segoe UI', Arial, sans-serif;
+      background: #f8f9fa;
+      color: #212529;
+      line-height: 1.7;
+      padding: 0 16px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 40px auto 60px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      padding: 48px 56px;
+    }
+    .meta {
+      font-size: 0.82rem;
+      color: #868e96;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: #6c757d;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .divider {
+      border: none;
+      border-top: 2px solid #e9ecef;
+      margin: 32px 0;
+    }
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 40px 0 14px;
+      padding-bottom: 6px;
+      border-bottom: 3px solid #4361ee;
+      display: inline-block;
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #343a40;
+      margin: 24px 0 10px;
+    }
+    h4 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: #495057;
+      margin: 18px 0 8px;
+    }
+    p {
+      margin-bottom: 12px;
+      font-size: 0.97rem;
+    }
+    .en {
+      font-size: 0.84rem;
+      color: #6c757d;
+      font-style: italic;
+      margin-left: 4px;
+    }
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 12px;
+    }
+    li {
+      margin-bottom: 6px;
+      font-size: 0.96rem;
+    }
+    .card {
+      background: #f1f3f5;
+      border-left: 4px solid #4361ee;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .card-green { border-left-color: #2f9e44; background: #ebfbee; }
+    .card-orange { border-left-color: #e8590c; background: #fff4e6; }
+    .card-purple { border-left-color: #7048e8; background: #f3f0ff; }
+    .card-red { border-left-color: #c92a2a; background: #fff5f5; }
+    .badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .badge-blue { background: #d0ebff; color: #1864ab; }
+    .badge-green { background: #d3f9d8; color: #1b5e20; }
+    .badge-orange { background: #ffe8cc; color: #7c4a00; }
+    .badge-purple { background: #e5dbff; color: #4a1f8a; }
+    .source {
+      font-size: 0.78rem;
+      color: #868e96;
+    }
+    .source a {
+      color: #4361ee;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #4361ee;
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #e9ecef;
+    }
+    tr:nth-child(even) td { background: #f8f9fa; }
+    .highlight {
+      background: #fff3bf;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    pre {
+      background: #212529;
+      color: #f8f9fa;
+      padding: 16px 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      margin: 12px 0 16px;
+      line-height: 1.55;
+    }
+    code {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    p code, li code, td code {
+      background: #f1f3f5;
+      color: #c2255c;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.88em;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 24px 18px; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="meta">Study Note · 2026-07-02 22:00 (KST)</div>
+  <h1>Windows Git Bash에서 rsync를 이용해 Linux로 파일 동기화</h1>
+  <p class="subtitle">Syncing files from Windows Git Bash to a Linux server using rsync — 설치, SSH 연동, 경로 함정, 실전 명령어까지</p>
+  <hr class="divider">
+
+  <!-- 개요 -->
+  <h2>1. 개요 <span class="en">Overview</span></h2>
+  <p>이 문서는 <strong>Windows</strong> 환경에서 <strong>Git Bash</strong>를 이용해 <strong>rsync</strong>로 원격 <strong>Linux</strong> 서버와 파일을 동기화하는 방법을 정리한 스터디 노트입니다. 대상 독자는 Windows 개발 환경에서 작업하면서 배포 서버나 원격 Linux 개발 서버로 파일을 빠르고 안전하게 동기화해야 하는 개발자입니다. Git Bash는 <span class="highlight">MSYS2</span> 기반 Unix 유사 셸을 제공하지만 rsync를 기본 포함하지 않기 때문에, 설치 방법과 Windows 특유의 경로 변환 문제를 함께 다룹니다.</p>
+
+  <!-- 핵심 개념 -->
+  <h2>2. 핵심 개념 정의 <span class="en">Key Concepts</span></h2>
+  <table>
+    <tr>
+      <th>용어</th>
+      <th>정의</th>
+    </tr>
+    <tr>
+      <td><strong>rsync</strong><br><span class="en">Remote Sync</span></td>
+      <td>두 위치(로컬↔로컬, 로컬↔원격) 간 파일을 <span class="highlight">델타(차이분)만 전송</span>하는 방식으로 동기화하는 유틸리티. 전체 파일을 매번 복사하지 않아 반복 동기화 시 빠름</td>
+    </tr>
+    <tr>
+      <td><strong>Git Bash</strong></td>
+      <td>Windows용 Git 배포판에 포함된 터미널 에뮬레이터. 내부적으로 <strong>MSYS2</strong> 런타임(POSIX 호환 레이어)을 사용해 <code>bash</code>, <code>ssh</code> 등 Unix 명령을 Windows에서 실행 가능하게 함</td>
+    </tr>
+    <tr>
+      <td><strong>MSYS2</strong></td>
+      <td>Windows에서 POSIX 호환 개발 환경과 <code>pacman</code> 기반 패키지 저장소를 제공하는 프로젝트. Git Bash가 이 런타임 위에서 동작</td>
+    </tr>
+    <tr>
+      <td><strong>경로 변환 <span class="en">Path Translation</span></strong></td>
+      <td>MSYS2 계열은 <code>C:\Users\me</code>를 <code>/c/Users/me</code>로 표기하고, Cygwin 계열은 <code>/cygdrive/c/Users/me</code>로 표기함. 두 표기법이 섞이면 rsync가 경로를 찾지 못하는 오류 발생</td>
+    </tr>
+  </table>
+
+  <!-- 사전 준비 -->
+  <h2>3. 사전 준비 <span class="en">Prerequisites</span></h2>
+  <ul>
+    <li>Windows에 <a href="https://git-scm.com/downloads" target="_blank">Git for Windows</a> 설치 (Git Bash 포함)</li>
+    <li>동기화 대상 Linux 서버에 SSH 접속 가능 (계정, 포트, 필요 시 SSH 키)</li>
+    <li>Linux 서버에는 대부분 배포판에 rsync가 기본 포함되어 있으나, 없다면 <code>sudo apt install rsync</code> 등으로 설치</li>
+  </ul>
+  <div class="card card-orange">
+    <strong>중요 <span class="en">Important</span></strong>
+    <p>Git for Windows에는 <strong>rsync 바이너리가 기본 포함되어 있지 않습니다.</strong> <code>rsync: command not found</code> 오류가 뜨면 아래 4장의 설치 절차가 필요합니다.</p>
+  </div>
+
+  <!-- rsync 설치 -->
+  <h2>4. Git Bash에 rsync 설치 <span class="en">Installing rsync in Git Bash</span></h2>
+  <p>Git Bash는 MSYS2 런타임을 쓰지만 rsync 패키지 자체는 빠져 있습니다. 가장 널리 쓰이는 방법은 <strong>MSYS2 공식 저장소에서 rsync 패키지를 받아 Git Bash의 bin 폴더에 직접 넣는 것</strong>입니다.</p>
+
+  <h3>방법 A. MSYS2 패키지 수동 설치 (권장) <span class="en">Manual MSYS2 Package (Recommended)</span></h3>
+  <ol>
+    <li><a href="https://packages.msys2.org/package/rsync" target="_blank">MSYS2 패키지 저장소</a>에서 <code>rsync-*.pkg.tar.zst</code> 최신 버전을 다운로드</li>
+    <li>7-Zip 등으로 압축을 풀어 <code>usr/bin/rsync.exe</code>를 추출</li>
+    <li><code>rsync.exe</code>를 Git 설치 경로의 <code>C:\Program Files\Git\usr\bin</code>에 복사</li>
+    <li>DLL 의존성 오류(<code>libzstd-1.dll</code>, <code>liblz4-1.dll</code>, <code>libxxhash-0.dll</code> 등)가 나면 동일한 MSYS2 저장소에서 해당 패키지를 받아 같은 폴더에 함께 복사</li>
+  </ol>
+<pre><code># Git Bash에서 설치 확인
+rsync --version</code></pre>
+  <p>버전 정보가 정상 출력되면 설치가 완료된 것입니다.</p>
+  <span class="source">출처: <a href="https://prasaz.medium.com/add-rsync-to-windows-git-bash-f42736bae1b3" target="_blank">Prasanna Wijesiriwardana – Add rsync to Windows Git Bash</a>, <a href="https://gist.github.com/radleta/0b337a2b14f761951cf2aab0578512b9" target="_blank">radleta – Step-by-step rsync with Git Bash</a></span>
+
+  <h3>방법 B. cwRsync 클라이언트 사용 <span class="en">Using cwRsync Client</span></h3>
+  <p>Cygwin 기반으로 빌드된 <strong>cwRsync</strong> 배포판을 받아 압축 해제 후 <code>bin</code> 폴더를 시스템 PATH에 추가하는 방법도 있습니다. 다만 Cygwin 경로 표기(<code>/cygdrive/c/...</code>)를 사용하므로 Git Bash(MSYS2)의 <code>/c/...</code> 표기와 섞이면 6장에서 다루는 경로 문제가 발생하기 쉽습니다.</p>
+  <span class="source">출처: <a href="https://tlundberg.com/installing-rsync-on-windows" target="_blank">tlundberg.com – Installing rsync on Windows</a></span>
+
+  <!-- SSH 연동 -->
+  <h2>5. SSH 연동 설정 <span class="en">SSH Setup</span></h2>
+  <p>rsync는 원격 전송 시 내부적으로 <code>ssh</code>를 전송 채널로 사용합니다. Git Bash에는 <code>ssh</code> 클라이언트가 기본 포함되어 있으므로 별도 설치는 불필요합니다.</p>
+<pre><code># 1) SSH 키 생성 (이미 있다면 생략)
+ssh-keygen -t ed25519 -C "sb.park@toss.im"
+
+# 2) 공개키를 Linux 서버에 등록
+ssh-copy-id user@linux-server
+
+# 3) 접속 테스트
+ssh user@linux-server</code></pre>
+  <div class="card">
+    <p><code>ssh-copy-id</code>가 Windows Git Bash에서 동작하지 않는 환경이라면, <code>cat ~/.ssh/id_ed25519.pub</code>로 공개키를 출력해 수동으로 서버의 <code>~/.ssh/authorized_keys</code>에 추가합니다.</p>
+  </div>
+
+  <!-- 경로 함정 -->
+  <h2>6. Windows 경로 함정 <span class="en">Windows Path Pitfalls</span></h2>
+  <p>Windows 로컬 경로를 rsync에 넘길 때 표기법이 맞지 않으면 <code>No such file or directory</code> 오류가 발생합니다.</p>
+  <table>
+    <tr>
+      <th>표기법</th>
+      <th>예시 (C:\Users\me\project)</th>
+      <th>사용 환경</th>
+    </tr>
+    <tr>
+      <td>MSYS2 스타일</td>
+      <td><code>/c/Users/me/project</code></td>
+      <td>Git Bash (기본)</td>
+    </tr>
+    <tr>
+      <td>Cygwin 스타일</td>
+      <td><code>/cygdrive/c/Users/me/project</code></td>
+      <td>cwRsync, Cygwin rsync</td>
+    </tr>
+    <tr>
+      <td>Windows 원본 경로</td>
+      <td><code>C:\Users\me\project</code></td>
+      <td>rsync에 직접 사용 불가 (콜론 <code>:</code>이 원격 호스트 구분자와 충돌)</td>
+    </tr>
+  </table>
+  <div class="card card-red">
+    <strong>흔한 오류 <span class="en">Common Pitfall</span></strong>
+    <p>Windows 경로의 드라이브 콜론(<code>C:</code>)은 rsync의 <code>host:path</code> 구분자와 충돌해 잘못 해석될 수 있습니다. 반드시 <code>/c/...</code> 형태로 변환해서 사용하고, Git Bash와 cwRsync를 함께 설치했다면 <strong>PATH에서 어느 rsync.exe가 먼저 잡히는지</strong> 확인해야 합니다.</p>
+  </div>
+  <span class="source">출처: <a href="https://github.com/hashicorp/vagrant/issues/4073" target="_blank">GitHub Issue – hashicorp/vagrant #4073 (Rsync on Windows fails – lacks /cygdrive prefix)</a></span>
+
+  <!-- 기본 사용법 -->
+  <h2>7. 기본 사용법 <span class="en">Basic Usage</span></h2>
+  <p>로컬 Windows 프로젝트 폴더를 원격 Linux 서버로 동기화하는 가장 기본적인 명령입니다.</p>
+<pre><code># 로컬 → 원격 동기화 (업로드)
+rsync -avz -e ssh /c/Users/me/project/ user@linux-server:/home/user/project/
+
+# 원격 → 로컬 동기화 (다운로드)
+rsync -avz -e ssh user@linux-server:/home/user/project/ /c/Users/me/project/</code></pre>
+  <div class="card card-orange">
+    <strong>슬래시(<code>/</code>) 주의 <span class="en">Trailing Slash Matters</span></strong>
+    <p>소스 경로 끝에 <code>/</code>가 있으면 "폴더 안의 내용물"을 동기화하고, 없으면 "폴더 자체"를 대상 경로 밑에 복사합니다. 예상과 다른 위치에 파일이 생기는 실수의 대부분은 이 슬래시 유무 때문입니다.</p>
+  </div>
+
+  <!-- 옵션 표 -->
+  <h2>8. 자주 쓰는 옵션 <span class="en">Common Flags</span></h2>
+  <table>
+    <tr>
+      <th>옵션</th>
+      <th>설명</th>
+    </tr>
+    <tr>
+      <td><code>-a</code><br><span class="en">archive</span></td>
+      <td>권한·심볼릭 링크·타임스탬프 등을 보존하며 하위 디렉터리까지 재귀적으로 동기화 (<code>-rlptgoD</code>의 축약)</td>
+    </tr>
+    <tr>
+      <td><code>-v</code><br><span class="en">verbose</span></td>
+      <td>전송 중인 파일 목록을 출력</td>
+    </tr>
+    <tr>
+      <td><code>-z</code><br><span class="en">compress</span></td>
+      <td>전송 시 데이터를 압축 — 네트워크가 느릴 때 유용</td>
+    </tr>
+    <tr>
+      <td><code>-e ssh</code></td>
+      <td>전송 프로토콜로 SSH를 사용하도록 지정 (포트 변경 시 <code>-e "ssh -p 2222"</code>)</td>
+    </tr>
+    <tr>
+      <td><code>--delete</code></td>
+      <td>소스에는 없는데 대상에만 있는 파일을 삭제하여 완전히 미러링. <span class="highlight">삭제를 동반하므로 신중히 사용</span></td>
+    </tr>
+    <tr>
+      <td><code>--dry-run</code> (<code>-n</code>)</td>
+      <td>실제로 전송/삭제하지 않고 어떤 작업이 일어날지만 미리 확인</td>
+    </tr>
+    <tr>
+      <td><code>--exclude</code></td>
+      <td>특정 패턴의 파일/폴더를 동기화 대상에서 제외 (예: <code>--exclude 'node_modules/'</code>)</td>
+    </tr>
+    <tr>
+      <td><code>--progress</code></td>
+      <td>파일별 전송 진행률 표시</td>
+    </tr>
+  </table>
+  <span class="source">출처: <a href="https://man7.org/linux/man-pages/man1/rsync.1.html" target="_blank">rsync(1) 공식 man page</a></span>
+
+  <!-- 실전 예시 -->
+  <h2>9. 실전 예시 <span class="en">Practical Example</span></h2>
+  <p>Windows에서 작업 중인 프로젝트를 <code>.git</code>, <code>node_modules</code> 등 불필요한 폴더는 제외하고, 먼저 dry-run으로 확인한 뒤 실제 동기화하는 흐름입니다.</p>
+<pre><code># 1) 사전 확인 (실제 전송 없이 변경 사항만 확인)
+rsync -avzn --delete \
+  --exclude '.git/' \
+  --exclude 'node_modules/' \
+  -e "ssh -p 22" \
+  /c/Users/me/project/ user@linux-server:/home/user/project/
+
+# 2) 실제 동기화 실행
+rsync -avz --delete \
+  --exclude '.git/' \
+  --exclude 'node_modules/' \
+  -e "ssh -p 22" \
+  /c/Users/me/project/ user@linux-server:/home/user/project/</code></pre>
+  <div class="card card-green">
+    <strong>팁 <span class="en">Tip</span></strong>
+    <p>매번 긴 명령을 입력하기 번거롭다면 <code>~/.bashrc</code>에 셸 함수나 별칭으로 등록해두면 편리합니다.</p>
+  </div>
+<pre><code># ~/.bashrc
+sync-to-server() {
+  rsync -avz --delete \
+    --exclude '.git/' \
+    --exclude 'node_modules/' \
+    -e ssh \
+    /c/Users/me/project/ user@linux-server:/home/user/project/
+}</code></pre>
+
+  <!-- 트러블슈팅 -->
+  <h2>10. 트러블슈팅 <span class="en">Troubleshooting</span></h2>
+  <table>
+    <tr>
+      <th>증상</th>
+      <th>원인 및 해결</th>
+    </tr>
+    <tr>
+      <td><code>rsync: command not found</code></td>
+      <td>4장의 방법으로 rsync 바이너리를 Git Bash <code>usr/bin</code>에 설치하지 않은 경우</td>
+    </tr>
+    <tr>
+      <td>rsync 실행 시 DLL 오류로 즉시 종료</td>
+      <td>rsync.exe가 동적으로 링크하는 <code>libzstd-1.dll</code> 등 의존 DLL이 없는 경우. MSYS2 저장소에서 해당 DLL 패키지를 받아 같은 폴더에 배치</td>
+    </tr>
+    <tr>
+      <td><code>No such file or directory</code> (경로가 분명 존재하는데도)</td>
+      <td>6장의 경로 표기법 불일치. <code>C:\...</code> 대신 <code>/c/...</code> 형식 사용, 설치된 rsync가 MSYS2/Cygwin 중 어느 것인지 확인</td>
+    </tr>
+    <tr>
+      <td>모든 파일의 권한/타임스탬프가 매번 변경된 것으로 감지됨</td>
+      <td>NTFS는 POSIX 파일 권한을 그대로 지원하지 않아 <code>-a</code>의 권한 보존이 왜곡될 수 있음. 로컬↔윈도우 동기화에서는 <code>--no-perms --no-owner --no-group</code> 옵션 추가를 고려</td>
+    </tr>
+    <tr>
+      <td>텍스트 파일 내용이 서버에서 깨져 보임</td>
+      <td>Git의 <code>core.autocrlf</code> 설정으로 인한 개행 문자(CRLF↔LF) 변환 문제일 수 있음 — rsync 자체는 바이너리 그대로 전송하므로, 원본 파일이 이미 CRLF로 저장된 경우가 원인</td>
+    </tr>
+  </table>
+
+  <!-- 요약 -->
+  <h2>11. 요약 <span class="en">Summary</span></h2>
+  <ul>
+    <li>Git Bash에는 rsync가 기본 포함되어 있지 않으므로 MSYS2 패키지에서 <code>rsync.exe</code>를 별도로 가져와야 함</li>
+    <li>원격 동기화는 SSH를 전송 채널로 사용하며, Git Bash에 내장된 <code>ssh</code>로 키 기반 인증을 먼저 구성하는 것이 효율적</li>
+    <li>Windows 경로는 반드시 <code>/c/...</code> 형식(MSYS2 스타일)으로 변환하며, Cygwin 계열 도구와 혼용하지 않도록 주의</li>
+    <li>소스 경로의 트레일링 슬래시 유무가 동기화 결과 구조를 결정하므로 항상 <code>--dry-run</code>으로 먼저 확인하는 습관이 안전함</li>
+  </ul>
+
+  <!-- 참고 자료 -->
+  <h2>12. 참고 자료 <span class="en">References</span></h2>
+  <ul>
+    <li><a href="https://man7.org/linux/man-pages/man1/rsync.1.html" target="_blank">rsync(1) 공식 man page</a></li>
+    <li><a href="https://packages.msys2.org/package/rsync" target="_blank">MSYS2 rsync 패키지 저장소</a></li>
+    <li><a href="https://gist.github.com/radleta/0b337a2b14f761951cf2aab0578512b9" target="_blank">radleta – Step-by-step: rsync with Git Bash from Windows command prompt</a></li>
+    <li><a href="https://prasaz.medium.com/add-rsync-to-windows-git-bash-f42736bae1b3" target="_blank">Prasanna Wijesiriwardana – Add rsync to Windows Git Bash (Medium)</a></li>
+    <li><a href="https://github.com/hashicorp/vagrant/issues/4073" target="_blank">GitHub – hashicorp/vagrant Issue #4073 (cygdrive path issue)</a></li>
+  </ul>
+
+</div>
+</body>
+</html>
