@@ -4,7 +4,7 @@
 
 REPO_ROOT="$(cd "$(dirname "$0")/." && pwd)"
 
-if git diff --quiet && git diff --cached --quiet; then
+if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcelain --untracked-files=all)" ]; then
   echo ""
   echo "변경 사항 없음 — 커밋 및 푸시를 건너뜁니다."
   exit 0
