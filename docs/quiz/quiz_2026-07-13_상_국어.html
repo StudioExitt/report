@@ -1,0 +1,220 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-13 (국어/상)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-상 {
+    background: #fdecea;
+    color: #c0392b;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #2c5f8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #244c6f;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #eaf3ec;
+    border: 1px solid #b7dbc0;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 국어</h1>
+<div class="meta">
+  <span>2026년 7월 13일 (월)</span>
+  <span class="diff-상">난이도: 상</span>
+  <span>유형: 국어 (비문학 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+인간은 오랫동안 교환의 매개체로서 화폐를 사용해 왔다. 조개껍데기, 소금, 금과 은 같은 상품화폐에서 출발하여 오늘날에는 종이로 된 지폐와 전자적으로 기록되는 디지털 화폐에 이르기까지, 화폐의 형태는 시대에 따라 끊임없이 변화해 왔다. 그러나 이러한 형태의 변화 속에서도 변하지 않는 한 가지 본질이 있다. 그것은 화폐가 그 자체로 가치를 지니는 것이 아니라, 사회 구성원들이 그것에 가치가 있다고 '믿는' 한에서만 가치를 지닌다는 사실이다.
+</p>
+<p>
+흔히 사람들은 금이나 은과 같은 귀금속 화폐를 두고 '내재적 가치'를 지닌다고 말한다. 그러나 엄밀히 따져 보면 금 자체가 배고픔을 해결해 주거나 추위를 막아 주지는 못한다. 금이 값진 이유는 그것이 희소하고 가공하기 쉬우며 부패하지 않는다는 물리적 속성 때문이기도 하지만, 더 근본적으로는 사람들이 오랜 세월에 걸쳐 금을 가치 저장과 교환의 수단으로 '합의'해 왔기 때문이다. 즉 상품화폐의 가치조차도 상당 부분은 사회적 합의에 의존하고 있는 것이다.
+</p>
+<p>
+이러한 사실은 오늘날의 지폐, 이른바 명목화폐(fiat money)에서 더욱 분명하게 드러난다. 지폐 한 장의 재료비는 그것에 인쇄된 액면가에 비하면 무시할 수 있을 정도로 낮다. 만 원짜리 지폐를 만드는 데 드는 실제 비용은 몇백 원에 불과하다. 그럼에도 우리는 그 종이 조각을 만 원의 가치로 받아들이고 상품과 서비스를 교환하는 데 아무런 거리낌이 없다. 이는 국가라는 발행 주체와 그 국가의 경제 체제에 대한 사회 구성원들의 신뢰가 뒷받침되기 때문에 가능한 일이다.
+</p>
+<p>
+신뢰가 무너지면 화폐의 가치도 함께 무너진다. 역사적으로 초인플레이션을 겪은 국가들의 사례는 이를 극명하게 보여 준다. 1920년대 독일이나 2000년대 짐바브웨에서는 화폐 발행량이 통제를 벗어나면서 국민들이 자국 화폐의 미래 가치를 더 이상 신뢰하지 않게 되었고, 그 결과 화폐는 휴지 조각과 다름없는 취급을 받았다. 사람들은 화폐 대신 물물교환이나 외화, 심지어 담배와 같은 대체 수단을 이용하기 시작했다. 이는 화폐의 가치가 물리적 실체가 아니라 신뢰라는 무형의 기반 위에 서 있음을 역설적으로 증명하는 사례다.
+</p>
+<p>
+최근 등장한 디지털 화폐와 암호화폐 역시 같은 원리의 연장선에 있다. 비트코인과 같은 암호화폐는 국가의 보증이나 실물 자산의 뒷받침 없이도 일부 사용자들 사이에서 가치를 인정받고 있다. 이는 신뢰의 원천이 반드시 국가 권력일 필요는 없으며, 특정한 기술적 장치나 공동체의 합의 역시 신뢰를 형성하는 기반이 될 수 있음을 보여 준다. 다만 이러한 신뢰가 국가가 보증하는 화폐만큼 안정적인지는 여전히 논쟁의 대상이다. 가격 변동성이 크고 소수의 이탈만으로도 신뢰 기반이 쉽게 흔들릴 수 있기 때문이다.
+</p>
+<p>
+결국 화폐의 역사는 신뢰를 제도화하는 방식의 역사라고도 할 수 있다. 조개껍데기에서 금속 화폐로, 금속 화폐에서 지폐로, 그리고 지폐에서 디지털 기록으로 형태는 바뀌어 왔지만, 그 밑바탕에는 언제나 '이 매개체가 교환의 수단으로 통용될 것'이라는 공동체의 믿음이 자리하고 있었다. 화폐를 단순히 종이나 금속, 혹은 숫자로 이루어진 물질로만 이해한다면 우리는 그 작동 원리의 절반밖에 이해하지 못한 것이다. 화폐의 진정한 기반은 인쇄소나 조폐국이 아니라, 그것을 사용하는 사람들의 마음속에 있는 신뢰라는 무형의 제도에 있다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices">
+    <li>화폐는 시대에 따라 조개껍데기, 금속, 지폐, 디지털 기록의 순서로 발전해 왔다.</li>
+    <li>화폐의 가치는 물리적 재료의 희소성에 의해 전적으로 결정된다.</li>
+    <li>화폐의 가치는 물질적 실체가 아니라 사회 구성원들의 신뢰에 근거하여 성립하고 유지된다.</li>
+    <li>국가가 보증하지 않는 화폐는 어떠한 경우에도 가치를 인정받을 수 없다.</li>
+    <li>초인플레이션은 화폐 발행량과 무관하게 우연히 발생하는 경제 현상이다.</li>
+  </ol>
+
+  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ③</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 화폐 형태의 역사적 변천 과정은 지문에 언급된 소재이지만, 글쓴이가 궁극적으로 말하고자 하는 바는 형태 변화가 아니라 그 변화 속에서도 변하지 않는 '신뢰'라는 본질이다. 지엽적인 내용을 주제로 착각하게 만드는 선택지다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답</b> — 지문은 오히려 금과 같은 상품화폐조차 희소성 등 물리적 속성만으로 가치가 결정되는 것이 아니라 사회적 합의, 즉 신뢰가 더 근본적인 요인이라고 설명한다. 지문의 논지와 정반대되는 진술이다.
+    </div>
+    <div class="explain-item correct">
+      <b>③ 정답</b> — 지문 전체는 상품화폐, 명목화폐, 초인플레이션 사례, 암호화폐를 차례로 예시로 들며 '화폐의 가치는 물질적 실체가 아니라 사회적 신뢰에 근거한다'는 하나의 주제를 일관되게 뒷받침하고 있다. 마지막 문단에서 이 주제를 직접적으로 요약하고 있다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 지문은 비트코인 사례를 통해 국가의 보증 없이도 신뢰가 형성될 수 있음을 보여 준다. 다만 그 안정성에는 논쟁이 있다고 했을 뿐, 가치를 전혀 인정받을 수 없다고 단정하지 않았으므로 지문 내용과 어긋난다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 지문은 초인플레이션이 '화폐 발행량이 통제를 벗어나면서' 신뢰가 무너진 결과로 발생한다고 명확한 인과 관계를 제시한다. 우연이라는 서술은 지문의 내용과 정면으로 배치된다.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-13 06:12 (KST) · 문제은행 자동 생성</footer>
