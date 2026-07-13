@@ -1,0 +1,217 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-14 (영어/중)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Segoe UI", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-중 {
+    background: #fff6e0;
+    color: #a5730b;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #2c5f8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #244c6f;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #eaf3ec;
+    border: 1px solid #b7dbc0;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 영어</h1>
+<div class="meta">
+  <span>2026년 7월 14일 (화)</span>
+  <span class="diff-중">난이도: 중</span>
+  <span>유형: 영어 (독해 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+For most of human history, sleep was treated as a simple pause between periods of activity, a biological intermission with little value of its own. Modern research has overturned that view. Sleep is now understood to be an active and highly organized process during which the brain performs essential maintenance that cannot easily happen while a person is awake.
+</p>
+<p>
+One of the clearest examples of this maintenance is memory consolidation. Throughout the day, the brain absorbs an enormous amount of information, but only a fraction of it is retained. During deep sleep, the hippocampus, a region closely tied to short-term memory, replays the events of the day and gradually transfers the most important patterns to the cortex, where they are stored more permanently. Studies of students who slept after learning new material consistently show better recall than those who stayed awake for the same number of hours, even when the awake group was not otherwise occupied.
+</p>
+<p>
+Sleep also plays a crucial role in clearing metabolic waste from the brain. Researchers have identified a network of channels, sometimes called the glymphatic system, that becomes far more active during sleep than during waking hours. Through this network, cerebrospinal fluid flows through brain tissue and flushes out byproducts that accumulate from normal neural activity, including proteins that, when left to build up over years, are associated with neurodegenerative conditions. In effect, the sleeping brain runs its own overnight cleaning cycle.
+</p>
+<p>
+Beyond memory and cleanup, sleep regulates a wide range of bodily systems. Hormones that control appetite, stress response, and immune function all follow cycles that depend on regular, sufficient sleep. Chronic sleep deprivation disrupts these cycles, which is why people who consistently sleep too little tend to show elevated stress hormones, weakened immune responses, and a higher likelihood of overeating. None of these effects are simply a matter of feeling tired; they reflect deeper disruptions to systems that sleep is meant to keep in balance.
+</p>
+<p>
+Given all of this, it is misleading to think of sleep as wasted time or as a luxury that can be sacrificed without consequence. The evidence instead points to sleep as a period of intense, purposeful biological work, one in which the brain consolidates what it has learned, clears out harmful waste, and resets the hormonal systems the body relies on. Far from being a passive gap in the day, sleep is one of the most productive things a brain ever does.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. What is the main idea of the passage?</div>
+  <ol class="choices">
+    <li>Sleep is a passive break during which the brain and body remain largely inactive.</li>
+    <li>Sleep is an active biological process that consolidates memory, removes waste, and regulates bodily systems.</li>
+    <li>Students who avoid sleeping after studying tend to remember material better than those who sleep.</li>
+    <li>The glymphatic system is the only part of the body affected by a lack of sleep.</li>
+    <li>Hormonal regulation is unrelated to how much sleep a person gets each night.</li>
+  </ol>
+
+  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ②</div>
+    <div class="explain-item">
+      <b>① 오답</b> — The passage explicitly rejects this view in its opening and closing paragraphs, stating that sleep was once mistakenly treated as a simple pause but is now understood to be an active, purposeful process. This choice states the opposite of the passage's claim.
+    </div>
+    <div class="explain-item correct">
+      <b>② 정답</b> — The passage develops three supporting points — memory consolidation via the hippocampus, waste clearance through the glymphatic system, and hormonal regulation of appetite, stress, and immunity — all converging on the conclusion that sleep is active, purposeful biological work. This choice accurately summarizes the whole passage.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답</b> — This reverses the finding described in the second paragraph, which states that students who slept after learning showed better recall than those who stayed awake, not worse.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — The glymphatic system is presented as only one of several systems affected by sleep; the passage also discusses memory consolidation and hormonal regulation, so calling it "the only" affected system misrepresents the text.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — The fourth paragraph directly states that hormones controlling appetite, stress response, and immune function depend on regular, sufficient sleep, making this choice contrary to the passage.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-14 06:17 (KST) · 문제은행 자동 생성</footer>
