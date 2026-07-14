@@ -1,0 +1,220 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-15 (국어/하)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-하 {
+    background: #eaf3ec;
+    color: #2e7d4f;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #2c5f8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #244c6f;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #eaf3ec;
+    border: 1px solid #b7dbc0;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 국어</h1>
+<div class="meta">
+  <span>2026년 7월 15일 (수)</span>
+  <span class="diff-하">난이도: 하</span>
+  <span>유형: 국어 (비문학 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+걷기는 인간이 가장 먼저 익히는 이동 방식이자, 특별한 장비나 비용 없이도 누구나 손쉽게 실천할 수 있는 운동이다. 헬스장의 값비싼 기구나 전문적인 코치가 없어도 되고, 날씨가 지나치게 나쁘지 않다면 언제 어디서든 시작할 수 있다는 점에서 걷기는 문턱이 가장 낮은 운동으로 꼽힌다. 그럼에도 걷기가 우리 몸과 마음에 미치는 효과는 결코 가볍지 않다.
+</p>
+<p>
+먼저 걷기는 심장과 혈관 건강에 직접적인 도움을 준다. 규칙적으로 걷는 습관을 들이면 심장이 더 효율적으로 혈액을 순환시키게 되고, 이는 혈압을 안정시키는 데 기여한다. 여러 연구에 따르면 하루 30분씩 꾸준히 걷는 사람은 그렇지 않은 사람에 비해 심혈관 질환에 걸릴 위험이 눈에 띄게 낮았다. 이는 걷기가 단순한 산책을 넘어 실질적인 건강 관리 수단이 될 수 있음을 보여 준다.
+</p>
+<p>
+걷기는 체중 관리에도 효과적이다. 격렬한 운동에 비해 몸에 무리를 덜 주면서도 꾸준히 지속할 경우 칼로리 소모와 신진대사 촉진에 도움이 된다. 특히 평소 운동과 담을 쌓고 지내던 사람이라도 걷기는 비교적 쉽게 습관으로 자리 잡을 수 있어, 장기적인 체중 관리에 유리한 방법으로 여겨진다.
+</p>
+<p>
+신체 건강뿐 아니라 정신 건강 측면에서도 걷기의 효과는 두드러진다. 걷는 동안 우리 몸에서는 기분을 좋게 만드는 호르몬이 분비되어 스트레스와 불안감을 줄여 준다. 또한 반복적인 걸음의 리듬은 마음을 차분하게 가라앉히는 효과가 있어, 복잡한 생각을 정리하거나 새로운 아이디어를 떠올리는 데에도 도움이 된다는 보고가 많다.
+</p>
+<p>
+게다가 걷기는 사회적인 활동으로 확장되기도 한다. 가족이나 친구와 함께 걸으며 대화를 나누는 시간은 관계를 돈독하게 하고, 동네를 걷다 보면 이웃과 마주치며 자연스럽게 지역 사회에 대한 소속감도 커진다. 이렇듯 걷기는 개인의 건강을 넘어 사람과 사람 사이의 관계에도 긍정적인 영향을 미친다.
+</p>
+<p>
+이처럼 걷기는 특별한 준비물이나 비용 없이도 신체 건강과 정신 건강, 나아가 사회적 관계에까지 폭넓은 긍정적 효과를 가져다주는 운동이다. 거창한 계획을 세우기보다 오늘 당장 가까운 곳부터 천천히 걸어 보는 작은 실천이, 우리 삶의 질을 높이는 첫걸음이 될 수 있다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices">
+    <li>걷기는 헬스장 기구를 이용한 운동보다 칼로리 소모량이 항상 더 많다.</li>
+    <li>걷기는 특별한 비용이나 장비 없이도 신체와 정신 건강, 인간관계에 두루 긍정적인 효과를 준다.</li>
+    <li>심혈관 질환을 예방하려면 걷기 대신 반드시 격렬한 운동을 해야 한다.</li>
+    <li>걷기의 정신적 효과는 과학적으로 증명된 바가 없는 막연한 주장에 불과하다.</li>
+    <li>이웃과의 관계는 걷기 운동과 아무런 관련이 없는 별개의 문제이다.</li>
+  </ol>
+
+  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ②</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 지문은 걷기가 칼로리 소모와 신진대사에 도움이 된다고 했을 뿐, 헬스장 기구 운동보다 칼로리 소모량이 항상 더 많다고 비교하거나 단정한 내용은 없다. 지문에 없는 과도한 비교를 담은 선택지다.
+    </div>
+    <div class="explain-item correct">
+      <b>② 정답</b> — 지문은 걷기가 문턱이 낮은 운동이라는 점을 전제로, 심혈관 건강, 체중 관리, 정신 건강, 사회적 관계까지 폭넓은 영역에서 긍정적 효과를 준다는 내용을 순서대로 제시하고 마지막 문단에서 이를 종합하여 요약하고 있다. 지문 전체를 아우르는 주제다.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답</b> — 지문은 걷기 자체가 심혈관 건강에 도움이 된다고 설명할 뿐, 격렬한 운동이 반드시 필요하다거나 걷기를 대체해야 한다는 내용은 언급하지 않았다. 지문 내용과 반대되는 진술이다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 지문은 오히려 걷기가 스트레스와 불안감을 줄이는 호르몬 분비와 관련된 연구 보고가 많다고 서술하며 정신적 효과를 긍정적으로 소개하고 있다. 지문의 내용을 정반대로 왜곡한 선택지다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 지문은 걷다 보면 이웃과 마주치며 지역 사회에 대한 소속감이 커진다고 설명하며 걷기와 사회적 관계를 직접 연결 짓고 있다. 지문 내용과 정면으로 배치되는 진술이다.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-15 06:49 (KST) · 문제은행 자동 생성</footer>
