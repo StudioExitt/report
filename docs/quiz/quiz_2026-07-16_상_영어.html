@@ -1,0 +1,122 @@
+<meta charset="utf-8">
+<title>일일 영어 문제 — 2026-07-16 (난이도: 상)</title>
+<style>
+  :root {
+    --bg: #fbfcfe;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #5b6b7b;
+    --line: #e3e8ef;
+    --accent: #2563eb;
+    --accent-soft: #eef4ff;
+    --good: #15803d;
+    --bad: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.7;
+    padding: 32px 16px 80px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 1.7rem; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.92rem; }
+  .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
+  }
+  .badge.level { background: #fff1e6; color: #c2410c; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin-bottom: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  h2 { font-size: 1.15rem; font-weight: 800; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2 .num { background: var(--accent); color: #fff; border-radius: 8px; font-size: 0.85rem; padding: 2px 9px; }
+  .passage p { margin: 0 0 14px; }
+  .passage { font-size: 1.02rem; }
+  .q-stem { font-weight: 700; margin: 0 0 16px; font-size: 1.05rem; }
+  ol.choices { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.choices li {
+    counter-increment: c; border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px 13px 48px; margin-bottom: 10px; position: relative; cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  ol.choices li:hover { background: var(--accent-soft); border-color: var(--accent); }
+  ol.choices li::before {
+    content: counter(c); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 50%; background: #eef2f7; color: var(--ink);
+    font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.correct::before { background: var(--good); color: #fff; }
+  .btn {
+    background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+    padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .answer { display: none; margin-top: 22px; }
+  .answer.show { display: block; }
+  .answer-head { font-weight: 800; font-size: 1.05rem; color: var(--good); margin-bottom: 14px; }
+  .exp { border-top: 1px dashed var(--line); padding-top: 14px; margin-top: 4px; }
+  .exp li { margin-bottom: 10px; }
+  .exp .k { font-weight: 700; }
+  .exp .ans-mark { color: var(--good); }
+  .exp .wrong-mark { color: var(--bad); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 30px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>일일 영어 문제</h1>
+    <div class="meta">주제 파악 (Finding the Main Idea) · 지문을 읽고 가장 적절한 주제를 고르세요.</div>
+    <div class="badges">
+      <span class="badge">유형: 영어 · 주제 찾기</span>
+      <span class="badge level">난이도: 상</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">지문</span> Reading Passage</h2>
+    <div class="passage">
+      <p>When a measure becomes a target, it ceases to be a good measure. This deceptively simple observation, now known as Goodhart's Law, began as a footnote in monetary economics but has quietly become one of the most useful diagnostic tools for understanding institutional failure. The trouble is not that people are dishonest; it is that any metric, once tied to reward, invites optimization toward the metric itself rather than toward the underlying good it was meant to represent.</p>
+      <p>Consider a hospital judged by the length of patients' waiting times. The intention is benign: shorter waits signal a responsive, well-run institution. Yet once administrators are rewarded for the number alone, staff may be reassigned to triage the easy cases first, or patients may be nominally "admitted" the moment they enter, resetting the clock even as they sit untreated in a corridor. The waiting time falls; the care does not improve. The proxy has drifted free of the thing it was supposed to track.</p>
+      <p>The mechanism generalizes with unsettling reach. Schools rated by test scores narrow their teaching to the test. Software teams measured by lines of code produce bloated programs. Research communities that count citations breed strategic co-authorship and salami-sliced papers. In each case the number rises impressively while the substance it was meant to capture erodes, precisely because attention has migrated from the goal to its shadow. What looks like progress is often the metric learning to flatter its keepers.</p>
+      <p>None of this implies that measurement should be abandoned. A world without proxies would be a world without accountability, and vague aspirations are easily corrupted in their own way. The deeper lesson is more demanding: no single number can be trusted to carry the full weight of a complex aim. Robust institutions therefore treat every metric as provisional, watch for the sideways drift between proxy and purpose, and refuse to let any one figure harden into the sole definition of success. The wisest response to a good measure, paradoxically, is a persistent refusal to worship it.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">문제</span> Question</h2>
+    <p class="q-stem">What is the main idea of the passage?</p>
+    <ol class="choices">
+      <li>Dishonest employees are the primary reason that institutions fail to meet their stated goals.</li>
+      <li>Because metrics tend to corrupt the very goals they measure, they should be discarded in favor of broad aspirations.</li>
+      <li>Once a metric becomes a target it tends to diverge from its underlying purpose, so no single number should be treated as the definition of success.</li>
+      <li>Hospitals, schools, and research communities each require entirely different and unrelated systems of evaluation.</li>
+      <li>Goodhart's Law originated in monetary economics before being applied to other fields.</li>
+    </ol>
+
+    <button class="btn" onclick="document.getElementById('ans').classList.add('show'); this.style.display='none';">정답 보기</button>
+
+    <div class="answer" id="ans">
+      <div class="answer-head">정답: ③</div>
+      <ul class="exp">
+        <li><span class="k">① 오답 <span class="wrong-mark">✗</span></span> — 지문은 오히려 "문제는 사람들이 부정직해서가 아니다(The trouble is not that people are dishonest)"라고 명시하며, 정직/부정직의 문제가 아니라 지표 최적화라는 구조적 메커니즘을 지적한다. 세부 진술을 반박하는 선택지.</li>
+        <li><span class="k">② 오답 <span class="wrong-mark">✗</span></span> — "측정을 포기해야 한다는 뜻은 아니다(None of this implies that measurement should be abandoned)"라고 분명히 선을 긋는다. 지표를 버리라는 것은 지문의 결론과 정반대이므로 과장·왜곡된 해석.</li>
+        <li><span class="k">③ 정답 <span class="ans-mark">✓</span></span> — Goodhart's Law의 핵심(지표가 목표가 되면 본래 목적에서 이탈함)과 마지막 문단의 결론(어떤 단일 숫자도 성공의 유일한 정의가 되어선 안 됨)을 모두 포괄한다. 문제·전개·결론을 아우르는 가장 적절한 주제.</li>
+        <li><span class="k">④ 오답 <span class="wrong-mark">✗</span></span> — 병원·학교·연구 공동체는 '서로 다른 평가체계가 필요하다'는 예가 아니라, 동일한 메커니즘(proxy drift)이 여러 영역에서 반복된다는 것을 보여주는 예시다. 예시의 취지를 정반대로 읽은 선택지.</li>
+        <li><span class="k">⑤ 오답 <span class="wrong-mark">✗</span></span> — 사실 자체는 지문과 일치하지만, 도입부의 부수적 배경 정보일 뿐 글 전체를 관통하는 주제가 아니다. 지엽적 세부사항을 주제로 오인한 함정.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    생성일시: 2026-07-16 06:21 (KST, 로컬 타임존) · quiz_2026-07-16_상_영어.html
+  </footer>
+</div>
