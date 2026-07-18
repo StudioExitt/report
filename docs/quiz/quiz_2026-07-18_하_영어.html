@@ -1,0 +1,122 @@
+<meta charset="utf-8">
+<title>일일 영어 문제 — 2026-07-18 (난이도: 하)</title>
+<style>
+  :root {
+    --bg: #fbfcfe;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #5b6b7b;
+    --line: #e3e8ef;
+    --accent: #2563eb;
+    --accent-soft: #eef4ff;
+    --good: #15803d;
+    --bad: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.7;
+    padding: 32px 16px 80px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 1.7rem; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.92rem; }
+  .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
+  }
+  .badge.level { background: #fff1e6; color: #c2410c; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin-bottom: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  h2 { font-size: 1.15rem; font-weight: 800; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2 .num { background: var(--accent); color: #fff; border-radius: 8px; font-size: 0.85rem; padding: 2px 9px; }
+  .passage p { margin: 0 0 14px; }
+  .passage { font-size: 1.02rem; }
+  .q-stem { font-weight: 700; margin: 0 0 16px; font-size: 1.05rem; }
+  ol.choices { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.choices li {
+    counter-increment: c; border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px 13px 48px; margin-bottom: 10px; position: relative; cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  ol.choices li:hover { background: var(--accent-soft); border-color: var(--accent); }
+  ol.choices li::before {
+    content: counter(c); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 50%; background: #eef2f7; color: var(--ink);
+    font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.correct::before { background: var(--good); color: #fff; }
+  .btn {
+    background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+    padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .answer { display: none; margin-top: 22px; }
+  .answer.show { display: block; }
+  .answer-head { font-weight: 800; font-size: 1.05rem; color: var(--good); margin-bottom: 14px; }
+  .exp { border-top: 1px dashed var(--line); padding-top: 14px; margin-top: 4px; }
+  .exp li { margin-bottom: 10px; }
+  .exp .k { font-weight: 700; }
+  .exp .ans-mark { color: var(--good); }
+  .exp .wrong-mark { color: var(--bad); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 30px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>일일 영어 문제</h1>
+    <div class="meta">주제 파악 (Finding the Main Idea) · 지문을 읽고 가장 적절한 주제를 고르세요.</div>
+    <div class="badges">
+      <span class="badge">유형: 영어 · 주제 찾기</span>
+      <span class="badge level">난이도: 하</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">지문</span> Reading Passage</h2>
+    <div class="passage">
+      <p>In the nineteenth century, the economist William Stanley Jevons noticed something strange about coal. Steam engines were becoming far more efficient, using less coal to produce the same amount of work. Common sense suggested that Britain's total coal consumption should fall as a result. Instead, it rose sharply. Jevons realized that greater efficiency had made steam power cheaper to run, and that cheapness encouraged people to use it in more factories, more ships, and more machines than before. The savings from efficiency were not banked; they were spent on doing more of the very thing that was supposedly being made leaner.</p>
+      <p>This pattern, now called the Jevons Paradox, keeps reappearing in modern life. When cars became more fuel-efficient, many drivers did not keep their fuel bills the same; they simply drove farther, bought bigger vehicles, or took trips they once would have skipped. When LED bulbs cut the electricity cost of lighting to a fraction of what incandescent bulbs required, cities and homeowners responded by installing far more lights, often leaving them on all night, so that total energy used for lighting did not fall nearly as much as the efficiency gains alone would predict.</p>
+      <p>The same logic shows up outside of energy use entirely. Faster computer chips did not shrink the demand for computing power; they unlocked new software that demanded even more processing, from video streaming to artificial intelligence. Cheaper, quicker communication did not reduce the number of meetings and messages people exchange; it multiplied them. In each case, an improvement that was meant to conserve a resource instead lowered the cost of using it, and lower cost invited greater consumption.</p>
+      <p>None of this means efficiency is worthless or that engineers should stop improving their machines. But the paradox is a useful reminder that technical improvements alone rarely guarantee the outcome we hope for. If the real goal is to use less of something — less coal, less fuel, less electricity — then efficiency must be paired with limits, pricing, or policy that keeps the savings from simply being reinvested in more consumption. Otherwise, a more efficient world can end up, paradoxically, a hungrier one.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">문제</span> Question</h2>
+    <p class="q-stem">What is the main idea of the passage?</p>
+    <ol class="choices">
+      <li>William Stanley Jevons was the first economist to study the history of coal-powered steam engines in Britain.</li>
+      <li>Improving the efficiency of a resource can lower its cost of use and thereby increase, rather than decrease, overall consumption of it.</li>
+      <li>LED bulbs are a poor replacement for incandescent bulbs because they encourage people to waste electricity.</li>
+      <li>Faster computer chips and cheaper communication tools have made modern workplaces less productive overall.</li>
+      <li>Engineers should stop trying to make machines more efficient since efficiency gains are always wasted.</li>
+    </ol>
+
+    <button class="btn" onclick="document.getElementById('ans').classList.add('show'); this.style.display='none';">정답 보기</button>
+
+    <div class="answer" id="ans">
+      <div class="answer-head">정답: ②</div>
+      <ul class="exp">
+        <li><span class="k">① 오답 <span class="wrong-mark">✗</span></span> — Jevons는 지문의 도입부에 등장하는 인물이자 이 현상에 이름을 붙인 사람이지만, 그의 학문적 우선성 자체가 지문의 주제는 아니다. 도입 정보를 주제로 오인한 함정.</li>
+        <li><span class="k">② 정답 <span class="ans-mark">✓</span></span> — 석탄, 자동차 연료, LED 조명, 컴퓨터 칩, 통신 수단의 사례가 모두 "효율이 좋아지면 비용이 낮아지고, 비용이 낮아지면 소비가 늘어난다"는 동일한 원리(Jevons Paradox)를 보여주며, 마지막 문단의 결론과도 정확히 일치한다.</li>
+        <li><span class="k">③ 오답 <span class="wrong-mark">✗</span></span> — LED 조명은 하나의 예시일 뿐이며, 지문은 LED 자체가 "나쁜 대체재"라고 평가하지 않는다. 하나의 사례를 전체 주제로 확대 해석한 오류.</li>
+        <li><span class="k">④ 오답 <span class="wrong-mark">✗</span></span> — 컴퓨터 칩과 통신 수단은 "생산성 저하"가 아니라 소비·수요가 늘어나는 동일한 패턴을 보여주는 예시로 제시되었을 뿐, 생산성에 대한 평가는 지문에 없다.</li>
+        <li><span class="k">⑤ 오답 <span class="wrong-mark">✗</span></span> — 지문은 마지막 문단에서 "효율이 무가치하다는 뜻은 아니다(None of this means efficiency is worthless)"라고 명시적으로 반박하는 진술이다. 결론을 정반대로 읽은 선택지.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    생성일시: 2026-07-18 10:21 (KST, 로컬 타임존) · quiz_2026-07-18_하_영어.html
+  </footer>
+</div>
