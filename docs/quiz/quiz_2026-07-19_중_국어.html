@@ -1,0 +1,214 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-19 (국어/중)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #7a3b8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #f2eef6;
+    color: #7a3b8a;
+    font-weight: 700;
+  }
+  .meta span.diff-중 {
+    background: #fff6e0;
+    color: #a5730b;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #7a3b8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #7a3b8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #7a3b8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #653072;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #7a3b8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #f3eaf6;
+    border: 1px solid #d9bce2;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 국어</h1>
+<div class="meta">
+  <span>2026년 7월 19일 (일)</span>
+  <span class="diff-중">난이도: 중</span>
+  <span>유형: 국어 (비문학 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+19세기 중반, 사진기가 발명되었을 때 화가들이 느낀 충격은 단순한 기술적 놀라움을 넘어서는 것이었다. 프랑스의 화가 폴 들라로슈가 사진을 처음 보고 "오늘부로 회화는 죽었다"고 탄식했다는 일화는 당시의 위기감을 압축해서 보여 준다. 그때까지 회화의 가장 중요한 가치 중 하나는 눈앞의 대상을 얼마나 정확하고 섬세하게 재현해 내는가에 있었다. 그런데 사진기는 인간의 손으로는 도저히 따라갈 수 없는 정밀함과 속도로 대상을 그대로 옮겨 담았다. 초상화가들은 하루아침에 일자리를 잃을지도 모른다는 불안에 시달렸고, 회화라는 예술 장르 전체의 존재 이유가 흔들리는 듯했다.
+</p>
+<p>
+그러나 시간이 흐르면서 사진의 등장은 회화에 예상치 못한 방향으로 작용했다. 사물을 있는 그대로 기록하는 일을 사진기가 대신 떠맡게 되자, 화가들은 더 이상 눈에 보이는 대로 충실히 그려야 한다는 오랜 의무에서 벗어날 수 있었다. 대상을 정확히 재현하지 않아도 되는 자유가 주어지자, 화가들은 자신이 실제로 무엇을 그려야 하는지를 새롭게 고민하기 시작했다. 모네를 비롯한 인상주의 화가들은 대상의 고정된 형태보다 빛과 색채가 시시각각 변화하며 눈에 남기는 순간적인 인상을 화폭에 담는 데 몰두했다. 이는 사진기가 포착할 수 없는, 오직 화가의 지각과 감각을 통해서만 표현될 수 있는 영역이었다.
+</p>
+<p>
+이후의 흐름은 더욱 대담해졌다. 세잔은 대상을 눈에 보이는 그대로가 아니라 기하학적 구조로 재구성하여 화면에 새로운 질서를 부여하려 했고, 이러한 시도는 이후 입체파의 실험으로 이어졌다. 나아가 칸딘스키와 같은 화가들은 아예 눈에 보이는 대상 자체를 그리는 일을 그만두고, 색과 선과 형태만으로 감정과 정신을 표현하는 추상화의 길을 열었다. 이 모든 변화의 공통점은 회화가 더 이상 사진과 재현의 정확성을 두고 경쟁하지 않았다는 데 있다. 화가들은 사진이 할 수 없는 것, 즉 화가 자신의 눈과 마음을 통과한 세계를 보여 주는 쪽으로 방향을 돌렸다.
+</p>
+<p>
+물론 사진 역시 이 과정에서 단순한 기록 도구를 넘어 독자적인 예술 장르로 성장해 갔다. 그러나 회화의 입장에서 보면, 사진의 발명이 가져온 결과는 예술로서의 종말이 아니라 오히려 재현이라는 오래된 굴레로부터의 해방이었다. 들라로슈의 탄식과 달리, 회화는 사진에 밀려 사라지기는커녕 사진 덕분에 비로소 사진이 대신할 수 없는 고유한 영역, 즉 인간 내면의 시선과 감각을 표현하는 예술로서 새로운 정체성을 찾아갈 수 있었던 것이다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices">
+    <li>사진기의 발명으로 회화는 예술로서의 지위를 완전히 상실하고 쇠퇴하였다.</li>
+    <li>사진의 등장은 회화가 재현의 의무에서 벗어나 화가 고유의 시선과 감각을 표현하는 예술로 나아가는 계기가 되었다.</li>
+    <li>인상주의와 추상화는 사진 기술의 발전과 무관하게 독자적으로 등장한 화풍이다.</li>
+    <li>사진은 정밀한 기록 능력을 갖추었지만 예술적 가치에서는 결코 회화를 따라올 수 없다.</li>
+    <li>화가들은 사진의 등장에 위기감을 느껴 이전보다 더 사실적인 재현에 몰두하게 되었다.</li>
+  </ol>
+
+  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ②</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 지문은 들라로슈의 "회화는 죽었다"는 초기의 위기감을 언급하지만, 이어지는 내용 전체를 통해 그 예상과 달리 회화가 사진 덕분에 새로운 정체성을 찾았다고 결론짓는다. 회화가 '완전히 상실·쇠퇴'했다는 진술은 지문의 논지와 정반대다.
+    </div>
+    <div class="explain-item correct">
+      <b>② 정답</b> — 지문은 사진기가 재현의 역할을 대신 떠맡으면서 화가들이 정확한 묘사의 의무에서 벗어났고, 그 자유를 바탕으로 인상주의·입체파·추상화로 이어지는 새로운 예술적 방향을 찾아갔다는 흐름을 일관되게 서술한다. 마지막 문단의 "재현이라는 오래된 굴레로부터의 해방"이라는 표현이 이를 압축적으로 보여 주는 주제문이다.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답</b> — 셋째 문단은 세잔의 구조적 재구성과 칸딘스키의 추상화를 사진기가 재현을 대신하게 된 이후의 흐름 속에서 설명하고 있으므로, 이러한 화풍이 사진 기술과 '무관하게' 등장했다는 진술은 지문의 서술과 어긋난다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 지문은 사진과 회화 중 어느 쪽이 예술적으로 더 우월한지를 비교하거나 우열을 가리지 않는다. 넷째 문단은 오히려 사진도 독자적인 예술 장르로 성장했다고 언급하므로, 회화의 우월성을 주장하는 진술은 지문의 취지와 다르다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 지문에 따르면 화가들은 사진의 등장 이후 오히려 사실적 재현에서 멀어져 인상주의, 입체파, 추상화와 같이 재현으로부터 벗어난 방향으로 나아갔다. '더 사실적인 재현에 몰두'했다는 진술은 지문 내용과 정반대다.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-19 10:16 (KST) · 문제은행 자동 생성</footer>
