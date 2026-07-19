@@ -1,0 +1,122 @@
+<meta charset="utf-8">
+<title>일일 영어 문제 — 2026-07-20 (난이도: 중)</title>
+<style>
+  :root {
+    --bg: #fbfcfe;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #5b6b7b;
+    --line: #e3e8ef;
+    --accent: #2563eb;
+    --accent-soft: #eef4ff;
+    --good: #15803d;
+    --bad: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.7;
+    padding: 32px 16px 80px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 1.7rem; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.92rem; }
+  .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
+  }
+  .badge.level { background: #fff1e6; color: #c2410c; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin-bottom: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  h2 { font-size: 1.15rem; font-weight: 800; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2 .num { background: var(--accent); color: #fff; border-radius: 8px; font-size: 0.85rem; padding: 2px 9px; }
+  .passage p { margin: 0 0 14px; }
+  .passage { font-size: 1.02rem; }
+  .q-stem { font-weight: 700; margin: 0 0 16px; font-size: 1.05rem; }
+  ol.choices { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.choices li {
+    counter-increment: c; border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px 13px 48px; margin-bottom: 10px; position: relative; cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  ol.choices li:hover { background: var(--accent-soft); border-color: var(--accent); }
+  ol.choices li::before {
+    content: counter(c); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 50%; background: #eef2f7; color: var(--ink);
+    font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.correct::before { background: var(--good); color: #fff; }
+  .btn {
+    background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+    padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .answer { display: none; margin-top: 22px; }
+  .answer.show { display: block; }
+  .answer-head { font-weight: 800; font-size: 1.05rem; color: var(--good); margin-bottom: 14px; }
+  .exp { border-top: 1px dashed var(--line); padding-top: 14px; margin-top: 4px; }
+  .exp li { margin-bottom: 10px; }
+  .exp .k { font-weight: 700; }
+  .exp .ans-mark { color: var(--good); }
+  .exp .wrong-mark { color: var(--bad); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 30px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>일일 영어 문제</h1>
+    <div class="meta">주제 파악 (Finding the Main Idea) · 지문을 읽고 가장 적절한 주제를 고르세요.</div>
+    <div class="badges">
+      <span class="badge">유형: 영어 · 주제 찾기</span>
+      <span class="badge level">난이도: 중</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">지문</span> Reading Passage</h2>
+    <div class="passage">
+      <p>In the 1960s, biologist Garrett Hardin popularized a simple story that has since shaped how economists and policymakers think about shared resources. Picture a pasture open to every herder in a village. Each herder benefits fully from adding one more cow, since the extra milk and meat belong to them alone, while the cost of the extra grazing is spread thinly across everyone who shares the pasture. Because the personal gain is concentrated but the cost is diffused, every herder is individually rewarded for adding another animal, and another, even though the pasture will eventually be stripped bare and everyone will suffer. Hardin called this the tragedy of the commons.</p>
+      <p>The pattern turns out to describe far more than pastures. Ocean fisheries decline when every fishing fleet reasons that leaving fish in the water only means a rival boat will catch them instead, so no single fleet has an incentive to hold back. Groundwater aquifers are pumped faster than rain can refill them when each farmer calculates that conserving water today mainly benefits the farmer next door tomorrow. Even a shared office refrigerator or a public hiking trail littered with trash reflects the same logic in miniature: whoever eats the last shared snack or leaves the campfire burning captures a small private convenience, while the mess or the risk is absorbed by everyone else.</p>
+      <p>What makes the tragedy so persistent is that it does not require anyone to be greedy or foolish. Rational, well-meaning individuals can produce a collectively disastrous outcome simply by following incentives that make sense from where they stand. This is precisely why Hardin argued that appeals to conscience or goodwill rarely solve the problem on their own; as long as the underlying incentive structure rewards overuse, moral pleas tend to be overwhelmed by the logic of self-interest.</p>
+      <p>Yet the story is not one of hopeless inevitability. Later researchers, most notably economist Elinor Ostrom, documented numerous real-world commons — irrigation systems, forests, fisheries — that communities managed sustainably for generations without collapse. Their success typically depended on clear boundaries defining who could use the resource, monitoring that made overuse visible, and graduated penalties for those who took more than their share. In other words, the tragedy of the commons is not a fixed law of nature but a description of what happens when a shared resource lacks rules; when a community builds the right rules, the same resource can be used indefinitely.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">문제</span> Question</h2>
+    <p class="q-stem">What is the main idea of the passage?</p>
+    <ol class="choices">
+      <li>Garrett Hardin was the first scientist to study how herders in villages managed grazing pastures.</li>
+      <li>Shared resources are inevitably destroyed because most people who use them are careless or greedy.</li>
+      <li>Individually rational use of a shared resource can lead to its collective ruin, but well-designed rules and monitoring can prevent this outcome.</li>
+      <li>Ocean fisheries and groundwater aquifers are declining mainly because governments have failed to regulate private farms and fishing fleets.</li>
+      <li>Elinor Ostrom proved that Garrett Hardin's theory of the commons was completely mistaken and should be discarded.</li>
+    </ol>
+
+    <button class="btn" onclick="document.getElementById('ans').classList.add('show'); this.style.display='none';">정답 보기</button>
+
+    <div class="answer" id="ans">
+      <div class="answer-head">정답: ③</div>
+      <ul class="exp">
+        <li><span class="k">① 오답 <span class="wrong-mark">✗</span></span> — Hardin은 지문에서 이 현상에 이름을 붙이고 이를 대중화한 인물로 소개될 뿐, 그가 "최초의 연구자"인지 여부는 지문의 핵심 주제가 아니다. 도입부의 세부 정보를 주제로 착각한 함정.</li>
+        <li><span class="k">② 오답 <span class="wrong-mark">✗</span></span> — 지문은 3문단에서 "누구도 탐욕스럽거나 어리석을 필요가 없다"고 명시적으로 반박한다. 개인의 부주의나 탐욕이 원인이라는 이 선택지는 지문의 핵심 논지와 정반대이다.</li>
+        <li><span class="k">③ 정답 <span class="ans-mark">✓</span></span> — 목초지, 어장, 지하수, 공용 냉장고 등 다양한 사례를 통해 "합리적 개인 행동이 모여 공동의 파국을 낳는다"는 원리를 설명하고, 마지막 문단에서 Ostrom의 사례를 들어 "명확한 규칙과 감시가 있으면 지속 가능하다"는 해법까지 제시하므로 지문 전체를 가장 정확히 포괄한다.</li>
+        <li><span class="k">④ 오답 <span class="wrong-mark">✗</span></span> — 어장과 지하수는 하나의 예시일 뿐이며, 지문은 "정부 규제 실패"를 원인으로 지목하지 않는다. 특정 사례를 전체 주제로 과잉 일반화한 오류.</li>
+        <li><span class="k">⑤ 오답 <span class="wrong-mark">✗</span></span> — Ostrom은 Hardin의 이론을 "완전히 틀렸다"고 반박한 것이 아니라, 규칙이 없을 때 벌어지는 현상이라는 Hardin의 틀을 인정하면서 "규칙이 있으면 지속 가능하다"는 보완적 사례를 제시했을 뿐이다. 지문 내용을 왜곡한 선택지.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    생성일시: 2026-07-20 06:27 (KST, 로컬 타임존) · quiz_2026-07-20_중_영어.html
+  </footer>
+</div>
