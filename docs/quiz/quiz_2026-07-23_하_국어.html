@@ -1,0 +1,217 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-23 (국어/하)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-하 {
+    background: #eaf3ec;
+    color: #2e7d4f;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #2c5f8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #234b6e;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #e9f1f7;
+    border: 1px solid #b9d3e6;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 국어</h1>
+<div class="meta">
+  <span>2026년 7월 23일 (목)</span>
+  <span class="diff-하">난이도: 하</span>
+  <span>유형: 국어 (비문학 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+사람의 몸을 이루는 세포 안에는 미토콘드리아라는 작은 기관이 들어 있다. 미토콘드리아는 우리가 먹은 음식물을 분해하여 세포가 사용할 수 있는 에너지를 만들어 내는 역할을 한다. 그런데 이 미토콘드리아는 세포의 다른 부분과 뚜렷하게 구별되는 특징을 몇 가지 가지고 있다. 첫째, 미토콘드리아는 세포핵과는 별도로 자기만의 유전 물질(DNA)을 가지고 있다. 둘째, 미토콘드리아는 세포 안의 다른 소기관과 달리 두 겹의 막으로 둘러싸여 있다. 셋째, 미토콘드리아는 세포 분열과는 별개로 스스로 둘로 나뉘어 늘어날 수 있다.
+</p>
+<p>
+이러한 특징들은 오랫동안 과학자들에게 하나의 의문을 던져 주었다. 왜 미토콘드리아만 세포 속에서 마치 독립된 생물처럼 행동하는 것일까? 1960년대에 미국의 생물학자 린 마굴리스는 이 의문에 대해 대담한 답을 내놓았다. 그것이 바로 '세포내공생설'이다. 이 이론에 따르면, 아주 먼 옛날 원시적인 형태의 큰 세포가 산소를 이용해 에너지를 만들어 내는 작은 세균을 삼켰다. 그런데 이 작은 세균은 소화되어 사라지지 않고 큰 세포 안에서 살아남았다. 그리고 시간이 흐르면서 두 생물은 서로에게 이익이 되는 방향으로 함께 살아가게 되었다. 작은 세균은 큰 세포 안에서 안전하게 보호받으며 영양분을 공급받았고, 큰 세포는 그 세균이 만들어 내는 풍부한 에너지를 얻을 수 있었다.
+</p>
+<p>
+식물 세포에 들어 있는 엽록체 역시 이와 비슷한 방식으로 설명된다. 엽록체는 빛을 이용해 영양분을 만들어 내는 광합성을 담당하는 소기관인데, 미토콘드리아와 마찬가지로 자신만의 DNA를 지니고 있고 두 겹의 막으로 싸여 있으며 스스로 분열할 수 있다. 학자들은 엽록체 역시 원래는 광합성을 하는 독립된 세균이었다가, 다른 큰 세포에게 삼켜진 뒤 그 안에서 함께 살아가게 된 것이라고 설명한다.
+</p>
+<p>
+처음 이 주장이 나왔을 때 많은 과학자들은 회의적인 반응을 보였다. 서로 다른 두 생물이 하나로 합쳐져 오늘날과 같은 복잡한 세포를 이루었다는 설명이 지나치게 파격적으로 들렸기 때문이다. 그러나 이후 미토콘드리아와 엽록체의 DNA를 정밀하게 분석한 결과, 이 DNA의 구조가 세균의 DNA와 매우 닮아 있다는 사실이 확인되었다. 이러한 증거들이 쌓이면서 세포내공생설은 오늘날 널리 받아들여지는 정설로 자리 잡게 되었다.
+</p>
+<p>
+결국 우리 몸을 이루는 세포 하나하나는 단일한 기원에서 출발한 것이 아니라, 서로 다른 두 생물이 만나 협력하며 이루어 낸 결합체라고 할 수 있다. 미토콘드리아와 엽록체의 독특한 특징은 이들이 한때 독립적으로 살아가던 생물이었음을 보여 주는 흔적인 셈이다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices">
+    <li>미토콘드리아는 세포핵과 마찬가지로 세포 분열에 따라서만 개수가 늘어난다.</li>
+    <li>미토콘드리아와 엽록체는 원래 독립된 생물이었다가 다른 세포와 공생하게 되었다는 것이 세포내공생설의 핵심 내용이다.</li>
+    <li>린 마굴리스의 세포내공생설은 발표 당시부터 오늘날까지 모든 과학자에게 별다른 의심 없이 받아들여져 왔다.</li>
+    <li>엽록체는 미토콘드리아와 달리 독자적인 유전 물질을 가지고 있지 않다는 점에서 차이가 있다.</li>
+    <li>세포 안의 소기관들은 모두 하나의 기원에서 출발하여 동일한 방식으로 형성되었다.</li>
+  </ol>
+
+  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ②</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 지문은 미토콘드리아가 세포 분열과는 별개로 "스스로 둘로 나뉘어 늘어날 수 있다"고 설명한다. 세포핵과 같은 방식으로만 늘어난다는 진술은 지문 내용과 반대된다.
+    </div>
+    <div class="explain-item correct">
+      <b>② 정답</b> — 지문은 미토콘드리아와 엽록체가 지닌 독자적인 DNA, 이중막 구조, 자체 분열 능력 등의 특징을 근거로, 이들이 원래는 독립된 세균이었다가 큰 세포에게 삼켜진 뒤 서로 이익이 되는 방향으로 공생하게 되었다는 세포내공생설을 소개하고 있다. 이것이 지문 전체를 아우르는 중심 내용이다.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답</b> — 넷째 문단에 따르면 이 주장이 처음 나왔을 때 많은 과학자들이 회의적인 반응을 보였으며, 이후 DNA 분석 등의 증거가 쌓이면서 비로소 정설로 받아들여지게 되었다. 따라서 발표 당시부터 의심 없이 받아들여졌다는 진술은 사실과 다르다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 셋째 문단은 엽록체 역시 미토콘드리아와 마찬가지로 "자신만의 DNA를 지니고 있다"고 설명하므로, 엽록체에 독자적인 유전 물질이 없다는 진술은 지문 내용과 어긋난다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 지문은 미토콘드리아와 엽록체만이 원래 독립된 생물이었다가 공생하게 된 특수한 사례임을 설명할 뿐, 세포 안의 모든 소기관이 동일한 방식으로 형성되었다고 말하지 않는다.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-23 06:57 (KST) · 문제은행 자동 생성</footer>
