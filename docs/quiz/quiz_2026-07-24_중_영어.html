@@ -1,0 +1,122 @@
+<meta charset="utf-8">
+<title>일일 영어 문제 — 2026-07-24 (난이도: 중)</title>
+<style>
+  :root {
+    --bg: #fbfcfe;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #5b6b7b;
+    --line: #e3e8ef;
+    --accent: #2563eb;
+    --accent-soft: #eef4ff;
+    --good: #15803d;
+    --bad: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.7;
+    padding: 32px 16px 80px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 1.7rem; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.92rem; }
+  .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
+  }
+  .badge.level { background: #fff7e6; color: #b45309; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin-bottom: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  h2 { font-size: 1.15rem; font-weight: 800; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2 .num { background: var(--accent); color: #fff; border-radius: 8px; font-size: 0.85rem; padding: 2px 9px; }
+  .passage p { margin: 0 0 14px; }
+  .passage { font-size: 1.02rem; }
+  .q-stem { font-weight: 700; margin: 0 0 16px; font-size: 1.05rem; }
+  ol.choices { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.choices li {
+    counter-increment: c; border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px 13px 48px; margin-bottom: 10px; position: relative; cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  ol.choices li:hover { background: var(--accent-soft); border-color: var(--accent); }
+  ol.choices li::before {
+    content: counter(c); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 50%; background: #eef2f7; color: var(--ink);
+    font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.correct::before { background: var(--good); color: #fff; }
+  .btn {
+    background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+    padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .answer { display: none; margin-top: 22px; }
+  .answer.show { display: block; }
+  .answer-head { font-weight: 800; font-size: 1.05rem; color: var(--good); margin-bottom: 14px; }
+  .exp { border-top: 1px dashed var(--line); padding-top: 14px; margin-top: 4px; }
+  .exp li { margin-bottom: 10px; }
+  .exp .k { font-weight: 700; }
+  .exp .ans-mark { color: var(--good); }
+  .exp .wrong-mark { color: var(--bad); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 30px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>일일 영어 문제</h1>
+    <div class="meta">주제 파악 (Finding the Main Idea) · 지문을 읽고 가장 적절한 주제를 고르세요.</div>
+    <div class="badges">
+      <span class="badge">유형: 영어 · 주제 찾기</span>
+      <span class="badge level">난이도: 중</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">지문</span> Reading Passage</h2>
+    <div class="passage">
+      <p>When wolves were eliminated from Yellowstone National Park in the 1920s, ecologists expected the local elk population to grow, and it did. What they did not fully anticipate was how far the consequences of that single removal would ripple outward through the rest of the ecosystem. Without wolves to hunt them or to keep them moving, elk lingered in river valleys and stream banks, grazing willow and aspen saplings down to the roots year after year. Within a few decades, the young trees that once anchored those banks had all but disappeared.</p>
+      <p>The loss of streamside trees turned out to matter far more than anyone had predicted. Riverbanks that were once held together by root systems began to erode more quickly, widening and straightening the channels. Beavers, which depend on willow for both food and dam-building material, largely vanished from the park, and with them went the small ponds and wetlands their dams had created. Songbirds that nested in the streamside thickets lost their habitat, and the cooler, shaded water that fish needed grew scarcer as the tree canopy thinned.</p>
+      <p>In 1995, wildlife managers reintroduced gray wolves to Yellowstone, and researchers began tracking what came to be called a trophic cascade: a chain of effects that starts at the top of a food web and moves downward through every level beneath it. Wolves did not need to kill enormous numbers of elk to change the landscape; their mere presence was often enough. Elk grew warier and stopped congregating for long stretches in the open river valleys where they were most exposed to predators, and this shift in behavior, known as the "ecology of fear," allowed young willows and aspens to finally take root again.</p>
+      <p>Within roughly a decade, streamside vegetation was recovering, beavers were returning to rebuild their dams, and the ponds and wetlands that follow from beaver activity were reappearing across the park. Some researchers have even argued that reintroducing wolves altered the physical course of certain rivers, since stabilized banks erode more slowly and meander less. The Yellowstone case is now cited widely, sometimes in oversimplified form, as evidence that a single species sitting at the top of a food chain can shape the physical landscape far below it, and that removing or restoring that species can set off changes that reach well beyond the animals it directly hunts.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">문제</span> Question</h2>
+    <p class="q-stem">What is the main idea of the passage?</p>
+    <ol class="choices">
+      <li>Beavers are the single most important species for maintaining healthy rivers and wetlands in any ecosystem.</li>
+      <li>The removal and later reintroduction of wolves in Yellowstone triggered a cascade of changes, through elk behavior, that reshaped vegetation, wildlife, and even the physical rivers themselves.</li>
+      <li>Wolves were reintroduced to Yellowstone in 1995 primarily to reduce the elk population through direct predation.</li>
+      <li>Elk grazing has no meaningful effect on the growth of willow and aspen trees along riverbanks.</li>
+      <li>Yellowstone National Park's rivers naturally change course every few decades regardless of which animal species are present.</li>
+    </ol>
+
+    <button class="btn" onclick="document.getElementById('ans').classList.add('show'); this.style.display='none';">정답 보기</button>
+
+    <div class="answer" id="ans">
+      <div class="answer-head">정답: ②</div>
+      <ul class="exp">
+        <li><span class="k">① 오답 <span class="wrong-mark">✗</span></span> — 2문단과 4문단에서 비버와 습지의 회복을 다루지만, 이는 늑대 재도입이 촉발한 연쇄 반응의 한 결과일 뿐이며, 비버가 "가장 중요한 종"이라는 주장은 지문에 없다.</li>
+        <li><span class="k">② 정답 <span class="ans-mark">✓</span></span> — 1문단은 늑대 제거로 엘크가 늘어 하천가 나무가 사라진 과정을, 2문단은 그로 인한 침식·비버 소멸 등 연쇄 효과를, 3~4문단은 늑대 재도입 후 엘크의 행동 변화(공포의 생태학)로 식생과 하천이 회복된 과정을 다룬다. 이는 지문 전체를 포괄하는 핵심 주제이다.</li>
+        <li><span class="k">③ 오답 <span class="wrong-mark">✗</span></span> — 3문단은 "늑대가 엘크를 많이 죽일 필요 없이, 존재 자체만으로도 충분했다"고 명시하며, 직접적인 포식보다 행동 변화가 핵심 기제임을 강조한다. 선택지는 이를 정반대로 왜곡한다.</li>
+        <li><span class="k">④ 오답 <span class="wrong-mark">✗</span></span> — 1문단은 엘크가 버드나무와 사시나무 묘목을 "뿌리까지" 뜯어먹어 사라지게 했다고 명시하므로, 아무 영향이 없다는 진술은 지문과 정반대이다.</li>
+        <li><span class="k">⑤ 오답 <span class="wrong-mark">✗</span></span> — 4문단은 강의 물길 변화가 "안정된 강둑은 덜 침식되고 덜 굽이친다"는 식생·동물 요인과 연결되어 있다고 설명하며, 종과 무관하게 자연히 일어난다고 말하지 않는다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    생성일시: 2026-07-24 23:44 (KST, 로컬 타임존) · quiz_2026-07-24_중_영어.html
+  </footer>
+</div>
