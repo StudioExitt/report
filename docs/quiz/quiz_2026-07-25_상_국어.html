@@ -1,0 +1,217 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-25 (국어/상)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-상 {
+    background: #fbeaea;
+    color: #a02c2c;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #2c5f8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #234b6e;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #e9f1f7;
+    border: 1px solid #b9d3e6;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 국어</h1>
+<div class="meta">
+  <span>2026년 7월 25일 (토)</span>
+  <span class="diff-상">난이도: 상</span>
+  <span>유형: 국어 (비문학 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+전통적인 경제학은 인간을 언제나 합리적으로 판단하고 선택하는 존재, 이른바 '경제적 인간(homo economicus)'으로 가정해 왔다. 이 가정에 따르면 사람들은 주어진 정보를 빠짐없이 검토하고, 자신의 이익을 극대화하는 방향으로 일관되게 행동한다. 그러나 행동경제학자 리처드 탈러와 법학자 캐스 선스타인은 실제 인간의 의사 결정이 이러한 이상적 모형과 다르게 이루어진다는 점에 주목했다. 사람들은 종종 눈앞의 편리함에 이끌리고, 정보를 충분히 살피지 않은 채 습관이나 관성에 따라 선택하며, 선택지가 제시되는 방식 자체에 영향을 받는다는 것이다.
+</p>
+<p>
+이러한 인간관을 바탕으로 두 사람이 제안한 개념이 바로 '넛지(nudge)'이다. 넛지란 원래 팔꿈치로 슬쩍 찌른다는 뜻으로, 이들은 이를 "선택을 금지하거나 경제적 유인을 크게 바꾸지 않으면서도 사람들의 행동을 예측 가능한 방향으로 부드럽게 유도하는 모든 요소"라고 정의했다. 예컨대 구내식당에서 몸에 좋은 음식을 눈높이에 맞춰 진열하고 튀김류를 눈에 덜 띄는 곳에 두는 것만으로도, 선택의 자유를 전혀 제한하지 않으면서 사람들이 건강한 음식을 더 많이 고르도록 유도할 수 있다. 이때 핵심은 강제나 금지, 세금과 같은 직접적 개입이 아니라 선택지가 놓이는 맥락, 즉 '선택 설계(choice architecture)'를 조정하는 데 있다.
+</p>
+<p>
+넛지 개념은 각국의 공공 정책에서 폭넓게 응용되었다. 대표적인 사례가 연금 가입 제도이다. 과거에는 노동자가 스스로 신청서를 작성해야만 퇴직연금에 가입할 수 있었는데, 이 방식에서는 가입을 미루거나 잊어버리는 사람이 많았다. 이후 여러 나라가 제도를 바꾸어, 별도의 의사 표시가 없으면 자동으로 연금에 가입되고 원하지 않는 사람만 탈퇴를 신청하도록 했다. 그 결과 가입률이 눈에 띄게 상승했다. 세금 신고서에 "당신이 사는 지역 주민의 대다수는 이미 세금을 성실히 납부했습니다"라는 문구를 추가해 체납률을 낮춘 사례, 전기 요금 고지서에 이웃 가구의 평균 사용량을 함께 표시해 에너지 절약을 유도한 사례 등도 널리 알려져 있다.
+</p>
+<p>
+그러나 넛지가 언제나 환영받은 것은 아니다. 비판자들은 넛지가 결국 정부나 설계자가 특정한 답을 미리 정해 놓고 국민을 그 방향으로 은근히 몰아가는 것은 아닌지 의문을 제기한다. 아무리 강제성이 없다고 해도, 선택 설계자가 어떤 기본값과 배치를 택하느냐에 따라 결과가 크게 달라진다는 점에서 완전히 중립적인 개입이란 존재하기 어렵다는 것이다. 이에 대해 탈러와 선스타인은 자신들의 입장을 '자유주의적 개입주의(libertarian paternalism)'라고 부르며 반박한다. 이는 사람들이 원래 선택했던 대안을 언제든 자유롭게 고를 수 있는 길을 열어 두면서도, 더 나은 결과로 이어질 가능성이 높은 선택 쪽으로 살짝 방향을 제시하는 절충적 태도라는 것이다. 즉 선택의 자유는 보장하되, 그 선택이 이루어지는 환경을 사람들에게 이로운 방향으로 설계하는 데 개입하겠다는 뜻이다.
+</p>
+<p>
+넛지 이론이 던지는 물음은 단순히 정책 기법의 효용을 넘어선다. 그것은 인간이 실제로 어떻게 판단하고 선택하는지에 대한 근본적인 재검토를 요구하며, 동시에 그러한 인간의 특성을 알게 된 이들이 다른 사람의 선택 환경을 조정할 권한과 책임을 어디까지 가질 수 있는가 하는 문제로 이어진다. 넛지가 단지 효과적인 설계 기술로만 소비되지 않으려면, 그 개입의 목적이 누구의 이익을 향하고 있는지, 그리고 그 과정이 투명하게 공개되고 있는지를 함께 따져 보아야 한다는 지적이 나오는 이유도 여기에 있다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices">
+    <li>정부는 세금이나 벌금과 같은 강력한 경제적 유인을 동원해야만 국민의 행동을 실질적으로 바꿀 수 있다.</li>
+    <li>넛지는 선택을 금지하지 않으면서 선택 설계를 통해 행동을 유도하는 개념으로, 그 효용과 함께 개입의 정당성에 대한 물음도 함께 지닌다.</li>
+    <li>인간은 언제나 합리적으로 정보를 검토하여 자신에게 가장 유리한 선택을 내리는 존재이므로 별도의 정책적 개입이 필요하지 않다.</li>
+    <li>연금 자동 가입 제도는 넛지의 대표적인 실패 사례로, 이후 여러 나라에서 폐지되는 결과로 이어졌다.</li>
+    <li>자유주의적 개입주의는 선택의 자유를 제한하는 대가로 더 나은 결과를 보장하는 강제적 개입 방식이다.</li>
+  </ol>
+
+  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ②</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 둘째 문단에서 넛지는 "경제적 유인을 크게 바꾸지 않으면서도" 행동을 유도하는 방식이라고 정의된다. 지문은 오히려 강력한 경제적 유인 없이도 행동을 바꿀 수 있음을 강조하므로, 강력한 유인이 반드시 필요하다는 진술은 지문의 핵심과 반대된다.
+    </div>
+    <div class="explain-item correct">
+      <b>② 정답</b> — 지문은 전통적 경제학의 '경제적 인간' 가정을 비판적으로 검토하며 넛지 개념을 소개하고, 연금 가입·세금 납부·에너지 절약 등 응용 사례를 제시한 뒤, 넛지가 선택 설계자의 개입이라는 점에서 비판을 받는다는 것과 이에 대한 탈러·선스타인의 반박(자유주의적 개입주의)까지 다룬다. 이는 곧 넛지의 개념과 효용, 그리고 그 개입의 정당성에 관한 물음을 함께 짚는 글 전체의 흐름을 요약한다.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답</b> — 첫째 문단은 오히려 실제 인간이 전통 경제학이 가정하는 것처럼 항상 합리적으로 판단하지 않는다는 점, 즉 넛지 이론이 출발하는 전제를 설명하고 있으므로 이 진술은 지문 내용과 정반대이다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 셋째 문단은 연금 자동 가입 제도가 시행된 이후 "가입률이 눈에 띄게 상승했다"고 설명하며 이를 넛지의 성공적인 응용 사례로 제시한다. 실패 사례나 제도 폐지에 대한 언급은 지문에 없다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 넷째 문단에 따르면 자유주의적 개입주의는 "사람들이 원래 선택했던 대안을 언제든 자유롭게 고를 수 있는 길을 열어 두면서" 더 나은 선택 쪽으로 방향을 제시하는 절충적 태도이다. 선택의 자유를 제한하는 강제적 개입이라는 설명은 이와 어긋난다.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-25 21:40 (KST) · 문제은행 자동 생성</footer>
