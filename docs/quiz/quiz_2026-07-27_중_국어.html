@@ -1,0 +1,217 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-27 (국어/중)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-중 {
+    background: #fff6e0;
+    color: #a5730b;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #2c5f8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #234b6e;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #e9f1f7;
+    border: 1px solid #b9d3e6;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 국어</h1>
+<div class="meta">
+  <span>2026년 7월 27일 (월)</span>
+  <span class="diff-중">난이도: 중</span>
+  <span>유형: 국어 (비문학 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+1492년 콜럼버스가 카리브해의 섬에 도착한 사건은 흔히 '신대륙의 발견'이라는 이름으로 불려 왔다. 그러나 20세기 후반의 역사학자 앨프리드 크로스비는 이 사건을 단순한 지리적 발견이나 정치적 정복으로만 보아서는 그 진정한 의미를 이해할 수 없다고 지적했다. 그는 콜럼버스의 항해 이후 아메리카 대륙과 유럽·아시아·아프리카 대륙, 즉 신대륙과 구대륙 사이에서 동식물과 병원균이 오간 대규모의 생물학적 교류가 일어났다는 점에 주목하며 이를 '콜럼버스의 교환(Columbian Exchange)'이라 명명했다.
+</p>
+<p>
+이 교환에서 신대륙으로부터 구대륙으로 건너간 작물들은 특히 큰 영향을 끼쳤다. 감자, 옥수수, 토마토, 고추, 카카오와 같은 작물이 대표적이다. 이 가운데 감자는 척박한 땅에서도 잘 자라고 단위 면적당 수확량이 밀보다 훨씬 높았기 때문에, 유럽 여러 지역에서 만성적인 식량 부족 문제를 완화하는 데 크게 기여했다. 역사학자들은 감자의 보급이 18세기 이후 유럽 인구가 크게 늘어나는 데 상당한 역할을 했다고 평가한다. 고추 역시 아시아 각지의 요리 문화에 깊숙이 파고들어, 오늘날 우리가 떠올리는 여러 나라의 전통 음식에 없어서는 안 될 재료가 되었다.
+</p>
+<p>
+반대로 구대륙에서 신대륙으로 건너간 것들은 전혀 다른 성격의 영향을 남겼다. 밀, 사탕수수와 같은 작물, 그리고 말과 소, 돼지 같은 가축이 아메리카 대륙에 새롭게 도입되어 이 지역의 농업과 생활 방식을 크게 바꾸어 놓았다. 그러나 무엇보다 치명적이었던 것은 천연두, 홍역과 같은 전염병이었다. 오랫동안 구대륙과 격리되어 살아온 아메리카 원주민은 이러한 병원균에 대한 면역력을 전혀 갖추고 있지 않았고, 그 결과 짧은 기간 동안 원주민 인구가 급격하게 줄어드는 재앙적인 피해를 입었다.
+</p>
+<p>
+이처럼 급감한 원주민 노동력을 대신하기 위해 유럽 식민 세력은 사탕수수 등을 재배하는 대규모 플랜테이션 농업을 확대했고, 이는 아프리카로부터 강제로 사람을 끌어오는 노예 무역을 확산시키는 배경이 되었다. 결국 콜럼버스의 교환은 아메리카 대륙 안에서만 머무른 사건이 아니라, 유럽과 아프리카, 아시아를 하나의 연결망으로 엮어 내며 전 지구적인 경제와 생태의 질서를 새롭게 재편하는 결과로 이어졌다.
+</p>
+<p>
+따라서 콜럼버스의 항해가 지닌 역사적 의미는 한 탐험가의 개인적 업적이나 유럽에 의한 영토 확장이라는 틀만으로는 온전히 설명되지 않는다. 그것은 오랫동안 서로 단절되어 있던 두 세계의 생물학적 경계가 허물어지면서, 인류의 식탁과 인구 구조, 나아가 대륙 간의 경제 관계까지 근본적으로 바꾸어 놓은 전 지구적 전환점이었다고 보아야 한다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices">
+    <li>콜럼버스는 신대륙에 처음 도달한 유럽인으로서, 그의 개인적인 항해 업적과 항로 개척 과정 자체가 이 글의 중심 내용이다.</li>
+    <li>감자, 옥수수, 담배는 원래 유럽에서 재배되던 작물로, 콜럼버스 이후 아메리카 대륙에 전파되어 원주민의 식생활을 바꾸어 놓았다.</li>
+    <li>콜럼버스의 신대륙 도달을 계기로 신대륙과 구대륙 사이에 동식물과 병원균이 오간 교환이 전 지구의 생태와 사회 구조를 근본적으로 바꾸어 놓았다.</li>
+    <li>신대륙 원주민은 구대륙에서 전해진 전염병에 대해 이미 강한 면역력을 갖추고 있어 유럽인과의 접촉 이후에도 인구가 꾸준히 증가하였다.</li>
+    <li>콜럼버스의 교환은 아메리카 대륙 내부에서만 일어난 국지적 사건으로, 유럽과 아프리카의 역사에는 별다른 영향을 주지 않았다.</li>
+  </ol>
+
+  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ③</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 지문은 크로스비의 관점을 빌려 콜럼버스의 항해를 개인의 업적이 아니라 신대륙과 구대륙 사이의 생물학적 교류라는 틀로 재해석하고 있으며, 마지막 문단에서도 "한 탐험가의 개인적 업적"이라는 틀로는 설명되지 않는다고 명시한다. 항로 개척 과정 자체는 지문의 중심 내용이 아니다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답</b> — 둘째 문단에 따르면 감자, 옥수수, 고추 등은 신대륙에서 구대륙으로 건너간 작물이다. 유럽에서 아메리카로 전파되었다는 설명은 교환의 방향을 정반대로 뒤바꾼 것이다.
+    </div>
+    <div class="explain-item correct">
+      <b>③ 정답</b> — 지문은 콜럼버스의 항해 이후 신대륙과 구대륙 사이에서 작물과 가축, 병원균 등이 오간 '콜럼버스의 교환'을 소개하고, 감자의 보급이 유럽 인구 증가에 기여한 사례, 전염병으로 인한 원주민 인구 급감, 플랜테이션 농업과 노예 무역의 확산 등을 통해 이 교환이 대륙 간 생태와 사회 구조를 근본적으로 바꾸어 놓았음을 설명한다. 이는 글 전체를 관통하는 중심 내용이다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 셋째 문단은 아메리카 원주민이 구대륙의 전염병에 대한 면역력을 전혀 갖추고 있지 않아 인구가 급격히 줄어드는 재앙적 피해를 입었다고 설명한다. 면역력을 이미 갖추고 있어 인구가 늘었다는 진술은 지문 내용과 정반대이다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 넷째 문단은 원주민 노동력 감소를 메우기 위한 플랜테이션 농업과 아프리카 노예 무역의 확산을 언급하며, 콜럼버스의 교환이 "유럽과 아프리카, 아시아를 하나의 연결망으로 엮어 내며" 전 지구적 질서를 재편했다고 설명한다. 아메리카 대륙 내부의 국지적 사건이라는 진술은 이와 어긋난다.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-27 06:23 (KST) · 문제은행 자동 생성</footer>
