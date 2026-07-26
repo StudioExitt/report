@@ -105,6 +105,50 @@
     align-items: center;
     justify-content: center;
   }
+  ol.choices li {
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li:hover {
+    background: #eef4fa;
+    border-color: #b9d3e6;
+  }
+  ol.choices li.picked-correct {
+    background: #e7f6ec;
+    border-color: #7cc79a;
+  }
+  ol.choices li.picked-correct::before {
+    background: #2e8b57;
+  }
+  ol.choices li.picked-wrong {
+    background: #fdecec;
+    border-color: #e39a9a;
+  }
+  ol.choices li.picked-wrong::before {
+    background: #c0392b;
+  }
+  ol.choices li.reveal-correct {
+    border-color: #7cc79a;
+    box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset;
+  }
+  #pick-feedback {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  #pick-feedback.correct {
+    background: #e7f6ec;
+    color: #1e6b3e;
+    border: 1px solid #7cc79a;
+  }
+  #pick-feedback.wrong {
+    background: #fdecec;
+    color: #a02f22;
+    border: 1px solid #e39a9a;
+  }
   #reveal-btn {
     margin-top: 24px;
     background: #2c5f8a;
@@ -185,14 +229,16 @@
 <div class="question-box">
   <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
   <ol class="choices">
-    <li>정부는 세금이나 벌금과 같은 강력한 경제적 유인을 동원해야만 국민의 행동을 실질적으로 바꿀 수 있다.</li>
-    <li>넛지는 선택을 금지하지 않으면서 선택 설계를 통해 행동을 유도하는 개념으로, 그 효용과 함께 개입의 정당성에 대한 물음도 함께 지닌다.</li>
-    <li>인간은 언제나 합리적으로 정보를 검토하여 자신에게 가장 유리한 선택을 내리는 존재이므로 별도의 정책적 개입이 필요하지 않다.</li>
-    <li>연금 자동 가입 제도는 넛지의 대표적인 실패 사례로, 이후 여러 나라에서 폐지되는 결과로 이어졌다.</li>
-    <li>자유주의적 개입주의는 선택의 자유를 제한하는 대가로 더 나은 결과를 보장하는 강제적 개입 방식이다.</li>
+    <li class="selectable" id="choice-1" onclick="selectChoice(1)">정부는 세금이나 벌금과 같은 강력한 경제적 유인을 동원해야만 국민의 행동을 실질적으로 바꿀 수 있다.</li>
+    <li class="selectable" id="choice-2" onclick="selectChoice(2)">넛지는 선택을 금지하지 않으면서 선택 설계를 통해 행동을 유도하는 개념으로, 그 효용과 함께 개입의 정당성에 대한 물음도 함께 지닌다.</li>
+    <li class="selectable" id="choice-3" onclick="selectChoice(3)">인간은 언제나 합리적으로 정보를 검토하여 자신에게 가장 유리한 선택을 내리는 존재이므로 별도의 정책적 개입이 필요하지 않다.</li>
+    <li class="selectable" id="choice-4" onclick="selectChoice(4)">연금 자동 가입 제도는 넛지의 대표적인 실패 사례로, 이후 여러 나라에서 폐지되는 결과로 이어졌다.</li>
+    <li class="selectable" id="choice-5" onclick="selectChoice(5)">자유주의적 개입주의는 선택의 자유를 제한하는 대가로 더 나은 결과를 보장하는 강제적 개입 방식이다.</li>
   </ol>
 
-  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+  <div id="pick-feedback"></div>
+
+  <button id="reveal-btn" onclick="openAnswer();">정답보기</button>
 
   <div id="answer-area">
     <div class="correct-badge">정답: ②</div>
@@ -215,3 +261,43 @@
 </div>
 
 <footer>생성일시: 2026-07-25 21:40 (KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const CORRECT_INDEX = 2;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('answer-area').style.display = 'block';
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('ol.choices li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('answer-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>

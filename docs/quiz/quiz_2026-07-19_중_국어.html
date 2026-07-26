@@ -105,6 +105,50 @@
     align-items: center;
     justify-content: center;
   }
+  ol.choices li {
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li:hover {
+    background: #eef4fa;
+    border-color: #b9d3e6;
+  }
+  ol.choices li.picked-correct {
+    background: #e7f6ec;
+    border-color: #7cc79a;
+  }
+  ol.choices li.picked-correct::before {
+    background: #2e8b57;
+  }
+  ol.choices li.picked-wrong {
+    background: #fdecec;
+    border-color: #e39a9a;
+  }
+  ol.choices li.picked-wrong::before {
+    background: #c0392b;
+  }
+  ol.choices li.reveal-correct {
+    border-color: #7cc79a;
+    box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset;
+  }
+  #pick-feedback {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  #pick-feedback.correct {
+    background: #e7f6ec;
+    color: #1e6b3e;
+    border: 1px solid #7cc79a;
+  }
+  #pick-feedback.wrong {
+    background: #fdecec;
+    color: #a02f22;
+    border: 1px solid #e39a9a;
+  }
   #reveal-btn {
     margin-top: 24px;
     background: #7a3b8a;
@@ -182,14 +226,16 @@
 <div class="question-box">
   <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
   <ol class="choices">
-    <li>사진기의 발명으로 회화는 예술로서의 지위를 완전히 상실하고 쇠퇴하였다.</li>
-    <li>사진의 등장은 회화가 재현의 의무에서 벗어나 화가 고유의 시선과 감각을 표현하는 예술로 나아가는 계기가 되었다.</li>
-    <li>인상주의와 추상화는 사진 기술의 발전과 무관하게 독자적으로 등장한 화풍이다.</li>
-    <li>사진은 정밀한 기록 능력을 갖추었지만 예술적 가치에서는 결코 회화를 따라올 수 없다.</li>
-    <li>화가들은 사진의 등장에 위기감을 느껴 이전보다 더 사실적인 재현에 몰두하게 되었다.</li>
+    <li class="selectable" id="choice-1" onclick="selectChoice(1)">사진기의 발명으로 회화는 예술로서의 지위를 완전히 상실하고 쇠퇴하였다.</li>
+    <li class="selectable" id="choice-2" onclick="selectChoice(2)">사진의 등장은 회화가 재현의 의무에서 벗어나 화가 고유의 시선과 감각을 표현하는 예술로 나아가는 계기가 되었다.</li>
+    <li class="selectable" id="choice-3" onclick="selectChoice(3)">인상주의와 추상화는 사진 기술의 발전과 무관하게 독자적으로 등장한 화풍이다.</li>
+    <li class="selectable" id="choice-4" onclick="selectChoice(4)">사진은 정밀한 기록 능력을 갖추었지만 예술적 가치에서는 결코 회화를 따라올 수 없다.</li>
+    <li class="selectable" id="choice-5" onclick="selectChoice(5)">화가들은 사진의 등장에 위기감을 느껴 이전보다 더 사실적인 재현에 몰두하게 되었다.</li>
   </ol>
 
-  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+  <div id="pick-feedback"></div>
+
+  <button id="reveal-btn" onclick="openAnswer();">정답보기</button>
 
   <div id="answer-area">
     <div class="correct-badge">정답: ②</div>
@@ -212,3 +258,43 @@
 </div>
 
 <footer>생성일시: 2026-07-19 10:16 (KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const CORRECT_INDEX = 2;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('answer-area').style.display = 'block';
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('ol.choices li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('answer-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>

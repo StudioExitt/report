@@ -74,6 +74,43 @@
     color: #3b4ba0;
     margin-right: 8px;
   }
+  ol.choices li {
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li:hover {
+    background-color: #eef2ff;
+    border-color: #b9c3e8;
+  }
+  ol.choices li.picked-correct {
+    background-color: #eaf6ea;
+    border-color: #7cc79a;
+  }
+  ol.choices li.picked-wrong {
+    background-color: #fbeaea;
+    border-color: #e2a0a0;
+  }
+  ol.choices li.reveal-correct {
+    border-color: #7cc79a;
+    box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.35) inset;
+  }
+  #pick-feedback {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  #pick-feedback.correct {
+    background-color: #eaf6ea;
+    color: #1c6e1c;
+    border: 1px solid #7cc79a;
+  }
+  #pick-feedback.wrong {
+    background-color: #fbeaea;
+    color: #a02f22;
+    border: 1px solid #e2a0a0;
+  }
   button#revealBtn {
     background-color: #3b4ba0;
     color: white;
@@ -142,14 +179,16 @@
 
 <div class="question">Q. 윗글의 중심 내용으로 가장 적절한 것은?</div>
 <ol class="choices" id="choicesList">
-  <li data-idx="1">에어컨 사용을 줄이면 도시의 여름철 전력난을 근본적으로 해결할 수 있다.</li>
-  <li data-idx="2">도시 열섬 현상은 지표면 재질, 건물 밀집 구조, 인공 열원이 복합적으로 작용해 발생하며 공중보건과 에너지 문제로 이어지므로 종합적인 대응이 필요하다.</li>
-  <li data-idx="3">아스팔트와 콘크리트는 흙보다 열을 많이 흡수하므로 모든 도로를 흙길로 되돌려야 한다.</li>
-  <li data-idx="4">서울의 열대야 일수가 급증한 것은 전적으로 자동차 배기가스 때문이다.</li>
-  <li data-idx="5">고층 건물의 협곡 효과는 도시 열섬 현상과 무관한 별개의 기상 현상이다.</li>
+  <li data-idx="1" id="choice-1" onclick="selectChoice(1)">에어컨 사용을 줄이면 도시의 여름철 전력난을 근본적으로 해결할 수 있다.</li>
+  <li data-idx="2" id="choice-2" onclick="selectChoice(2)">도시 열섬 현상은 지표면 재질, 건물 밀집 구조, 인공 열원이 복합적으로 작용해 발생하며 공중보건과 에너지 문제로 이어지므로 종합적인 대응이 필요하다.</li>
+  <li data-idx="3" id="choice-3" onclick="selectChoice(3)">아스팔트와 콘크리트는 흙보다 열을 많이 흡수하므로 모든 도로를 흙길로 되돌려야 한다.</li>
+  <li data-idx="4" id="choice-4" onclick="selectChoice(4)">서울의 열대야 일수가 급증한 것은 전적으로 자동차 배기가스 때문이다.</li>
+  <li data-idx="5" id="choice-5" onclick="selectChoice(5)">고층 건물의 협곡 효과는 도시 열섬 현상과 무관한 별개의 기상 현상이다.</li>
 </ol>
 
-<button id="revealBtn" onclick="document.getElementById('answerBox').style.display='block'; this.style.display='none';">정답 보기</button>
+<div id="pick-feedback"></div>
+
+<button id="revealBtn" onclick="openAnswer();">정답 보기</button>
 
 <div id="answerBox">
   <div class="correct">정답: ② 번</div>
@@ -161,6 +200,46 @@
 </div>
 
 <footer>생성일시: 2026-07-12 17:52 (KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const CORRECT_INDEX = 2;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('answerBox').style.display = 'block';
+    document.getElementById('revealBtn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('#choicesList li').forEach(li => {
+      li.style.cursor = 'default';
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('answerBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
 
 </body>
 </html>

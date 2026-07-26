@@ -55,6 +55,14 @@
   }
   ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
   ol.choices li.correct::before { background: var(--good); color: #fff; }
+  ol.choices li.picked-correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.picked-correct::before { background: var(--good); color: #fff; }
+  ol.choices li.picked-wrong { border-color: var(--bad); background: #fef2f2; }
+  ol.choices li.picked-wrong::before { background: var(--bad); color: #fff; }
+  ol.choices li.reveal-correct { border-color: var(--good); box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.25) inset; }
+  #pick-feedback { display: none; margin-top: 16px; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; }
+  #pick-feedback.correct { background: #f0fdf4; color: var(--good); border: 1px solid var(--good); }
+  #pick-feedback.wrong { background: #fef2f2; color: var(--bad); border: 1px solid var(--bad); }
   .btn {
     background: var(--accent); color: #fff; border: 0; border-radius: 10px;
     padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
@@ -96,14 +104,16 @@
     <h2><span class="num">문제</span> Question</h2>
     <p class="q-stem">What is the main idea of the passage?</p>
     <ol class="choices">
-      <li>Willpower is a fixed personality trait that some people possess in greater amounts than others from birth.</li>
-      <li>Research on whether self-control draws on a limited, depletable resource remains contested, but it has nonetheless reshaped how decision quality is understood as dependent on surrounding conditions rather than character alone.</li>
-      <li>The 2010s replication crisis definitively proved that ego depletion does not exist and that self-control failures are always caused by low motivation.</li>
-      <li>Courtrooms and hospitals should always schedule important decisions in the morning because afternoon decisions are provably worse.</li>
-      <li>Resisting cookies in a laboratory experiment has no relevance to real-world decision-making outside controlled settings.</li>
+      <li id="choice-1" onclick="selectChoice(1)">Willpower is a fixed personality trait that some people possess in greater amounts than others from birth.</li>
+      <li id="choice-2" onclick="selectChoice(2)">Research on whether self-control draws on a limited, depletable resource remains contested, but it has nonetheless reshaped how decision quality is understood as dependent on surrounding conditions rather than character alone.</li>
+      <li id="choice-3" onclick="selectChoice(3)">The 2010s replication crisis definitively proved that ego depletion does not exist and that self-control failures are always caused by low motivation.</li>
+      <li id="choice-4" onclick="selectChoice(4)">Courtrooms and hospitals should always schedule important decisions in the morning because afternoon decisions are provably worse.</li>
+      <li id="choice-5" onclick="selectChoice(5)">Resisting cookies in a laboratory experiment has no relevance to real-world decision-making outside controlled settings.</li>
     </ol>
 
-    <button class="btn" onclick="document.getElementById('ans').classList.add('show'); this.style.display='none';">정답 보기</button>
+    <div id="pick-feedback"></div>
+
+    <button class="btn" id="reveal-btn" onclick="openAnswer();">정답 보기</button>
 
     <div class="answer" id="ans">
       <div class="answer-head">정답: ②</div>
@@ -121,3 +131,43 @@
     생성일시: 2026-07-26 21:11 (KST, 로컬 타임존) · quiz_2026-07-26_상_영어.html
   </footer>
 </div>
+
+<script>
+  const CORRECT_INDEX = 2;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('ans').classList.add('show');
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('ol.choices li').forEach(li => {
+      li.style.cursor = 'default';
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('ans').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>

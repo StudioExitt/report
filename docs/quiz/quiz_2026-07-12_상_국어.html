@@ -73,6 +73,43 @@
     color: #a03b52;
     margin-right: 8px;
   }
+  ol.choices li {
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li:hover {
+    background-color: #fdeef0;
+    border-color: #e3b6c0;
+  }
+  ol.choices li.picked-correct {
+    background-color: #eaf6ea;
+    border-color: #7cc79a;
+  }
+  ol.choices li.picked-wrong {
+    background-color: #fbeaea;
+    border-color: #e2a0a0;
+  }
+  ol.choices li.reveal-correct {
+    border-color: #7cc79a;
+    box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.35) inset;
+  }
+  #pick-feedback {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  #pick-feedback.correct {
+    background-color: #eaf6ea;
+    color: #1c6e1c;
+    border: 1px solid #7cc79a;
+  }
+  #pick-feedback.wrong {
+    background-color: #fbeaea;
+    color: #a02f22;
+    border: 1px solid #e2a0a0;
+  }
   button#revealBtn {
     background-color: #a03b52;
     color: white;
@@ -143,14 +180,16 @@
 
 <div class="question">Q. 윗글의 중심 내용으로 가장 적절한 것은?</div>
 <ol class="choices" id="choicesList">
-  <li data-idx="1">모든 언어에는 대응하는 단어가 반드시 존재하므로, 유능한 번역자라면 어휘 층위의 번역 불가능성 문제를 완전히 해결할 수 있다.</li>
-  <li data-idx="2">번역은 원문과 동일한 등가물을 만드는 기계적 작업이며, 번역 불가능성은 번역자의 능력 부족에서 비롯된 결함일 뿐이다.</li>
-  <li data-idx="3">번역 불가능성은 언어와 문화의 근본적 차이에서 비롯되는 필연적 현상이며, 이를 인정하는 데서 번역자의 선택과 창조적 작업, 즉 번역의 진짜 의미가 시작된다.</li>
-  <li data-idx="4">시와 소설처럼 리듬과 사투리가 중요한 문학 작품은 애초에 번역 대상으로 삼아서는 안 되며 원어로만 감상해야 한다.</li>
-  <li data-idx="5">한국어의 높임법 체계는 다른 언어보다 우월한 문법 장치이므로 모든 언어가 이를 받아들여야 소통의 오해가 사라진다.</li>
+  <li data-idx="1" id="choice-1" onclick="selectChoice(1)">모든 언어에는 대응하는 단어가 반드시 존재하므로, 유능한 번역자라면 어휘 층위의 번역 불가능성 문제를 완전히 해결할 수 있다.</li>
+  <li data-idx="2" id="choice-2" onclick="selectChoice(2)">번역은 원문과 동일한 등가물을 만드는 기계적 작업이며, 번역 불가능성은 번역자의 능력 부족에서 비롯된 결함일 뿐이다.</li>
+  <li data-idx="3" id="choice-3" onclick="selectChoice(3)">번역 불가능성은 언어와 문화의 근본적 차이에서 비롯되는 필연적 현상이며, 이를 인정하는 데서 번역자의 선택과 창조적 작업, 즉 번역의 진짜 의미가 시작된다.</li>
+  <li data-idx="4" id="choice-4" onclick="selectChoice(4)">시와 소설처럼 리듬과 사투리가 중요한 문학 작품은 애초에 번역 대상으로 삼아서는 안 되며 원어로만 감상해야 한다.</li>
+  <li data-idx="5" id="choice-5" onclick="selectChoice(5)">한국어의 높임법 체계는 다른 언어보다 우월한 문법 장치이므로 모든 언어가 이를 받아들여야 소통의 오해가 사라진다.</li>
 </ol>
 
-<button id="revealBtn" onclick="document.getElementById('answerBox').style.display='block'; this.style.display='none';">정답 보기</button>
+<div id="pick-feedback"></div>
+
+<button id="revealBtn" onclick="openAnswer();">정답 보기</button>
 
 <div id="answerBox">
   <div class="correct">정답: ③ 번</div>
@@ -162,6 +201,46 @@
 </div>
 
 <footer>생성일시: 2026-07-12 18:15 (KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const CORRECT_INDEX = 3;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('answerBox').style.display = 'block';
+    document.getElementById('revealBtn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('#choicesList li').forEach(li => {
+      li.style.cursor = 'default';
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('answerBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
 
 </body>
 </html>

@@ -55,6 +55,14 @@
   }
   ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
   ol.choices li.correct::before { background: var(--good); color: #fff; }
+  ol.choices li.picked-correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.picked-correct::before { background: var(--good); color: #fff; }
+  ol.choices li.picked-wrong { border-color: var(--bad); background: #fef2f2; }
+  ol.choices li.picked-wrong::before { background: var(--bad); color: #fff; }
+  ol.choices li.reveal-correct { border-color: var(--good); box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.25) inset; }
+  #pick-feedback { display: none; margin-top: 16px; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; }
+  #pick-feedback.correct { background: #f0fdf4; color: var(--good); border: 1px solid var(--good); }
+  #pick-feedback.wrong { background: #fef2f2; color: var(--bad); border: 1px solid var(--bad); }
   .btn {
     background: var(--accent); color: #fff; border: 0; border-radius: 10px;
     padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
@@ -95,14 +103,16 @@
     <h2><span class="num">문제</span> Question</h2>
     <p class="q-stem">What is the main idea of the passage?</p>
     <ol class="choices">
-      <li>Kitty Genovese's murder in 1964 was witnessed by dozens of indifferent neighbors, none of whom bothered to call the police.</li>
-      <li>The presence of other bystanders tends to reduce, rather than increase, an individual's likelihood of helping, but this diffusion of responsibility can be countered by assigning a specific person to act.</li>
-      <li>Darley and Latane proved that most people are fundamentally selfish and unwilling to help strangers in an emergency.</li>
-      <li>Pluralistic ignorance and evaluation apprehension are two unrelated psychological phenomena that have nothing to do with why bystanders fail to act.</li>
-      <li>Emergency responders now require every bystander at the scene of an accident to call for help simultaneously to ensure someone succeeds.</li>
+      <li id="choice-1" onclick="selectChoice(1)">Kitty Genovese's murder in 1964 was witnessed by dozens of indifferent neighbors, none of whom bothered to call the police.</li>
+      <li id="choice-2" onclick="selectChoice(2)">The presence of other bystanders tends to reduce, rather than increase, an individual's likelihood of helping, but this diffusion of responsibility can be countered by assigning a specific person to act.</li>
+      <li id="choice-3" onclick="selectChoice(3)">Darley and Latane proved that most people are fundamentally selfish and unwilling to help strangers in an emergency.</li>
+      <li id="choice-4" onclick="selectChoice(4)">Pluralistic ignorance and evaluation apprehension are two unrelated psychological phenomena that have nothing to do with why bystanders fail to act.</li>
+      <li id="choice-5" onclick="selectChoice(5)">Emergency responders now require every bystander at the scene of an accident to call for help simultaneously to ensure someone succeeds.</li>
     </ol>
 
-    <button class="btn" onclick="document.getElementById('ans').classList.add('show'); this.style.display='none';">정답 보기</button>
+    <div id="pick-feedback"></div>
+
+    <button class="btn" id="reveal-btn" onclick="openAnswer();">정답 보기</button>
 
     <div class="answer" id="ans">
       <div class="answer-head">정답: ②</div>
@@ -120,3 +130,43 @@
     생성일시: 2026-07-22 06:16 (KST, 로컬 타임존) · quiz_2026-07-22_상_영어.html
   </footer>
 </div>
+
+<script>
+  const CORRECT_INDEX = 2;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('ans').classList.add('show');
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('ol.choices li').forEach(li => {
+      li.style.cursor = 'default';
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('ans').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>

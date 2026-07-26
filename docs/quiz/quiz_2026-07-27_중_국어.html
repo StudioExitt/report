@@ -87,6 +87,12 @@
     border-radius: 8px;
     background: #fafafa;
     border: 1px solid #ececec;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li.selectable:hover {
+    background: #eef4fa;
+    border-color: #b9d3e6;
   }
   ol.choices li::before {
     content: counter(choice);
@@ -104,6 +110,42 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  ol.choices li.picked-correct {
+    background: #e7f6ec;
+    border-color: #7cc79a;
+  }
+  ol.choices li.picked-correct::before {
+    background: #2e8b57;
+  }
+  ol.choices li.picked-wrong {
+    background: #fdecec;
+    border-color: #e39a9a;
+  }
+  ol.choices li.picked-wrong::before {
+    background: #c0392b;
+  }
+  ol.choices li.reveal-correct {
+    border-color: #7cc79a;
+    box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset;
+  }
+  #pick-feedback {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  #pick-feedback.correct {
+    background: #e7f6ec;
+    color: #1e6b3e;
+    border: 1px solid #7cc79a;
+  }
+  #pick-feedback.wrong {
+    background: #fdecec;
+    color: #a02f22;
+    border: 1px solid #e39a9a;
   }
   #reveal-btn {
     margin-top: 24px;
@@ -184,15 +226,17 @@
 <h2 class="section">문제</h2>
 <div class="question-box">
   <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
-  <ol class="choices">
-    <li>콜럼버스는 신대륙에 처음 도달한 유럽인으로서, 그의 개인적인 항해 업적과 항로 개척 과정 자체가 이 글의 중심 내용이다.</li>
-    <li>감자, 옥수수, 담배는 원래 유럽에서 재배되던 작물로, 콜럼버스 이후 아메리카 대륙에 전파되어 원주민의 식생활을 바꾸어 놓았다.</li>
-    <li>콜럼버스의 신대륙 도달을 계기로 신대륙과 구대륙 사이에 동식물과 병원균이 오간 교환이 전 지구의 생태와 사회 구조를 근본적으로 바꾸어 놓았다.</li>
-    <li>신대륙 원주민은 구대륙에서 전해진 전염병에 대해 이미 강한 면역력을 갖추고 있어 유럽인과의 접촉 이후에도 인구가 꾸준히 증가하였다.</li>
-    <li>콜럼버스의 교환은 아메리카 대륙 내부에서만 일어난 국지적 사건으로, 유럽과 아프리카의 역사에는 별다른 영향을 주지 않았다.</li>
+  <ol class="choices" id="choice-list">
+    <li class="selectable" id="choice-1" onclick="selectChoice(1)">콜럼버스는 신대륙에 처음 도달한 유럽인으로서, 그의 개인적인 항해 업적과 항로 개척 과정 자체가 이 글의 중심 내용이다.</li>
+    <li class="selectable" id="choice-2" onclick="selectChoice(2)">감자, 옥수수, 담배는 원래 유럽에서 재배되던 작물로, 콜럼버스 이후 아메리카 대륙에 전파되어 원주민의 식생활을 바꾸어 놓았다.</li>
+    <li class="selectable" id="choice-3" onclick="selectChoice(3)">콜럼버스의 신대륙 도달을 계기로 신대륙과 구대륙 사이에 동식물과 병원균이 오간 교환이 전 지구의 생태와 사회 구조를 근본적으로 바꾸어 놓았다.</li>
+    <li class="selectable" id="choice-4" onclick="selectChoice(4)">신대륙 원주민은 구대륙에서 전해진 전염병에 대해 이미 강한 면역력을 갖추고 있어 유럽인과의 접촉 이후에도 인구가 꾸준히 증가하였다.</li>
+    <li class="selectable" id="choice-5" onclick="selectChoice(5)">콜럼버스의 교환은 아메리카 대륙 내부에서만 일어난 국지적 사건으로, 유럽과 아프리카의 역사에는 별다른 영향을 주지 않았다.</li>
   </ol>
 
-  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+  <div id="pick-feedback"></div>
+
+  <button id="reveal-btn" onclick="openAnswer();">정답보기</button>
 
   <div id="answer-area">
     <div class="correct-badge">정답: ③</div>
@@ -215,3 +259,43 @@
 </div>
 
 <footer>생성일시: 2026-07-27 06:23 (KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const CORRECT_INDEX = 3;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('answer-area').style.display = 'block';
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('#choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('answer-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>

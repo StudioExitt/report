@@ -105,6 +105,50 @@
     align-items: center;
     justify-content: center;
   }
+  ol.choices li {
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li:hover {
+    background: #eef4fa;
+    border-color: #b9d3e6;
+  }
+  ol.choices li.picked-correct {
+    background: #e7f6ec;
+    border-color: #7cc79a;
+  }
+  ol.choices li.picked-correct::before {
+    background: #2e8b57;
+  }
+  ol.choices li.picked-wrong {
+    background: #fdecec;
+    border-color: #e39a9a;
+  }
+  ol.choices li.picked-wrong::before {
+    background: #c0392b;
+  }
+  ol.choices li.reveal-correct {
+    border-color: #7cc79a;
+    box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset;
+  }
+  #pick-feedback {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  #pick-feedback.correct {
+    background: #e7f6ec;
+    color: #1e6b3e;
+    border: 1px solid #7cc79a;
+  }
+  #pick-feedback.wrong {
+    background: #fdecec;
+    color: #a02f22;
+    border: 1px solid #e39a9a;
+  }
   #reveal-btn {
     margin-top: 24px;
     background: #2c5f8a;
@@ -185,14 +229,16 @@ Given all of this, it is misleading to think of sleep as wasted time or as a lux
 <div class="question-box">
   <div class="question-text">Q. What is the main idea of the passage?</div>
   <ol class="choices">
-    <li>Sleep is a passive break during which the brain and body remain largely inactive.</li>
-    <li>Sleep is an active biological process that consolidates memory, removes waste, and regulates bodily systems.</li>
-    <li>Students who avoid sleeping after studying tend to remember material better than those who sleep.</li>
-    <li>The glymphatic system is the only part of the body affected by a lack of sleep.</li>
-    <li>Hormonal regulation is unrelated to how much sleep a person gets each night.</li>
+    <li class="selectable" id="choice-1" onclick="selectChoice(1)">Sleep is a passive break during which the brain and body remain largely inactive.</li>
+    <li class="selectable" id="choice-2" onclick="selectChoice(2)">Sleep is an active biological process that consolidates memory, removes waste, and regulates bodily systems.</li>
+    <li class="selectable" id="choice-3" onclick="selectChoice(3)">Students who avoid sleeping after studying tend to remember material better than those who sleep.</li>
+    <li class="selectable" id="choice-4" onclick="selectChoice(4)">The glymphatic system is the only part of the body affected by a lack of sleep.</li>
+    <li class="selectable" id="choice-5" onclick="selectChoice(5)">Hormonal regulation is unrelated to how much sleep a person gets each night.</li>
   </ol>
 
-  <button id="reveal-btn" onclick="document.getElementById('answer-area').style.display='block'; this.style.display='none';">정답보기</button>
+  <div id="pick-feedback"></div>
+
+  <button id="reveal-btn" onclick="openAnswer();">정답보기</button>
 
   <div id="answer-area">
     <div class="correct-badge">정답: ②</div>
@@ -215,3 +261,43 @@ Given all of this, it is misleading to think of sleep as wasted time or as a lux
 </div>
 
 <footer>생성일시: 2026-07-14 06:17 (KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const CORRECT_INDEX = 2;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('answer-area').style.display = 'block';
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('ol.choices li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('answer-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
