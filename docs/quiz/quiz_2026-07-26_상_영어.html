@@ -1,0 +1,123 @@
+<meta charset="utf-8">
+<title>일일 영어 문제 — 2026-07-26 (난이도: 상)</title>
+<style>
+  :root {
+    --bg: #fbfcfe;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #5b6b7b;
+    --line: #e3e8ef;
+    --accent: #2563eb;
+    --accent-soft: #eef4ff;
+    --good: #15803d;
+    --bad: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.7;
+    padding: 32px 16px 80px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 1.7rem; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.92rem; }
+  .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
+  }
+  .badge.level { background: #fff7e6; color: #b45309; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin-bottom: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  h2 { font-size: 1.15rem; font-weight: 800; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2 .num { background: var(--accent); color: #fff; border-radius: 8px; font-size: 0.85rem; padding: 2px 9px; }
+  .passage p { margin: 0 0 14px; }
+  .passage { font-size: 1.02rem; }
+  .q-stem { font-weight: 700; margin: 0 0 16px; font-size: 1.05rem; }
+  ol.choices { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.choices li {
+    counter-increment: c; border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px 13px 48px; margin-bottom: 10px; position: relative; cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  ol.choices li:hover { background: var(--accent-soft); border-color: var(--accent); }
+  ol.choices li::before {
+    content: counter(c); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 50%; background: #eef2f7; color: var(--ink);
+    font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.correct::before { background: var(--good); color: #fff; }
+  .btn {
+    background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+    padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .answer { display: none; margin-top: 22px; }
+  .answer.show { display: block; }
+  .answer-head { font-weight: 800; font-size: 1.05rem; color: var(--good); margin-bottom: 14px; }
+  .exp { border-top: 1px dashed var(--line); padding-top: 14px; margin-top: 4px; }
+  .exp li { margin-bottom: 10px; }
+  .exp .k { font-weight: 700; }
+  .exp .ans-mark { color: var(--good); }
+  .exp .wrong-mark { color: var(--bad); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 30px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>일일 영어 문제</h1>
+    <div class="meta">주제 파악 (Finding the Main Idea) · 지문을 읽고 가장 적절한 주제를 고르세요.</div>
+    <div class="badges">
+      <span class="badge">유형: 영어 · 주제 찾기</span>
+      <span class="badge level">난이도: 상</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">지문</span> Reading Passage</h2>
+    <div class="passage">
+      <p>For much of the twentieth century, economists modeled willpower as a fixed personal trait, something a person simply had more or less of, rather like height or eye color. Self-control failures, from skipped workouts to broken diets, were treated as evidence of weak character. Over the past two decades, however, a body of research in behavioral psychology has converged on a different and considerably more mechanical picture: willpower behaves less like a trait and more like a depletable resource, one that is drawn down by every act of deliberate self-regulation over the course of a day and replenished only through rest.</p>
+      <p>The clearest demonstrations of this pattern come from laboratory studies in which participants are first asked to perform a task requiring sustained self-control, such as resisting a plate of fresh cookies in favor of a bowl of radishes, and are then given a second, seemingly unrelated task, such as persisting at an unsolvable puzzle. Participants who exercised restraint in the first task reliably gave up on the second task sooner than those who had not been asked to restrain themselves at all, even though the two tasks shared no obvious surface connection. Researchers labeled this carryover effect "ego depletion," and for a time it was treated as one of the more robust findings in social psychology.</p>
+      <p>What makes the phenomenon consequential well beyond the laboratory is that everyday self-regulation rarely announces itself as such. Deciding what to eat, choosing words carefully in a tense conversation, resisting the urge to check a phone during a meeting, and suppressing a yawn during a lecture all draw on the same limited pool, according to this model, even though none of these acts feels like "using willpower" in the way that resisting a slice of cake does. A person who has spent the morning making a long series of small, effortful decisions may therefore arrive at an important choice in the afternoon with less capacity for careful deliberation than the morning version of themselves, quite apart from how tired or hungry they consciously feel.</p>
+      <p>This resource-based account has not gone unchallenged. A large-scale replication effort published in the mid-2010s, involving dozens of laboratories testing thousands of participants under standardized conditions, found an effect size for ego depletion close to zero, reigniting a debate about whether the original studies had been distorted by small sample sizes and selective publication of positive results. Some researchers now argue that what looks like depletion is better explained by shifting motivation or attention rather than the exhaustion of any literal internal reserve; a person may simply choose to stop trying on a boring second task, not because their capacity has run out, but because they no longer see the effort as worthwhile.</p>
+      <p>Whichever interpretation eventually prevails, the practical implications converge on similar ground. Institutions from courtrooms to hospitals have begun scheduling their most consequential decisions, such as parole hearings or complex diagnoses, earlier in the day or immediately after a break, on the theory that decision quality is not constant across the hours in which a person is awake. Whether the underlying cause is a genuinely depleting resource, a wandering motivation, or some combination the field has not yet cleanly separated, the broader lesson is the same: the conditions surrounding a decision, and not only the intelligence or character of the person making it, shape how well that decision is likely to be made.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">문제</span> Question</h2>
+    <p class="q-stem">What is the main idea of the passage?</p>
+    <ol class="choices">
+      <li>Willpower is a fixed personality trait that some people possess in greater amounts than others from birth.</li>
+      <li>Research on whether self-control draws on a limited, depletable resource remains contested, but it has nonetheless reshaped how decision quality is understood as dependent on surrounding conditions rather than character alone.</li>
+      <li>The 2010s replication crisis definitively proved that ego depletion does not exist and that self-control failures are always caused by low motivation.</li>
+      <li>Courtrooms and hospitals should always schedule important decisions in the morning because afternoon decisions are provably worse.</li>
+      <li>Resisting cookies in a laboratory experiment has no relevance to real-world decision-making outside controlled settings.</li>
+    </ol>
+
+    <button class="btn" onclick="document.getElementById('ans').classList.add('show'); this.style.display='none';">정답 보기</button>
+
+    <div class="answer" id="ans">
+      <div class="answer-head">정답: ②</div>
+      <ul class="exp">
+        <li><span class="k">① 오답 <span class="wrong-mark">✗</span></span> — 1문단은 의지력을 "타고난 고정된 특성"으로 보던 과거 관점을 소개한 뒤, 이후 연구는 이를 "소모 가능한 자원"에 가까운 것으로 재해석했다고 명시한다. 선택지는 지문이 반박한 옛 관점을 그대로 진술한다.</li>
+        <li><span class="k">② 정답 <span class="ans-mark">✓</span></span> — 지문은 자아 고갈(ego depletion) 개념의 등장(1~3문단), 대규모 재현 연구로 촉발된 논쟁(4문단), 그리고 원인 규명과 무관하게 의사결정의 질이 그것을 둘러싼 조건에 좌우된다는 실질적 시사점(5문단)을 순서대로 다룬다. 이는 지문 전체를 아우르는 핵심 주제이다.</li>
+        <li><span class="k">③ 오답 <span class="wrong-mark">✗</span></span> — 4문단은 재현 연구가 효과크기를 0에 가깝게 발견했다고 말할 뿐, "존재하지 않음을 결정적으로 증명"했다거나 "항상 동기 부족 때문"이라고 단정하지 않는다. 지문은 논쟁이 여전히 진행 중임을 강조한다.</li>
+        <li><span class="k">④ 오답 <span class="wrong-mark">✗</span></span> — 5문단은 기관들이 아침이나 휴식 직후로 중요한 결정을 배치하기 시작했다는 사실을 언급하지만, 이것이 "입증된" 규칙이라거나 오후 결정이 "항상" 더 나쁘다고 단정하지는 않는다.</li>
+        <li><span class="k">⑤ 오답 <span class="wrong-mark">✗</span></span> — 3문단은 실험실 밖 일상적 의사결정(음식 선택, 대화 중 단어 선택 등)도 동일한 자원 풀을 사용한다고 설명하며, 5문단은 실제 법원·병원 정책에 실험 결과가 적용되고 있음을 보여준다. 따라서 무관하다는 진술은 지문과 정반대이다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    생성일시: 2026-07-26 21:11 (KST, 로컬 타임존) · quiz_2026-07-26_상_영어.html
+  </footer>
+</div>
