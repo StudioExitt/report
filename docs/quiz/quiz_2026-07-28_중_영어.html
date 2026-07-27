@@ -1,0 +1,173 @@
+<meta charset="utf-8">
+<title>일일 영어 문제 — 2026-07-28 (난이도: 중)</title>
+<style>
+  :root {
+    --bg: #fbfcfe;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #5b6b7b;
+    --line: #e3e8ef;
+    --accent: #2563eb;
+    --accent-soft: #eef4ff;
+    --good: #15803d;
+    --bad: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.7;
+    padding: 32px 16px 80px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 1.7rem; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.92rem; }
+  .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
+  }
+  .badge.level { background: #fff7e6; color: #b45309; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin-bottom: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  h2 { font-size: 1.15rem; font-weight: 800; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2 .num { background: var(--accent); color: #fff; border-radius: 8px; font-size: 0.85rem; padding: 2px 9px; }
+  .passage p { margin: 0 0 14px; }
+  .passage { font-size: 1.02rem; }
+  .q-stem { font-weight: 700; margin: 0 0 16px; font-size: 1.05rem; }
+  ol.choices { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.choices li {
+    counter-increment: c; border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px 13px 48px; margin-bottom: 10px; position: relative; cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  ol.choices li:hover { background: var(--accent-soft); border-color: var(--accent); }
+  ol.choices li::before {
+    content: counter(c); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 50%; background: #eef2f7; color: var(--ink);
+    font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.correct::before { background: var(--good); color: #fff; }
+  ol.choices li.picked-correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.picked-correct::before { background: var(--good); color: #fff; }
+  ol.choices li.picked-wrong { border-color: var(--bad); background: #fef2f2; }
+  ol.choices li.picked-wrong::before { background: var(--bad); color: #fff; }
+  ol.choices li.reveal-correct { border-color: var(--good); box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.25) inset; }
+  #pick-feedback { display: none; margin-top: 16px; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; }
+  #pick-feedback.correct { background: #f0fdf4; color: var(--good); border: 1px solid var(--good); }
+  #pick-feedback.wrong { background: #fef2f2; color: var(--bad); border: 1px solid var(--bad); }
+  .btn {
+    background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+    padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .answer { display: none; margin-top: 22px; }
+  .answer.show { display: block; }
+  .answer-head { font-weight: 800; font-size: 1.05rem; color: var(--good); margin-bottom: 14px; }
+  .exp { border-top: 1px dashed var(--line); padding-top: 14px; margin-top: 4px; }
+  .exp li { margin-bottom: 10px; }
+  .exp .k { font-weight: 700; }
+  .exp .ans-mark { color: var(--good); }
+  .exp .wrong-mark { color: var(--bad); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 30px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>일일 영어 문제</h1>
+    <div class="meta">주제 파악 (Finding the Main Idea) · 지문을 읽고 가장 적절한 주제를 고르세요.</div>
+    <div class="badges">
+      <span class="badge">유형: 영어 · 주제 찾기</span>
+      <span class="badge level">난이도: 중</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">지문</span> Reading Passage</h2>
+    <div class="passage">
+      <p>When wolves were reintroduced to Yellowstone National Park in 1995, after being absent from the ecosystem for roughly seventy years, biologists expected the predators to reduce the park's swollen elk population. What they did not fully anticipate was how far the effects would ripple outward, reshaping the physical landscape itself in ways that had little to do with the number of elk killed each year.</p>
+      <p>In the decades without wolves, elk had grazed river valleys and streambanks with almost no fear of predation, lingering in the open for as long as they liked. Willow and aspen saplings, a favorite elk food, were cropped down again and again before they could grow tall enough to survive. Once wolves returned, elk behavior changed even more than elk numbers did: herds began avoiding exposed valley bottoms where they could be easily cornered, and they moved more frequently instead of settling in one spot to graze. Ecologists later called this shift in prey behavior the "ecology of fear," a term describing how the mere presence of a predator can alter an entire landscape independent of how many animals it actually kills.</p>
+      <p>With grazing pressure eased in the valleys, willow and aspen stands began to recover for the first time in generations. Taller vegetation stabilized eroding riverbanks, which in turn slowed the flow of water and allowed sediment to build up rather than wash away. Beavers, which had nearly vanished from parts of the park, returned to exploit the recovering willow stands for both food and dam-building material, and their dams created new ponds and wetlands that supported fish, amphibians, and songbirds that had been scarce for decades. Even the shape of some river channels measurably changed as a result, a physical transformation researchers had not expected a predator reintroduction to trigger.</p>
+      <p>Not every scientist agrees on how large a role wolves alone played in this recovery, since the same years also brought drought cycles, changes in bison numbers, and other management shifts that could have influenced vegetation independently. Still, the Yellowstone case has become one of the most widely cited illustrations of a "trophic cascade," in which a change at the top of a food chain propagates downward through multiple layers of an ecosystem, from large herbivores to plants to soil and water systems, and eventually back up again to smaller animals that depend on the habitat those plants and waterways provide.</p>
+      <p>For conservation policy, the lesson extended well beyond wolves and elk. It became a widely cited argument that a single missing species can destabilize a web of relationships in ways that are difficult to predict in advance, and that restoring one seemingly narrow piece of an ecosystem, such as one predator, can set off changes across an entire landscape rather than affecting only the species directly involved.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">문제</span> Question</h2>
+    <p class="q-stem">What is the main idea of the passage?</p>
+    <ol class="choices">
+      <li id="choice-1" onclick="selectChoice(1)">Wolves were reintroduced to Yellowstone solely to reduce the elk population, and the program succeeded only in lowering elk numbers.</li>
+      <li id="choice-2" onclick="selectChoice(2)">The return of wolves to Yellowstone changed elk behavior and, through a cascading chain of effects on vegetation, rivers, and wildlife, illustrates how restoring a single predator can reshape an entire ecosystem in unpredictable ways.</li>
+      <li id="choice-3" onclick="selectChoice(3)">Beavers were the primary cause of Yellowstone's ecological recovery, and wolves played only a minor, largely coincidental role.</li>
+      <li id="choice-4" onclick="selectChoice(4)">Scientists have conclusively proven that drought and bison populations, not wolves, were entirely responsible for the changes observed in Yellowstone after 1995.</li>
+      <li id="choice-5" onclick="selectChoice(5)">Predator reintroduction programs always produce identical outcomes regardless of the ecosystem in which they are attempted.</li>
+    </ol>
+
+    <div id="pick-feedback"></div>
+
+    <button class="btn" id="reveal-btn" onclick="openAnswer();">정답 보기</button>
+
+    <div class="answer" id="ans">
+      <div class="answer-head">정답: ②</div>
+      <ul class="exp">
+        <li><span class="k">① 오답 <span class="wrong-mark">✗</span></span> — 지문은 늑대 재도입의 효과가 엘크 개체수 감소를 훨씬 넘어, 행동 변화와 식생·하천·야생동물까지 이어졌다고 강조한다. "개체수 감소에만 성공했다"는 진술은 지문의 핵심 논지와 반대된다.</li>
+        <li><span class="k">② 정답 <span class="ans-mark">✓</span></span> — 지문은 늑대 복귀 → 엘크의 행동 변화("공포의 생태") → 버드나무·사시나무 회복 → 하천 안정화 및 비버 귀환 → 습지·조류 회복이라는 연쇄 반응(영양 종속효과, trophic cascade)을 순서대로 서술하며, 마지막 문단에서 이를 하나의 포식자 복원이 예측 불가능한 방식으로 생태계 전체를 바꿀 수 있다는 시사점으로 정리한다. 이는 전체 지문을 아우르는 주제이다.</li>
+        <li><span class="k">③ 오답 <span class="wrong-mark">✗</span></span> — 3문단은 비버가 회복된 버드나무 군락을 이용해 돌아왔다고 설명할 뿐, 비버를 생태계 회복의 "주된 원인"으로, 늑대를 "부수적 존재"로 규정하지 않는다.</li>
+        <li><span class="k">④ 오답 <span class="wrong-mark">✗</span></span> — 4문단은 가뭄이나 들소 개체수 변화 등 다른 요인도 영향을 미쳤을 수 있다는 이견을 소개할 뿐, 이것이 "결정적으로 입증"되었다거나 늑대의 역할이 "전혀 없다"고 단정하지 않는다. 오히려 늑대 복원 사례는 여전히 널리 인용되는 대표 사례로 제시된다.</li>
+        <li><span class="k">⑤ 오답 <span class="wrong-mark">✗</span></span> — 지문은 다른 과학자들이 모든 변화를 늑대 탓으로만 돌리지는 않는다고 밝히며, "예측하기 어려운 방식"이라는 표현을 통해 결과가 생태계마다 다르게 나타날 수 있음을 시사한다. "항상 동일한 결과"라는 일반화는 지문에 근거가 없다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    생성일시: 2026-07-28 06:20 (KST, 로컬 타임존) · quiz_2026-07-28_중_영어.html
+  </footer>
+</div>
+
+<script>
+  const CORRECT_INDEX = 2;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('ans').classList.add('show');
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('ol.choices li').forEach(li => {
+      li.style.cursor = 'default';
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('ans').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
