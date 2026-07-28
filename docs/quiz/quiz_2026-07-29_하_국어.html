@@ -1,0 +1,301 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-29 (국어/하)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-하 {
+    background: #eaf6ea;
+    color: #2e7d32;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li.selectable:hover {
+    background: #eef4fa;
+    border-color: #b9d3e6;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  ol.choices li.picked-correct {
+    background: #e7f6ec;
+    border-color: #7cc79a;
+  }
+  ol.choices li.picked-correct::before {
+    background: #2e8b57;
+  }
+  ol.choices li.picked-wrong {
+    background: #fdecec;
+    border-color: #e39a9a;
+  }
+  ol.choices li.picked-wrong::before {
+    background: #c0392b;
+  }
+  ol.choices li.reveal-correct {
+    border-color: #7cc79a;
+    box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset;
+  }
+  #pick-feedback {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  #pick-feedback.correct {
+    background: #e7f6ec;
+    color: #1e6b3e;
+    border: 1px solid #7cc79a;
+  }
+  #pick-feedback.wrong {
+    background: #fdecec;
+    color: #a02f22;
+    border: 1px solid #e39a9a;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #2c5f8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #234b6e;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #e9f1f7;
+    border: 1px solid #b9d3e6;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 국어</h1>
+<div class="meta">
+  <span>2026년 7월 29일 (수)</span>
+  <span class="diff-하">난이도: 하</span>
+  <span>유형: 국어 (비문학 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+사람은 하루의 약 3분의 1을 잠으로 보낸다. 오랫동안 잠은 몸을 쉬게 하는 시간으로만 여겨졌지만, 최근의 뇌과학 연구들은 잠이 단순한 휴식이 아니라 낮 동안 겪은 일들을 정리하고 저장하는 매우 능동적인 과정이라는 사실을 보여 주고 있다. 특히 학습한 내용이 오래 남는 기억으로 바뀌는 과정, 즉 '기억 공고화'에 수면이 중요한 역할을 한다는 연구 결과가 잇따라 발표되었다.
+</p>
+<p>
+사람이 새로운 정보를 배우면, 그 정보는 먼저 뇌의 해마라는 부위에 임시로 저장된다. 해마는 정보를 빠르게 받아들일 수 있지만, 그 정보를 오랫동안 안정적으로 보관하는 데는 적합하지 않다. 그래서 시간이 지나면 해마에 저장된 정보 가운데 일부가 대뇌 피질이라는 부위로 옮겨져 장기 기억으로 자리를 잡게 되는데, 여러 실험 결과에 따르면 이러한 이동은 주로 우리가 잠을 자는 동안에 활발하게 일어난다.
+</p>
+<p>
+실제로 한 실험에서 연구자들은 사람들에게 새로운 단어 목록을 외우게 한 뒤, 한 집단은 그날 밤 충분히 잠을 자게 하고 다른 집단은 잠을 자지 않고 깨어 있게 했다. 다음 날 두 집단의 기억력을 비교한 결과, 충분히 잠을 잔 집단이 단어를 훨씬 더 정확하게 기억해 냈다. 잠을 자지 않은 집단은 시간이 흘러도 기억이 뚜렷하게 좋아지지 않았다.
+</p>
+<p>
+잠에는 여러 단계가 있는데, 그 가운데 꿈을 많이 꾸는 렘수면과 뇌파가 느려지는 깊은 잠인 서파수면이 기억 공고화에 특히 중요한 역할을 하는 것으로 알려져 있다. 서파수면 동안에는 해마와 대뇌 피질이 서로 신호를 주고받으며 낮 동안 저장된 정보를 반복적으로 재생하는 현상이 관찰되는데, 이는 마치 컴퓨터의 파일을 임시 저장 장치에서 영구 저장 장치로 복사하는 과정과 비슷하다고 설명된다.
+</p>
+<p>
+이러한 연구 결과는 시험공부를 앞둔 사람들에게도 실질적인 시사점을 준다. 밤을 새워 무리하게 공부한 뒤 잠을 충분히 자지 않으면, 애써 외운 내용이 장기 기억으로 자리 잡을 기회를 놓치게 될 수 있다는 것이다. 결국 무언가를 제대로 배우고 오래 기억하기 위해서는 배우는 시간 못지않게 그 뒤에 이어지는 충분한 잠도 중요하다고 할 수 있다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices" id="choice-list">
+    <li class="selectable" id="choice-1" onclick="selectChoice(1)">잠은 단순히 몸을 쉬게 하는 시간일 뿐, 뇌의 기억 활동과는 별다른 관련이 없다.</li>
+    <li class="selectable" id="choice-2" onclick="selectChoice(2)">해마는 정보를 오랫동안 안정적으로 저장하는 데 가장 적합한 뇌 부위로, 잠을 자는 동안에도 그 역할이 바뀌지 않는다.</li>
+    <li class="selectable" id="choice-3" onclick="selectChoice(3)">새로운 정보가 장기 기억으로 자리 잡는 기억 공고화 과정에는 충분한 수면이 중요한 역할을 한다.</li>
+    <li class="selectable" id="choice-4" onclick="selectChoice(4)">잠을 자지 않고 깨어 있던 집단이 충분히 잠을 잔 집단보다 다음 날 단어를 더 정확하게 기억해 냈다.</li>
+    <li class="selectable" id="choice-5" onclick="selectChoice(5)">렘수면과 서파수면은 기억 공고화와 무관하며, 오직 신체 피로 회복에만 관여하는 수면 단계이다.</li>
+  </ol>
+
+  <div id="pick-feedback"></div>
+
+  <button id="reveal-btn" onclick="openAnswer();">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ③</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 첫째 문단은 잠이 단순한 휴식이 아니라 낮 동안 겪은 일들을 정리하고 저장하는 능동적인 과정이라고 설명한다. 잠과 기억 활동이 무관하다는 진술은 지문의 핵심 주장과 정반대이다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답</b> — 둘째 문단에 따르면 해마는 정보를 빠르게 받아들이지만 오랫동안 안정적으로 보관하는 데는 적합하지 않으며, 시간이 지나면 정보가 대뇌 피질로 옮겨져 장기 기억이 된다. 해마의 역할이 잠을 자는 동안에도 바뀌지 않는다는 설명은 이와 어긋난다.
+    </div>
+    <div class="explain-item correct">
+      <b>③ 정답</b> — 지문은 해마에 임시로 저장된 정보가 대뇌 피질로 옮겨져 장기 기억이 되는 기억 공고화 과정을 설명하면서, 단어 암기 실험과 서파수면 중 나타나는 반복 재생 현상 등을 근거로 이 과정이 주로 수면 중에 활발히 일어난다는 점을 일관되게 강조한다. 마지막 문단의 시험공부 사례 역시 이 주제를 뒷받침한다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 셋째 문단의 실험 결과는 이와 반대로, 충분히 잠을 잔 집단이 잠을 자지 않은 집단보다 단어를 훨씬 더 정확하게 기억해 냈다고 설명한다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 넷째 문단은 렘수면과 서파수면이 기억 공고화에 특히 중요한 역할을 한다고 설명하며, 서파수면 중 해마와 대뇌 피질이 정보를 반복적으로 재생하는 현상까지 소개한다. 신체 피로 회복에만 관여한다는 설명은 지문 내용과 어긋난다.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-29 06:44 (KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const CORRECT_INDEX = 3;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('answer-area').style.display = 'block';
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('#choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('answer-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
