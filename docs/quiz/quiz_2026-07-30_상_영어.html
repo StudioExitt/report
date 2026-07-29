@@ -1,0 +1,173 @@
+<meta charset="utf-8">
+<title>일일 영어 문제 — 2026-07-30 (난이도: 상)</title>
+<style>
+  :root {
+    --bg: #fbfcfe;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #5b6b7b;
+    --line: #e3e8ef;
+    --accent: #2563eb;
+    --accent-soft: #eef4ff;
+    --good: #15803d;
+    --bad: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.7;
+    padding: 32px 16px 80px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 1.7rem; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .meta { color: var(--muted); font-size: 0.92rem; }
+  .badges { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
+  }
+  .badge.level { background: #fff7e6; color: #b45309; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin-bottom: 22px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  h2 { font-size: 1.15rem; font-weight: 800; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  h2 .num { background: var(--accent); color: #fff; border-radius: 8px; font-size: 0.85rem; padding: 2px 9px; }
+  .passage p { margin: 0 0 14px; }
+  .passage { font-size: 1.02rem; }
+  .q-stem { font-weight: 700; margin: 0 0 16px; font-size: 1.05rem; }
+  ol.choices { list-style: none; counter-reset: c; padding: 0; margin: 0; }
+  ol.choices li {
+    counter-increment: c; border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 16px 13px 48px; margin-bottom: 10px; position: relative; cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  ol.choices li:hover { background: var(--accent-soft); border-color: var(--accent); }
+  ol.choices li::before {
+    content: counter(c); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 50%; background: #eef2f7; color: var(--ink);
+    font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices li.correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.correct::before { background: var(--good); color: #fff; }
+  ol.choices li.picked-correct { border-color: var(--good); background: #f0fdf4; }
+  ol.choices li.picked-correct::before { background: var(--good); color: #fff; }
+  ol.choices li.picked-wrong { border-color: var(--bad); background: #fef2f2; }
+  ol.choices li.picked-wrong::before { background: var(--bad); color: #fff; }
+  ol.choices li.reveal-correct { border-color: var(--good); box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.25) inset; }
+  #pick-feedback { display: none; margin-top: 16px; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; }
+  #pick-feedback.correct { background: #f0fdf4; color: var(--good); border: 1px solid var(--good); }
+  #pick-feedback.wrong { background: #fef2f2; color: var(--bad); border: 1px solid var(--bad); }
+  .btn {
+    background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+    padding: 12px 24px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 4px;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .answer { display: none; margin-top: 22px; }
+  .answer.show { display: block; }
+  .answer-head { font-weight: 800; font-size: 1.05rem; color: var(--good); margin-bottom: 14px; }
+  .exp { border-top: 1px dashed var(--line); padding-top: 14px; margin-top: 4px; }
+  .exp li { margin-bottom: 10px; }
+  .exp .k { font-weight: 700; }
+  .exp .ans-mark { color: var(--good); }
+  .exp .wrong-mark { color: var(--bad); }
+  footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 30px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>일일 영어 문제</h1>
+    <div class="meta">주제 파악 (Finding the Main Idea) · 지문을 읽고 가장 적절한 주제를 고르세요.</div>
+    <div class="badges">
+      <span class="badge">유형: 영어 · 주제 찾기</span>
+      <span class="badge level">난이도: 상</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">지문</span> Reading Passage</h2>
+    <div class="passage">
+      <p>In 1940, the linguist Benjamin Lee Whorf published a claim that would unsettle generations of scholars: that the structure of a language does not merely describe how its speakers think, but actively shapes and constrains it. Drawing on his study of Hopi, an Indigenous language of the American Southwest, Whorf argued that its grammar encoded time and causation so differently from European languages that Hopi speakers might experience reality itself in a fundamentally different way. Combined with earlier observations by his teacher Edward Sapir, this idea became known as the Sapir-Whorf hypothesis, or linguistic relativity.</p>
+      <p>The hypothesis is often presented in two versions of very different strength. The "strong" version holds that language determines thought outright, making certain concepts literally unthinkable to someone whose language lacks the words or grammar to express them. This strong form fell out of favor decades ago; critics pointed out that people routinely grasp ideas for which their native language has no ready term, and that translation between languages, however imperfect, remains possible. A far more modest "weak" version survived, proposing only that language influences habitual patterns of thought and attention without imprisoning them.</p>
+      <p>Contemporary research has lent this weaker claim considerable support, though rarely in the dramatic terms Whorf originally imagined. Speakers of languages that grammatically distinguish light blue from dark blue, for instance, have been shown in laboratory tests to discriminate between those shades slightly faster than speakers of languages with a single word for blue. Studies of languages that rely on absolute directions such as north and south, rather than relative terms like left and right, found that their speakers maintain a strikingly precise, almost compass-like sense of orientation even indoors or in unfamiliar surroundings. These effects are measurable, but they are subtle nudges in cognitive tendency, not walls around what a mind can conceive.</p>
+      <p>Skeptics caution against overreading such findings. Many of the observed effects are small, appear only under specific experimental conditions, and can sometimes be explained by cultural practice rather than grammar itself; a community that navigates by the stars because of its way of life may simply pay closer attention to direction regardless of how its language happens to be structured. Untangling cause from correlation, in other words, has proven far harder than either Whorf's original enthusiasm or his later critics' dismissals suggested.</p>
+      <p>What has emerged from nearly a century of debate is neither the vindication nor the wholesale rejection of Whorf's idea, but a considerably more careful picture. Language appears to interact with cognition much as a well-worn path interacts with a walker: it does not forbid other routes, but it makes some ways of noticing, categorizing, and remembering the world a little easier to fall into than others. That modest, empirically grounded version of linguistic relativity, rather than the dramatic claim about unthinkable thoughts, is what continues to shape research in psycholinguistics today.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">문제</span> Question</h2>
+    <p class="q-stem">What is the main idea of the passage?</p>
+    <ol class="choices">
+      <li id="choice-1" onclick="selectChoice(1)">Whorf's study of Hopi grammar proved conclusively that language completely determines what its speakers are capable of thinking.</li>
+      <li id="choice-2" onclick="selectChoice(2)">While the strong version of linguistic relativity claiming that language rigidly determines thought has been largely discredited, a weaker version showing that language subtly shapes habitual cognitive tendencies has gained credible, if limited, empirical support.</li>
+      <li id="choice-3" onclick="selectChoice(3)">Modern experiments on color perception and spatial orientation have shown that language has no measurable effect on how people think or perceive the world.</li>
+      <li id="choice-4" onclick="selectChoice(4)">Cultural practices such as star navigation are entirely unrelated to language and therefore disprove any connection between grammar and cognition.</li>
+      <li id="choice-5" onclick="selectChoice(5)">Edward Sapir and Benjamin Lee Whorf collaborated directly on all of the research described in the passage, including the modern laboratory studies.</li>
+    </ol>
+
+    <div id="pick-feedback"></div>
+
+    <button class="btn" id="reveal-btn" onclick="openAnswer();">정답 보기</button>
+
+    <div class="answer" id="ans">
+      <div class="answer-head">정답: ②</div>
+      <ul class="exp">
+        <li><span class="k">① 오답 <span class="wrong-mark">✗</span></span> — 지문 2문단은 언어가 사고를 "완전히 결정한다"는 강한 가설이 이미 오래 전에 설득력을 잃었다고 명시한다. 호피어 연구는 가설의 출발점일 뿐, "결정적으로 증명"된 사실로 제시되지 않는다.</li>
+        <li><span class="k">② 정답 <span class="ans-mark">✓</span></span> — 지문은 강한 버전(언어가 사고를 결정한다)이 비판을 받아 힘을 잃었지만, 약한 버전(언어가 습관적 사고 경향에 미세하게 영향을 준다)은 색채 지각·방향 감각 실험 등 경험적 근거를 통해 지지받고 있다는 흐름을 전개한다. 마지막 문단의 "잘 다져진 길" 비유는 이 절제된 결론을 요약하며, 이는 지문 전체를 관통하는 주제이다.</li>
+        <li><span class="k">③ 오답 <span class="wrong-mark">✗</span></span> — 3문단은 색채 구분 속도 및 방향 감각에서 언어에 따른 측정 가능한 차이가 실제로 관찰되었다고 서술한다. "효과가 전혀 없다"는 진술은 지문 내용과 정반대이다.</li>
+        <li><span class="k">④ 오답 <span class="wrong-mark">✗</span></span> — 4문단은 문화적 관행이 언어 효과처럼 보이는 결과를 설명할 수도 있다는 "가능성"을 신중하게 제기할 뿐, 이것이 언어와 인지의 연관성을 "반증한다"고 단정하지 않는다. 오히려 원인과 상관관계를 구분하기가 어렵다는 점을 지적한다.</li>
+        <li><span class="k">⑤ 오답 <span class="wrong-mark">✗</span></span> — 사피어는 워프의 스승으로 언급될 뿐이며, 현대의 실험실 연구들은 이후 수십 년에 걸쳐 다른 연구자들이 수행한 것으로 서술된다. 두 사람이 현대 연구까지 "직접 공동으로" 수행했다는 진술은 지문에 근거가 없다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    생성일시: 2026-07-30 06:19 (KST, 로컬 타임존) · quiz_2026-07-30_상_영어.html
+  </footer>
+</div>
+
+<script>
+  const CORRECT_INDEX = 2;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('ans').classList.add('show');
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('ol.choices li').forEach(li => {
+      li.style.cursor = 'default';
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('ans').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
