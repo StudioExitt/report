@@ -1,0 +1,301 @@
+<meta charset="UTF-8">
+<title>일일 문제은행 - 2026-07-31 (국어/중)</title>
+<style>
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 28px;
+  }
+  .meta span {
+    display: inline-block;
+    margin-right: 14px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-중 {
+    background: #fff4e0;
+    color: #b7791f;
+  }
+  h2.section {
+    font-weight: 800;
+    font-size: 19px;
+    color: #1a1a1a;
+    margin-top: 36px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p {
+    margin: 0 0 14px 0;
+  }
+  .passage p:last-child {
+    margin-bottom: 0;
+  }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .question-text {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+  ol.choices {
+    list-style: none;
+    counter-reset: choice;
+    margin: 0;
+    padding: 0;
+  }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li.selectable:hover {
+    background: #eef4fa;
+    border-color: #b9d3e6;
+  }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  ol.choices li.picked-correct {
+    background: #e7f6ec;
+    border-color: #7cc79a;
+  }
+  ol.choices li.picked-correct::before {
+    background: #2e8b57;
+  }
+  ol.choices li.picked-wrong {
+    background: #fdecec;
+    border-color: #e39a9a;
+  }
+  ol.choices li.picked-wrong::before {
+    background: #c0392b;
+  }
+  ol.choices li.reveal-correct {
+    border-color: #7cc79a;
+    box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset;
+  }
+  #pick-feedback {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  #pick-feedback.correct {
+    background: #e7f6ec;
+    color: #1e6b3e;
+    border: 1px solid #7cc79a;
+  }
+  #pick-feedback.wrong {
+    background: #fdecec;
+    color: #a02f22;
+    border: 1px solid #e39a9a;
+  }
+  #reveal-btn {
+    margin-top: 24px;
+    background: #2c5f8a;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #reveal-btn:hover {
+    background: #234b6e;
+  }
+  #answer-area {
+    display: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 2px dashed #d5d0c5;
+  }
+  .correct-badge {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .explain-item {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f5f7fa;
+  }
+  .explain-item.correct {
+    background: #e9f1f7;
+    border: 1px solid #b9d3e6;
+  }
+  .explain-item b {
+    font-weight: 700;
+  }
+  footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+</style>
+
+<h1>일일 문제은행 - 국어</h1>
+<div class="meta">
+  <span>2026년 7월 31일 (금)</span>
+  <span class="diff-중">난이도: 중</span>
+  <span>유형: 국어 (비문학 - 주제 찾기)</span>
+</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+우리는 흔히 서비스업 종사자들이 항상 웃는 얼굴로 손님을 대하는 모습을 자연스럽게 여긴다. 그러나 이러한 웃음과 친절한 말투 뒤에는 실제 감정과는 다른 감정을 겉으로 꾸며내야 하는 노동이 숨어 있는 경우가 많다. 이렇게 자신의 진짜 감정을 억누르고 직업이 요구하는 감정을 표현해야 하는 노동을 '감정노동'이라고 부른다.
+</p>
+<p>
+감정노동이라는 개념은 미국의 사회학자 앨리 러셀 혹실드가 항공사 승무원들을 연구하면서 처음으로 체계화하였다. 혹실드는 승무원들이 승객에게 화가 나거나 지쳐 있을 때에도 항상 미소를 지으며 친절하게 응대하도록 교육받는다는 점에 주목하고, 이러한 감정 관리 자체가 하나의 노동이라고 설명하였다. 이후 이 개념은 콜센터 상담원, 판매원, 간호사 등 다양한 직업으로 확장되어 연구되었다.
+</p>
+<p>
+감정노동이 문제가 되는 이유는 겉으로 드러내는 감정과 속으로 느끼는 감정 사이의 간극이 클수록 정신적인 스트레스가 커지기 때문이다. 화가 나는 상황에서도 웃어야 하고, 부당한 요구를 받아도 침착하게 대응해야 하는 상황이 반복되면, 감정을 억누르는 데 쓰이는 에너지가 쌓여 우울감이나 무기력감으로 이어질 수 있다. 실제로 여러 연구에서 감정노동 강도가 높은 직군일수록 정신 건강 지표가 낮게 나타나는 경향이 확인되었다.
+</p>
+<p>
+그럼에도 불구하고 감정노동은 오랫동안 눈에 보이지 않는 노동으로 취급되어 왔다. 육체노동이나 정신노동과 달리 감정을 다스리는 일은 성과로 측정하기 어렵고, 흔히 '친절한 성격' 정도로 여겨져 정당한 보상의 대상이 되지 못했다. 이 때문에 감정노동에 시달리는 노동자들이 겪는 어려움은 개인의 성격 문제로 축소되는 경우가 많았다.
+</p>
+<p>
+최근에는 감정노동의 문제점을 사회적으로 인식하고 이를 제도적으로 보완하려는 움직임이 나타나고 있다. 고객의 폭언이나 부당한 요구로부터 노동자를 보호하는 법률이 마련되고, 기업 차원에서도 상담원에게 심리 상담을 지원하거나 감정노동 강도를 낮추는 근무 방식을 도입하는 사례가 늘고 있다. 이는 감정을 다루는 일 또한 정당한 노동으로 인정받아야 한다는 인식이 확산되고 있음을 보여 준다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices" id="choice-list">
+    <li class="selectable" id="choice-1" onclick="selectChoice(1)">감정노동은 서비스업 종사자 개인의 성격 문제일 뿐이므로 사회나 기업이 개입할 필요는 없다.</li>
+    <li class="selectable" id="choice-2" onclick="selectChoice(2)">앨리 러셀 혹실드는 항공사 승무원의 감정노동을 연구하여 승무원들의 급여 체계를 크게 개선하는 데 성공하였다.</li>
+    <li class="selectable" id="choice-3" onclick="selectChoice(3)">감정노동은 실제 감정과 다르게 감정을 표현해야 하는 노동으로, 이로 인한 문제를 완화하기 위한 사회적·제도적 노력이 필요하다.</li>
+    <li class="selectable" id="choice-4" onclick="selectChoice(4)">감정노동 강도가 높은 직군일수록 오히려 정신 건강 지표가 더 좋게 나타나는 경향이 확인되었다.</li>
+    <li class="selectable" id="choice-5" onclick="selectChoice(5)">감정노동은 육체노동이나 정신노동과 마찬가지로 오래전부터 정당한 보상의 대상으로 인정받아 왔다.</li>
+  </ol>
+
+  <div id="pick-feedback"></div>
+
+  <button id="reveal-btn" onclick="openAnswer();">정답보기</button>
+
+  <div id="answer-area">
+    <div class="correct-badge">정답: ③</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 넷째 문단은 감정노동에 시달리는 노동자들의 어려움이 개인의 성격 문제로 축소되어 온 것을 문제점으로 지적하고 있으며, 다섯째 문단은 오히려 사회적·제도적 대응이 필요함을 강조한다. 개입이 필요 없다는 진술은 지문의 취지와 정반대이다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답</b> — 둘째 문단은 혹실드가 승무원 연구를 통해 감정노동이라는 개념을 체계화하였다고 설명할 뿐, 이 연구로 승무원의 급여 체계가 개선되었다는 내용은 지문에 나타나지 않는다.
+    </div>
+    <div class="explain-item correct">
+      <b>③ 정답</b> — 지문은 첫째 문단에서 감정노동의 개념을 정의하고, 둘째 문단에서 그 유래를, 셋째·넷째 문단에서 그로 인한 정신적 스트레스와 정당한 보상을 받지 못해 온 문제점을 설명한 뒤, 다섯째 문단에서 이를 보완하기 위한 법률과 제도적 노력이 필요함을 제시한다. 이 흐름을 모두 포괄하는 것이 ③이다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 셋째 문단은 이와 반대로, 감정노동 강도가 높은 직군일수록 정신 건강 지표가 낮게 나타나는 경향이 확인되었다고 설명한다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 넷째 문단은 감정노동이 성과로 측정하기 어렵고 '친절한 성격' 정도로 여겨져 오랫동안 정당한 보상의 대상이 되지 못했다고 설명하므로, 오래전부터 정당한 보상을 받아 왔다는 진술은 지문 내용과 어긋난다.
+    </div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-07-31 07:59 (KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const CORRECT_INDEX = 3;
+  const CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let answered = false;
+
+  function openAnswer() {
+    document.getElementById('answer-area').style.display = 'block';
+    document.getElementById('reveal-btn').style.display = 'none';
+  }
+
+  function selectChoice(n) {
+    if (answered) return;
+    answered = true;
+
+    const picked = document.getElementById('choice-' + n);
+    const correctLi = document.getElementById('choice-' + CORRECT_INDEX);
+    const feedback = document.getElementById('pick-feedback');
+    const isCorrect = n === CORRECT_INDEX;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) {
+      correctLi.classList.add('reveal-correct');
+    }
+
+    document.querySelectorAll('#choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.style.display = 'block';
+    feedback.className = isCorrect ? 'correct' : 'wrong';
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${CIRCLED[n - 1]}번이며, 정답은 ${CIRCLED[CORRECT_INDEX - 1]}번입니다.`;
+
+    openAnswer();
+    document.getElementById('answer-area').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
