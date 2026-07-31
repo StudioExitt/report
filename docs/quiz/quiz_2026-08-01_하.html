@@ -1,0 +1,384 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일일 문제은행 - 2026-08-01 (국어+영어/하)</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta { font-size: 14px; color: #666; margin-bottom: 28px; }
+  .meta span {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 6px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-하 { background: #e9f6ee; color: #1e6b3e; }
+  h2.big-section {
+    font-weight: 800;
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-top: 44px;
+    margin-bottom: 4px;
+  }
+  .big-section-desc { font-size: 13px; color: #777; margin-bottom: 18px; }
+  h2.section {
+    font-weight: 800;
+    font-size: 18px;
+    color: #1a1a1a;
+    margin-top: 30px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p { margin: 0 0 14px 0; }
+  .passage p:last-child { margin-bottom: 0; }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 18px;
+  }
+  .q-num {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .question-text { font-weight: 700; font-size: 17px; margin-bottom: 20px; }
+  ol.choices { list-style: none; counter-reset: choice; margin: 0; padding: 0; }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li.selectable:hover { background: #eef4fa; border-color: #b9d3e6; }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #2c5f8a; color: #fff; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices.abc li::before { content: counter(choice, upper-alpha); }
+  ol.choices li.picked-correct { background: #e7f6ec; border-color: #7cc79a; }
+  ol.choices li.picked-correct::before { background: #2e8b57; }
+  ol.choices li.picked-wrong { background: #fdecec; border-color: #e39a9a; }
+  ol.choices li.picked-wrong::before { background: #c0392b; }
+  ol.choices li.reveal-correct { border-color: #7cc79a; box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset; }
+  .pick-feedback {
+    display: none; margin-top: 16px; padding: 12px 16px; border-radius: 8px;
+    font-weight: 700; font-size: 15px;
+  }
+  .pick-feedback.correct { display: block; background: #e7f6ec; color: #1e6b3e; border: 1px solid #7cc79a; }
+  .pick-feedback.wrong { display: block; background: #fdecec; color: #a02f22; border: 1px solid #e39a9a; }
+  .reveal-btn {
+    margin-top: 24px; background: #2c5f8a; color: #fff; border: none;
+    padding: 12px 22px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .reveal-btn:hover { background: #234b6e; }
+  .answer-area {
+    display: none; margin-top: 22px; padding-top: 20px; border-top: 2px dashed #d5d0c5;
+  }
+  .answer-area.show { display: block; }
+  .correct-badge {
+    display: inline-block; background: #2c5f8a; color: #fff; font-weight: 800;
+    padding: 4px 12px; border-radius: 6px; margin-bottom: 14px;
+  }
+  .explain-item { margin-bottom: 10px; padding: 10px 14px; border-radius: 8px; background: #f5f7fa; }
+  .explain-item.correct { background: #e9f1f7; border: 1px solid #b9d3e6; }
+  .explain-item b { font-weight: 700; }
+  footer { margin-top: 40px; font-size: 12px; color: #999; text-align: center; }
+
+  @media (max-width: 640px) {
+    body { padding: 20px 14px 60px; font-size: 15px; }
+    h1 { font-size: 21px; }
+    .meta span { font-size: 12px; padding: 2px 8px; margin-right: 6px; }
+    h2.section, h2.big-section, h2 { font-size: 16px; margin-top: 26px; }
+    .big-section-desc { font-size: 12px; }
+    .passage, .question-box { padding: 16px 16px; font-size: 15px; }
+    .question-text { font-size: 15.5px; }
+    ol.choices li { padding: 10px 10px 10px 36px; font-size: 14px; }
+    ol.choices li::before { width: 20px; height: 20px; font-size: 12px; left: 8px; }
+    #reveal-btn, .reveal-btn { width: 100%; padding: 12px; font-size: 14px; }
+    .correct-badge { font-size: 14px; }
+    footer { font-size: 11px; }
+  }
+</style>
+
+<h1>일일 문제은행</h1>
+<div class="meta">
+  <span>2026년 8월 1일 (토)</span>
+  <span class="diff-하">난이도: 하</span>
+  <span>국어 1문제 + 영어 5문제</span>
+</div>
+
+<h2 class="big-section">국어</h2>
+<div class="big-section-desc">비문학 지문을 읽고 주제로 가장 적절한 것을 고르세요.</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+최근 여러 나라의 보건 당국이 청소년의 수면 부족 문제를 심각한 건강 이슈로 다루기 시작했다. 조사에 따르면 상당수의 중고등학생이 권장 수면 시간인 8~10시간에 크게 못 미치는 6시간 안팎의 수면을 취하고 있으며, 그 원인으로는 늦은 밤까지 이어지는 학습과 스마트폰 사용, 그리고 이른 등교 시간이 함께 꼽힌다.
+</p>
+<p>
+수면은 단순히 몸을 쉬게 하는 시간이 아니다. 잠을 자는 동안 뇌는 낮 동안 습득한 정보를 정리하고 장기 기억으로 저장하는 작업을 수행한다. 특히 깊은 수면 단계에서 해마라는 뇌 부위가 활발히 움직이며 새로운 지식을 기존 기억과 연결하는데, 이 과정이 충분히 이루어지지 않으면 아무리 오래 공부해도 내용이 머릿속에 오래 남지 않는다. 실제로 수면이 부족한 학생들은 집중력과 기억력 검사에서 또래보다 낮은 점수를 기록하는 경향이 반복적으로 관찰된다.
+</p>
+<p>
+문제를 더 복잡하게 만드는 것은 청소년기의 독특한 생체리듬이다. 사춘기에 접어들면 졸음을 유발하는 호르몬인 멜라토닌이 성인보다 늦은 시각에 분비되기 시작한다. 즉 청소년은 밤에 일찍 잠들고 싶어도 몸이 아직 잠들 준비가 되지 않은 경우가 많다. 그런데 대부분의 학교는 이러한 생체리듬을 고려하지 않고 이른 아침에 등교를 시작하도록 정해 놓았기 때문에, 학생들은 구조적으로 수면이 부족한 채로 하루를 시작할 수밖에 없다.
+</p>
+<p>
+이러한 문제의식에서 등교 시간을 한 시간가량 늦춘 학교들의 사례가 주목받고 있다. 등교 시간을 조정한 학교에서는 학생들의 평균 수면 시간이 늘어났을 뿐 아니라, 지각과 결석률이 줄고 시험 성적도 소폭 향상되었다는 보고가 이어지고 있다. 이는 수면 부족이 단순히 개인의 의지 문제가 아니라 제도적으로 개선할 수 있는 영역임을 보여 주는 사례로 평가된다.
+</p>
+<p>
+결국 청소년의 수면 부족은 개인의 게으름이나 자기 관리 실패로만 볼 문제가 아니다. 뇌의 기억 저장 과정과 생체리듬이라는 생물학적 근거를 고려할 때, 학습 능력을 높이기 위해서는 등교 시간 조정과 같은 사회적, 제도적 차원의 노력이 함께 이루어져야 한다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices" id="kr-choice-list">
+    <li class="selectable" id="kr-choice-1" onclick="selectKr(1)">청소년은 성인보다 적게 자도 학습 능력에 아무런 영향을 받지 않는다.</li>
+    <li class="selectable" id="kr-choice-2" onclick="selectKr(2)">등교 시간을 늦추는 정책은 여러 학교에서 시도되었지만 실제로는 아무런 효과가 없었다.</li>
+    <li class="selectable" id="kr-choice-3" onclick="selectKr(3)">청소년의 수면 부족은 기억 저장과 생체리듬 등 생물학적 요인과 관련이 깊으므로, 등교 시간 조정과 같은 제도적 노력을 통해 학습 능력 저하 문제를 개선해야 한다.</li>
+    <li class="selectable" id="kr-choice-4" onclick="selectKr(4)">청소년의 기억력 저하는 수면과는 무관하며 전적으로 개인의 학습 습관에 달려 있다.</li>
+    <li class="selectable" id="kr-choice-5" onclick="selectKr(5)">멜라토닌 분비 시각은 청소년과 성인이 동일하므로 등교 시간을 조정할 근거가 없다.</li>
+  </ol>
+
+  <div class="pick-feedback" id="kr-feedback"></div>
+
+  <button class="reveal-btn" id="kr-reveal-btn" onclick="openKrAnswer();">정답보기</button>
+
+  <div class="answer-area" id="kr-answer-area">
+    <div class="correct-badge">정답: ③</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 둘째 문단에서 수면이 부족한 학생들이 집중력과 기억력 검사에서 낮은 점수를 기록한다고 밝히고 있으므로, 아무런 영향을 받지 않는다는 진술은 지문과 반대된다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답</b> — 넷째 문단은 등교 시간을 늦춘 학교에서 수면 시간 증가, 지각·결석률 감소, 성적 소폭 향상 등의 긍정적 효과가 보고되었다고 서술하므로, 효과가 없었다는 진술은 지문 내용과 어긋난다.
+    </div>
+    <div class="explain-item correct">
+      <b>③ 정답</b> — 지문은 첫째 문단에서 청소년 수면 부족 실태를 제시한 뒤, 둘째~셋째 문단에서 기억 저장 과정과 생체리듬이라는 생물학적 근거를, 넷째 문단에서 등교 시간 조정의 실제 효과를 제시하고, 다섯째 문단에서 제도적 노력의 필요성으로 마무리한다. 이 전체 흐름을 요약한 것이 ③이다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 둘째 문단은 수면 중 해마가 기억을 장기 기억으로 저장하는 과정을 설명하며 기억력과 수면의 밀접한 관련성을 강조하므로, 수면과 무관하다는 진술은 지문 내용과 맞지 않는다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 셋째 문단에서 청소년은 성인보다 멜라토닌이 늦게 분비된다고 명시하고 있으므로, 분비 시각이 동일하다는 진술은 지문 내용과 어긋난다.
+    </div>
+  </div>
+</div>
+
+<h2 class="big-section">영어</h2>
+<div class="big-section-desc">TOEIC Part 5 문장완성 · 빈칸에 들어갈 가장 적절한 표현을 고르세요.</div>
+
+<div class="question-box">
+  <div class="q-num">문제 1</div>
+  <div class="question-text">The customer service team responded to the complaints very ___.</div>
+  <ol class="choices abc" id="en-choice-list-1">
+    <li class="selectable" id="en-1-1" onclick="selectEn(1,1)">quick</li>
+    <li class="selectable" id="en-1-2" onclick="selectEn(1,2)">quickness</li>
+    <li class="selectable" id="en-1-3" onclick="selectEn(1,3)">quickly</li>
+    <li class="selectable" id="en-1-4" onclick="selectEn(1,4)">quickest</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-1"></div>
+  <button class="reveal-btn" id="en-reveal-btn-1" onclick="openEnAnswer(1);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-1">
+    <div class="correct-badge">정답: (C) quickly</div>
+    <div class="explain-item"><b>(A) 오답</b> — quick은 형용사로, 동사 responded를 수식하는 부사 자리에 쓰일 수 없다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — quickness는 명사로, 동사구 뒤 부사 자리에 문법적으로 맞지 않는다.</div>
+    <div class="explain-item correct"><b>(C) 정답</b> — quickly는 부사로 동사 responded를 수식하여 "빠르게 대응했다"라는 의미를 자연스럽게 완성한다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — quickest는 최상급 형용사로, 부사 자리에 쓰일 수 없다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 2</div>
+  <div class="question-text">The company ___ a new branch in Busan next month.</div>
+  <ol class="choices abc" id="en-choice-list-2">
+    <li class="selectable" id="en-2-1" onclick="selectEn(2,1)">opens</li>
+    <li class="selectable" id="en-2-2" onclick="selectEn(2,2)">will open</li>
+    <li class="selectable" id="en-2-3" onclick="selectEn(2,3)">opened</li>
+    <li class="selectable" id="en-2-4" onclick="selectEn(2,4)">has opened</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-2"></div>
+  <button class="reveal-btn" id="en-reveal-btn-2" onclick="openEnAnswer(2);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-2">
+    <div class="correct-badge">정답: (B) will open</div>
+    <div class="explain-item"><b>(A) 오답</b> — opens는 단순 현재형으로, "next month"라는 미래 시점 표현과 함께 쓰이기에 자연스럽지 않다.</div>
+    <div class="explain-item correct"><b>(B) 정답</b> — "next month"라는 명확한 미래 시점 표현이 있으므로 미래시제 will open이 문맥상 가장 적절하다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — opened는 과거형으로, 미래를 나타내는 next month와 함께 쓰일 수 없다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — has opened는 현재완료로 이미 일어난 일을 나타내므로, 미래 시점을 나타내는 문장과 맞지 않는다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 3</div>
+  <div class="question-text">She arrived ___ the airport two hours before her flight.</div>
+  <ol class="choices abc" id="en-choice-list-3">
+    <li class="selectable" id="en-3-1" onclick="selectEn(3,1)">at</li>
+    <li class="selectable" id="en-3-2" onclick="selectEn(3,2)">in</li>
+    <li class="selectable" id="en-3-3" onclick="selectEn(3,3)">on</li>
+    <li class="selectable" id="en-3-4" onclick="selectEn(3,4)">to</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-3"></div>
+  <button class="reveal-btn" id="en-reveal-btn-3" onclick="openEnAnswer(3);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-3">
+    <div class="correct-badge">정답: (A) at</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — "arrive at + 장소(지점)"는 공항, 역과 같은 특정 지점에 도착함을 나타내는 관용적 표현으로 문맥에 알맞다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — in은 넓은 공간이나 도시, 국가 등과 함께 쓰이며, "arrive in the airport"는 어색한 표현이다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — on은 표면이나 특정 교통수단과 함께 쓰이므로, 도착 지점을 나타내는 이 문맥에 맞지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — arrive는 자동사로 뒤에 to를 취하지 않으며, "arrive to the airport"는 문법적으로 틀린 표현이다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 4</div>
+  <div class="question-text">___ it was raining heavily, the outdoor concert was cancelled.</div>
+  <ol class="choices abc" id="en-choice-list-4">
+    <li class="selectable" id="en-4-1" onclick="selectEn(4,1)">Because</li>
+    <li class="selectable" id="en-4-2" onclick="selectEn(4,2)">Although</li>
+    <li class="selectable" id="en-4-3" onclick="selectEn(4,3)">Despite</li>
+    <li class="selectable" id="en-4-4" onclick="selectEn(4,4)">However</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-4"></div>
+  <button class="reveal-btn" id="en-reveal-btn-4" onclick="openEnAnswer(4);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-4">
+    <div class="correct-badge">정답: (A) Because</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — Because는 이유를 나타내는 접속사로, 비가 많이 온 것(원인)과 공연이 취소된 것(결과)을 자연스럽게 연결한다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — Although는 양보의 접속사로 "비가 왔지만"이라는 의미가 되어, 취소라는 결과와 논리적으로 어색하게 연결된다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — Despite는 전치사로 뒤에 명사(구)가 와야 하므로, 절(it was raining heavily)이 이어지는 이 문장 구조와 맞지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — However는 부사로 두 개의 절을 접속사처럼 연결할 수 없으므로 문법적으로 맞지 않는다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 5</div>
+  <div class="question-text">Each of the employees ___ required to attend the safety training.</div>
+  <ol class="choices abc" id="en-choice-list-5">
+    <li class="selectable" id="en-5-1" onclick="selectEn(5,1)">are</li>
+    <li class="selectable" id="en-5-2" onclick="selectEn(5,2)">is</li>
+    <li class="selectable" id="en-5-3" onclick="selectEn(5,3)">were</li>
+    <li class="selectable" id="en-5-4" onclick="selectEn(5,4)">have</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-5"></div>
+  <button class="reveal-btn" id="en-reveal-btn-5" onclick="openEnAnswer(5);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-5">
+    <div class="correct-badge">정답: (B) is</div>
+    <div class="explain-item"><b>(A) 오답</b> — "Each of + 복수명사" 구문의 주어는 단수로 취급되므로, 복수동사 are는 맞지 않는다.</div>
+    <div class="explain-item correct"><b>(B) 정답</b> — Each는 단수 취급하는 대명사이므로 단수동사 is가 주어와 수 일치하여 알맞다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — were는 복수 과거형으로, 단수 주어 Each와 수가 일치하지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — have는 복수동사이므로, 단수로 취급되는 Each of the employees와 수가 일치하지 않는다.</div>
+  </div>
+</div>
+
+<footer>생성일시: 2026-08-01 07:44 (로컬 타임존, KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const KR_CORRECT = 3;
+  const KR_CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let krAnswered = false;
+
+  function openKrAnswer() {
+    document.getElementById('kr-answer-area').classList.add('show');
+    document.getElementById('kr-reveal-btn').style.display = 'none';
+  }
+
+  function selectKr(n) {
+    if (krAnswered) return;
+    krAnswered = true;
+
+    const picked = document.getElementById('kr-choice-' + n);
+    const correctLi = document.getElementById('kr-choice-' + KR_CORRECT);
+    const feedback = document.getElementById('kr-feedback');
+    const isCorrect = n === KR_CORRECT;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#kr-choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${KR_CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${KR_CIRCLED[n - 1]}번이며, 정답은 ${KR_CIRCLED[KR_CORRECT - 1]}번입니다.`;
+
+    openKrAnswer();
+  }
+
+  const EN_CORRECT = { 1: 3, 2: 2, 3: 1, 4: 1, 5: 2 };
+  const EN_LETTERS = ['A', 'B', 'C', 'D'];
+  const enAnswered = {};
+
+  function openEnAnswer(q) {
+    document.getElementById('en-answer-area-' + q).classList.add('show');
+    document.getElementById('en-reveal-btn-' + q).style.display = 'none';
+  }
+
+  function selectEn(q, n) {
+    if (enAnswered[q]) return;
+    enAnswered[q] = true;
+
+    const correctIndex = EN_CORRECT[q];
+    const picked = document.getElementById('en-' + q + '-' + n);
+    const correctLi = document.getElementById('en-' + q + '-' + correctIndex);
+    const feedback = document.getElementById('en-feedback-' + q);
+    const isCorrect = n === correctIndex;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#en-choice-list-' + q + ' li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${EN_LETTERS[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${EN_LETTERS[n - 1]}번이며, 정답은 ${EN_LETTERS[correctIndex - 1]}번입니다.`;
+
+    openEnAnswer(q);
+  }
+</script>
