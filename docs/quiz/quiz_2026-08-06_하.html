@@ -1,0 +1,474 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일일 문제은행 - 2026-08-06 (국어+영어+수학+일본어/하)</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta { font-size: 14px; color: #666; margin-bottom: 28px; }
+  .meta span {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 6px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-하 { background: #e9f6ee; color: #1e6b3e; }
+  h2.big-section {
+    font-weight: 800;
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-top: 44px;
+    margin-bottom: 4px;
+  }
+  .big-section-desc { font-size: 13px; color: #777; margin-bottom: 18px; }
+  h2.section {
+    font-weight: 800;
+    font-size: 18px;
+    color: #1a1a1a;
+    margin-top: 30px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p { margin: 0 0 14px 0; }
+  .passage p:last-child { margin-bottom: 0; }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 18px;
+  }
+  .q-num {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .question-text { font-weight: 700; font-size: 17px; margin-bottom: 20px; }
+  ol.choices { list-style: none; counter-reset: choice; margin: 0; padding: 0; }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li.selectable:hover { background: #eef4fa; border-color: #b9d3e6; }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #2c5f8a; color: #fff; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices.abc li::before { content: counter(choice, upper-alpha); }
+  ol.choices li.picked-correct { background: #e7f6ec; border-color: #7cc79a; }
+  ol.choices li.picked-correct::before { background: #2e8b57; }
+  ol.choices li.picked-wrong { background: #fdecec; border-color: #e39a9a; }
+  ol.choices li.picked-wrong::before { background: #c0392b; }
+  ol.choices li.reveal-correct { border-color: #7cc79a; box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset; }
+  .pick-feedback {
+    display: none; margin-top: 16px; padding: 12px 16px; border-radius: 8px;
+    font-weight: 700; font-size: 15px;
+  }
+  .pick-feedback.correct { display: block; background: #e7f6ec; color: #1e6b3e; border: 1px solid #7cc79a; }
+  .pick-feedback.wrong { display: block; background: #fdecec; color: #a02f22; border: 1px solid #e39a9a; }
+  .reveal-btn {
+    margin-top: 24px; background: #2c5f8a; color: #fff; border: none;
+    padding: 12px 22px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .reveal-btn:hover { background: #234b6e; }
+  .answer-area {
+    display: none; margin-top: 22px; padding-top: 20px; border-top: 2px dashed #d5d0c5;
+  }
+  .answer-area.show { display: block; }
+  .correct-badge {
+    display: inline-block; background: #2c5f8a; color: #fff; font-weight: 800;
+    padding: 4px 12px; border-radius: 6px; margin-bottom: 14px;
+  }
+  .explain-item { margin-bottom: 10px; padding: 10px 14px; border-radius: 8px; background: #f5f7fa; }
+  .explain-item.correct { background: #e9f1f7; border: 1px solid #b9d3e6; }
+  .explain-item b { font-weight: 700; }
+  .jp-box {
+    background: #fffdf5;
+    border: 1px solid #ecd9a0;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .jp-sentence { font-size: 20px; font-weight: 800; color: #1a1a1a; margin-bottom: 10px; }
+  .jp-reading { font-size: 14px; color: #8a5a1e; margin-bottom: 10px; }
+  .jp-meaning { font-size: 16px; color: #333; padding-top: 10px; border-top: 1px dashed #ecd9a0; }
+  footer { margin-top: 40px; font-size: 12px; color: #999; text-align: center; }
+
+  @media (max-width: 640px) {
+    body { padding: 20px 14px 60px; font-size: 15px; }
+    h1 { font-size: 21px; }
+    .meta span { font-size: 12px; padding: 2px 8px; margin-right: 6px; }
+    h2.section, h2.big-section, h2 { font-size: 16px; margin-top: 26px; }
+    .big-section-desc { font-size: 12px; }
+    .passage, .question-box, .jp-box { padding: 16px 16px; font-size: 15px; }
+    .question-text { font-size: 15.5px; }
+    ol.choices li { padding: 10px 10px 10px 36px; font-size: 14px; }
+    ol.choices li::before { width: 20px; height: 20px; font-size: 12px; left: 8px; }
+    #reveal-btn, .reveal-btn { width: 100%; padding: 12px; font-size: 14px; }
+    .correct-badge { font-size: 14px; }
+    footer { font-size: 11px; }
+  }
+</style>
+
+<h1>일일 문제은행</h1>
+<div class="meta">
+  <span>2026년 8월 6일 (목)</span>
+  <span class="diff-하">난이도: 하</span>
+  <span>국어 1문제 + 영어 5문제 + 수학 1문제 + 일본어 1문장</span>
+</div>
+
+<h2 class="big-section">국어</h2>
+<div class="big-section-desc">비문학 지문을 읽고 주제로 가장 적절한 것을 고르세요.</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+환율은 한 나라의 화폐와 다른 나라의 화폐가 교환되는 비율을 말한다. 원/달러 환율이 오른다는 것은 원화 가치가 달러 대비 낮아진다는 뜻이며, 반대로 환율이 내린다는 것은 원화 가치가 높아진다는 뜻이다. 이러한 환율의 변동은 수출입 기업의 실적에 직접적인 영향을 미친다.
+</p>
+<p>
+먼저 수출 기업의 입장에서 살펴보면, 환율이 오르면 같은 양의 제품을 수출하고 받은 달러를 원화로 바꿀 때 더 많은 원화를 받을 수 있다. 예를 들어 100달러짜리 제품을 수출했을 때 환율이 1,200원이면 12만 원을 받지만, 환율이 1,300원으로 오르면 13만 원을 받게 되어 같은 물량을 팔아도 매출이 늘어나는 효과가 생긴다. 그래서 환율 상승은 일반적으로 수출 기업에 유리하게 작용한다.
+</p>
+<p>
+반면 수입 기업은 사정이 정반대이다. 원자재나 부품을 해외에서 달러로 결제해 사 오는 기업이라면, 환율이 오를수록 같은 물건을 사기 위해 더 많은 원화를 지불해야 한다. 이 때문에 원자재 수입 비중이 큰 기업은 환율 상승 시기에 생산 비용 부담이 커지고, 이는 제품 가격 인상이나 수익성 악화로 이어질 수 있다.
+</p>
+<p>
+문제는 한 기업이 수출과 수입을 동시에 하는 경우가 많다는 점이다. 예컨대 해외에서 부품을 수입해 조립한 뒤 완제품을 다시 해외에 수출하는 기업이라면, 환율 상승이 수입 비용 증가와 수출 매출 증가라는 상반된 효과를 동시에 만들어 낸다. 이런 기업의 실제 손익은 수출 비중과 수입 비중, 그리고 환율 변동 폭에 따라 달라지므로 일률적으로 유불리를 판단하기 어렵다.
+</p>
+<p>
+결국 환율 변동은 어느 기업에나 똑같이 이롭거나 불리한 것이 아니라, 그 기업이 수출과 수입 중 어느 쪽에 더 많이 노출되어 있는지에 따라 서로 다른 영향을 미친다. 그렇기 때문에 많은 기업들이 환율 변동에 따른 위험을 줄이기 위해 환헤지와 같은 수단을 활용하기도 한다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices" id="kr-choice-list">
+    <li class="selectable" id="kr-choice-1" onclick="selectKr(1)">환율이 오르면 모든 기업의 수익성이 동일하게 개선되므로 환율 상승은 항상 긍정적인 신호이다.</li>
+    <li class="selectable" id="kr-choice-2" onclick="selectKr(2)">환율 변동은 기업이 수출과 수입 중 어느 쪽에 더 많이 노출되어 있는지에 따라 서로 다른 영향을 미친다.</li>
+    <li class="selectable" id="kr-choice-3" onclick="selectKr(3)">수입 기업은 환율과 무관하게 항상 안정적인 비용 구조를 유지할 수 있다.</li>
+    <li class="selectable" id="kr-choice-4" onclick="selectKr(4)">환헤지를 활용하는 기업은 환율 변동의 영향을 전혀 받지 않는다.</li>
+    <li class="selectable" id="kr-choice-5" onclick="selectKr(5)">수출과 수입을 동시에 하는 기업은 환율이 오르면 반드시 손해를 본다.</li>
+  </ol>
+
+  <div class="pick-feedback" id="kr-feedback"></div>
+
+  <button class="reveal-btn" id="kr-reveal-btn" onclick="openKrAnswer();">정답보기</button>
+
+  <div class="answer-area" id="kr-answer-area">
+    <div class="correct-badge">정답: ②</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 셋째 문단에서 수입 기업은 환율 상승 시 비용 부담이 커져 수익성이 악화될 수 있다고 설명하므로, 모든 기업의 수익성이 동일하게 개선된다는 진술은 지문과 어긋난다.
+    </div>
+    <div class="explain-item correct">
+      <b>② 정답</b> — 둘째~넷째 문단은 환율 상승이 수출 기업에는 유리하게, 수입 기업에는 불리하게 작용하며 두 활동을 동시에 하는 기업은 노출 비중에 따라 손익이 달라진다고 설명한다. 다섯째 문단이 이를 종합해 결론짓는 내용을 요약한 것이 ②이다.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답</b> — 셋째 문단에서 원자재 수입 비중이 큰 기업은 환율 상승 시 비용 부담이 커진다고 설명하므로, 환율과 무관하게 안정적이라는 진술은 지문과 반대된다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 다섯째 문단은 환헤지가 환율 변동에 따른 위험을 '줄이기 위한' 수단이라고 설명할 뿐, 영향을 전혀 받지 않는다고는 말하지 않는다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 넷째 문단에서 수출입을 동시에 하는 기업의 손익은 비중과 변동 폭에 따라 달라져 일률적으로 판단하기 어렵다고 설명하므로, 반드시 손해를 본다는 진술은 지문과 어긋난다.
+    </div>
+  </div>
+</div>
+
+<h2 class="big-section">영어</h2>
+<div class="big-section-desc">TOEIC Part 5 문장완성 · 빈칸에 들어갈 가장 적절한 표현을 고르세요.</div>
+
+<div class="question-box">
+  <div class="q-num">문제 1</div>
+  <div class="question-text">The new employee handbook was distributed to all staff ___ Monday morning.</div>
+  <ol class="choices abc" id="en-choice-list-1">
+    <li class="selectable" id="en-1-1" onclick="selectEn(1,1)">on</li>
+    <li class="selectable" id="en-1-2" onclick="selectEn(1,2)">at</li>
+    <li class="selectable" id="en-1-3" onclick="selectEn(1,3)">in</li>
+    <li class="selectable" id="en-1-4" onclick="selectEn(1,4)">by</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-1"></div>
+  <button class="reveal-btn" id="en-reveal-btn-1" onclick="openEnAnswer(1);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-1">
+    <div class="correct-badge">정답: (A) on</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — 특정 요일(Monday morning)을 나타낼 때는 전치사 on을 사용하므로 on이 알맞다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — at은 구체적인 시각(예: at 9 a.m.)을 나타낼 때 쓰이며 요일 앞에는 쓰이지 않는다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — in은 월, 계절, 연도 등 비교적 긴 기간 앞에 쓰이며 특정 요일 앞에는 쓰이지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — by는 '~까지'라는 기한의 의미로, 배포된 시점을 나타내는 문맥에는 적절하지 않다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 2</div>
+  <div class="question-text">All visitors must ___ their identification at the front desk before entering the building.</div>
+  <ol class="choices abc" id="en-choice-list-2">
+    <li class="selectable" id="en-2-1" onclick="selectEn(2,1)">show</li>
+    <li class="selectable" id="en-2-2" onclick="selectEn(2,2)">shows</li>
+    <li class="selectable" id="en-2-3" onclick="selectEn(2,3)">showing</li>
+    <li class="selectable" id="en-2-4" onclick="selectEn(2,4)">shown</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-2"></div>
+  <button class="reveal-btn" id="en-reveal-btn-2" onclick="openEnAnswer(2);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-2">
+    <div class="correct-badge">정답: (A) show</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — 조동사 must 뒤에는 동사원형이 와야 하므로 show가 알맞다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — shows는 3인칭 단수 현재형으로, 조동사 must 뒤에는 동사원형만 올 수 있어 적절하지 않다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — showing은 동명사/현재분사 형태로, 조동사 뒤 동사원형 자리에 쓰일 수 없다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — shown은 과거분사로 조동사 must 뒤 동사원형 자리에 쓰일 수 없다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 3</div>
+  <div class="question-text">The training session has been rescheduled ___ next Wednesday due to a venue conflict.</div>
+  <ol class="choices abc" id="en-choice-list-3">
+    <li class="selectable" id="en-3-1" onclick="selectEn(3,1)">to</li>
+    <li class="selectable" id="en-3-2" onclick="selectEn(3,2)">for</li>
+    <li class="selectable" id="en-3-3" onclick="selectEn(3,3)">since</li>
+    <li class="selectable" id="en-3-4" onclick="selectEn(3,4)">from</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-3"></div>
+  <button class="reveal-btn" id="en-reveal-btn-3" onclick="openEnAnswer(3);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-3">
+    <div class="correct-badge">정답: (A) to</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — reschedule은 'reschedule A to B(A를 B로 일정을 변경하다)' 형태로 쓰이므로 to가 알맞다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — for는 목적이나 기간을 나타낼 때 주로 쓰이며, 일정을 특정 날짜로 옮긴다는 의미에는 맞지 않는다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — since는 '~이후로'라는 뜻으로 과거의 시작 시점을 나타내므로, 미래의 새 일정을 가리키는 문맥과 맞지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — from은 시작 시점을 나타내는 전치사로, 일정이 옮겨간 도착 시점을 나타내기에는 적절하지 않다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 4</div>
+  <div class="question-text">___ the budget is approved, the marketing team will launch the new campaign immediately.</div>
+  <ol class="choices abc" id="en-choice-list-4">
+    <li class="selectable" id="en-4-1" onclick="selectEn(4,1)">Once</li>
+    <li class="selectable" id="en-4-2" onclick="selectEn(4,2)">Despite</li>
+    <li class="selectable" id="en-4-3" onclick="selectEn(4,3)">During</li>
+    <li class="selectable" id="en-4-4" onclick="selectEn(4,4)">Because of</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-4"></div>
+  <button class="reveal-btn" id="en-reveal-btn-4" onclick="openEnAnswer(4);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-4">
+    <div class="correct-badge">정답: (A) Once</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — Once는 접속사로 뒤에 절(the budget is approved)이 올 수 있으며, "예산이 승인되면"이라는 문맥을 자연스럽게 완성한다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — Despite는 전치사로 뒤에 명사(구)가 와야 하는데, 빈칸 뒤는 완전한 절이므로 적절하지 않다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — During도 전치사로 뒤에 절을 이끌 수 없으므로 문법적으로 맞지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — Because of 역시 전치사구로 뒤에 절이 아닌 명사(구)가 와야 하므로 적절하지 않다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 5</div>
+  <div class="question-text">Employees are encouraged to submit their expense reports ___ than the end of each month.</div>
+  <ol class="choices abc" id="en-choice-list-5">
+    <li class="selectable" id="en-5-1" onclick="selectEn(5,1)">no later</li>
+    <li class="selectable" id="en-5-2" onclick="selectEn(5,2)">no sooner</li>
+    <li class="selectable" id="en-5-3" onclick="selectEn(5,3)">no more</li>
+    <li class="selectable" id="en-5-4" onclick="selectEn(5,4)">no less</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-5"></div>
+  <button class="reveal-btn" id="en-reveal-btn-5" onclick="openEnAnswer(5);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-5">
+    <div class="correct-badge">정답: (A) no later</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — "no later than(늦어도 ~까지는)"은 마감 기한을 나타내는 관용 표현으로, 매달 말까지 제출하라는 문맥에 알맞다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — "no sooner than"은 '~보다 일찍이 아니라'는 뜻으로 기한을 나타내는 문맥과 맞지 않는다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — "no more than"은 수량의 상한(~이하)을 나타내는 표현으로 시점을 나타내는 문맥에는 적절하지 않다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — "no less than"은 수량의 하한(~이상)을 나타내는 표현으로 역시 시점을 나타내기에는 적절하지 않다.</div>
+  </div>
+</div>
+
+<h2 class="big-section">수학</h2>
+<div class="big-section-desc">순열과 조합을 이용한 경우의 수 · 고등학교 1학년 수준</div>
+
+<div class="question-box">
+  <div class="q-num">문제</div>
+  <div class="question-text">Q. 서로 다른 종류의 과일 4개(사과, 배, 귤, 포도) 중에서 3개를 골라 일렬로 나열하려고 한다. 이때 가능한 경우의 수는?</div>
+  <ol class="choices" id="math-choice-list">
+    <li class="selectable" id="math-choice-1" onclick="selectMath(1)">4</li>
+    <li class="selectable" id="math-choice-2" onclick="selectMath(2)">12</li>
+    <li class="selectable" id="math-choice-3" onclick="selectMath(3)">24</li>
+    <li class="selectable" id="math-choice-4" onclick="selectMath(4)">48</li>
+    <li class="selectable" id="math-choice-5" onclick="selectMath(5)">64</li>
+  </ol>
+
+  <div class="pick-feedback" id="math-feedback"></div>
+
+  <button class="reveal-btn" id="math-reveal-btn" onclick="openMathAnswer();">정답보기</button>
+
+  <div class="answer-area" id="math-answer-area">
+    <div class="correct-badge">정답: ③ 24</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 4는 과일 4개 중 1개만 고르는 경우의 수와 같으며, 3개를 뽑아 순서까지 배열하는 이 문제의 조건을 반영하지 못한 값이다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답</b> — 12는 ₄C₃(=4)와 3!(=6)을 곱하지 않고 잘못된 방식으로 계산했을 때 나올 수 있는 값으로, 실제 순열 계산 결과와 다르다.
+    </div>
+    <div class="explain-item correct">
+      <b>③ 정답</b> — 서로 다른 4개 중 3개를 골라 순서를 고려하여 배열하는 경우의 수는 순열 ₄P₃ = 4×3×2 = 24이다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 48은 24에 임의로 2를 곱했을 때 나오는 값으로, 중복 계산이 반영된 오류이다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 64는 4를 3번 곱한 값(4³=64)으로, 중복을 허용하여 뽑는 경우(중복순열)에 해당하며 이 문제의 조건과는 다르다.
+    </div>
+  </div>
+</div>
+
+<h2 class="big-section">일본어</h2>
+<div class="big-section-desc">고등학교 수준 회화 문장 · 해석과 함께 외워 보세요.</div>
+
+<div class="jp-box">
+  <div class="jp-sentence">すみませんが、駅までの道を教えていただけませんか。</div>
+  <div class="jp-reading">스미마센가, 에키마데노 미치오 오시에테 이타다케마센카.</div>
+  <div class="jp-meaning">해석: 죄송하지만, 역까지 가는 길을 알려 주실 수 없을까요?<br>Tip: 「教えていただけませんか」는 「教えてください」보다 더 정중한 부탁 표현으로, 처음 만난 사람이나 낯선 곳에서 길을 물을 때 자연스럽게 쓸 수 있습니다.</div>
+</div>
+
+<footer>생성일시: 2026-08-06 (로컬 타임존, KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const KR_CORRECT = 2;
+  const KR_CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let krAnswered = false;
+
+  function openKrAnswer() {
+    document.getElementById('kr-answer-area').classList.add('show');
+    document.getElementById('kr-reveal-btn').style.display = 'none';
+  }
+
+  function selectKr(n) {
+    if (krAnswered) return;
+    krAnswered = true;
+
+    const picked = document.getElementById('kr-choice-' + n);
+    const correctLi = document.getElementById('kr-choice-' + KR_CORRECT);
+    const feedback = document.getElementById('kr-feedback');
+    const isCorrect = n === KR_CORRECT;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#kr-choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${KR_CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${KR_CIRCLED[n - 1]}번이며, 정답은 ${KR_CIRCLED[KR_CORRECT - 1]}번입니다.`;
+
+    openKrAnswer();
+  }
+
+  const EN_CORRECT = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1 };
+  const EN_LETTERS = ['A', 'B', 'C', 'D'];
+  const enAnswered = {};
+
+  function openEnAnswer(q) {
+    document.getElementById('en-answer-area-' + q).classList.add('show');
+    document.getElementById('en-reveal-btn-' + q).style.display = 'none';
+  }
+
+  function selectEn(q, n) {
+    if (enAnswered[q]) return;
+    enAnswered[q] = true;
+
+    const correctIndex = EN_CORRECT[q];
+    const picked = document.getElementById('en-' + q + '-' + n);
+    const correctLi = document.getElementById('en-' + q + '-' + correctIndex);
+    const feedback = document.getElementById('en-feedback-' + q);
+    const isCorrect = n === correctIndex;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#en-choice-list-' + q + ' li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${EN_LETTERS[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${EN_LETTERS[n - 1]}번이며, 정답은 ${EN_LETTERS[correctIndex - 1]}번입니다.`;
+
+    openEnAnswer(q);
+  }
+
+  const MATH_CORRECT = 3;
+  const MATH_CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let mathAnswered = false; // 정답: ③ 24
+
+  function openMathAnswer() {
+    document.getElementById('math-answer-area').classList.add('show');
+    document.getElementById('math-reveal-btn').style.display = 'none';
+  }
+
+  function selectMath(n) {
+    if (mathAnswered) return;
+    mathAnswered = true;
+
+    const picked = document.getElementById('math-choice-' + n);
+    const correctLi = document.getElementById('math-choice-' + MATH_CORRECT);
+    const feedback = document.getElementById('math-feedback');
+    const isCorrect = n === MATH_CORRECT;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#math-choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${MATH_CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${MATH_CIRCLED[n - 1]}번이며, 정답은 ${MATH_CIRCLED[MATH_CORRECT - 1]}번입니다.`;
+
+    openMathAnswer();
+  }
+</script>
