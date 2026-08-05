@@ -1,0 +1,474 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일일 문제은행 - 2026-08-05 (국어+영어+수학+일본어/중)</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta { font-size: 14px; color: #666; margin-bottom: 28px; }
+  .meta span {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 6px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-중 { background: #fff6e0; color: #8a6d1e; }
+  h2.big-section {
+    font-weight: 800;
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-top: 44px;
+    margin-bottom: 4px;
+  }
+  .big-section-desc { font-size: 13px; color: #777; margin-bottom: 18px; }
+  h2.section {
+    font-weight: 800;
+    font-size: 18px;
+    color: #1a1a1a;
+    margin-top: 30px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p { margin: 0 0 14px 0; }
+  .passage p:last-child { margin-bottom: 0; }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 18px;
+  }
+  .q-num {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .question-text { font-weight: 700; font-size: 17px; margin-bottom: 20px; }
+  ol.choices { list-style: none; counter-reset: choice; margin: 0; padding: 0; }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li.selectable:hover { background: #eef4fa; border-color: #b9d3e6; }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #2c5f8a; color: #fff; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices.abc li::before { content: counter(choice, upper-alpha); }
+  ol.choices li.picked-correct { background: #e7f6ec; border-color: #7cc79a; }
+  ol.choices li.picked-correct::before { background: #2e8b57; }
+  ol.choices li.picked-wrong { background: #fdecec; border-color: #e39a9a; }
+  ol.choices li.picked-wrong::before { background: #c0392b; }
+  ol.choices li.reveal-correct { border-color: #7cc79a; box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset; }
+  .pick-feedback {
+    display: none; margin-top: 16px; padding: 12px 16px; border-radius: 8px;
+    font-weight: 700; font-size: 15px;
+  }
+  .pick-feedback.correct { display: block; background: #e7f6ec; color: #1e6b3e; border: 1px solid #7cc79a; }
+  .pick-feedback.wrong { display: block; background: #fdecec; color: #a02f22; border: 1px solid #e39a9a; }
+  .reveal-btn {
+    margin-top: 24px; background: #2c5f8a; color: #fff; border: none;
+    padding: 12px 22px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .reveal-btn:hover { background: #234b6e; }
+  .answer-area {
+    display: none; margin-top: 22px; padding-top: 20px; border-top: 2px dashed #d5d0c5;
+  }
+  .answer-area.show { display: block; }
+  .correct-badge {
+    display: inline-block; background: #2c5f8a; color: #fff; font-weight: 800;
+    padding: 4px 12px; border-radius: 6px; margin-bottom: 14px;
+  }
+  .explain-item { margin-bottom: 10px; padding: 10px 14px; border-radius: 8px; background: #f5f7fa; }
+  .explain-item.correct { background: #e9f1f7; border: 1px solid #b9d3e6; }
+  .explain-item b { font-weight: 700; }
+  .jp-box {
+    background: #fffdf5;
+    border: 1px solid #ecd9a0;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .jp-sentence { font-size: 20px; font-weight: 800; color: #1a1a1a; margin-bottom: 10px; }
+  .jp-reading { font-size: 14px; color: #8a5a1e; margin-bottom: 10px; }
+  .jp-meaning { font-size: 16px; color: #333; padding-top: 10px; border-top: 1px dashed #ecd9a0; }
+  footer { margin-top: 40px; font-size: 12px; color: #999; text-align: center; }
+
+  @media (max-width: 640px) {
+    body { padding: 20px 14px 60px; font-size: 15px; }
+    h1 { font-size: 21px; }
+    .meta span { font-size: 12px; padding: 2px 8px; margin-right: 6px; }
+    h2.section, h2.big-section, h2 { font-size: 16px; margin-top: 26px; }
+    .big-section-desc { font-size: 12px; }
+    .passage, .question-box, .jp-box { padding: 16px 16px; font-size: 15px; }
+    .question-text { font-size: 15.5px; }
+    ol.choices li { padding: 10px 10px 10px 36px; font-size: 14px; }
+    ol.choices li::before { width: 20px; height: 20px; font-size: 12px; left: 8px; }
+    #reveal-btn, .reveal-btn { width: 100%; padding: 12px; font-size: 14px; }
+    .correct-badge { font-size: 14px; }
+    footer { font-size: 11px; }
+  }
+</style>
+
+<h1>일일 문제은행</h1>
+<div class="meta">
+  <span>2026년 8월 5일 (수)</span>
+  <span class="diff-중">난이도: 중</span>
+  <span>국어 1문제 + 영어 5문제 + 수학 1문제 + 일본어 1문장</span>
+</div>
+
+<h2 class="big-section">국어</h2>
+<div class="big-section-desc">비문학 지문을 읽고 주제로 가장 적절한 것을 고르세요.</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+중앙은행이 기준금리를 인상하면 시중 은행들은 대출 금리를 그에 맞춰 올리게 되고, 이는 가계와 기업의 자금 조달 비용을 동시에 끌어올린다. 특히 변동금리로 대출을 받은 가계는 금리 인상의 영향을 즉각적으로 체감하게 되는데, 매달 갚아야 하는 원리금 상환액이 늘어나면서 가처분소득이 줄어들고 이는 곧 소비 여력의 축소로 이어진다.
+</p>
+<p>
+기업의 경우도 사정은 크게 다르지 않다. 설비 투자나 운영 자금을 대출에 의존하는 기업일수록 이자 비용 부담이 커지므로, 신규 투자 계획을 미루거나 축소하는 경향이 나타난다. 이러한 투자 위축은 단기적으로는 기업의 재무 건전성을 지키는 방편이 될 수 있지만, 장기적으로는 생산성 향상과 고용 창출의 기회를 놓치는 결과로 이어질 위험이 있다.
+</p>
+<p>
+한편 금리 인상은 물가 안정이라는 본래의 목적과도 맞닿아 있다. 대출 비용이 늘어나 소비와 투자가 위축되면 시중에 풀린 자금의 흐름이 둔화되고, 이는 과도한 수요로 인한 물가 상승 압력을 완화하는 효과를 가져온다. 즉 중앙은행은 금리라는 수단을 통해 경기 과열을 억제하고 물가를 안정시키려 하는 것이다.
+</p>
+<p>
+그러나 이러한 긴축 정책이 지나치게 빠르거나 급격하게 이루어지면 부작용도 만만치 않다. 특히 부채 비율이 높은 가계나 한계기업의 경우 상환 부담이 급증하면서 연쇄적인 부실로 이어질 가능성이 있으며, 이는 금융 시스템 전반의 안정성을 위협하는 요인으로 작용할 수 있다. 따라서 중앙은행은 물가 안정과 금융 안정이라는 두 가지 목표 사이에서 균형을 찾아야 하는 어려운 과제를 안고 있다.
+</p>
+<p>
+결국 기준금리 조정은 단순히 물가를 낮추기 위한 수단에 그치지 않고, 가계의 소비 여력과 기업의 투자 의욕, 나아가 금융 시스템의 안정성까지 두루 고려해야 하는 복합적인 정책 결정이다. 정책 당국이 금리 인상의 속도와 폭을 신중하게 조절해야 하는 이유가 바로 여기에 있다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 주제로 가장 적절한 것은?</div>
+  <ol class="choices" id="kr-choice-list">
+    <li class="selectable" id="kr-choice-1" onclick="selectKr(1)">기준금리를 인상하면 모든 가계와 기업이 동일한 수준의 이자 부담을 지게 되므로 금리 정책의 효과는 예측 가능하다.</li>
+    <li class="selectable" id="kr-choice-2" onclick="selectKr(2)">기준금리 인상은 물가 안정에 기여하지만 가계와 기업의 부담, 금융 시스템의 안정성까지 함께 고려해야 하는 복합적인 정책 결정이다.</li>
+    <li class="selectable" id="kr-choice-3" onclick="selectKr(3)">기준금리를 인상할수록 기업의 투자와 생산성은 항상 향상되므로 중앙은행은 금리를 지속적으로 올려야 한다.</li>
+    <li class="selectable" id="kr-choice-4" onclick="selectKr(4)">변동금리 대출을 받은 가계는 금리 인상의 영향을 전혀 받지 않으므로 소비 여력에는 변화가 없다.</li>
+    <li class="selectable" id="kr-choice-5" onclick="selectKr(5)">물가 안정과 금융 안정은 서로 무관한 목표이므로 중앙은행은 둘 중 하나만 고려하면 충분하다.</li>
+  </ol>
+
+  <div class="pick-feedback" id="kr-feedback"></div>
+
+  <button class="reveal-btn" id="kr-reveal-btn" onclick="openKrAnswer();">정답보기</button>
+
+  <div class="answer-area" id="kr-answer-area">
+    <div class="correct-badge">정답: ②</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 첫째 문단에서 변동금리 대출을 받은 가계가 금리 인상의 영향을 즉각적으로 체감한다고 설명하므로, 모든 가계와 기업이 동일한 부담을 진다는 진술은 지문과 어긋난다.
+    </div>
+    <div class="explain-item correct">
+      <b>② 정답</b> — 첫째~둘째 문단은 금리 인상이 가계와 기업에 미치는 부담을, 셋째 문단은 물가 안정 효과를, 넷째 문단은 금융 시스템 안정성에 대한 위협 가능성을 설명하며, 다섯째 문단이 이를 종합해 기준금리 조정이 복합적인 정책 결정임을 결론짓는다. 이 흐름을 요약한 것이 ②이다.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답</b> — 둘째 문단에서 이자 비용 부담으로 기업이 투자를 미루거나 축소하는 경향이 나타난다고 설명하므로, 투자와 생산성이 항상 향상된다는 진술은 지문과 반대된다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 첫째 문단에서 변동금리 대출 가계가 금리 인상의 영향을 즉각적으로 체감하며 소비 여력이 축소된다고 설명하므로, 영향을 전혀 받지 않는다는 진술은 지문 내용과 어긋난다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 넷째 문단에서 중앙은행이 물가 안정과 금융 안정이라는 두 가지 목표 사이에서 균형을 찾아야 한다고 설명하므로, 두 목표가 서로 무관하다는 진술은 지문과 반대된다.
+    </div>
+  </div>
+</div>
+
+<h2 class="big-section">영어</h2>
+<div class="big-section-desc">TOEIC Part 5 문장완성 · 빈칸에 들어갈 가장 적절한 표현을 고르세요.</div>
+
+<div class="question-box">
+  <div class="q-num">문제 1</div>
+  <div class="question-text">Despite ___ market conditions, the company managed to increase its quarterly revenue.</div>
+  <ol class="choices abc" id="en-choice-list-1">
+    <li class="selectable" id="en-1-1" onclick="selectEn(1,1)">unfavorable</li>
+    <li class="selectable" id="en-1-2" onclick="selectEn(1,2)">unfavorably</li>
+    <li class="selectable" id="en-1-3" onclick="selectEn(1,3)">unfavor</li>
+    <li class="selectable" id="en-1-4" onclick="selectEn(1,4)">unfavoring</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-1"></div>
+  <button class="reveal-btn" id="en-reveal-btn-1" onclick="openEnAnswer(1);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-1">
+    <div class="correct-badge">정답: (A) unfavorable</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — 빈칸 뒤의 명사 market conditions를 수식해야 하므로 형용사 unfavorable이 알맞다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — unfavorably는 부사로 명사를 수식할 수 없으므로 명사 앞자리에 올 수 없다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — unfavor는 동사 형태로, 명사를 수식하는 형용사 자리에 쓰일 수 없다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — unfavoring은 사전에 없는 형태로 문법적으로 성립하지 않는다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 2</div>
+  <div class="question-text">The manager insisted that the report ___ before Friday.</div>
+  <ol class="choices abc" id="en-choice-list-2">
+    <li class="selectable" id="en-2-1" onclick="selectEn(2,1)">is submitted</li>
+    <li class="selectable" id="en-2-2" onclick="selectEn(2,2)">submitted</li>
+    <li class="selectable" id="en-2-3" onclick="selectEn(2,3)">be submitted</li>
+    <li class="selectable" id="en-2-4" onclick="selectEn(2,4)">will be submitted</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-2"></div>
+  <button class="reveal-btn" id="en-reveal-btn-2" onclick="openEnAnswer(2);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-2">
+    <div class="correct-badge">정답: (C) be submitted</div>
+    <div class="explain-item"><b>(A) 오답</b> — insist처럼 요구·주장을 나타내는 동사가 이끄는 that절에서는 동사원형을 써야 하므로 is submitted는 적절하지 않다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — submitted(과거형)는 요구를 나타내는 that절의 동사원형 규칙에 맞지 않는다.</div>
+    <div class="explain-item correct"><b>(C) 정답</b> — insist that절에서는 should가 생략된 형태로 동사원형이 오는 것이 원칙이며, report가 제출되는 대상이므로 수동형 동사원형 be submitted가 알맞다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — will be submitted는 조동사가 포함된 형태로, insist that절에서 요구되는 동사원형 자리에 쓸 수 없다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 3</div>
+  <div class="question-text">The flight was delayed ___ the severe weather conditions in the region.</div>
+  <ol class="choices abc" id="en-choice-list-3">
+    <li class="selectable" id="en-3-1" onclick="selectEn(3,1)">because</li>
+    <li class="selectable" id="en-3-2" onclick="selectEn(3,2)">because of</li>
+    <li class="selectable" id="en-3-3" onclick="selectEn(3,3)">due to the fact</li>
+    <li class="selectable" id="en-3-4" onclick="selectEn(3,4)">owing</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-3"></div>
+  <button class="reveal-btn" id="en-reveal-btn-3" onclick="openEnAnswer(3);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-3">
+    <div class="correct-badge">정답: (B) because of</div>
+    <div class="explain-item"><b>(A) 오답</b> — because는 접속사로 뒤에 절이 와야 하는데, 빈칸 뒤는 명사구(the severe weather conditions)이므로 적절하지 않다.</div>
+    <div class="explain-item correct"><b>(B) 정답</b> — because of는 전치사구로 뒤에 명사구가 오는 구조에 알맞으며, "악천후 때문에 항공편이 지연되었다"는 문맥을 자연스럽게 완성한다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — due to the fact는 뒤에 that절이 이어져야 완전한 표현(due to the fact that)이 되므로, 명사구 앞에 단독으로 쓸 수 없다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — owing은 단독으로 전치사 역할을 하지 못하며 owing to의 형태로 써야 하므로 적절하지 않다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 4</div>
+  <div class="question-text">The employee ___ proposal was selected will present it at the annual meeting.</div>
+  <ol class="choices abc" id="en-choice-list-4">
+    <li class="selectable" id="en-4-1" onclick="selectEn(4,1)">who</li>
+    <li class="selectable" id="en-4-2" onclick="selectEn(4,2)">whose</li>
+    <li class="selectable" id="en-4-3" onclick="selectEn(4,3)">which</li>
+    <li class="selectable" id="en-4-4" onclick="selectEn(4,4)">whom</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-4"></div>
+  <button class="reveal-btn" id="en-reveal-btn-4" onclick="openEnAnswer(4);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-4">
+    <div class="correct-badge">정답: (B) whose</div>
+    <div class="explain-item"><b>(A) 오답</b> — who는 뒤에 주어가 없는 불완전한 절이 와야 하는데, 빈칸 뒤에는 이미 명사 proposal이 있으므로 적절하지 않다.</div>
+    <div class="explain-item correct"><b>(B) 정답</b> — whose는 소유격 관계대명사로 뒤에 명사(proposal)가 이어질 수 있으며, "제안서가 선정된 직원"이라는 소유 관계를 자연스럽게 나타낸다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — which는 사람을 선행사로 받을 수 없으므로 employee를 수식하는 관계대명사로 적절하지 않다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — whom은 목적격 관계대명사로 뒤에 목적어가 없는 절이 와야 하는데, 빈칸 뒤 구조와 맞지 않는다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 5</div>
+  <div class="question-text">The new packaging design is ___ more cost-effective than the previous version.</div>
+  <ol class="choices abc" id="en-choice-list-5">
+    <li class="selectable" id="en-5-1" onclick="selectEn(5,1)">very</li>
+    <li class="selectable" id="en-5-2" onclick="selectEn(5,2)">much</li>
+    <li class="selectable" id="en-5-3" onclick="selectEn(5,3)">so</li>
+    <li class="selectable" id="en-5-4" onclick="selectEn(5,4)">too</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-5"></div>
+  <button class="reveal-btn" id="en-reveal-btn-5" onclick="openEnAnswer(5);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-5">
+    <div class="correct-badge">정답: (B) much</div>
+    <div class="explain-item"><b>(A) 오답</b> — very는 원급 형용사·부사를 강조할 때 쓰이며 비교급 more cost-effective 앞에는 쓸 수 없다.</div>
+    <div class="explain-item correct"><b>(B) 정답</b> — much는 비교급을 강조하는 부사로 "much more + 형용사" 형태로 쓰여 "훨씬 더 ~한"이라는 의미를 자연스럽게 나타낸다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — so는 원급 형용사·부사를 강조하며 뒤에 that절이 이어지는 구조로 주로 쓰이므로, 비교급 앞에는 적절하지 않다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — too 역시 원급 형용사·부사를 강조하는 표현으로 비교급 more 앞에 쓰이지 않는다.</div>
+  </div>
+</div>
+
+<h2 class="big-section">수학</h2>
+<div class="big-section-desc">순열과 조합을 이용한 경우의 수 · 고등학교 1학년 수준</div>
+
+<div class="question-box">
+  <div class="q-num">문제</div>
+  <div class="question-text">Q. 서로 다른 소설책 5권과 서로 다른 시집 3권이 있다. 이 중에서 소설책 2권과 시집 2권을 각각 골라 총 4권을 책꽂이에 일렬로 꽂으려고 한다. 이때 가능한 경우의 수는?</div>
+  <ol class="choices" id="math-choice-list">
+    <li class="selectable" id="math-choice-1" onclick="selectMath(1)">30</li>
+    <li class="selectable" id="math-choice-2" onclick="selectMath(2)">60</li>
+    <li class="selectable" id="math-choice-3" onclick="selectMath(3)">180</li>
+    <li class="selectable" id="math-choice-4" onclick="selectMath(4)">720</li>
+    <li class="selectable" id="math-choice-5" onclick="selectMath(5)">1440</li>
+  </ol>
+
+  <div class="pick-feedback" id="math-feedback"></div>
+
+  <button class="reveal-btn" id="math-reveal-btn" onclick="openMathAnswer();">정답보기</button>
+
+  <div class="answer-area" id="math-answer-area">
+    <div class="correct-badge">정답: ④ 720</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 30은 소설책 2권을 고르는 경우의 수(₅C₂=10)와 시집 2권을 고르는 경우의 수(₃C₂=3)를 곱한 값(10×3=30)으로, 고른 4권을 일렬로 배열하는 과정이 반영되지 않은 값이다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답</b> — 60은 계산 과정에서 배열 경우의 수를 절반만 반영했을 때 나올 수 있는 값으로, 실제 순열 계산 결과와 일치하지 않는다.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답</b> — 180은 4권을 배열할 때 4!(=24) 대신 3!(=6)을 잘못 적용했을 때 나오는 값(10×3×6=180)으로, 배열해야 할 책의 권수를 잘못 계산한 오류이다.
+    </div>
+    <div class="explain-item correct">
+      <b>④ 정답</b> — 먼저 소설책 5권 중 2권을 고르는 경우의 수는 ₅C₂=10, 시집 3권 중 2권을 고르는 경우의 수는 ₃C₂=3이다. 이렇게 고른 서로 다른 4권을 책꽂이에 일렬로 꽂는 경우의 수는 4!=24이므로, 전체 경우의 수는 10×3×24=720이다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 1440은 720에 불필요한 배수(예: 2)를 추가로 곱했을 때 나올 수 있는 값으로, 중복 계산이 반영된 오류이다.
+    </div>
+  </div>
+</div>
+
+<h2 class="big-section">일본어</h2>
+<div class="big-section-desc">고등학교 수준 회화 문장 · 해석과 함께 외워 보세요.</div>
+
+<div class="jp-box">
+  <div class="jp-sentence">もしよろしければ、後で私にご連絡いただけますか。</div>
+  <div class="jp-reading">모시 요로시케레바, 아토데 와타시니 고렌라쿠 이타다케마스카.</div>
+  <div class="jp-meaning">해석: 혹시 괜찮으시다면, 나중에 저에게 연락해 주실 수 있나요?<br>Tip: 「ご+명사+いただく」는 상대방에게 정중히 부탁할 때 쓰는 겸양 표현으로, 「もしよろしければ」와 함께 쓰면 부드럽고 공손한 부탁 문장이 됩니다.</div>
+</div>
+
+<footer>생성일시: 2026-08-05 (로컬 타임존, KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const KR_CORRECT = 2;
+  const KR_CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let krAnswered = false;
+
+  function openKrAnswer() {
+    document.getElementById('kr-answer-area').classList.add('show');
+    document.getElementById('kr-reveal-btn').style.display = 'none';
+  }
+
+  function selectKr(n) {
+    if (krAnswered) return;
+    krAnswered = true;
+
+    const picked = document.getElementById('kr-choice-' + n);
+    const correctLi = document.getElementById('kr-choice-' + KR_CORRECT);
+    const feedback = document.getElementById('kr-feedback');
+    const isCorrect = n === KR_CORRECT;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#kr-choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${KR_CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${KR_CIRCLED[n - 1]}번이며, 정답은 ${KR_CIRCLED[KR_CORRECT - 1]}번입니다.`;
+
+    openKrAnswer();
+  }
+
+  const EN_CORRECT = { 1: 1, 2: 3, 3: 2, 4: 2, 5: 2 };
+  const EN_LETTERS = ['A', 'B', 'C', 'D'];
+  const enAnswered = {};
+
+  function openEnAnswer(q) {
+    document.getElementById('en-answer-area-' + q).classList.add('show');
+    document.getElementById('en-reveal-btn-' + q).style.display = 'none';
+  }
+
+  function selectEn(q, n) {
+    if (enAnswered[q]) return;
+    enAnswered[q] = true;
+
+    const correctIndex = EN_CORRECT[q];
+    const picked = document.getElementById('en-' + q + '-' + n);
+    const correctLi = document.getElementById('en-' + q + '-' + correctIndex);
+    const feedback = document.getElementById('en-feedback-' + q);
+    const isCorrect = n === correctIndex;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#en-choice-list-' + q + ' li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${EN_LETTERS[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${EN_LETTERS[n - 1]}번이며, 정답은 ${EN_LETTERS[correctIndex - 1]}번입니다.`;
+
+    openEnAnswer(q);
+  }
+
+  const MATH_CORRECT = 4;
+  const MATH_CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let mathAnswered = false; // 정답: ④ 720
+
+  function openMathAnswer() {
+    document.getElementById('math-answer-area').classList.add('show');
+    document.getElementById('math-reveal-btn').style.display = 'none';
+  }
+
+  function selectMath(n) {
+    if (mathAnswered) return;
+    mathAnswered = true;
+
+    const picked = document.getElementById('math-choice-' + n);
+    const correctLi = document.getElementById('math-choice-' + MATH_CORRECT);
+    const feedback = document.getElementById('math-feedback');
+    const isCorrect = n === MATH_CORRECT;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#math-choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${MATH_CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${MATH_CIRCLED[n - 1]}번이며, 정답은 ${MATH_CIRCLED[MATH_CORRECT - 1]}번입니다.`;
+
+    openMathAnswer();
+  }
+</script>
