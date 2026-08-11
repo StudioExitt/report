@@ -1,0 +1,476 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일일 문제은행 - 2026-08-12 (국어+영어+수학+일본어/상)</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    background-color: #f7f5f0;
+    color: #222;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    line-height: 1.8;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 26px;
+    color: #1a1a1a;
+    border-bottom: 4px solid #2c5f8a;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .meta { font-size: 14px; color: #666; margin-bottom: 28px; }
+  .meta span {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 6px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: #eef2f6;
+    color: #2c5f8a;
+    font-weight: 700;
+  }
+  .meta span.diff-상 { background: #fdeceb; color: #b23a2e; }
+  h2.big-section {
+    font-weight: 800;
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-top: 44px;
+    margin-bottom: 4px;
+  }
+  .big-section-desc { font-size: 13px; color: #777; margin-bottom: 18px; }
+  h2.section {
+    font-weight: 800;
+    font-size: 18px;
+    color: #1a1a1a;
+    margin-top: 30px;
+    margin-bottom: 14px;
+    padding-left: 10px;
+    border-left: 6px solid #2c5f8a;
+  }
+  .passage {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+  .passage p { margin: 0 0 14px 0; }
+  .passage p:last-child { margin-bottom: 0; }
+  .question-box {
+    background: #ffffff;
+    border: 1px solid #e0ddd5;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 18px;
+  }
+  .q-num {
+    display: inline-block;
+    background: #2c5f8a;
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .question-text { font-weight: 700; font-size: 17px; margin-bottom: 20px; }
+  ol.choices { list-style: none; counter-reset: choice; margin: 0; padding: 0; }
+  ol.choices li {
+    counter-increment: choice;
+    padding: 12px 14px 12px 42px;
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  ol.choices li.selectable:hover { background: #eef4fa; border-color: #b9d3e6; }
+  ol.choices li::before {
+    content: counter(choice);
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #2c5f8a; color: #fff; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.choices.abc li::before { content: counter(choice, upper-alpha); }
+  ol.choices li.picked-correct { background: #e7f6ec; border-color: #7cc79a; }
+  ol.choices li.picked-correct::before { background: #2e8b57; }
+  ol.choices li.picked-wrong { background: #fdecec; border-color: #e39a9a; }
+  ol.choices li.picked-wrong::before { background: #c0392b; }
+  ol.choices li.reveal-correct { border-color: #7cc79a; box-shadow: 0 0 0 2px rgba(124, 199, 154, 0.4) inset; }
+  .pick-feedback {
+    display: none; margin-top: 16px; padding: 12px 16px; border-radius: 8px;
+    font-weight: 700; font-size: 15px;
+  }
+  .pick-feedback.correct { display: block; background: #e7f6ec; color: #1e6b3e; border: 1px solid #7cc79a; }
+  .pick-feedback.wrong { display: block; background: #fdecec; color: #a02f22; border: 1px solid #e39a9a; }
+  .reveal-btn {
+    margin-top: 24px; background: #2c5f8a; color: #fff; border: none;
+    padding: 12px 22px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .reveal-btn:hover { background: #234b6e; }
+  .answer-area {
+    display: none; margin-top: 22px; padding-top: 20px; border-top: 2px dashed #d5d0c5;
+  }
+  .answer-area.show { display: block; }
+  .correct-badge {
+    display: inline-block; background: #2c5f8a; color: #fff; font-weight: 800;
+    padding: 4px 12px; border-radius: 6px; margin-bottom: 14px;
+  }
+  .explain-item { margin-bottom: 10px; padding: 10px 14px; border-radius: 8px; background: #f5f7fa; }
+  .explain-item.correct { background: #e9f1f7; border: 1px solid #b9d3e6; }
+  .explain-item b { font-weight: 700; }
+  .jp-box {
+    background: #fffdf5;
+    border: 1px solid #ecd9a0;
+    border-radius: 10px;
+    padding: 24px 28px;
+  }
+  .jp-sentence { font-size: 20px; font-weight: 800; color: #1a1a1a; margin-bottom: 8px; }
+  .jp-kana { font-size: 15px; color: #5a6b7a; margin-bottom: 6px; }
+  .jp-reading { font-size: 14px; color: #8a5a1e; margin-bottom: 10px; }
+  .jp-meaning { font-size: 16px; color: #333; padding-top: 10px; border-top: 1px dashed #ecd9a0; }
+  footer { margin-top: 40px; font-size: 12px; color: #999; text-align: center; }
+
+  @media (max-width: 640px) {
+    body { padding: 20px 14px 60px; font-size: 15px; }
+    h1 { font-size: 21px; }
+    .meta span { font-size: 12px; padding: 2px 8px; margin-right: 6px; }
+    h2.section, h2.big-section, h2 { font-size: 16px; margin-top: 26px; }
+    .big-section-desc { font-size: 12px; }
+    .passage, .question-box, .jp-box { padding: 16px 16px; font-size: 15px; }
+    .question-text { font-size: 15.5px; }
+    ol.choices li { padding: 10px 10px 10px 36px; font-size: 14px; }
+    ol.choices li::before { width: 20px; height: 20px; font-size: 12px; left: 8px; }
+    #reveal-btn, .reveal-btn { width: 100%; padding: 12px; font-size: 14px; }
+    .correct-badge { font-size: 14px; }
+    footer { font-size: 11px; }
+  }
+</style>
+
+<h1>일일 문제은행</h1>
+<div class="meta">
+  <span>2026년 8월 12일 (수)</span>
+  <span class="diff-상">난이도: 상</span>
+  <span>국어 1문제 + 영어 5문제 + 수학 1문제 + 일본어 1문장</span>
+</div>
+
+<h2 class="big-section">국어</h2>
+<div class="big-section-desc">경제·경영·금융·경기동향 지문을 읽고 내용과 일치하지 않는 것을 고르세요.</div>
+
+<h2 class="section">지문</h2>
+<div class="passage">
+<p>
+채권 투자자에게 금리 변동은 곧 자산 가치의 변동을 의미한다. 채권 가격과 시장금리는 반대 방향으로 움직이는데, 이는 채권이 만기까지 지급하기로 약정된 미래 현금흐름(이자와 원금)을 현재 시점의 할인율, 즉 시장금리로 할인하여 가격이 결정되기 때문이다. 시장금리가 상승하면 동일한 미래 현금흐름의 현재가치가 작아지므로 채권 가격은 하락하고, 반대로 시장금리가 하락하면 채권 가격은 상승한다.
+</p>
+<p>
+이때 채권 가격이 금리 변화에 얼마나 민감하게 반응하는지를 나타내는 지표가 듀레이션(duration)이다. 듀레이션은 채권에서 발생하는 각 현금흐름의 현재가치를 가중치로 하여 계산한 평균 회수 기간으로, 단위는 연(年)으로 표시된다. 일반적으로 만기가 길수록, 표면금리(쿠폰금리)가 낮을수록 듀레이션은 커지는 경향이 있다. 표면금리가 낮은 채권은 현금흐름이 상대적으로 만기 시점에 집중되어 있어 평균 회수 기간이 길어지기 때문이다.
+</p>
+<p>
+듀레이션이 큰 채권일수록 금리 변화에 따른 가격 변동폭이 커진다. 예를 들어 듀레이션이 5인 채권은 시장금리가 1퍼센트포인트 상승할 때 가격이 약 5퍼센트 하락하는 반면, 듀레이션이 10인 채권은 같은 금리 변화에 대해 약 10퍼센트 하락한다. 이 때문에 향후 금리 상승이 예상되는 국면에서는 투자자들이 듀레이션이 짧은 채권으로 포트폴리오를 재조정하여 가격 하락 위험을 줄이려 하는 경향을 보인다.
+</p>
+<p>
+다만 듀레이션은 금리와 채권 가격 사이의 관계를 선형으로 근사한 지표이기 때문에 금리 변동폭이 클 경우에는 실제 가격 변동을 정확히 예측하지 못하는 한계가 있다. 실제 채권 가격과 금리의 관계는 아래로 볼록한 곡선 형태를 띠는데, 이러한 곡률을 컨벡시티(convexity)라고 한다. 컨벡시티가 큰 채권은 금리가 하락할 때는 듀레이션만으로 추정한 것보다 가격이 더 크게 상승하고, 금리가 상승할 때는 듀레이션만으로 추정한 것보다 가격이 덜 하락하는 특성을 지녀 투자자에게 상대적으로 유리하게 작용한다.
+</p>
+<p>
+이러한 이유로 채권 포트폴리오를 운용하는 기관투자자들은 듀레이션과 컨벡시티를 함께 고려하여 금리 변동에 따른 위험을 관리한다. 특히 부채의 만기 구조와 자산인 채권의 듀레이션을 일치시켜 금리 변동이 순자산가치에 미치는 영향을 최소화하는 면역전략(immunization strategy)은 연기금이나 보험사와 같이 장기 부채를 보유한 기관에서 널리 활용되고 있다.
+</p>
+</div>
+
+<h2 class="section">문제</h2>
+<div class="question-box">
+  <div class="question-text">Q. 윗글의 내용과 일치하지 않는 것은?</div>
+  <ol class="choices" id="kr-choice-list">
+    <li class="selectable" id="kr-choice-1" onclick="selectKr(1)">채권 가격은 미래 현금흐름을 시장금리로 할인하여 결정되므로, 시장금리가 상승하면 채권 가격은 하락한다.</li>
+    <li class="selectable" id="kr-choice-2" onclick="selectKr(2)">표면금리가 낮은 채권은 현금흐름이 만기 시점에 상대적으로 더 집중되어 있어 듀레이션이 커지는 경향이 있다.</li>
+    <li class="selectable" id="kr-choice-3" onclick="selectKr(3)">듀레이션이 큰 채권일수록 동일한 금리 변화에 대해 가격 변동폭이 더 커진다.</li>
+    <li class="selectable" id="kr-choice-4" onclick="selectKr(4)">컨벡시티가 큰 채권은 금리가 상승할 때 듀레이션만으로 추정한 것보다 가격이 더 크게 하락한다.</li>
+    <li class="selectable" id="kr-choice-5" onclick="selectKr(5)">연기금이나 보험사는 부채의 만기 구조와 자산의 듀레이션을 일치시키는 면역전략을 활용하기도 한다.</li>
+  </ol>
+
+  <div class="pick-feedback" id="kr-feedback"></div>
+
+  <button class="reveal-btn" id="kr-reveal-btn" onclick="openKrAnswer();">정답보기</button>
+
+  <div class="answer-area" id="kr-answer-area">
+    <div class="correct-badge">정답: ④</div>
+    <div class="explain-item">
+      <b>① 오답(일치)</b> — 첫째 문단에서 시장금리가 상승하면 미래 현금흐름의 현재가치가 작아져 채권 가격이 하락한다고 설명하므로 지문과 일치한다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답(일치)</b> — 둘째 문단에서 표면금리가 낮은 채권은 현금흐름이 만기 시점에 집중되어 평균 회수 기간(듀레이션)이 길어진다고 설명하므로 지문과 일치한다.
+    </div>
+    <div class="explain-item">
+      <b>③ 오답(일치)</b> — 셋째 문단에서 듀레이션이 큰 채권일수록 금리 변화에 따른 가격 변동폭이 커진다고 설명하며 듀레이션 5와 10의 예시를 제시하므로 지문과 일치한다.
+    </div>
+    <div class="explain-item correct">
+      <b>④ 정답(불일치)</b> — 넷째 문단에서 컨벡시티가 큰 채권은 금리가 상승할 때 '듀레이션만으로 추정한 것보다 가격이 덜 하락한다'고 설명한다. 이를 '더 크게 하락한다'고 서술한 것은 지문의 내용과 정반대이므로 정답이다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답(일치)</b> — 다섯째 문단에서 연기금이나 보험사와 같이 장기 부채를 보유한 기관이 면역전략을 널리 활용하고 있다고 설명하므로 지문과 일치한다.
+    </div>
+  </div>
+</div>
+
+<h2 class="big-section">영어</h2>
+<div class="big-section-desc">TOEIC Part 5 문장완성 · 빈칸에 들어갈 가장 적절한 표현을 고르세요.</div>
+
+<div class="question-box">
+  <div class="q-num">문제 1</div>
+  <div class="question-text">Employees are required to submit their expense reports ___ the end of each month.</div>
+  <ol class="choices abc" id="en-choice-list-1">
+    <li class="selectable" id="en-1-1" onclick="selectEn(1,1)">by</li>
+    <li class="selectable" id="en-1-2" onclick="selectEn(1,2)">until</li>
+    <li class="selectable" id="en-1-3" onclick="selectEn(1,3)">since</li>
+    <li class="selectable" id="en-1-4" onclick="selectEn(1,4)">for</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-1"></div>
+  <button class="reveal-btn" id="en-reveal-btn-1" onclick="openEnAnswer(1);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-1">
+    <div class="correct-badge">정답: (A) by</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — by는 '~까지는(완료 기한)'이라는 뜻으로, 매달 말까지 제출을 완료해야 한다는 마감 시한을 나타내는 문맥에 정확히 들어맞는다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — until은 '~까지 계속'이라는 뜻으로 동작이나 상태의 지속을 나타내므로, 제출이라는 일회성 완료 동작을 나타내는 문맥과 맞지 않는다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — since는 과거의 시작 시점을 나타내는 전치사로 현재완료 시제와 함께 쓰이며, 미래의 마감 기한을 나타내는 이 문맥과는 어울리지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — for는 기간의 길이를 나타낼 때 쓰이는 전치사로, 특정 마감 시점을 나타내는 이 문맥에는 적합하지 않다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 2</div>
+  <div class="question-text">The manager assigned the project to Sarah, ___ has over ten years of experience in logistics.</div>
+  <ol class="choices abc" id="en-choice-list-2">
+    <li class="selectable" id="en-2-1" onclick="selectEn(2,1)">which</li>
+    <li class="selectable" id="en-2-2" onclick="selectEn(2,2)">who</li>
+    <li class="selectable" id="en-2-3" onclick="selectEn(2,3)">whom</li>
+    <li class="selectable" id="en-2-4" onclick="selectEn(2,4)">whose</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-2"></div>
+  <button class="reveal-btn" id="en-reveal-btn-2" onclick="openEnAnswer(2);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-2">
+    <div class="correct-badge">정답: (B) who</div>
+    <div class="explain-item"><b>(A) 오답</b> — which는 사물을 선행사로 받는 관계대명사이므로 사람인 Sarah를 받을 수 없다.</div>
+    <div class="explain-item correct"><b>(B) 정답</b> — 선행사 Sarah는 사람이고 콤마 뒤에서 주어 역할을 하며 동사 has로 이어지므로 주격 관계대명사 who가 알맞다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — whom은 사람을 받는 목적격 관계대명사인데, 빈칸 뒤에 동사 has가 바로 이어지므로 주어 자리가 필요한 이 문맥에는 맞지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — whose는 소유격 관계대명사로 뒤에 명사가 와야 하는데, 빈칸 뒤에는 명사 없이 동사 has가 바로 이어지므로 맞지 않는다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 3</div>
+  <div class="question-text">The new policy ___ across all branches starting next Monday.</div>
+  <ol class="choices abc" id="en-choice-list-3">
+    <li class="selectable" id="en-3-1" onclick="selectEn(3,1)">will implement</li>
+    <li class="selectable" id="en-3-2" onclick="selectEn(3,2)">implementing</li>
+    <li class="selectable" id="en-3-3" onclick="selectEn(3,3)">will be implemented</li>
+    <li class="selectable" id="en-3-4" onclick="selectEn(3,4)">has implemented</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-3"></div>
+  <button class="reveal-btn" id="en-reveal-btn-3" onclick="openEnAnswer(3);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-3">
+    <div class="correct-badge">정답: (C) will be implemented</div>
+    <div class="explain-item"><b>(A) 오답</b> — will implement은 능동태로, 주어인 the new policy가 시행 '되는' 대상이므로 능동태가 아닌 수동태가 필요하다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — implementing은 분사형으로 문장의 본동사 자리에 단독으로 올 수 없다.</div>
+    <div class="explain-item correct"><b>(C) 정답</b> — 정책(the new policy)은 시행'되는' 대상이므로 수동태가 필요하며, starting next Monday로 보아 미래 시제이므로 will be implemented가 알맞다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — has implemented는 능동태 현재완료로, 정책이 무언가를 시행하는 주체가 되어 문맥상 의미가 맞지 않는다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 4</div>
+  <div class="question-text">The presentation was ___ informative that the audience asked for a copy of the slides.</div>
+  <ol class="choices abc" id="en-choice-list-4">
+    <li class="selectable" id="en-4-1" onclick="selectEn(4,1)">so</li>
+    <li class="selectable" id="en-4-2" onclick="selectEn(4,2)">such</li>
+    <li class="selectable" id="en-4-3" onclick="selectEn(4,3)">too</li>
+    <li class="selectable" id="en-4-4" onclick="selectEn(4,4)">very</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-4"></div>
+  <button class="reveal-btn" id="en-reveal-btn-4" onclick="openEnAnswer(4);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-4">
+    <div class="correct-badge">정답: (A) so</div>
+    <div class="explain-item correct"><b>(A) 정답</b> — "so + 형용사 + that절" 구문은 '너무 ~해서 …하다'라는 결과를 나타내며, 뒤에 형용사 informative가 바로 이어지므로 so가 알맞다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — such는 "such + (a/an) + 형용사 + 명사 + that절" 구조로 쓰이는데, 뒤에 명사 없이 형용사 informative만 있으므로 문법상 맞지 않는다.</div>
+    <div class="explain-item"><b>(C) 오답</b> — too는 "too + 형용사 + to부정사" 구조로 쓰이며, that절과 함께 결과를 나타내는 구문에는 쓰이지 않는다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — very는 형용사를 단순히 강조하는 부사로, that절과 연결되어 결과를 나타내는 구문을 만들 수 없다.</div>
+  </div>
+</div>
+
+<div class="question-box">
+  <div class="q-num">문제 5</div>
+  <div class="question-text">If the shipment ___ on time, we would not have lost the client.</div>
+  <ol class="choices abc" id="en-choice-list-5">
+    <li class="selectable" id="en-5-1" onclick="selectEn(5,1)">arrives</li>
+    <li class="selectable" id="en-5-2" onclick="selectEn(5,2)">arrived</li>
+    <li class="selectable" id="en-5-3" onclick="selectEn(5,3)">had arrived</li>
+    <li class="selectable" id="en-5-4" onclick="selectEn(5,4)">would arrive</li>
+  </ol>
+  <div class="pick-feedback" id="en-feedback-5"></div>
+  <button class="reveal-btn" id="en-reveal-btn-5" onclick="openEnAnswer(5);">정답보기</button>
+  <div class="answer-area" id="en-answer-area-5">
+    <div class="correct-badge">정답: (C) had arrived</div>
+    <div class="explain-item"><b>(A) 오답</b> — arrives는 현재시제로, 과거 사실의 반대를 가정하는 가정법 과거완료 문맥과 맞지 않는다.</div>
+    <div class="explain-item"><b>(B) 오답</b> — arrived는 가정법 과거(현재 사실의 반대)에 쓰이는 형태로, 주절의 "would not have lost"(과거완료 결과)와 시제가 맞지 않는다.</div>
+    <div class="explain-item correct"><b>(C) 정답</b> — 주절에 "would not have lost"라는 가정법 과거완료 형태가 쓰였으므로, if절에도 과거완료형인 had arrived가 와야 과거 사실의 반대를 가정하는 문장이 성립한다.</div>
+    <div class="explain-item"><b>(D) 오답</b> — would arrive는 가정법 과거의 주절에 쓰이는 형태로, if절 자리에는 올 수 없다.</div>
+  </div>
+</div>
+
+<h2 class="big-section">수학</h2>
+<div class="big-section-desc">순열과 조합을 이용한 경우의 수 · 고등학교 1학년 수준 (난이도: 최상)</div>
+
+<div class="question-box">
+  <div class="q-num">문제</div>
+  <div class="question-text">Q. 1부터 7까지의 자연수 중에서 서로 다른 5개를 택하여 일렬로 나열하여 5자리 자연수를 만들 때, 이 자연수가 3의 배수이면서 동시에 짝수인 경우의 수는?</div>
+  <ol class="choices" id="math-choice-list">
+    <li class="selectable" id="math-choice-1" onclick="selectMath(1)">300</li>
+    <li class="selectable" id="math-choice-2" onclick="selectMath(2)">330</li>
+    <li class="selectable" id="math-choice-3" onclick="selectMath(3)">360</li>
+    <li class="selectable" id="math-choice-4" onclick="selectMath(4)">390</li>
+    <li class="selectable" id="math-choice-5" onclick="selectMath(5)">420</li>
+  </ol>
+
+  <div class="pick-feedback" id="math-feedback"></div>
+
+  <button class="reveal-btn" id="math-reveal-btn" onclick="openMathAnswer();">정답보기</button>
+
+  <div class="answer-area" id="math-answer-area">
+    <div class="correct-badge">정답: ③ 360</div>
+    <div class="explain-item">
+      <b>① 오답</b> — 300은 3의 배수 조건을 만족하는 숫자 5개의 조합 중 짝수 개수를 세는 과정에서 일부 경우를 누락했을 때 나올 수 있는 값이다.
+    </div>
+    <div class="explain-item">
+      <b>② 오답</b> — 330은 짝수 자리에 올 수 있는 숫자의 개수를 일부 조합에서 잘못 세었을 때 나올 수 있는 값이다.
+    </div>
+    <div class="explain-item correct">
+      <b>③ 정답</b> — 1부터 7까지의 합은 28이다. 5개를 택해 만든 수가 3의 배수가 되려면 택한 5개의 합이 3의 배수여야 하므로, 제외한 2개 숫자의 합 r이 28 − r ≡ 0 (mod 3), 즉 r ≡ 1 (mod 3)을 만족해야 한다. 1~7을 3으로 나눈 나머지로 분류하면 나머지 0: {3,6}, 나머지 1: {1,4,7}, 나머지 2: {2,5}이다. 두 수의 합이 나머지 1이 되는 조합은 (나머지0, 나머지1) 조합 2×3=6가지와 (나머지2, 나머지2) 조합 1가지로 총 7가지이다. 이 7가지 경우 각각에 대해 남은 5개 숫자 중 짝수(2,4,6)의 개수를 세어보면 순서대로 3,2,3,2,1,2,2개이며, 합은 15개이다. 각 경우에서 5자리 수가 짝수가 되는 경우의 수는 (남은 짝수 개수)×4!이므로, 전체 경우의 수는 15×24 = 360이다.
+    </div>
+    <div class="explain-item">
+      <b>④ 오답</b> — 390은 짝수 개수 합계를 계산할 때 특정 조합에서 짝수 개수를 실제보다 많이 센 경우 나올 수 있는 값이다.
+    </div>
+    <div class="explain-item">
+      <b>⑤ 오답</b> — 420은 3의 배수 조건은 고려하지 않고 단순히 짝수 5자리 수의 경우의 수 전체를 구했을 때 나올 수 있는 값에 가깝다.
+    </div>
+  </div>
+</div>
+
+<h2 class="big-section">일본어</h2>
+<div class="big-section-desc">고등학교 1학년 2학기 수준 회화 문장 · 해석과 함께 외워 보세요.</div>
+
+<div class="jp-box">
+  <div class="jp-sentence">明日は雨が降るかもしれないので、傘を持って行った方がいいですよ。</div>
+  <div class="jp-kana">明日(あした)は 雨(あめ)が 降(ふ)るかもしれないので、傘(かさ)を 持(も)って 行(い)った方(ほう)がいいですよ。</div>
+  <div class="jp-reading">아시타와 아메가 후루카모시레나이노데, 카사오 못테 잇타 호-가 이-데스요.</div>
+  <div class="jp-meaning">해석: 내일은 비가 올지도 모르니까, 우산을 가지고 가는 편이 좋겠어요.<br>Tip: 「〜かもしれない」는 '~일지도 모른다'라는 뜻으로 확신이 없는 추측을 나타내는 표현입니다. 「동사 た형 + 方がいいです」는 '~하는 편이 좋다'는 뜻으로 상대방에게 조언이나 권유를 할 때 사용하며, 이 문장에서는 「行く」의 た형인 「行った」가 쓰였습니다.</div>
+</div>
+
+<footer>생성일시: 2026-08-12 (로컬 타임존, KST) · 문제은행 자동 생성</footer>
+
+<script>
+  const KR_CORRECT = 4;
+  const KR_CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let krAnswered = false;
+
+  function openKrAnswer() {
+    document.getElementById('kr-answer-area').classList.add('show');
+    document.getElementById('kr-reveal-btn').style.display = 'none';
+  }
+
+  function selectKr(n) {
+    if (krAnswered) return;
+    krAnswered = true;
+
+    const picked = document.getElementById('kr-choice-' + n);
+    const correctLi = document.getElementById('kr-choice-' + KR_CORRECT);
+    const feedback = document.getElementById('kr-feedback');
+    const isCorrect = n === KR_CORRECT;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#kr-choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${KR_CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${KR_CIRCLED[n - 1]}번이며, 정답은 ${KR_CIRCLED[KR_CORRECT - 1]}번입니다.`;
+
+    openKrAnswer();
+  }
+
+  const EN_CORRECT = { 1: 1, 2: 2, 3: 3, 4: 1, 5: 3 };
+  const EN_LETTERS = ['A', 'B', 'C', 'D'];
+  const enAnswered = {};
+
+  function openEnAnswer(q) {
+    document.getElementById('en-answer-area-' + q).classList.add('show');
+    document.getElementById('en-reveal-btn-' + q).style.display = 'none';
+  }
+
+  function selectEn(q, n) {
+    if (enAnswered[q]) return;
+    enAnswered[q] = true;
+
+    const correctIndex = EN_CORRECT[q];
+    const picked = document.getElementById('en-' + q + '-' + n);
+    const correctLi = document.getElementById('en-' + q + '-' + correctIndex);
+    const feedback = document.getElementById('en-feedback-' + q);
+    const isCorrect = n === correctIndex;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#en-choice-list-' + q + ' li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${EN_LETTERS[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${EN_LETTERS[n - 1]}번이며, 정답은 ${EN_LETTERS[correctIndex - 1]}번입니다.`;
+
+    openEnAnswer(q);
+  }
+
+  const MATH_CORRECT = 3;
+  const MATH_CIRCLED = ['①', '②', '③', '④', '⑤'];
+  let mathAnswered = false; // 정답: ③ 360
+
+  function openMathAnswer() {
+    document.getElementById('math-answer-area').classList.add('show');
+    document.getElementById('math-reveal-btn').style.display = 'none';
+  }
+
+  function selectMath(n) {
+    if (mathAnswered) return;
+    mathAnswered = true;
+
+    const picked = document.getElementById('math-choice-' + n);
+    const correctLi = document.getElementById('math-choice-' + MATH_CORRECT);
+    const feedback = document.getElementById('math-feedback');
+    const isCorrect = n === MATH_CORRECT;
+
+    picked.classList.add(isCorrect ? 'picked-correct' : 'picked-wrong');
+    if (!isCorrect) correctLi.classList.add('reveal-correct');
+
+    document.querySelectorAll('#math-choice-list li').forEach(li => {
+      li.classList.remove('selectable');
+      li.onclick = null;
+    });
+
+    feedback.className = 'pick-feedback ' + (isCorrect ? 'correct' : 'wrong');
+    feedback.textContent = isCorrect
+      ? `✅ 정답입니다! (${MATH_CIRCLED[n - 1]}번을 선택하셨습니다)`
+      : `❌ 오답입니다. 선택하신 답은 ${MATH_CIRCLED[n - 1]}번이며, 정답은 ${MATH_CIRCLED[MATH_CORRECT - 1]}번입니다.`;
+
+    openMathAnswer();
+  }
+</script>
