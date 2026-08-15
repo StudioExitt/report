@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 퀴즈 2026-08-16 (난이도: 상)</title>
+<style>
+  :root{
+    --bg:#f7f9fc;
+    --card:#ffffff;
+    --line:#e2e8f0;
+    --text:#1f2937;
+    --muted:#64748b;
+    --kor:#2563eb;
+    --eng:#059669;
+    --math:#d97706;
+    --jpn:#db2777;
+    --ok:#16a34a;
+    --no:#dc2626;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;padding:16px;
+    background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.7;
+  }
+  .wrap{max-width:860px;margin:0 auto;}
+  header.top{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:22px 20px;text-align:center;margin-bottom:22px;
+  }
+  header.top h1{margin:0 0 8px;font-size:1.6rem;font-weight:800;}
+  header.top .meta{color:var(--muted);font-size:.9rem;}
+  .badge{
+    display:inline-block;margin-top:10px;padding:4px 12px;border-radius:999px;
+    background:#fee2e2;color:#b91c1c;font-weight:700;font-size:.85rem;
+  }
+  section.sec{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px;margin-bottom:24px;
+  }
+  h2.sec-title{
+    margin:0 0 18px;font-size:1.25rem;font-weight:800;
+    padding-left:12px;border-left:6px solid var(--accent,#2563eb);
+  }
+  .kor{--accent:var(--kor);} .eng{--accent:var(--eng);}
+  .math{--accent:var(--math);} .jpn{--accent:var(--jpn);}
+  .passage{
+    background:#f8fafc;border:1px solid var(--line);border-radius:10px;
+    padding:18px;margin-bottom:18px;font-size:.98rem;
+  }
+  .passage p{margin:0 0 12px;text-indent:.4em;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{margin-bottom:26px;padding-bottom:6px;}
+  .q:last-child{margin-bottom:0;}
+  .q-title{font-weight:700;margin-bottom:12px;}
+  .q-title .num{
+    display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;
+    background:var(--accent,#2563eb);color:#fff;border-radius:8px;font-size:.85rem;margin-right:8px;
+  }
+  ul.opts{list-style:none;margin:0;padding:0;}
+  ul.opts li{
+    border:1px solid var(--line);border-radius:10px;background:#fff;
+    padding:11px 14px;margin-bottom:8px;cursor:pointer;
+    transition:.15s;font-size:.97rem;
+  }
+  ul.opts li:hover{background:#f1f5f9;}
+  ul.opts li.correct{background:#dcfce7;border-color:var(--ok);font-weight:600;}
+  ul.opts li.wrong{background:#fee2e2;border-color:var(--no);}
+  ul.opts li.locked{cursor:default;}
+  .btn{
+    display:inline-block;margin-top:6px;padding:9px 18px;border:none;border-radius:9px;
+    background:var(--accent,#2563eb);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;
+  }
+  .btn:hover{opacity:.88;}
+  .ans{
+    display:none;margin-top:14px;padding:16px;
+    background:#f0f9ff;border:1px solid #bae6fd;border-left:5px solid #0284c7;border-radius:10px;
+    font-size:.94rem;
+  }
+  .ans.show{display:block;}
+  .ans .head{font-weight:800;margin-bottom:10px;color:#0369a1;}
+  .ans ul{margin:8px 0 0;padding-left:20px;}
+  .ans li{margin-bottom:6px;}
+  .verdict{
+    margin-bottom:10px;padding:8px 12px;border-radius:8px;font-weight:800;
+  }
+  .verdict.o{background:#dcfce7;color:#15803d;}
+  .verdict.x{background:#fee2e2;color:#b91c1c;}
+  .jp-line{font-size:1.35rem;font-weight:700;margin:0 0 6px;line-height:1.6;}
+  .jp-read{color:var(--jpn);font-size:1rem;margin:0 0 12px;}
+  .jp-kr{font-size:1.05rem;margin:0 0 14px;font-weight:600;}
+  table.words{width:100%;border-collapse:collapse;font-size:.93rem;margin-top:10px;}
+  table.words th,table.words td{border:1px solid var(--line);padding:8px 10px;text-align:left;}
+  table.words th{background:#f8fafc;font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 0 30px;}
+  @media (max-width:600px){
+    body{padding:10px;}
+    section.sec{padding:14px;}
+    header.top h1{font-size:1.3rem;}
+    .passage{padding:14px;font-size:.93rem;}
+    ul.opts li{font-size:.93rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>📘 데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 16일 (일) · 생성 시각 08:37 KST</div>
+  <div class="badge">난이도: 상</div>
+</header>
+
+<!-- ================= 국어 ================= -->
+<section class="sec kor">
+  <h2 class="sec-title">📖 국어 — 독서(사회·경제)</h2>
+
+  <div class="passage">
+    <p>환율은 자국 통화와 외국 통화의 교환 비율을 뜻한다. 원/달러 환율이 1,300원에서 1,400원으로 오르면, 1달러를 얻기 위해 더 많은 원화를 지불해야 하므로 이는 원화의 대외 가치가 하락했음을 의미한다. 이러한 환율 변동은 수출입 가격을 매개로 국내 물가와 경기 전반에 폭넓은 영향을 미치는데, 환율 변동분이 국내 가격에 반영되는 정도를 '환율 전가율'이라 한다.</p>
+    <p>전가율은 환율이 1% 상승할 때 해당 가격 지표가 몇 % 상승하는지로 측정된다. 전가율이 1이면 환율 상승분이 가격에 남김없이 반영되는 완전 전가이고, 0과 1 사이이면 일부만 반영되는 부분 전가이다. 실증 연구에서 대부분의 국가는 부분 전가를 보이며, 특히 소비자물가 단계로 갈수록 전가율은 뚜렷하게 낮아진다.</p>
+    <p>전가가 불완전한 데에는 여러 이유가 있다. 첫째, 기업은 시장 점유율을 지키기 위해 환율 상승분을 판매 가격에 즉시 반영하지 않고 자신의 이윤 폭을 줄여 흡수하는 전략을 택하기도 한다. 이를 '시장별 가격 설정'이라 한다. 둘째, 가격표나 계약을 고치는 데 드는 이른바 메뉴 비용 때문에 가격은 단기적으로 경직적이다. 셋째, 최종 소비재 가격에는 국내 임대료·인건비·물류비 등 환율과 무관한 유통 비용이 상당 부분 포함되어 있어, 수입 원가의 상승분이 희석된다.</p>
+    <p>수출입 계약에서 어떤 통화로 가격을 표시하는지도 전가율을 좌우한다. 수출 기업이 자국 통화로 가격을 매기는 '생산자 통화 표시 가격 설정'에서는 환율이 오르면 수입국의 현지 판매 가격이 곧바로 함께 움직이므로 전가율이 높다. 반면 수입국의 통화로 가격을 고정해 두는 '현지 통화 표시 가격 설정'에서는 환율이 변해도 현지 판매 가격이 당분간 그대로 유지되므로, 단기 전가율은 오히려 낮게 나타나고 환율 변동은 수출 기업의 이윤 변동으로 흡수된다.</p>
+    <p>전가는 시차를 두고 단계적으로 진행된다. 환율 상승은 먼저 수입 원자재와 중간재의 원화 표시 가격, 즉 수입물가를 끌어올린다. 이 비용 상승은 국내 기업의 생산 원가에 반영되어 생산자물가를 밀어 올리고, 다시 유통 단계를 거쳐 소비자물가에 도달한다. 우리나라의 경우 수입물가에는 거의 즉각적으로, 소비자물가에는 통상 두세 분기에 걸쳐 파급되는 것으로 알려져 있다.</p>
+    <p>한편 환율 상승은 수출 가격 경쟁력을 높여 경상수지를 개선하는 요인으로 흔히 거론된다. 그러나 단기에는 계약이 이미 체결되어 있어 수출입 물량이 즉각 변하지 않는 반면, 수입품의 원화 표시 금액은 곧바로 늘어난다. 그 결과 환율 상승 직후에는 경상수지가 오히려 나빠졌다가 시간이 지나 물량 조정이 이루어진 뒤에야 개선되는 모습이 나타난다. 이처럼 시간에 따른 경상수지의 궤적이 알파벳 J를 닮았다 하여 이를 J커브 효과라 부른다.</p>
+    <p>경기 동향의 측면에서 환율 상승은 교역 조건을 악화시킨다. 수출 한 단위로 살 수 있는 수입품의 양이 줄어들면 국민의 실질 구매력이 감소하고, 이는 민간 소비를 위축시킨다. 원자재 수입 의존도가 높은 경제일수록 이러한 실질 소득 유출 효과는 커진다.</p>
+    <p>통화 당국의 대응은 환율 상승의 성격에 따라 달라진다. 물가 안정 목표제를 운영하는 중앙은행은 환율 상승이 기대 인플레이션을 자극해 임금과 가격의 연쇄적 상승으로 번질 조짐이 보이면 정책 금리를 인상해 총수요를 억제한다. 그러나 환율 상승이 일시적 공급 충격에서 비롯되었고 기대 인플레이션이 안정적으로 유지된다면, 금리 인상은 경기만 위축시킬 뿐이므로 당국은 관망하는 편을 택하기도 한다. 결국 환율 전가에 대한 판단은 물가 안정과 경기 안정 사이의 균형을 찾는 문제로 귀결된다.</p>
+  </div>
+
+  <div class="q" data-answer="2">
+    <div class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+    <ul class="opts">
+      <li>① 원/달러 환율의 상승은 원화의 대외 가치가 하락했음을 의미한다.</li>
+      <li>② 전가율이 0과 1 사이의 값을 가지면 환율 상승률보다 가격 상승률이 낮다.</li>
+      <li>③ 수출 기업이 수입국 통화로 가격을 고정해 두면 환율 변동이 현지 판매 가격에 즉시 반영되어 단기 전가율이 높아진다.</li>
+      <li>④ 환율 상승의 영향은 수입물가, 생산자물가, 소비자물가의 순서로 시차를 두고 파급된다.</li>
+      <li>⑤ J커브 효과에 따르면 환율 상승 직후에는 경상수지가 오히려 악화될 수 있다.</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: ③</div>
+      <ul>
+        <li><b>① 일치</b> — 1문단에서 환율이 오르면 1달러를 얻는 데 더 많은 원화가 필요하므로 "원화의 대외 가치가 하락"한 것이라고 명시했다.</li>
+        <li><b>② 일치</b> — 2문단에 따르면 전가율은 환율 1% 상승 시 가격 상승률이며, 0과 1 사이면 "일부만 반영되는 부분 전가"이므로 가격 상승률이 환율 상승률보다 작다.</li>
+        <li><b>③ 불일치(정답)</b> — 4문단은 '현지 통화 표시 가격 설정'에서는 환율이 변해도 현지 판매 가격이 <b>당분간 그대로 유지</b>되어 <b>단기 전가율이 오히려 낮다</b>고 했다. 즉시 반영되어 전가율이 높은 쪽은 '생산자 통화 표시 가격 설정'이므로 서술이 뒤바뀌었다.</li>
+        <li><b>④ 일치</b> — 5문단에서 수입물가 → 생산자물가 → 소비자물가의 단계적 파급과 두세 분기의 시차를 설명했다.</li>
+        <li><b>⑤ 일치</b> — 6문단에서 환율 상승 직후 경상수지가 나빠졌다가 뒤늦게 개선되는 현상을 J커브 효과로 소개했다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 영어 ================= -->
+<section class="sec eng">
+  <h2 class="sec-title">✏️ 영어 — TOEIC Part 5 문장 완성 (5문항)</h2>
+
+  <div class="q" data-answer="1">
+    <div class="q-title"><span class="num">1</span>The board postponed the vote until every director ______ a chance to review the revised merger terms.</div>
+    <ul class="opts">
+      <li>(A) having</li>
+      <li>(B) has had</li>
+      <li>(C) will have</li>
+      <li>(D) to have</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (B) has had</div>
+      <ul>
+        <li><b>(A) having</b> — 분사형은 종속절의 정동사가 될 수 없다.</li>
+        <li><b>(B) has had</b> — 정답. <code>until</code>이 이끄는 시간 부사절에서는 미래의 일도 현재/현재완료 시제로 표현한다. 완료의 뉘앙스("검토할 기회를 다 가진 뒤에")를 살린 현재완료가 가장 적절하다.</li>
+        <li><b>(C) will have</b> — 시간 부사절에서는 <code>will</code>을 쓰지 않는다.</li>
+        <li><b>(D) to have</b> — to부정사 역시 절의 동사 자리에 올 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="2">
+    <div class="q-title"><span class="num">2</span>______ the sharp rise in raw material costs, Danforth Manufacturing managed to keep its retail prices unchanged.</div>
+    <ul class="opts">
+      <li>(A) Although</li>
+      <li>(B) Nevertheless</li>
+      <li>(C) Despite</li>
+      <li>(D) Even though</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (C) Despite</div>
+      <ul>
+        <li><b>(A) Although</b> — 접속사이므로 뒤에 「주어+동사」가 와야 한다.</li>
+        <li><b>(B) Nevertheless</b> — 접속부사로, 두 문장을 연결하려면 세미콜론이나 마침표가 필요하다.</li>
+        <li><b>(C) Despite</b> — 정답. 빈칸 뒤가 <code>the sharp rise</code>라는 명사구이므로 전치사가 와야 하며, 의미상 양보(~에도 불구하고)가 자연스럽다.</li>
+        <li><b>(D) Even though</b> — 역시 접속사라 명사구를 목적어로 취할 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="3">
+    <div class="q-title"><span class="num">3</span>All maintenance requests must be submitted online, as the facilities team no longer accepts them ______ .</div>
+    <ul class="opts">
+      <li>(A) verbal</li>
+      <li>(B) verbalize</li>
+      <li>(C) verbalized</li>
+      <li>(D) verbally</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (D) verbally</div>
+      <ul>
+        <li><b>(A) verbal</b> — 형용사는 완전한 절의 끝에서 동사를 수식할 수 없다.</li>
+        <li><b>(B) verbalize</b> — 동사 원형이 들어갈 자리가 아니다.</li>
+        <li><b>(C) verbalized</b> — 과거분사로는 <code>them</code>을 수식한다고 보기 어렵고 의미도 어색하다.</li>
+        <li><b>(D) verbally</b> — 정답. 「accept + 목적어」로 문장이 이미 완결되었으므로 방법(구두로)을 나타내는 부사가 들어가야 한다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="0">
+    <div class="q-title"><span class="num">4</span>The consultant's report was so thorough ______ the executive committee approved the restructuring plan without further discussion.</div>
+    <ul class="opts">
+      <li>(A) that</li>
+      <li>(B) as</li>
+      <li>(C) which</li>
+      <li>(D) so</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (A) that</div>
+      <ul>
+        <li><b>(A) that</b> — 정답. 「so + 형용사 + that + 절」 구문으로 '너무 ~해서 …하다'라는 정도·결과를 나타낸다.</li>
+        <li><b>(B) as</b> — <code>so ... as</code>는 부정문의 원급 비교(<code>not so ... as</code>)에서 쓰인다.</li>
+        <li><b>(C) which</b> — 관계대명사는 선행사를 수식해야 하는데 뒤 절이 완전하다.</li>
+        <li><b>(D) so</b> — <code>so</code>가 두 번 겹쳐 구문이 성립하지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="1">
+    <div class="q-title"><span class="num">5</span>Ms. Okafor was promoted to regional director in ______ of her outstanding performance in the Asian market.</div>
+    <ul class="opts">
+      <li>(A) consideration</li>
+      <li>(B) recognition</li>
+      <li>(C) appreciate</li>
+      <li>(D) attention</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (B) recognition</div>
+      <ul>
+        <li><b>(A) consideration</b> — <code>in consideration of</code>는 '~을 고려하여/~의 대가로'라는 뜻으로 승진의 사유를 인정한다는 문맥과는 결이 다르다.</li>
+        <li><b>(B) recognition</b> — 정답. <code>in recognition of</code>는 '~을 인정하여, ~에 대한 공로로'라는 고정 표현으로 수상·승진 문맥의 관용구다.</li>
+        <li><b>(C) appreciate</b> — 동사이므로 전치사 <code>in</code> 뒤에 올 수 없다(<code>in appreciation of</code>라면 가능).</li>
+        <li><b>(D) attention</b> — <code>in attention of</code>라는 표현은 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 수학 ================= -->
+<section class="sec math">
+  <h2 class="sec-title">🧮 수학 — 순열과 조합 (경우의 수)</h2>
+
+  <div class="q" data-answer="2">
+    <div class="q-title"><span class="num">1</span>
+      1부터 9까지의 자연수가 하나씩 적힌 서로 다른 9장의 카드를 세 개의 상자 A, B, C에 3장씩 남김없이 나누어 넣으려고 한다.
+      이때 <b>세 상자 각각에 들어 있는 카드에 적힌 세 수의 합이 모두 홀수</b>가 되도록 넣는 경우의 수는?
+    </div>
+    <ul class="opts">
+      <li>① 240</li>
+      <li>② 300</li>
+      <li>③ 360</li>
+      <li>④ 420</li>
+      <li>⑤ 480</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: ③ 360</div>
+      <p><b>[풀이]</b></p>
+      <ul>
+        <li><b>1단계 — 홀수의 개수 조건 파악.</b> 1~9 중 홀수는 1, 3, 5, 7, 9의 <b>5개</b>, 짝수는 2, 4, 6, 8의 <b>4개</b>다. 세 수의 합이 홀수가 되려면 그 세 수 중 홀수가 <b>1개 또는 3개</b>여야 한다.</li>
+        <li><b>2단계 — 배분 형태 결정.</b> 각 상자에 들어가는 홀수의 개수를 a, b, c라 하면 a+b+c=5이고 각각은 1 또는 3이다. 가능한 조합은 {1, 1, 3}뿐이다. 따라서 한 상자는 (홀 3, 짝 0), 나머지 두 상자는 각각 (홀 1, 짝 2)가 되며, 짝수는 0+2+2=4로 정확히 맞아떨어진다.</li>
+        <li><b>3단계 — 경우의 수 계산.</b>
+          <br>· 홀수 3개가 들어갈 상자를 고르는 경우: <b>3</b>가지
+          <br>· 그 상자에 넣을 홀수 3개를 5개 중 선택: <sub>5</sub>C<sub>3</sub> = <b>10</b>가지
+          <br>· 남은 홀수 2개를 나머지 두 상자에 1개씩 배정: 2! = <b>2</b>가지
+          <br>· 짝수 4개를 그 두 상자에 2개씩 배정: <sub>4</sub>C<sub>2</sub> × <sub>2</sub>C<sub>2</sub> = <b>6</b>가지
+        </li>
+        <li><b>4단계 — 곱의 법칙.</b> 3 × 10 × 2 × 6 = <b>360</b></li>
+        <li><b>[함정 주의]</b> 상자 A, B, C는 서로 <b>구별되므로</b> 마지막에 3!로 나누면 안 된다. 또 "홀수가 1개 또는 3개"라는 조건에서 (3,1,1) 이외에 (5,0,0) 같은 배분을 떠올리기 쉬우나, 한 상자에는 3장만 들어가므로 불가능하다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 일본어 ================= -->
+<section class="sec jpn">
+  <h2 class="sec-title">🇯🇵 일본어 — 오늘의 회화 문장</h2>
+
+  <p class="jp-line">来週の 日曜日に 友だちと 映画を 見に 行く つもりです。</p>
+  <p class="jp-read">📢 らいしゅう の にちようび に ともだち と えいが を み に いく つもり です<br>
+  <span style="color:#64748b;">[라이슈-노 니치요-비니 토모다치토 에-가오 미니 이쿠 츠모리데스]</span></p>
+  <p class="jp-kr">🇰🇷 다음 주 일요일에 친구와 영화를 보러 갈 생각입니다.</p>
+
+  <div class="ans show" style="background:#fdf2f8;border-color:#fbcfe8;border-left-color:#db2777;">
+    <div class="head" style="color:#be185d;">📝 문법 설명</div>
+    <ul>
+      <li><b>동사 ます형 + に + 行く/来る</b> : '~하러 가다/오다'라는 <b>목적</b>을 나타낸다. 見ます → 見<b>に</b> 行く(보러 가다). 「食べに 行く(먹으러 가다)」처럼 활용한다. 3그룹 동사는 「買い物<b>に</b> 行く」처럼 동작성 명사에 바로 に를 붙인다.</li>
+      <li><b>동사 사전형 + つもりです</b> : '~할 작정이다, ~할 생각이다'로 <b>미리 정해 둔 의지</b>를 나타낸다. 부정은 「行かない つもりです(가지 않을 생각입니다)」처럼 <b>ない형</b>에 붙인다.</li>
+      <li><b>と</b> : 여기서는 '~와/과 (함께)'라는 <b>동반</b>의 조사. 友だち<b>と</b> = 친구와.</li>
+      <li><b>に</b> : 「日曜日に」의 に는 <b>시점</b>을 나타내는 조사. 단, 「明日(あした)」「今日(きょう)」「来週(らいしゅう)」처럼 상대적 시간 표현에는 に를 붙이지 않는다. 그래서 「来週<b>の</b> 日曜日<b>に</b>」처럼 の로 연결한 뒤 구체적 요일에 に를 붙인 점에 주의.</li>
+    </ul>
+    <table class="words">
+      <tr><th>단어</th><th>읽기</th><th>뜻</th></tr>
+      <tr><td>来週</td><td>らいしゅう</td><td>다음 주</td></tr>
+      <tr><td>日曜日</td><td>にちようび</td><td>일요일</td></tr>
+      <tr><td>友だち</td><td>ともだち</td><td>친구</td></tr>
+      <tr><td>映画</td><td>えいが</td><td>영화</td></tr>
+      <tr><td>見る</td><td>みる</td><td>보다</td></tr>
+      <tr><td>行く</td><td>いく</td><td>가다</td></tr>
+      <tr><td>つもり</td><td>—</td><td>작정, 생각(의도)</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>생성일시: 2026-08-16 08:37 (KST) · 난이도: 상</footer>
+</div>
+
+<script>
+document.querySelectorAll('.q').forEach(function(q){
+  var ansIdx = parseInt(q.dataset.answer, 10);
+  var opts = q.querySelectorAll('ul.opts li');
+  var box  = q.querySelector('.ans');
+  var btn  = q.querySelector('.btn');
+  var done = false;
+
+  function reveal(){
+    box.classList.add('show');
+    opts.forEach(function(li, i){
+      li.classList.add('locked');
+      if(i === ansIdx) li.classList.add('correct');
+    });
+  }
+
+  opts.forEach(function(li, i){
+    li.addEventListener('click', function(){
+      if(done) return;
+      done = true;
+      var ok = (i === ansIdx);
+      if(!ok) li.classList.add('wrong');
+      var v = document.createElement('div');
+      v.className = 'verdict ' + (ok ? 'o' : 'x');
+      v.textContent = ok ? '⭕ 정답입니다!' : '❌ 오답입니다. 해설을 확인하세요.';
+      box.insertBefore(v, box.firstChild);
+      reveal();
+      btn.textContent = '해설 접기/펼치기';
+    });
+  });
+
+  btn.addEventListener('click', function(){
+    if(!done){ done = true; reveal(); btn.textContent = '해설 접기/펼치기'; return; }
+    box.classList.toggle('show');
+  });
+});
+</script>
+</body>
+</html>
