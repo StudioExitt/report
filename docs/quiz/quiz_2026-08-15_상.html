@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-15 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: #f7f9fc;
+    color: #22272e;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  header.top {
+    background: #ffffff;
+    border: 1px solid #dfe6ef;
+    border-top: 6px solid #2f6fed;
+    border-radius: 14px;
+    padding: 22px 20px;
+    margin-bottom: 26px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.05);
+  }
+  header.top h1 { margin: 0 0 8px; font-size: 1.55rem; font-weight: 800; letter-spacing: -.02em; }
+  .meta { font-size: .9rem; color: #5b6672; }
+  .badge {
+    display: inline-block; background: #ffeaea; color: #c0392b;
+    font-weight: 800; font-size: .8rem; padding: 2px 10px; border-radius: 999px; margin-left: 6px;
+  }
+
+  section.card {
+    background: #fff; border: 1px solid #dfe6ef; border-radius: 14px;
+    padding: 20px 18px; margin-bottom: 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  h2.sec {
+    margin: -20px -18px 18px; padding: 14px 18px;
+    font-size: 1.15rem; font-weight: 800; letter-spacing: -.01em;
+    border-radius: 13px 13px 0 0; color: #fff;
+  }
+  .kor h2.sec  { background: #2f6fed; }
+  .eng h2.sec  { background: #16a085; }
+  .math h2.sec { background: #8e44ad; }
+  .jpn h2.sec  { background: #e67e22; }
+
+  .passage {
+    background: #f4f7fc; border: 1px solid #dde5f1; border-left: 5px solid #2f6fed;
+    border-radius: 8px; padding: 16px 18px; margin-bottom: 20px;
+    font-size: .98rem; text-align: justify;
+  }
+  .passage p { margin: 0 0 12px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 26px; }
+  .q:last-child { margin-bottom: 0; }
+  .q-title { font-weight: 800; margin-bottom: 10px; font-size: 1.02rem; }
+  .q-body { margin-bottom: 12px; }
+
+  ul.opts { list-style: none; margin: 0 0 12px; padding: 0; }
+  ul.opts li {
+    border: 1px solid #d9e0ea; background: #fff; border-radius: 9px;
+    padding: 10px 13px; margin-bottom: 8px; cursor: pointer;
+    transition: background .12s, border-color .12s;
+    font-size: .97rem; overflow: hidden;
+  }
+  ul.opts li:hover { background: #f0f4fb; border-color: #b7c6dd; }
+  ul.opts li.correct { background: #e7f8ee; border-color: #2ba25f; font-weight: 700; }
+  ul.opts li.wrong   { background: #fdeceb; border-color: #d64541; font-weight: 700; }
+  ul.opts li.locked  { cursor: default; }
+  ul.opts li .mark { float: right; font-weight: 800; margin-left: 8px; }
+
+  .btn {
+    display: inline-block; background: #2f6fed; color: #fff; border: none;
+    border-radius: 8px; padding: 9px 18px; font-size: .93rem; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+  }
+  .btn:hover { background: #2559c9; }
+
+  .ans {
+    display: none; margin-top: 12px;
+    background: #fffdf3; border: 1px solid #ecdfae; border-left: 5px solid #f0a500;
+    border-radius: 8px; padding: 14px 16px; font-size: .95rem;
+  }
+  .ans.show { display: block; }
+  .ans .head { font-weight: 800; margin-bottom: 8px; color: #a06a00; }
+  .ans .verdict { font-weight: 800; margin-bottom: 8px; }
+  .ans .verdict.o { color: #1e8449; }
+  .ans .verdict.x { color: #c0392b; }
+  .ans ul { margin: 6px 0 0; padding-left: 18px; }
+  .ans li { margin-bottom: 5px; }
+  .ans .step { margin: 10px 0; }
+
+  .jp-sentence {
+    font-size: 1.35rem; font-weight: 800; line-height: 2.1; margin: 6px 0 4px;
+    color: #b5510a;
+  }
+  .jp-reading { font-size: 1rem; color: #5b6672; margin-bottom: 6px; }
+  .jp-mean { font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; }
+  .jp-box {
+    background: #fff7f0; border: 1px solid #f3ddc7; border-left: 5px solid #e67e22;
+    border-radius: 8px; padding: 14px 16px; font-size: .95rem;
+  }
+  .jp-box .head { font-weight: 800; color: #b5510a; margin-bottom: 8px; }
+  .jp-box ul { margin: 0; padding-left: 18px; }
+  .jp-box li { margin-bottom: 6px; }
+  table.words { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .93rem; background:#fff; }
+  table.words th, table.words td { border: 1px solid #ecdcc9; padding: 7px 9px; text-align: left; }
+  table.words th { background: #fdf1e4; font-weight: 700; }
+
+  footer { text-align: center; color: #8a94a0; font-size: .85rem; margin-top: 30px; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 14px 10px 40px; }
+    header.top h1 { font-size: 1.25rem; }
+    h2.sec { font-size: 1.05rem; }
+    .jp-sentence { font-size: 1.15rem; line-height: 1.95; }
+    ul.opts li { font-size: .94rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>📚 데일리 학습 퀴즈 <span class="badge">난이도 상</span></h1>
+    <div class="meta">2026년 8월 15일 (토) · 국어 1문제 · 영어 5문제 · 수학 1문제 · 일본어 1문장</div>
+    <div class="meta" id="genTime"></div>
+  </header>
+
+  <!-- ================= 국어 ================= -->
+  <section class="card kor">
+    <h2 class="sec">📖 국어 — 독서(경제) : 경기종합지수</h2>
+
+    <div class="passage">
+      <p>경제는 확장과 수축을 되풀이하며 움직인다. 총생산·고용·소비·투자 등 여러 거시 변수가 대체로 같은 방향으로 움직이면서 상승과 하강을 반복하는 현상을 경기변동이라 한다. 경기변동은 곡선이 오르내리는 모양으로 표현되지만, 그 진폭과 주기가 매번 달라 기계적으로 예측하기는 어렵다. 그럼에도 정책 당국과 기업은 현재 경기가 어느 국면에 있고 앞으로 어디로 향할지를 판단해야 한다. 이 판단을 돕기 위해 통계 당국은 여러 개별 지표를 하나의 수치로 종합한 경기종합지수를 작성한다.</p>
+
+      <p>경기종합지수는 경기와 밀접한 관련이 있는 개별 지표들을 선별한 뒤, 각 지표의 전월 대비 변화율을 표준화하고 가중평균하여 산출한다. 개별 지표는 단위와 변동 폭이 서로 달라 그대로 더할 수 없으므로, 변화율을 각 지표의 평균적인 변동 크기로 나누어 크기를 맞추는 표준화 과정이 반드시 필요하다. 이렇게 만들어진 지수는 단순히 경기가 좋아지는지 나빠지는지의 방향뿐 아니라, 증감률의 크기를 통해 경기가 얼마나 빠르고 크게 변하고 있는지, 즉 변동의 속도와 진폭까지 보여 준다는 장점이 있다.</p>
+
+      <p>경기종합지수는 개별 지표가 경기 흐름에 대해 갖는 시간적 관계에 따라 세 가지로 나뉜다. 선행종합지수는 앞으로의 경기를 미리 반영하는 지표들로 구성된다. 재고순환지표, 기계류 내수출하지수, 건설수주액, 코스피지수, 장단기 금리차 등이 여기에 속하는데, 이들은 기업의 생산 계획이나 금융시장 참가자의 기대가 실제 생산 활동보다 먼저 움직인다는 점을 이용한 것이다. 동행종합지수는 현재의 경기 상태를 보여 주는 지표들로, 광공업생산지수·서비스업생산지수·소매판매액지수·비농림어업취업자수 등이 포함된다. 후행종합지수는 경기 흐름을 뒤따라 확인해 주는 지표들로 구성되며, 생산자제품재고지수, 소비재수입액, 취업자수, 회사채유통수익률 등이 대표적이다. 후행지수는 미래를 알려 주지는 못하지만, 앞선 판단이 옳았는지를 사후에 검증하는 데 쓰인다.</p>
+
+      <p>다만 동행종합지수를 그대로 읽으면 문제가 생긴다. 경제는 장기적으로 성장하는 추세를 가지므로, 지수 값 자체는 경기가 나빠지는 국면에서도 상승세를 유지하는 경우가 많기 때문이다. 그래서 동행종합지수에서 장기적인 성장 추세 요인을 제거한 값을 따로 구하는데, 이를 동행지수 순환변동치라 한다. 순환변동치는 100을 기준으로, 100을 넘으면 경제가 추세 수준보다 높은 상태를, 100에 못 미치면 추세 수준보다 낮은 상태를 뜻한다. 언론에서 흔히 인용하는 '경기가 기준선 아래로 내려갔다'라는 표현은 대개 이 순환변동치를 가리킨다.</p>
+
+      <p>지수형 지표와는 성격이 다른 도구도 있다. 경기확산지수(DI)는 여러 개별 지표 중에서 전월보다 개선된 지표가 차지하는 비율을 백분율로 나타낸 것이다. 예를 들어 열 개의 지표 중 일곱 개가 전월보다 좋아졌다면 DI는 70이 된다. DI가 50을 넘으면 확장 국면, 50에 못 미치면 수축 국면, 50이면 경기의 전환점 부근으로 해석한다. 그러나 DI는 각 지표가 '좋아졌는가, 나빠졌는가'라는 방향만 세어 계산하므로, 개선의 폭이 아주 작든 대단히 크든 똑같이 한 개로 계산된다. 따라서 DI는 경기 변동의 방향을 알려 줄 뿐, 변동의 크기나 속도에 대해서는 아무것도 말해 주지 못한다. 경기종합지수와 DI를 함께 보아야 하는 이유가 여기에 있다.</p>
+
+      <p>한편 확장이 끝나고 수축이 시작되는 시점, 또는 그 반대의 시점을 기준순환일이라 한다. 기준순환일은 실시간으로 확정되지 않는다. 지표는 발표 이후에도 여러 차례 수정되고, 일시적 충격 때문에 나타난 등락인지 진짜 국면 전환인지는 시간이 충분히 지나야 구분되기 때문이다. 이에 따라 통계 당국은 상당한 시차를 두고 사후적으로 기준순환일을 설정하며, 처음에는 잠정적으로 정한 뒤 이후 자료가 축적되면 이를 수정하기도 한다. 결국 경기 판단은 하나의 지표가 내려 주는 정답이 아니라, 성격이 다른 여러 지표를 겹쳐 읽으며 확률적으로 좁혀 가는 작업에 가깝다.</p>
+    </div>
+
+    <div class="q" data-answer="3">
+      <div class="q-title">문 1. 윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+      <ul class="opts">
+        <li data-idx="1">① 경기종합지수는 개별 지표의 전월 대비 변화율을 표준화한 뒤 가중평균하여 산출한다.</li>
+        <li data-idx="2">② 선행종합지수에는 코스피지수나 장단기 금리차와 같이 기대가 먼저 반영되는 지표가 포함된다.</li>
+        <li data-idx="3">③ 경기확산지수는 개선된 지표의 비율을 나타내므로, 경기 변동의 방향과 함께 그 진폭까지 파악할 수 있다.</li>
+        <li data-idx="4">④ 동행지수 순환변동치는 동행종합지수에서 장기 성장 추세 요인을 제거한 값으로 100을 기준으로 해석한다.</li>
+        <li data-idx="5">⑤ 기준순환일은 실시간으로 확정되지 않고 상당한 시차를 두고 사후적으로 설정되며, 이후 수정될 수 있다.</li>
+      </ul>
+      <button class="btn" onclick="reveal(this)">정답 보기</button>
+      <div class="ans">
+        <div class="verdict"></div>
+        <div class="head">정답 : ③</div>
+        <ul>
+          <li><b>① 일치</b> — 2문단 "각 지표의 전월 대비 변화율을 표준화하고 가중평균하여 산출한다"와 정확히 일치한다.</li>
+          <li><b>② 일치</b> — 3문단에서 선행종합지수 구성 지표로 코스피지수·장단기 금리차를 들고, "금융시장 참가자의 기대가 실제 생산 활동보다 먼저 움직인다"고 설명했다.</li>
+          <li><b>③ 불일치(정답)</b> — 5문단에서 DI는 지표의 개선 여부라는 <b>방향만 세어</b> 계산하므로 "변동의 크기나 속도에 대해서는 아무것도 말해 주지 못한다"고 했다. 진폭까지 알 수 있는 것은 증감률의 크기를 반영하는 <b>경기종합지수</b>(2문단)이다. 두 지표의 성격을 뒤바꾼 진술.</li>
+          <li><b>④ 일치</b> — 4문단 "동행종합지수에서 장기적인 성장 추세 요인을 제거한 값", "100을 기준으로"와 일치한다.</li>
+          <li><b>⑤ 일치</b> — 6문단 "상당한 시차를 두고 사후적으로 기준순환일을 설정하며, 처음에는 잠정적으로 정한 뒤 … 수정하기도 한다"와 일치한다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 영어 ================= -->
+  <section class="card eng">
+    <h2 class="sec">🅰️ TOEIC 영어 — Part 5 문장 완성 (5문제)</h2>
+
+    <div class="q" data-answer="1">
+      <div class="q-title">Q1.</div>
+      <div class="q-body">The board of directors will ______ the proposed merger in detail at next Monday's meeting.</div>
+      <ul class="opts">
+        <li data-idx="1">(A) review</li>
+        <li data-idx="2">(B) reviewing</li>
+        <li data-idx="3">(C) reviewed</li>
+        <li data-idx="4">(D) to review</li>
+      </ul>
+      <button class="btn" onclick="reveal(this)">정답 보기</button>
+      <div class="ans">
+        <div class="verdict"></div>
+        <div class="head">정답 : (A) review</div>
+        <div>해석 : 이사회는 다음 주 월요일 회의에서 제안된 합병 건을 상세히 <b>검토할 것이다</b>.</div>
+        <ul>
+          <li><b>(A) review</b> — 조동사 will 뒤에는 반드시 동사원형이 온다. 정답.</li>
+          <li>(B) reviewing — will 뒤에 -ing가 단독으로 올 수 없다. will be reviewing이라면 가능.</li>
+          <li>(C) reviewed — will 뒤에 과거형은 불가능하다.</li>
+          <li>(D) to review — 조동사 뒤에 to부정사는 올 수 없다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-title">Q2.</div>
+      <div class="q-body">All employees must submit their expense reports ______ the end of this month to receive reimbursement.</div>
+      <ul class="opts">
+        <li data-idx="1">(A) by</li>
+        <li data-idx="2">(B) until</li>
+        <li data-idx="3">(C) since</li>
+        <li data-idx="4">(D) during</li>
+      </ul>
+      <button class="btn" onclick="reveal(this)">정답 보기</button>
+      <div class="ans">
+        <div class="verdict"></div>
+        <div class="head">정답 : (A) by</div>
+        <div>해석 : 모든 직원은 환급을 받으려면 이달 말<b>까지</b> 경비 보고서를 제출해야 한다.</div>
+        <ul>
+          <li><b>(A) by</b> — '~까지(완료 기한)'. submit처럼 한 번에 끝나는 동작의 마감 시한에는 by를 쓴다. 정답.</li>
+          <li>(B) until — '~까지 계속'. wait, stay, remain처럼 지속되는 동작에 쓴다.</li>
+          <li>(C) since — '~이래로'. 보통 현재완료와 함께 과거 시점을 나타내므로 부적절.</li>
+          <li>(D) during — '~동안'. 기간 명사와 함께 쓰이며 마감 시점을 뜻하지 않는다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="3">
+      <div class="q-title">Q3.</div>
+      <div class="q-body">The newly installed software has significantly improved the ______ of our customer service team.</div>
+      <ul class="opts">
+        <li data-idx="1">(A) efficient</li>
+        <li data-idx="2">(B) efficiently</li>
+        <li data-idx="3">(C) efficiency</li>
+        <li data-idx="4">(D) efficiently made</li>
+      </ul>
+      <button class="btn" onclick="reveal(this)">정답 보기</button>
+      <div class="ans">
+        <div class="verdict"></div>
+        <div class="head">정답 : (C) efficiency</div>
+        <div>해석 : 새로 설치된 소프트웨어가 우리 고객 서비스 팀의 <b>효율성</b>을 크게 향상시켰다.</div>
+        <ul>
+          <li>(A) efficient — 형용사. 「the ___ of」의 빈칸은 명사 자리이다.</li>
+          <li>(B) efficiently — 부사는 타동사 improved의 목적어가 될 수 없다.</li>
+          <li><b>(C) efficiency</b> — '효율성'을 뜻하는 명사로, the ___ of 구조의 목적어 자리에 알맞다. 정답.</li>
+          <li>(D) efficiently made — 「부사+과거분사」 형태로 명사 자리를 채울 수 없다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title">Q4.</div>
+      <div class="q-body">______ the unusually heavy rain, the outdoor product launch proceeded exactly as scheduled.</div>
+      <ul class="opts">
+        <li data-idx="1">(A) Although</li>
+        <li data-idx="2">(B) Despite</li>
+        <li data-idx="3">(C) However</li>
+        <li data-idx="4">(D) Because of</li>
+      </ul>
+      <button class="btn" onclick="reveal(this)">정답 보기</button>
+      <div class="ans">
+        <div class="verdict"></div>
+        <div class="head">정답 : (B) Despite</div>
+        <div>해석 : 이례적으로 많은 비<b>에도 불구하고</b>, 야외 제품 출시 행사는 예정대로 정확히 진행되었다.</div>
+        <ul>
+          <li>(A) Although — 접속사이므로 뒤에 「주어+동사」가 와야 하는데, 여기서는 명사구(the ~ rain)만 있다.</li>
+          <li><b>(B) Despite</b> — 전치사로 명사(구)를 이끌며 '~에도 불구하고'. 양보의 의미도 문맥과 맞는다. 정답.</li>
+          <li>(C) However — 접속부사라 명사구를 이끌 수 없고, 콤마만으로 두 절을 연결할 수도 없다.</li>
+          <li>(D) Because of — 형태(전치사구)는 맞지만 '~때문에'라는 인과 관계가 되어 "예정대로 진행되었다"와 의미가 충돌한다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-title">Q5.</div>
+      <div class="q-body">Ms. Tanaka, ______ has managed the Osaka branch for over a decade, will be promoted to regional director.</div>
+      <ul class="opts">
+        <li data-idx="1">(A) who</li>
+        <li data-idx="2">(B) whom</li>
+        <li data-idx="3">(C) whose</li>
+        <li data-idx="4">(D) which</li>
+      </ul>
+      <button class="btn" onclick="reveal(this)">정답 보기</button>
+      <div class="ans">
+        <div class="verdict"></div>
+        <div class="head">정답 : (A) who</div>
+        <div>해석 : 10년 넘게 오사카 지점을 관리해 온 다나카 씨가 지역 본부장으로 승진할 예정이다.</div>
+        <ul>
+          <li><b>(A) who</b> — 선행사가 사람(Ms. Tanaka)이고 빈칸 뒤에 동사 has가 바로 이어지므로 주격 관계대명사가 필요하다. 정답.</li>
+          <li>(B) whom — 목적격이므로 뒤에 「주어+타동사」가 와야 한다.</li>
+          <li>(C) whose — 소유격이므로 바로 뒤에 명사가 와야 한다.</li>
+          <li>(D) which — 선행사가 사물일 때 쓴다. 사람인 Ms. Tanaka에는 쓸 수 없다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 수학 ================= -->
+  <section class="card math">
+    <h2 class="sec">✏️ 수학 — 순열과 조합 (난이도 최상)</h2>
+
+    <div class="q" data-answer="2">
+      <div class="q-title">문 1.</div>
+      <div class="q-body">
+        1, 2, 3, 4, 5, 6, 7의 <b>일곱 개의 숫자를 모두 한 번씩 사용하여</b> 일렬로 나열할 때, 다음 세 조건을 모두 만족시키는 경우의 수는?
+        <div style="background:#f6f1fb;border:1px solid #e0d2ef;border-radius:8px;padding:12px 14px;margin:12px 0;">
+          (가) 어떤 두 홀수도 서로 이웃하지 않는다.<br>
+          (나) 2가 4보다 앞에 온다.<br>
+          (다) 1이 7보다 앞에 온다.
+        </div>
+      </div>
+      <ul class="opts">
+        <li data-idx="1">① 24</li>
+        <li data-idx="2">② 36</li>
+        <li data-idx="3">③ 48</li>
+        <li data-idx="4">④ 60</li>
+        <li data-idx="5">⑤ 72</li>
+      </ul>
+      <button class="btn" onclick="reveal(this)">정답 보기</button>
+      <div class="ans">
+        <div class="verdict"></div>
+        <div class="head">정답 : ② 36</div>
+        <div class="step"><b>[1단계] 조건 (가) — '이웃하지 않는다'의 표준 전략</b><br>
+          홀수는 1, 3, 5, 7의 <b>4개</b>, 짝수는 2, 4, 6의 <b>3개</b>이다.<br>
+          이웃 금지 조건은 <b>제한이 없는 쪽(짝수)을 먼저 나열하고, 그 사이와 양 끝의 빈자리에 제한된 쪽(홀수)을 끼워 넣는</b> 방식으로 처리한다.
+        </div>
+        <div class="step"><b>[2단계] 짝수 배열과 빈자리 세기</b><br>
+          짝수 3개를 일렬로 나열하는 방법은 3! = 6가지.<br>
+          이때 홀수가 들어갈 수 있는 자리는 아래 ∨로 표시한 <b>4곳</b>(양 끝 2곳 + 사이 2곳)이다.<br>
+          &nbsp;&nbsp;<code>∨ ■ ∨ ■ ∨ ■ ∨</code> &nbsp;(■ = 짝수)<br>
+          한 자리에 홀수를 2개 이상 넣으면 그 둘이 이웃하게 되므로, 각 자리에는 <b>최대 1개</b>만 넣을 수 있다.
+        </div>
+        <div class="step"><b>[3단계] 홀수 배치</b><br>
+          자리는 4곳이고 홀수도 4개이므로 <b>4곳 모두에 정확히 1개씩</b> 들어가야 한다. 그 방법은 4! = 24가지.<br>
+          따라서 조건 (가)만 만족하는 경우의 수는 3! × 4! = 6 × 24 = <b>144</b>가지.
+        </div>
+        <div class="step"><b>[4단계] 조건 (나), (다) — 대칭성 이용</b><br>
+          144가지에서 짝수들끼리의 순서와 홀수들끼리의 순서는 서로 독립적으로 정해진다.<br>
+          · 짝수의 순서에서 2가 4보다 앞설 확률은 대칭성에 의해 <b>1/2</b><br>
+          · 홀수의 순서에서 1이 7보다 앞설 확률도 <b>1/2</b><br>
+          두 조건은 각각 짝수 집합, 홀수 집합의 순서에 관한 것이므로 서로 영향을 주지 않는다.
+        </div>
+        <div class="step"><b>[5단계] 결론</b><br>
+          144 × (1/2) × (1/2) = <b>36</b><br>
+          <span style="color:#7a4fa3;">※ 검산 : 2가 4보다 앞선 짝수 배열은 3!/2 = 3가지, 1이 7보다 앞선 홀수 배열은 4!/2 = 12가지 → 3 × 12 = <b>36</b>. 일치한다.</span>
+        </div>
+        <div class="step"><b>[오답 함정]</b><br>
+          ⑤ 72는 (나)와 (다) 중 하나만 반영한 값이고, ③ 48은 짝수를 먼저 배열하지 않고 홀수부터 배열해 빈자리 수를 잘못 센 경우 자주 나오는 값이다.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 일본어 ================= -->
+  <section class="card jpn">
+    <h2 class="sec">🗾 일본어 회화 — 오늘의 문장</h2>
+
+    <div class="jp-sentence">今度の 週末、いっしょに 映画を 見に 行きませんか。</div>
+    <div class="jp-reading">
+      ▶ 읽는 법 : <b>こんど</b>の <b>しゅうまつ</b>、いっしょに <b>えいが</b>を <b>み</b>に <b>い</b>きませんか。<br>
+      ▶ 한글 발음 : 콘도노 슈-마쓰, 잇쇼니 에-가오 미니 이키마셍카.
+    </div>
+    <div class="jp-mean">💬 해석 : 이번 주말에 같이 영화 보러 가지 않을래요?</div>
+
+    <div class="jp-box">
+      <div class="head">📌 문장 설명</div>
+      <ul>
+        <li>친구나 반 친구에게 주말 약속을 제안할 때 쓰는 가장 기본적인 권유 표현이다. 정중체(です・ます체)이므로 선생님이나 처음 만난 사람에게도 그대로 쓸 수 있다.</li>
+        <li>대답은 승낙이면 「いいですね。行(い)きましょう。/ 좋네요. 갑시다.」, 거절이면 「すみません、ちょっと…／ 죄송해요, 좀…」처럼 말끝을 흐리는 것이 자연스럽다.</li>
+      </ul>
+
+      <div class="head" style="margin-top:14px;">📌 문법 포인트</div>
+      <ul>
+        <li><b>~ませんか</b> : 「行(い)きます → 行(い)きませんか」처럼 ます형을 부정 의문형으로 바꾼 <b>권유 표현</b>. 직역은 '가지 않겠습니까'이지만 실제로는 '같이 갈래요?'라는 제안이다. 「~ましょうか」보다 상대의 의사를 존중하는 부드러운 표현이다.</li>
+        <li><b>동사 ます형 + に + 行(い)く / 来(く)る / 帰(かえ)る</b> : '~하러 가다/오다/돌아가다'라는 <b>이동의 목적</b>을 나타낸다. 「見(み)ます」에서 ます를 뗀 「見(み)」에 に를 붙여 「見(み)に 行(い)く」가 된다.<br>
+          예) 買(か)いに 行(い)く(사러 가다), 食(た)べに 来(く)る(먹으러 오다).<br>
+          ※ 목적이 명사일 때는 ます형 대신 명사를 바로 쓴다. 예) 買(か)い物(もの)に 行(い)く(장 보러 가다), 旅行(りょこう)に 行(い)く(여행 가다).</li>
+        <li><b>今度(こんど)</b> : '이번'과 '다음번' 두 뜻을 모두 가진다. 「今度の 週末」은 '이번 주말', 「今度 また」는 '다음에 또'. 문맥으로 구분한다.</li>
+        <li><b>いっしょに</b> : '함께, 같이'. 한자로는 「一緒(いっしょ)に」로 쓰며, 권유 표현과 짝을 이루어 자주 등장한다.</li>
+      </ul>
+
+      <table class="words">
+        <tr><th>단어</th><th>읽기(가나)</th><th>뜻</th></tr>
+        <tr><td>今度</td><td>こんど</td><td>이번, 다음번</td></tr>
+        <tr><td>週末</td><td>しゅうまつ</td><td>주말</td></tr>
+        <tr><td>一緒に</td><td>いっしょに</td><td>함께, 같이</td></tr>
+        <tr><td>映画</td><td>えいが</td><td>영화</td></tr>
+        <tr><td>見る</td><td>みる</td><td>보다</td></tr>
+        <tr><td>行く</td><td>いく</td><td>가다</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <footer>🌱 매일 조금씩, 꾸준히 — Daily Quiz</footer>
+</div>
+
+<script>
+  // 생성 시각 (로컬 타임존)
+  (function () {
+    var d = new Date();
+    var p = function (n) { return String(n).padStart(2, '0'); };
+    var tz = (Intl.DateTimeFormat().resolvedOptions().timeZone) || 'Local';
+    document.getElementById('genTime').textContent =
+      '생성 시각 : ' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' +
+      p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds()) + ' (' + tz + ')';
+  })();
+
+  function reveal(btn) {
+    showAnswer(btn.closest('.q'), null);
+  }
+
+  document.querySelectorAll('.q ul.opts').forEach(function (ul) {
+    ul.addEventListener('click', function (e) {
+      var li = e.target.closest('li');
+      if (!li || li.classList.contains('locked')) return;
+      showAnswer(ul.closest('.q'), parseInt(li.dataset.idx, 10));
+    });
+  });
+
+  function showAnswer(q, picked) {
+    var ansIdx = parseInt(q.dataset.answer, 10);
+    var box = q.querySelector('.ans');
+    var verdict = box.querySelector('.verdict');
+
+    q.querySelectorAll('ul.opts li').forEach(function (li) {
+      li.classList.add('locked');
+      var idx = parseInt(li.dataset.idx, 10);
+      if (idx === ansIdx) {
+        li.classList.add('correct');
+        if (!li.querySelector('.mark')) {
+          var s = document.createElement('span');
+          s.className = 'mark'; s.textContent = '✅ 정답';
+          li.appendChild(s);
+        }
+      } else if (picked !== null && idx === picked) {
+        li.classList.add('wrong');
+        if (!li.querySelector('.mark')) {
+          var w = document.createElement('span');
+          w.className = 'mark'; w.textContent = '❌ 오답';
+          li.appendChild(w);
+        }
+      }
+    });
+
+    if (picked !== null) {
+      verdict.className = 'verdict ' + (picked === ansIdx ? 'o' : 'x');
+      verdict.textContent = (picked === ansIdx)
+        ? '🎉 정답입니다!'
+        : '❌ 틀렸습니다. 아래 해설을 확인해 보세요.';
+    } else {
+      verdict.className = 'verdict';
+      verdict.textContent = '';
+    }
+
+    box.classList.add('show');
+  }
+</script>
+</body>
+</html>
