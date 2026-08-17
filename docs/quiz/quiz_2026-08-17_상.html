@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 퀴즈 2026-08-17 (난이도: 상)</title>
+<style>
+  :root{
+    --bg:#f7f9fc;
+    --card:#ffffff;
+    --line:#e2e8f0;
+    --text:#1f2937;
+    --muted:#64748b;
+    --kor:#2563eb;
+    --eng:#059669;
+    --math:#d97706;
+    --jpn:#db2777;
+    --ok:#16a34a;
+    --no:#dc2626;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;padding:16px;
+    background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.7;
+  }
+  .wrap{max-width:860px;margin:0 auto;}
+  header.top{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:22px 20px;text-align:center;margin-bottom:22px;
+  }
+  header.top h1{margin:0 0 8px;font-size:1.6rem;font-weight:800;}
+  header.top .meta{color:var(--muted);font-size:.9rem;}
+  .badge{
+    display:inline-block;margin-top:10px;padding:4px 12px;border-radius:999px;
+    background:#fee2e2;color:#b91c1c;font-weight:700;font-size:.85rem;
+  }
+  section.sec{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px;margin-bottom:24px;
+  }
+  h2.sec-title{
+    margin:0 0 18px;font-size:1.25rem;font-weight:800;
+    padding-left:12px;border-left:6px solid var(--accent,#2563eb);
+  }
+  .kor{--accent:var(--kor);} .eng{--accent:var(--eng);}
+  .math{--accent:var(--math);} .jpn{--accent:var(--jpn);}
+  .passage{
+    background:#f8fafc;border:1px solid var(--line);border-radius:10px;
+    padding:18px;margin-bottom:18px;font-size:.98rem;
+  }
+  .passage p{margin:0 0 12px;text-indent:.4em;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{margin-bottom:26px;padding-bottom:6px;}
+  .q:last-child{margin-bottom:0;}
+  .q-title{font-weight:700;margin-bottom:12px;}
+  .q-title .num{
+    display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;
+    background:var(--accent,#2563eb);color:#fff;border-radius:8px;font-size:.85rem;margin-right:8px;
+  }
+  ul.opts{list-style:none;margin:0;padding:0;}
+  ul.opts li{
+    border:1px solid var(--line);border-radius:10px;background:#fff;
+    padding:11px 14px;margin-bottom:8px;cursor:pointer;
+    transition:.15s;font-size:.97rem;
+  }
+  ul.opts li:hover{background:#f1f5f9;}
+  ul.opts li.correct{background:#dcfce7;border-color:var(--ok);font-weight:600;}
+  ul.opts li.wrong{background:#fee2e2;border-color:var(--no);}
+  ul.opts li.locked{cursor:default;}
+  .btn{
+    display:inline-block;margin-top:6px;padding:9px 18px;border:none;border-radius:9px;
+    background:var(--accent,#2563eb);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;
+  }
+  .btn:hover{opacity:.88;}
+  .ans{
+    display:none;margin-top:14px;padding:16px;
+    background:#f0f9ff;border:1px solid #bae6fd;border-left:5px solid #0284c7;border-radius:10px;
+    font-size:.94rem;
+  }
+  .ans.show{display:block;}
+  .ans .head{font-weight:800;margin-bottom:10px;color:#0369a1;}
+  .ans ul{margin:8px 0 0;padding-left:20px;}
+  .ans li{margin-bottom:6px;}
+  .verdict{
+    margin-bottom:10px;padding:8px 12px;border-radius:8px;font-weight:800;
+  }
+  .verdict.o{background:#dcfce7;color:#15803d;}
+  .verdict.x{background:#fee2e2;color:#b91c1c;}
+  .jp-line{font-size:1.35rem;font-weight:700;margin:0 0 6px;line-height:1.6;}
+  .jp-read{color:var(--jpn);font-size:1rem;margin:0 0 12px;}
+  .jp-kr{font-size:1.05rem;margin:0 0 14px;font-weight:600;}
+  table.words{width:100%;border-collapse:collapse;font-size:.93rem;margin-top:10px;}
+  table.words th,table.words td{border:1px solid var(--line);padding:8px 10px;text-align:left;}
+  table.words th{background:#f8fafc;font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 0 30px;}
+  @media (max-width:600px){
+    body{padding:10px;}
+    section.sec{padding:14px;}
+    header.top h1{font-size:1.3rem;}
+    .passage{padding:14px;font-size:.93rem;}
+    ul.opts li{font-size:.93rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>📘 데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 17일 (월) · 생성 시각 08:58 KST</div>
+  <div class="badge">난이도: 상</div>
+</header>
+
+<!-- ================= 국어 ================= -->
+<section class="sec kor">
+  <h2 class="sec-title">📖 국어 — 독서(사회·경제)</h2>
+
+  <div class="passage">
+    <p>경제는 확장과 수축을 되풀이하며 성장한다. 이러한 경기 순환의 국면을 판단하고 앞날을 가늠하기 위해 통계 당국은 여러 경기 지표를 만들어 공표한다. 그중 대표적인 것이 경기종합지수(CI)와 경기확산지수(DI)이다. 두 지수는 같은 개별 지표들을 재료로 삼으면서도 가공 방식과 읽는 법이 서로 다르다.</p>
+    <p>경기확산지수는 여러 구성 지표 가운데 전월보다 값이 늘어난 지표가 차지하는 비율로 계산된다. 증가한 지표에 1점, 변화가 없는 지표에 0.5점, 감소한 지표에 0점을 주고 이를 전체 지표 수로 나눈 뒤 100을 곱한다. 따라서 DI가 50을 넘으면 경기가 확장 국면에, 50에 못 미치면 수축 국면에 있다고 보며, 50 자체는 국면이 바뀌는 전환점으로 해석된다. 그러나 DI는 각 지표가 얼마나 늘었는지를 따지지 않고 늘었는지 줄었는지만 헤아리므로, 경기 변동의 <b>방향</b>은 알려 주되 그 <b>진폭이나 속도</b>는 알려 주지 못한다는 한계를 지닌다.</p>
+    <p>이 한계를 보완하는 것이 경기종합지수이다. 경기종합지수는 각 구성 지표의 변화율을 구한 뒤, 지표마다 변동성이 제각각이라는 점을 감안해 표준화 과정을 거쳐 합성한다. 변동 폭이 큰 지표가 지수 전체를 좌우하는 일을 막기 위한 장치이다. 이렇게 만들어진 지수는 방향뿐 아니라 변동의 크기까지 담아내므로, 경기가 '좋아지고 있다'를 넘어 '얼마나 빠르게 좋아지고 있다'까지 말해 준다.</p>
+    <p>경기종합지수는 개별 지표가 경기의 흐름보다 앞서는지 함께 가는지 뒤따르는지에 따라 세 갈래로 나뉜다. 선행종합지수는 재고순환지표, 경제심리지수, 건설수주액, 코스피지수처럼 앞으로의 경기를 미리 반영하는 지표들로 구성되어 향후 국면을 예측하는 데 쓰인다. 동행종합지수는 광공업생산지수, 소매판매액지수, 서비스업생산지수처럼 현재의 경기와 나란히 움직이는 지표로 이루어져 현 국면을 판단하는 잣대가 된다. 후행종합지수는 상용근로자수, 소비재수입액, 생산자제품재고지수처럼 경기 변동이 지나간 뒤에야 반응하는 지표로 구성되어, 이미 지나간 국면을 사후에 확인하는 데 쓰인다.</p>
+    <p>구성 지표 중에는 경기가 좋아질수록 값이 <b>작아지는</b> 것도 있다. 이런 지표는 그대로 더하면 지수의 의미가 뒤틀리므로 부호를 뒤집어 반영하는데, 이를 역계열 처리라 한다. 재고 관련 지표나 실업 관련 지표가 대표적이다.</p>
+    <p>동행종합지수를 그대로 보면 장기적인 성장 추세에 가려 순환의 모습이 잘 드러나지 않는다. 우리 경제처럼 성장세가 이어지는 경우 지수 자체는 수축 국면에서도 좀처럼 내려가지 않기 때문이다. 그래서 동행종합지수에서 추세 요인을 걷어 낸 동행지수 순환변동치를 함께 본다. 이 값은 100을 기준으로 하여 100을 넘으면 경기가 추세보다 위에 있음을, 밑돌면 추세보다 아래에 있음을 뜻한다. 다만 100 아래에 있다고 해서 반드시 경기가 나빠지고 있다는 뜻은 아니다. 순환변동치가 96에서 97로 올랐다면 여전히 추세를 밑돌면서도 경기는 개선되고 있는 것이다. 즉 <b>수준</b>과 <b>방향</b>은 구분해서 읽어야 한다.</p>
+    <p>경기의 정점과 저점이 언제였는지를 공식적으로 정한 날짜를 기준순환일이라 한다. 기준순환일은 동행지수 순환변동치를 중심으로 여러 지표와 국민경제 전반의 흐름을 종합해 결정되는데, 지표가 확정되고 잠정치가 여러 차례 수정되기를 기다려야 하므로 실제 전환점이 지난 뒤 상당한 시간이 흐른 다음에야 사후적으로 확정된다. 그래서 우리는 지금이 확장기인지 수축기인지를 실시간으로는 정확히 알 수 없으며, 선행지수의 움직임을 근거로 추정할 뿐이다.</p>
+    <p>결국 경기 판단은 하나의 숫자로 끝나지 않는다. DI로 변화가 얼마나 넓게 퍼져 있는지를 살피고, CI로 그 변화의 크기를 재며, 순환변동치로 추세 대비 위치를 확인하는 과정이 함께 이루어져야 한다. 지표마다 답할 수 있는 질문이 다르다는 사실을 잊는 순간, 같은 숫자를 두고도 정반대의 진단이 내려질 수 있다.</p>
+  </div>
+
+  <div class="q" data-answer="1">
+    <div class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+    <ul class="opts">
+      <li>① 경기확산지수는 구성 지표 중 값이 증가한 지표의 비율을 바탕으로 산출된다.</li>
+      <li>② 경기확산지수가 50에서 60으로 오르면 경기 확장의 속도가 그만큼 빨라졌음을 알 수 있다.</li>
+      <li>③ 경기종합지수는 지표별 변동성 차이를 조정하는 표준화 과정을 거쳐 합성된다.</li>
+      <li>④ 동행지수 순환변동치가 100보다 작으면서도 전월보다 상승할 수 있다.</li>
+      <li>⑤ 기준순환일은 실제 전환점이 지난 뒤 사후적으로 확정된다.</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: ②</div>
+      <ul>
+        <li><b>① 일치</b> — 2문단에서 DI는 전월보다 증가한 지표에 1점, 보합에 0.5점, 감소에 0점을 주어 전체 지표 수로 나눈 비율이라고 설명했다.</li>
+        <li><b>② 불일치(정답)</b> — 2문단은 DI가 "각 지표가 얼마나 늘었는지를 따지지 않고 늘었는지 줄었는지만 헤아리므로" 변동의 <b>방향</b>은 알려 주되 <b>진폭이나 속도</b>는 알려 주지 못한다고 명시했다. DI의 상승은 증가한 지표가 더 넓게 퍼졌다는 뜻일 뿐 확장 속도를 나타내지 않는다. 변동의 크기를 담아내는 것은 3문단의 경기종합지수(CI)다.</li>
+        <li><b>③ 일치</b> — 3문단에서 변동 폭이 큰 지표가 지수를 좌우하지 않도록 표준화 과정을 거쳐 합성한다고 했다.</li>
+        <li><b>④ 일치</b> — 6문단의 "96에서 97로 올랐다면 여전히 추세를 밑돌면서도 경기는 개선되고 있는 것"이라는 예시가 그대로 대응한다. 수준과 방향은 구분해 읽어야 한다.</li>
+        <li><b>⑤ 일치</b> — 7문단에서 지표 확정과 잠정치 수정을 기다려야 하므로 전환점이 지난 뒤 사후적으로 확정된다고 서술했다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 영어 ================= -->
+<section class="sec eng">
+  <h2 class="sec-title">✏️ 영어 — TOEIC Part 5 문장 완성 (5문항)</h2>
+
+  <div class="q" data-answer="2">
+    <div class="q-title"><span class="num">1</span>The relocation of the data center proved ______ more expensive than the initial estimate had suggested.</div>
+    <ul class="opts">
+      <li>(A) very</li>
+      <li>(B) too</li>
+      <li>(C) far</li>
+      <li>(D) such</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (C) far</div>
+      <ul>
+        <li><b>(A) very</b> — <code>very</code>는 원급을 강조하며 비교급 <code>more expensive</code>는 수식하지 못한다.</li>
+        <li><b>(B) too</b> — 역시 원급 강조어로 비교급 앞에 올 수 없다(<code>too expensive</code>는 가능).</li>
+        <li><b>(C) far</b> — 정답. <code>far / much / even / still / a lot</code>은 비교급을 강조하는 부사다. "훨씬 더 비싼".</li>
+        <li><b>(D) such</b> — 한정사로 「such a + 명사」 형태를 취하므로 비교급 형용사를 수식할 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="1">
+    <div class="q-title"><span class="num">2</span>Employees who wish to attend the leadership seminar should register ______ Friday at the latest.</div>
+    <ul class="opts">
+      <li>(A) until</li>
+      <li>(B) by</li>
+      <li>(C) since</li>
+      <li>(D) within</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (B) by</div>
+      <ul>
+        <li><b>(A) until</b> — 동작이 그때까지 <b>계속</b>됨을 나타낸다. <code>register</code>는 한 번에 끝나는 동작이라 어울리지 않는다.</li>
+        <li><b>(B) by</b> — 정답. 특정 시점까지 동작이 <b>완료</b>되어야 함을 뜻하는 기한의 전치사. <code>at the latest</code>(늦어도)와도 호응한다.</li>
+        <li><b>(C) since</b> — 과거 시점부터의 계속을 나타내며 완료 시제와 함께 쓰인다.</li>
+        <li><b>(D) within</b> — 뒤에 <code>within three days</code>처럼 기간을 나타내는 명사가 와야 한다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="3">
+    <div class="q-title"><span class="num">3</span>The updated inventory system enables warehouse staff to locate items far more ______ than the previous one did.</div>
+    <ul class="opts">
+      <li>(A) efficient</li>
+      <li>(B) efficiency</li>
+      <li>(C) efficiencies</li>
+      <li>(D) efficiently</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (D) efficiently</div>
+      <ul>
+        <li><b>(A) efficient</b> — 형용사는 명사를 수식하거나 보어가 되는데, 여기서는 수식할 명사도 보어 자리도 없다.</li>
+        <li><b>(B) efficiency</b> / <b>(C) efficiencies</b> — 명사는 <code>locate items</code>로 이미 완결된 구조에 들어갈 자리가 없다.</li>
+        <li><b>(D) efficiently</b> — 정답. 「to locate + 목적어」가 완전하므로 동사를 수식하는 부사가 필요하며, <code>far more ~ly</code>는 부사 비교급 강조 형태다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="0">
+    <div class="q-title"><span class="num">4</span>______ the shipment clears customs, our logistics team will notify the client of the revised delivery date.</div>
+    <ul class="opts">
+      <li>(A) As soon as</li>
+      <li>(B) In case of</li>
+      <li>(C) Owing to</li>
+      <li>(D) Instead of</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (A) As soon as</div>
+      <ul>
+        <li><b>(A) As soon as</b> — 정답. 뒤에 「주어(the shipment)+동사(clears)」의 절이 오므로 접속사가 필요하며, 의미상 '~하자마자'가 자연스럽다. 시간 부사절이라 미래를 현재시제 <code>clears</code>로 쓴 점도 단서다.</li>
+        <li><b>(B) In case of</b> — 전치사구로 뒤에 명사가 와야 한다(<code>in case</code>라면 절 가능).</li>
+        <li><b>(C) Owing to</b> — '~때문에'라는 전치사구로 절을 이끌 수 없다.</li>
+        <li><b>(D) Instead of</b> — 전치사구이며 의미도 문맥에 맞지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="1">
+    <div class="q-title"><span class="num">5</span>The quarterly forecast, ______ was compiled by the research division, indicates a modest recovery in consumer spending.</div>
+    <ul class="opts">
+      <li>(A) it</li>
+      <li>(B) which</li>
+      <li>(C) what</li>
+      <li>(D) whose</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: (B) which</div>
+      <ul>
+        <li><b>(A) it</b> — 대명사로는 절과 절을 연결할 수 없다(접속사가 없어 비문).</li>
+        <li><b>(B) which</b> — 정답. 콤마로 삽입된 계속적 용법의 관계대명사절로, 선행사 <code>The quarterly forecast</code>를 받아 주어 역할을 한다.</li>
+        <li><b>(C) what</b> — 선행사를 포함하는 관계대명사라 앞에 선행사가 있으면 쓸 수 없고, 계속적 용법도 불가능하다.</li>
+        <li><b>(D) whose</b> — 소유격이므로 바로 뒤에 명사가 와야 한다(<code>whose author was...</code>).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 수학 ================= -->
+<section class="sec math">
+  <h2 class="sec-title">🧮 수학 — 순열과 조합 (경우의 수)</h2>
+
+  <div class="q" data-answer="3">
+    <div class="q-title"><span class="num">1</span>
+      집합 <b>X = {1, 2, 3, 4, 5}</b>에 대하여 X에서 X로의 함수 <b>f</b> 중에서
+      모든 <b>x ∈ X</b>에 대해 <b>f(f(x)) = f(x)</b>를 만족시키는 함수 f의 개수는?
+    </div>
+    <ul class="opts">
+      <li>① 120</li>
+      <li>② 151</li>
+      <li>③ 176</li>
+      <li>④ 196</li>
+      <li>⑤ 220</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="head">정답: ④ 196</div>
+      <p><b>[풀이]</b></p>
+      <ul>
+        <li><b>1단계 — 조건의 의미 해석.</b> f(x)의 값을 y라 두면 조건은 <b>f(y) = y</b>가 된다. 즉 <b>f의 치역에 속하는 모든 원소는 자기 자신으로 가는 고정점</b>이어야 한다. 반대로 고정점들의 집합을 S라 하면 치역 ⊆ S이고, S의 원소는 모두 자기 자신으로 가므로 치역 ⊇ S다. 결국 <b>치역 = 고정점 집합 = S</b>.</li>
+        <li><b>2단계 — 구조 파악.</b> 따라서 f를 정하는 일은 다음 두 가지를 정하는 일과 같다.
+          <br>· 고정점 집합 S (크기 k, 1 ≤ k ≤ 5)를 고른다 → <sub>5</sub>C<sub>k</sub>가지
+          <br>· S에 속하지 않는 나머지 5−k개의 원소를 각각 S의 원소 중 하나로 보낸다 → k<sup>5−k</sup>가지
+          <br>(S 밖의 원소는 S 안으로 가므로 절대 자기 자신이 될 수 없어, S가 고정점 집합이라는 조건이 저절로 지켜진다. 따라서 <b>중복 계산이 없다</b>.)</li>
+        <li><b>3단계 — k별 계산.</b>
+          <br>· k = 1 : <sub>5</sub>C<sub>1</sub> × 1<sup>4</sup> = 5 × 1 = <b>5</b>
+          <br>· k = 2 : <sub>5</sub>C<sub>2</sub> × 2<sup>3</sup> = 10 × 8 = <b>80</b>
+          <br>· k = 3 : <sub>5</sub>C<sub>3</sub> × 3<sup>2</sup> = 10 × 9 = <b>90</b>
+          <br>· k = 4 : <sub>5</sub>C<sub>4</sub> × 4<sup>1</sup> = 5 × 4 = <b>20</b>
+          <br>· k = 5 : <sub>5</sub>C<sub>5</sub> × 5<sup>0</sup> = 1 × 1 = <b>1</b> (항등함수)</li>
+        <li><b>4단계 — 합의 법칙.</b> 5 + 80 + 90 + 20 + 1 = <b>196</b></li>
+        <li><b>[함정 주의]</b> ① k = 0은 불가능하다. 치역이 공집합인 함수는 없기 때문이다. ② k = 5는 모든 원소가 고정점이므로 항등함수 <b>1개</b>뿐이며, 5<sup>0</sup> = 1로 자연스럽게 처리된다. ③ "치역의 크기가 k"라고만 두고 <sub>5</sub>C<sub>k</sub> × k<sup>5−k</sup> 대신 포함배제를 쓰려 하면 훨씬 복잡해진다. 조건이 <b>치역 = 고정점 집합</b>임을 간파하는 것이 핵심이다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 일본어 ================= -->
+<section class="sec jpn">
+  <h2 class="sec-title">🇯🇵 일본어 — 오늘의 회화 문장</h2>
+
+  <p class="jp-line">明日 テストが あるから、今日は 早く 帰らなければ なりません。</p>
+  <p class="jp-read">📢 あした テスト が ある から、きょう は はやく かえらなければ なりません<br>
+  <span style="color:#64748b;">[아시타 테스토가 아루카라, 쿄-와 하야쿠 카에라나케레바 나리마셍]</span></p>
+  <p class="jp-kr">🇰🇷 내일 시험이 있으니까, 오늘은 일찍 돌아가야 합니다.</p>
+
+  <div class="ans show" style="background:#fdf2f8;border-color:#fbcfe8;border-left-color:#db2777;">
+    <div class="head" style="color:#be185d;">📝 문법 설명</div>
+    <ul>
+      <li><b>동사 ない형 + なければ なりません</b> : '~하지 않으면 안 됩니다 = ~해야 합니다'라는 <b>의무</b> 표현. 만드는 법은 ない형에서 <b>ない를 떼고 なければ</b>를 붙인다. 帰(かえ)らない → 帰ら + なければ なりません. 회화에서는 「帰らなくちゃ」처럼 줄여 쓰기도 한다.</li>
+      <li><b>から</b> : 여기서는 <b>이유·원인</b>을 나타내는 접속조사로 '~니까'. 「ので」도 비슷하지만, から는 말하는 사람의 <b>주관적 판단</b>을 담고, ので는 좀 더 객관적·정중한 느낌이다.</li>
+      <li><b>ある / いる</b> : 「テストが ある」의 ある는 <b>무생물</b>의 존재를 나타내는 동사. 사람·동물에는 「いる」를 쓴다(友だちが いる). 조사는 「~<b>が</b> ある」로 が를 쓰는 점에 주의.</li>
+      <li><b>早く</b> : い형용사 早(はや)い가 동사를 꾸미기 위해 <b>い → く</b>로 바뀐 부사형. 「安(やす)い → 安く 買(か)う(싸게 사다)」와 같은 원리다.</li>
+      <li><b>明日 / 今日</b> : 「明日」「今日」처럼 상대적 시간을 나타내는 말에는 조사 <b>に를 붙이지 않는다</b>. 문장에서 「今日<b>は</b>」의 は는 '오늘은 (다른 날과 달리)'이라는 <b>대비</b>의 뉘앙스를 준다.</li>
+    </ul>
+    <table class="words">
+      <tr><th>단어</th><th>읽기</th><th>뜻</th></tr>
+      <tr><td>明日</td><td>あした</td><td>내일</td></tr>
+      <tr><td>テスト</td><td>てすと</td><td>시험, 테스트</td></tr>
+      <tr><td>今日</td><td>きょう</td><td>오늘</td></tr>
+      <tr><td>早い</td><td>はやい</td><td>이르다, 빠르다</td></tr>
+      <tr><td>帰る</td><td>かえる</td><td>돌아가다, 귀가하다</td></tr>
+      <tr><td>ある</td><td>—</td><td>(무생물이) 있다</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>생성일시: 2026-08-17 08:58 (KST) · 난이도: 상</footer>
+</div>
+
+<script>
+document.querySelectorAll('.q').forEach(function(q){
+  var ansIdx = parseInt(q.dataset.answer, 10);
+  var opts = q.querySelectorAll('ul.opts li');
+  var box  = q.querySelector('.ans');
+  var btn  = q.querySelector('.btn');
+  var done = false;
+
+  function reveal(){
+    box.classList.add('show');
+    opts.forEach(function(li, i){
+      li.classList.add('locked');
+      if(i === ansIdx) li.classList.add('correct');
+    });
+  }
+
+  opts.forEach(function(li, i){
+    li.addEventListener('click', function(){
+      if(done) return;
+      done = true;
+      var ok = (i === ansIdx);
+      if(!ok) li.classList.add('wrong');
+      var v = document.createElement('div');
+      v.className = 'verdict ' + (ok ? 'o' : 'x');
+      v.textContent = ok ? '⭕ 정답입니다!' : '❌ 오답입니다. 해설을 확인하세요.';
+      box.insertBefore(v, box.firstChild);
+      reveal();
+      btn.textContent = '해설 접기/펼치기';
+    });
+  });
+
+  btn.addEventListener('click', function(){
+    if(!done){ done = true; reveal(); btn.textContent = '해설 접기/펼치기'; return; }
+    box.classList.toggle('show');
+  });
+});
+</script>
+</body>
+</html>
