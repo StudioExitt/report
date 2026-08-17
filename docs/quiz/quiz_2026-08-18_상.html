@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-18 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  header.page {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  header.page h1 { margin: 0 0 8px; font-size: 24px; font-weight: 800; color: #0f172a; }
+  header.page .meta { font-size: 14px; color: #64748b; }
+  header.page .badge {
+    display: inline-block; margin-top: 8px; padding: 4px 12px;
+    background: #fee2e2; color: #b91c1c; border-radius: 999px;
+    font-size: 13px; font-weight: 700;
+  }
+
+  section.subject {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 26px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  section.subject > h2 {
+    margin: -18px -18px 18px;
+    padding: 14px 18px;
+    font-size: 19px;
+    font-weight: 800;
+    color: #fff;
+    border-radius: 13px 13px 0 0;
+  }
+  .s-kor > h2 { background: #2563eb; }
+  .s-eng > h2 { background: #059669; }
+  .s-math > h2 { background: #7c3aed; }
+  .s-jp  > h2 { background: #db2777; }
+
+  .passage {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #2563eb;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 18px;
+    font-size: 15.5px;
+    text-align: justify;
+  }
+  .passage p { margin: 0 0 12px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 22px; padding-bottom: 4px; }
+  .q + .q { border-top: 1px dashed #e2e8f0; padding-top: 20px; }
+  .q .qtitle { font-weight: 700; margin-bottom: 12px; color: #0f172a; }
+  .q .qtitle .num {
+    display: inline-block; min-width: 26px; height: 26px; line-height: 26px;
+    text-align: center; background: #1e293b; color: #fff;
+    border-radius: 7px; font-size: 13px; margin-right: 8px;
+  }
+
+  .opts { list-style: none; margin: 0; padding: 0; }
+  .opts li {
+    border: 1px solid #dbe3ee;
+    background: #fff;
+    border-radius: 9px;
+    padding: 11px 13px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 15.5px;
+  }
+  .opts li:hover { background: #eff6ff; border-color: #93c5fd; }
+  .opts li.correct { background: #dcfce7; border-color: #16a34a; font-weight: 600; }
+  .opts li.wrong { background: #fee2e2; border-color: #dc2626; }
+  .opts li.locked { cursor: default; }
+  .opts li .mark { float: right; font-weight: 800; }
+
+  .btn {
+    display: inline-block; margin-top: 10px;
+    background: #1e293b; color: #fff; border: none;
+    padding: 9px 18px; border-radius: 8px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+  }
+  .btn:hover { background: #334155; }
+
+  .ans {
+    display: none;
+    margin-top: 12px;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-left: 5px solid #f59e0b;
+    border-radius: 9px;
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+  .ans.show { display: block; }
+  .ans .head { font-weight: 800; color: #92400e; margin-bottom: 8px; font-size: 15.5px; }
+  .ans .result { font-weight: 800; margin-bottom: 8px; }
+  .ans .result.ok { color: #15803d; }
+  .ans .result.no { color: #b91c1c; }
+  .ans ul { margin: 8px 0 0; padding-left: 20px; }
+  .ans li { margin-bottom: 5px; }
+
+  .jp-box {
+    background: #fdf2f8;
+    border: 1px solid #f9a8d4;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .jp-sentence { font-size: 22px; font-weight: 800; color: #831843; margin-bottom: 6px; line-height: 1.5; }
+  .jp-kana { font-size: 16px; color: #9d174d; margin-bottom: 10px; }
+  .jp-ko { font-size: 16.5px; font-weight: 700; margin-bottom: 14px; }
+  .jp-box h3 { font-size: 15px; margin: 14px 0 6px; font-weight: 800; color: #831843; }
+  .jp-box ul { margin: 0; padding-left: 20px; }
+  .jp-box li { margin-bottom: 5px; font-size: 15px; }
+  .jp-word { font-weight: 700; }
+
+  footer { text-align: center; color: #94a3b8; font-size: 13px; padding: 12px 0 30px; }
+
+  @media (max-width: 600px) {
+    body { padding: 10px; font-size: 15px; }
+    header.page h1 { font-size: 20px; }
+    section.subject { padding: 14px; }
+    section.subject > h2 { margin: -14px -14px 14px; padding: 12px 14px; font-size: 17px; }
+    .jp-sentence { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 18일 (화) · 생성 시각 06:47 (KST)</div>
+  <div class="badge">난이도 : 상</div>
+</header>
+
+<!-- ============ 국어 ============ -->
+<section class="subject s-kor">
+  <h2>📘 국어 — 독서(경제) : 산출갭과 통화정책</h2>
+
+  <div class="passage">
+    <p>한 나라의 경제가 물가를 자극하지 않으면서 지속적으로 생산해 낼 수 있는 산출 수준을 <strong>잠재 GDP</strong>라 한다. 잠재 GDP는 노동 투입량, 자본 스톡, 그리고 이 둘을 결합해 산출로 바꾸는 효율성인 총요소생산성에 의해 결정된다. 여기서 유의할 점은 잠재 GDP가 한 경제가 물리적으로 도달할 수 있는 최대치를 뜻하지 않는다는 것이다. 설비를 밤낮없이 가동하고 노동자를 한계까지 동원하면 일시적으로 잠재 GDP를 넘어서는 생산도 가능하다. 다만 그러한 상태는 임금과 원자재 가격의 상승을 불러오므로 오래 지속될 수 없다. 즉 잠재 GDP는 <em>물가 안정과 양립할 수 있는</em> 산출 수준이다.</p>
+
+    <p>실제 GDP가 잠재 GDP에서 얼마나 벗어나 있는지를 나타내는 지표가 <strong>산출갭</strong>이다. 산출갭은 실제 GDP에서 잠재 GDP를 뺀 값을 잠재 GDP로 나누어 백분율로 표시한다. 산출갭이 양(+)이면 총수요가 경제의 공급 능력을 웃도는 경기 과열 국면으로, 노동 시장이 빠듯해지고 임금과 물가에 상승 압력이 쌓인다. 반대로 산출갭이 음(−)이면 유휴 설비와 실업이 늘어나 물가 상승률이 낮아지는 경기 침체 국면이다.</p>
+
+    <p>산출갭은 고용 지표와도 밀접하게 연결된다. <strong>오쿤의 법칙</strong>은 산출갭과 실업률갭—실제 실업률에서 자연실업률을 뺀 값—사이에 안정적인 역(逆)의 관계가 존재함을 말한다. 산출갭이 1%포인트 커지면 실업률갭은 그 절반 정도만큼 작아지는 식이다. 생산이 늘어나면 그만큼 사람이 더 필요해지므로, 경기 과열은 실업률을 자연실업률 아래로 끌어내리고 경기 침체는 실업률을 그 위로 밀어 올린다.</p>
+
+    <p>중앙은행은 이 두 갭을 함께 보며 정책금리를 조정한다. 이를 단순한 식으로 정리한 것이 <strong>테일러 준칙</strong>이다. 이 준칙에 따르면 적정 정책금리는 실질 중립금리와 현재 물가상승률을 합한 값에, 물가상승률이 목표치를 웃도는 정도(인플레이션갭)와 산출갭에 각각 일정한 가중치를 곱해 더한 값이다. 여기서 인플레이션갭에 붙는 계수를 크게 잡을수록 중앙은행은 물가 안정을 중시하는 것이고, 산출갭에 붙는 계수를 크게 잡을수록 경기 변동을 줄이는 데 더 큰 비중을 두는 것이다. 두 목표가 같은 방향을 가리킬 때—예컨대 물가도 높고 경기도 과열일 때—정책 판단은 쉽다. 문제는 공급 충격으로 물가는 오르는데 산출은 줄어드는 국면처럼 두 신호가 서로 반대 방향을 가리킬 때이다.</p>
+
+    <p>그런데 테일러 준칙을 현실에 적용하기 어렵게 만드는 근본적인 난점이 있다. 잠재 GDP도, 자연실업률도, 중립금리도 모두 <strong>직접 관측되지 않는 추정치</strong>라는 점이다. 이들은 통계청이 발표하는 숫자가 아니라 모형을 통해 걸러 낸 값이며, 그나마도 새로운 자료가 쌓이면 사후적으로 크게 수정된다. 실제로 1970년대의 여러 중앙은행은 당시의 생산성 둔화를 일시적 경기 부진으로 오인해 잠재 GDP를 실제보다 높게 추정했고, 그 결과 산출갭을 실제보다 더 큰 음수로 보아 필요 이상으로 완화적인 정책을 유지했다. 고인플레이션은 그 대가였다.</p>
+
+    <p>최근에는 다른 층위의 논쟁도 더해졌다. 산출갭이 물가로 전달되는 통로인 <strong>필립스 곡선이 평탄해졌다</strong>는 진단이 그것이다. 기대 인플레이션이 목표치 부근에 단단히 고정되고 세계화로 국제 경쟁이 심해지면서, 같은 크기의 산출갭이 만들어 내는 물가 반응이 과거보다 약해졌다는 것이다. 이 진단이 옳다면 물가만 보고 통화정책을 운용할 경우 경기 과열의 누적을 뒤늦게야 알아차릴 위험이 있다.</p>
+
+    <p>또 하나 주목할 것은 <strong>이력현상</strong>이다. 전통적인 관점에서 산출갭은 시간이 지나면 저절로 메워지는 일시적 이탈이며, 잠재 GDP 자체는 총수요의 영향을 받지 않는다고 보았다. 그러나 깊은 불황이 오래 이어지면 장기 실업자의 숙련이 훼손되고 기업의 설비·연구개발 투자가 미뤄져, 경기가 회복된 뒤에도 공급 능력이 원래 궤도로 돌아오지 못한다. 수요 측 충격이 공급 측 능력에 흉터를 남기는 것이다. 이 견해를 받아들이면, 침체기의 소극적인 경기 대응은 단지 그 시기의 생산을 잃는 데 그치지 않고 미래의 잠재성장률까지 깎아 내리는 선택이 된다.</p>
+  </div>
+
+  <div class="q" data-answer="2">
+    <div class="qtitle"><span class="num">국1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+    <ul class="opts">
+      <li data-i="0">① 잠재 GDP는 통계로 직접 관측되는 값이 아니라 모형에 의한 추정치이므로 사후적으로 수정될 수 있다.</li>
+      <li data-i="1">② 산출갭이 양(+)의 값을 가지면 총수요가 공급 능력을 웃돌아 임금과 물가에 상승 압력이 쌓인다.</li>
+      <li data-i="2">③ 오쿤의 법칙에 따르면 산출갭이 커질 때 실업률갭도 같은 방향으로 함께 커진다.</li>
+      <li data-i="3">④ 테일러 준칙에서 산출갭에 붙는 계수를 크게 잡는 것은 경기 변동의 완화에 더 큰 비중을 두는 것이다.</li>
+      <li data-i="4">⑤ 이력현상을 인정하면 총수요 부진이 장기화될 때 잠재성장률 자체가 낮아질 수 있다고 보게 된다.</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : ③</div>
+      <ul>
+        <li>① <b>일치</b> — 5문단: 잠재 GDP·자연실업률·중립금리는 "직접 관측되지 않는 추정치"이며 "새로운 자료가 쌓이면 사후적으로 크게 수정된다"고 하였다.</li>
+        <li>② <b>일치</b> — 2문단: 산출갭이 양이면 "총수요가 경제의 공급 능력을 웃도는 경기 과열 국면"으로 "임금과 물가에 상승 압력이 쌓인다"고 하였다.</li>
+        <li>③ <b>불일치(정답)</b> — 3문단은 산출갭과 실업률갭 사이에 "안정적인 <b>역(逆)의 관계</b>"가 있다고 하였고, "산출갭이 1%포인트 커지면 실업률갭은 그 절반 정도만큼 <b>작아진다</b>"는 예시까지 들었다. 두 갭이 같은 방향으로 함께 커진다는 진술은 지문과 정반대이다.</li>
+        <li>④ <b>일치</b> — 4문단: "산출갭에 붙는 계수를 크게 잡을수록 경기 변동을 줄이는 데 더 큰 비중을 두는 것"이라고 하였다.</li>
+        <li>⑤ <b>일치</b> — 7문단: 깊은 불황이 길어지면 숙련 훼손·투자 지연으로 공급 능력이 회복되지 않아 "미래의 잠재성장률까지 깎아 내린다"고 하였다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 영어 ============ -->
+<section class="subject s-eng">
+  <h2>📗 TOEIC 영어 — Part 5 문장 완성 (5문제)</h2>
+
+  <div class="q" data-answer="2">
+    <div class="qtitle"><span class="num">영1</span>The board postponed the final vote ______ the external auditor's report was still incomplete.</div>
+    <ul class="opts">
+      <li data-i="0">(A) despite</li>
+      <li data-i="1">(B) because of</li>
+      <li data-i="2">(C) since</li>
+      <li data-i="3">(D) in spite of</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (C) since</div>
+      <ul>
+        <li>빈칸 뒤에 <b>주어(the report) + 동사(was)</b>가 이어지는 완전한 절이 오므로 <b>접속사</b> 자리다. 의미상으로도 "보고서가 미완성이었기 <b>때문에</b> 표결을 미뤘다"는 이유 관계이므로 (C)가 정답.</li>
+        <li>(A) despite · (D) in spite of — 둘 다 <b>전치사</b>라 뒤에 명사(구)만 올 수 있고, 의미도 양보('~에도 불구하고')여서 이중으로 부적합.</li>
+        <li>(B) because of — 이유의 의미는 맞지만 <b>전치사구</b>이므로 절을 이끌 수 없다. 절을 쓰려면 of를 뺀 because여야 한다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="0">
+    <div class="qtitle"><span class="num">영2</span>All staff members must submit their travel expense reports ______ the fifth of the following month.</div>
+    <ul class="opts">
+      <li data-i="0">(A) by</li>
+      <li data-i="1">(B) until</li>
+      <li data-i="2">(C) since</li>
+      <li data-i="3">(D) within</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (A) by</div>
+      <ul>
+        <li>submit(제출하다)은 한 번에 끝나는 <b>완료성 동작</b>이고, 5일이라는 <b>마감 시점</b>을 나타내야 하므로 '~까지(늦어도)'의 by가 정답.</li>
+        <li>(B) until — '~까지 <b>계속</b>'이라는 지속의 의미. wait, stay처럼 이어지는 동작에 쓰며 마감 기한에는 쓰지 않는다.</li>
+        <li>(C) since — '~ 이후로'라는 기점. 현재완료와 어울리며 미래 마감에는 맞지 않는다.</li>
+        <li>(D) within — 뒤에 two weeks 같은 <b>기간</b>이 와야 한다. the fifth는 시점이므로 불가.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="2">
+    <div class="qtitle"><span class="num">영3</span>The newly installed logistics system has significantly ______ the time required to process incoming orders.</div>
+    <ul class="opts">
+      <li data-i="0">(A) reduce</li>
+      <li data-i="1">(B) reducing</li>
+      <li data-i="2">(C) reduced</li>
+      <li data-i="3">(D) reduction</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (C) reduced</div>
+      <ul>
+        <li>조동사 has 뒤이므로 <b>과거분사</b>가 와야 현재완료(has + p.p.)가 성립한다. 부사 significantly는 has와 p.p. 사이에 끼어든 수식어일 뿐이므로 무시하고 구조를 본다.</li>
+        <li>(A) reduce — 동사원형. has 뒤에 원형은 올 수 없다.</li>
+        <li>(B) reducing — has reducing은 성립하지 않는 형태(진행형은 has <b>been</b> reducing).</li>
+        <li>(D) reduction — 명사. 뒤에 목적어 the time이 이미 있으므로 자리가 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="3">
+    <div class="qtitle"><span class="num">영4</span>Ms. Watanabe's revised proposal was far more ______ than the draft circulated last quarter.</div>
+    <ul class="opts">
+      <li data-i="0">(A) persuade</li>
+      <li data-i="1">(B) persuasion</li>
+      <li data-i="2">(C) persuasively</li>
+      <li data-i="3">(D) persuasive</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (D) persuasive</div>
+      <ul>
+        <li>be동사 was의 <b>보어</b> 자리이고 more ~ than 비교급 구문이므로 <b>형용사</b>가 필요하다. far는 비교급을 강조하는 부사.</li>
+        <li>(A) persuade — 동사. was 뒤에 원형 동사는 올 수 없다.</li>
+        <li>(B) persuasion — 명사. 'The proposal was persuasion'은 제안=설득이라는 어색한 등식이 된다.</li>
+        <li>(C) persuasively — 부사. 2형식 be동사의 보어로는 쓸 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="0">
+    <div class="qtitle"><span class="num">영5</span>______ the merger receives regulatory approval, the two companies will continue to operate as separate entities.</div>
+    <ul class="opts">
+      <li data-i="0">(A) Unless</li>
+      <li data-i="1">(B) Whereas</li>
+      <li data-i="2">(C) Even</li>
+      <li data-i="3">(D) So that</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (A) Unless</div>
+      <ul>
+        <li>"승인을 받지 <b>않는 한</b> 두 회사는 별개로 운영된다"는 조건 관계. Unless = if ... not.</li>
+        <li>(B) Whereas — '반면에'라는 대조. 두 절이 서로 맞서는 사실을 나열할 때 쓰며, 여기서는 승인 여부가 결과를 좌우하는 조건 관계라 어색하다.</li>
+        <li>(C) Even — 단독으로는 절을 이끌 수 없는 <b>강조 부사</b>다. 접속사가 되려면 even if / even though 형태여야 한다.</li>
+        <li>(D) So that — 목적('~하도록')이나 결과를 나타내며, 보통 주절 <b>뒤</b>에 온다. 문두에서 조건을 나타낼 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 수학 ============ -->
+<section class="subject s-math">
+  <h2>📙 수학 — 순열과 조합 (난이도 최상)</h2>
+
+  <div class="q" data-answer="1">
+    <div class="qtitle"><span class="num">수1</span>
+      집합 X = {1, 2, 3, 4, 5} 에 대하여, X에서 X로의 함수 f 중에서<br>
+      모든 x ∈ X 에 대하여 &nbsp;<b>f(f(x)) = f(x)</b>&nbsp; 를 만족시키는 함수 f의 개수는?
+    </div>
+    <ul class="opts">
+      <li data-i="0">① 176</li>
+      <li data-i="1">② 196</li>
+      <li data-i="2">③ 216</li>
+      <li data-i="3">④ 236</li>
+      <li data-i="4">⑤ 256</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : ② 196</div>
+      <ul>
+        <li><b>조건의 해석</b> — f의 치역을 Y = f(X) 라 하자. 임의의 y ∈ Y 는 y = f(x) 꼴이므로, 조건 f(f(x)) = f(x) 는 곧 <b>모든 y ∈ Y 에 대하여 f(y) = y</b> 라는 뜻이다. 즉 <b>치역에 속하는 원소는 모두 자기 자신으로 간다(고정점)</b>.</li>
+        <li><b>세는 방법</b> — 치역 Y의 크기를 k라 하면, ① 어떤 k개가 치역이 될지 고르는 경우가 <sub>5</sub>C<sub>k</sub> 가지, ② Y의 원소는 f(y)=y로 값이 이미 결정, ③ 나머지 5−k개의 원소는 각각 Y 안의 어느 값으로든 갈 수 있으므로 k<sup>5−k</sup> 가지. (이때 Y 밖의 원소는 자기 자신으로 가지 않으므로 치역이 정확히 Y가 되는 것도 자동으로 보장된다.)</li>
+        <li><b>계산</b> — 개수 = Σ<sub>k=1</sub><sup>5</sup> <sub>5</sub>C<sub>k</sub> · k<sup>5−k</sup>
+          <br>k=1 : 5 × 1<sup>4</sup> = 5
+          <br>k=2 : 10 × 2<sup>3</sup> = 80
+          <br>k=3 : 10 × 3<sup>2</sup> = 90
+          <br>k=4 : 5 × 4<sup>1</sup> = 20
+          <br>k=5 : 1 × 5<sup>0</sup> = 1
+          <br>합계 = 5 + 80 + 90 + 20 + 1 = <b>196</b>
+        </li>
+        <li><b>함정</b> — k=5는 항등함수 1가지뿐인데 이를 빠뜨리면 195, k=1을 "모든 x가 같은 값" 5가지가 아니라 다르게 세면 오답이 된다. 또 "치역 밖 원소가 치역 안으로만 간다"는 제약을 놓치면 k<sup>5−k</sup> 대신 5<sup>5−k</sup>로 잘못 세게 된다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 일본어 ============ -->
+<section class="subject s-jp">
+  <h2>📕 일본어 회화 — 오늘의 한 문장</h2>
+  <div class="jp-box">
+    <div class="jp-sentence">明日は友達と映画を見に行くつもりです。</div>
+    <div class="jp-kana">あした は ともだち と えいが を み に いく つもり です<br>(아시타와 토모다치토 에-가오 미니 이쿠 츠모리데스)</div>
+    <div class="jp-ko">🇰🇷 내일은 친구와 영화를 보러 갈 생각(예정)이에요.</div>
+
+    <h3>단어</h3>
+    <ul>
+      <li><span class="jp-word">明日(あした)</span> 내일 &nbsp;/&nbsp; <span class="jp-word">友達(ともだち)</span> 친구</li>
+      <li><span class="jp-word">映画(えいが)</span> 영화 &nbsp;/&nbsp; <span class="jp-word">見(み)る</span> 보다 &nbsp;/&nbsp; <span class="jp-word">行(い)く</span> 가다</li>
+      <li><span class="jp-word">つもり</span> 생각, 작정, 예정</li>
+    </ul>
+
+    <h3>문법 포인트</h3>
+    <ul>
+      <li><b>동사 ます형 어간 + に行く = ~하러 가다</b> (목적의 に)<br>
+        見ます → 見<b>に</b>行く (보러 가다), 買(か)います → 買<b>に</b>行く (사러 가다)<br>
+        ※ 「する」로 끝나는 명사 동사는 명사에 바로 붙인다 : 買(か)い物(もの)<b>に</b>行く (장 보러 가다)</li>
+      <li><b>동사 사전형 + つもりです = ~할 생각이다 / ~할 작정이다</b><br>
+        본인의 <b>의지·계획</b>을 나타낸다. 부정은 「行かない<b>つもり</b>です」(가지 않을 생각이다)처럼 동사를 부정형으로 바꾼다.<br>
+        ※ 「~예정입니다」를 이미 정해진 일정으로 말할 때는 「~予定(よてい)です」를 쓴다. つもり는 <b>마음속 계획</b>, 予定는 <b>확정된 일정</b>에 가깝다.</li>
+      <li><b>조사 と</b> 는 여기서 '~와(함께)'라는 <b>동반</b>의 의미. 友達<b>と</b>行く = 친구와 (함께) 가다.</li>
+      <li><b>は 와 に</b> — 「明日<b>は</b>」처럼 시간 명사에 は를 붙이면 "(다른 날은 몰라도) 내일은"이라는 <b>대비·강조</b>의 뉘앙스가 생긴다. 明日, 今日(きょう), 昨日(きのう) 같은 상대적 시간 표현에는 に를 붙이지 않는 점도 함께 외워 두자.</li>
+    </ul>
+
+    <h3>응용 문장</h3>
+    <ul>
+      <li>週末(しゅうまつ)は 図書館(としょかん)へ 本(ほん)を 借(か)りに 行くつもりです。<br>→ 주말에는 도서관에 책을 빌리러 갈 생각이에요.</li>
+      <li>今日(きょう)は どこにも 行かないつもりです。<br>→ 오늘은 아무 데도 가지 않을 생각이에요.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>생성일시 : 2026-08-18 06:47 (KST, Asia/Seoul)</footer>
+</div>
+
+<script>
+document.querySelectorAll('.q').forEach(function (q) {
+  var answer = parseInt(q.dataset.answer, 10);
+  var opts = q.querySelectorAll('.opts li');
+  var box = q.querySelector('.ans');
+  var result = box.querySelector('.result');
+  var btn = q.querySelector('.btn');
+  var done = false;
+
+  function reveal(picked) {
+    opts.forEach(function (o, i) {
+      o.classList.add('locked');
+      if (i === answer) {
+        o.classList.add('correct');
+        o.innerHTML += '<span class="mark">✅ 정답</span>';
+      } else if (picked !== null && i === picked) {
+        o.classList.add('wrong');
+        o.innerHTML += '<span class="mark">❌ 내 선택</span>';
+      }
+    });
+    if (picked === null) {
+      result.textContent = '';
+    } else if (picked === answer) {
+      result.textContent = '🎉 정답입니다!';
+      result.className = 'result ok';
+    } else {
+      result.textContent = '❌ 오답입니다. 아래 해설을 확인하세요.';
+      result.className = 'result no';
+    }
+    box.classList.add('show');
+    btn.textContent = '해설 접기 / 펼치기';
+    done = true;
+  }
+
+  opts.forEach(function (o, i) {
+    o.addEventListener('click', function () {
+      if (done) return;
+      reveal(i);
+    });
+  });
+
+  btn.addEventListener('click', function () {
+    if (!done) { reveal(null); return; }
+    box.classList.toggle('show');
+  });
+});
+</script>
+</body>
+</html>
