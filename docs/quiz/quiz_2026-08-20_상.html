@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-20 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  header.page {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  header.page h1 { margin: 0 0 8px; font-size: 24px; font-weight: 800; color: #0f172a; }
+  header.page .meta { font-size: 14px; color: #64748b; }
+  header.page .badge {
+    display: inline-block; margin-top: 8px; padding: 4px 12px;
+    background: #fee2e2; color: #b91c1c; border-radius: 999px;
+    font-size: 13px; font-weight: 700;
+  }
+
+  section.subject {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 26px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  section.subject > h2 {
+    margin: -18px -18px 18px;
+    padding: 14px 18px;
+    font-size: 19px;
+    font-weight: 800;
+    color: #fff;
+    border-radius: 13px 13px 0 0;
+  }
+  .s-kor > h2 { background: #2563eb; }
+  .s-eng > h2 { background: #059669; }
+  .s-math > h2 { background: #7c3aed; }
+  .s-jp  > h2 { background: #db2777; }
+
+  .passage {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #2563eb;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 18px;
+    font-size: 15.5px;
+    text-align: justify;
+  }
+  .passage p { margin: 0 0 12px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 22px; padding-bottom: 4px; }
+  .q + .q { border-top: 1px dashed #e2e8f0; padding-top: 20px; }
+  .q .qtitle { font-weight: 700; margin-bottom: 12px; color: #0f172a; }
+  .q .qtitle .num {
+    display: inline-block; min-width: 26px; height: 26px; line-height: 26px;
+    text-align: center; background: #1e293b; color: #fff;
+    border-radius: 7px; font-size: 13px; margin-right: 8px;
+  }
+
+  .opts { list-style: none; margin: 0; padding: 0; }
+  .opts li {
+    border: 1px solid #dbe3ee;
+    background: #fff;
+    border-radius: 9px;
+    padding: 11px 13px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 15.5px;
+  }
+  .opts li:hover { background: #eff6ff; border-color: #93c5fd; }
+  .opts li.correct { background: #dcfce7; border-color: #16a34a; font-weight: 600; }
+  .opts li.wrong { background: #fee2e2; border-color: #dc2626; }
+  .opts li.locked { cursor: default; }
+  .opts li .mark { float: right; font-weight: 800; }
+
+  .btn {
+    display: inline-block; margin-top: 10px;
+    background: #1e293b; color: #fff; border: none;
+    padding: 9px 18px; border-radius: 8px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+  }
+  .btn:hover { background: #334155; }
+
+  .ans {
+    display: none;
+    margin-top: 12px;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-left: 5px solid #f59e0b;
+    border-radius: 9px;
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+  .ans.show { display: block; }
+  .ans .head { font-weight: 800; color: #92400e; margin-bottom: 8px; font-size: 15.5px; }
+  .ans .result { font-weight: 800; margin-bottom: 8px; }
+  .ans .result.ok { color: #15803d; }
+  .ans .result.no { color: #b91c1c; }
+  .ans ul { margin: 8px 0 0; padding-left: 20px; }
+  .ans li { margin-bottom: 5px; }
+
+  .jp-box {
+    background: #fdf2f8;
+    border: 1px solid #f9a8d4;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .jp-sentence { font-size: 22px; font-weight: 800; color: #831843; margin-bottom: 6px; line-height: 1.5; }
+  .jp-kana { font-size: 16px; color: #9d174d; margin-bottom: 10px; }
+  .jp-ko { font-size: 16.5px; font-weight: 700; margin-bottom: 14px; }
+  .jp-box h3 { font-size: 15px; margin: 14px 0 6px; font-weight: 800; color: #831843; }
+  .jp-box ul { margin: 0; padding-left: 20px; }
+  .jp-box li { margin-bottom: 5px; font-size: 15px; }
+  .jp-word { font-weight: 700; }
+
+  footer { text-align: center; color: #94a3b8; font-size: 13px; padding: 12px 0 30px; }
+
+  @media (max-width: 600px) {
+    body { padding: 10px; font-size: 15px; }
+    header.page h1 { font-size: 20px; }
+    section.subject { padding: 14px; }
+    section.subject > h2 { margin: -14px -14px 14px; padding: 12px 14px; font-size: 17px; }
+    .jp-sentence { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 20일 (목) · 생성 시각 06:40 (KST)</div>
+  <div class="badge">난이도 : 상</div>
+</header>
+
+<!-- ============ 국어 ============ -->
+<section class="subject s-kor">
+  <h2>📘 국어 — 독서(경기동향) : 재고순환과 경기 국면의 판단</h2>
+
+  <div class="passage">
+    <p>기업이 창고에 쌓아 두는 재고는 언뜻 낭비처럼 보이지만, 실은 생산과 판매 사이의 시차를 메우는 완충 장치이다. 주문이 갑자기 몰려도 재고가 있으면 즉시 대응할 수 있고, 생산 설비를 일정한 속도로 돌릴 수도 있다. 그런데 바로 이 완충 기능 때문에 재고는 경기의 흐름을 읽는 유용한 단서가 된다. 기업이 앞날을 밝게 볼 때와 어둡게 볼 때, 재고를 다루는 방식이 정반대로 갈리기 때문이다.</p>
+
+    <p>재고의 움직임을 경기와 연결해 보는 대표적인 도구가 <strong>재고순환지표</strong>이다. 이 지표는 <strong>출하 증가율에서 재고 증가율을 뺀 값</strong>으로 정의된다. 출하가 재고보다 빠르게 늘고 있으면 값이 양(+)이 되고, 반대로 재고가 출하보다 빠르게 쌓이고 있으면 음(−)이 된다. 두 증가율을 각각의 축으로 놓고 좌표평면에 찍으면, 경기는 대체로 시계 방향으로 네 국면을 그리며 순환한다.</p>
+
+    <p>순환의 출발점은 <strong>회복 국면</strong>이다. 수요가 살아나 출하는 늘기 시작했지만 기업은 아직 확신이 없어 생산을 늘리지 않으므로, 팔린 만큼 창고가 비어 재고는 줄어든다. 출하는 늘고 재고는 줄어드는 이 조합이 경기 회복의 신호로 읽히는 이유이다. 이어지는 <strong>확장 국면</strong>에서는 기업이 수요 증가를 확신하고 생산을 늘리면서, 앞으로 팔릴 물량에 대비해 재고를 <em>의도적으로</em> 쌓는다. 출하와 재고가 함께 늘어나는 구간이다.</p>
+
+    <p>문제는 그다음이다. <strong>후퇴 국면</strong>에서는 수요가 먼저 꺾여 출하가 둔화되는데, 생산 계획은 이미 정해져 있어 곧바로 줄이기 어렵다. 그 결과 팔리지 않은 물건이 창고에 남는 <strong>의도치 않은 재고 축적</strong>이 발생한다. 같은 '재고 증가'라도 확장기의 것과 성격이 전혀 다르며, 이 신호는 경기 후퇴의 초기 징후로 해석된다. 마지막 <strong>수축 국면</strong>에서는 기업이 뒤늦게 생산을 대폭 줄여 재고를 털어 내므로 출하와 재고가 동시에 감소한다. 재고 조정이 끝나면 다시 회복 국면으로 넘어간다.</p>
+
+    <p>이러한 성질 때문에 통계 당국은 재고순환지표를 <strong>선행종합지수</strong>의 구성 항목으로 채택한다. 반면 재고 그 자체를 나타내는 <strong>생산자제품재고지수</strong>는 <strong>후행종합지수</strong>의 구성 항목이다. 같은 재고 자료라도, 출하와의 <em>관계</em>로 가공한 지표는 경기를 앞서가고, 가공하지 않은 수준 지표는 경기를 뒤따르는 것이다. 재고가 정점을 찍는 시점은 이미 경기가 꺾이고 한참 지난 뒤인 경우가 많다.</p>
+
+    <p>재고 조정이 경기 변동의 진폭을 키운다는 점도 중요하다. 최종 소비자의 수요가 조금만 흔들려도, 소매·도매·제조·부품으로 이어지는 공급망을 거슬러 올라갈수록 주문의 변동 폭이 눈덩이처럼 커진다. 각 단계의 기업이 품절을 피하려고 실제 수요보다 넉넉히 주문하고, 수요가 꺾이면 반대로 주문을 과도하게 끊기 때문이다. 이를 <strong>채찍 효과</strong>라 한다. 그래서 공급망의 뒤쪽에 있는 부품 업체일수록 경기의 진폭을 더 크게 체감한다.</p>
+
+    <p>다만 재고 신호를 읽을 때는 몇 가지 유보 조건이 따른다. 첫째, <strong>적시생산방식</strong>이 확산되면서 기업들이 상시적으로 재고를 얇게 유지하게 되었다. 재고 자체의 변동 폭이 줄어든 만큼, 재고순환지표가 경기 국면을 가려내는 민감도도 약해질 수 있다. 둘째, 재고 증가가 늘 수요 부진 탓만은 아니다. 원자재 가격이 오를 것으로 예상되거나 공급망 차질이 우려될 때, 기업은 오히려 <em>선제적으로</em> 재고를 늘린다. 이 경우의 재고 증가는 후퇴 신호가 아니라 방어적 대비에 가깝다. 셋째, 재고는 물량이 아니라 금액으로 집계되는 일이 많아 가격 변동의 영향을 받는다. 따라서 재고 지표는 출하·생산·가격 자료와 함께 놓고 그 증가가 <em>어떤 성격</em>의 것인지를 가려낸 뒤에야 경기 판단의 근거가 될 수 있다.</p>
+  </div>
+
+  <div class="q" data-answer="1">
+    <div class="qtitle"><span class="num">국1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+    <ul class="opts">
+      <li data-i="0">① 재고순환지표는 출하 증가율에서 재고 증가율을 뺀 값으로 정의된다.</li>
+      <li data-i="1">② 생산자제품재고지수는 경기종합지수 가운데 선행종합지수를 구성하는 항목이다.</li>
+      <li data-i="2">③ 출하가 늘어나는 가운데 재고가 줄어드는 조합은 경기 회복의 신호로 해석된다.</li>
+      <li data-i="3">④ 후퇴 국면의 재고 증가는 생산을 곧바로 줄이지 못해 생기는 의도치 않은 축적이다.</li>
+      <li data-i="4">⑤ 적시생산방식의 확산은 재고순환지표가 경기 국면을 가려내는 민감도를 약화시킬 수 있다.</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : ②</div>
+      <ul>
+        <li>① <b>일치</b> — 2문단: 재고순환지표는 "출하 증가율에서 재고 증가율을 뺀 값으로 정의된다"고 하였다.</li>
+        <li>② <b>불일치(정답)</b> — 5문단은 <b>재고순환지표</b>가 선행종합지수의 구성 항목이고, <b>생산자제품재고지수</b>는 <b>후행</b>종합지수의 구성 항목이라고 명시했다. 둘의 위치를 뒤바꾼 진술이다.</li>
+        <li>③ <b>일치</b> — 3문단: 회복 국면에서 "출하는 늘고 재고는 줄어드는 이 조합이 경기 회복의 신호로 읽힌다"고 하였다.</li>
+        <li>④ <b>일치</b> — 4문단: 출하가 둔화돼도 "생산 계획은 이미 정해져 있어 곧바로 줄이기 어렵"기 때문에 의도치 않은 재고 축적이 발생한다고 하였다.</li>
+        <li>⑤ <b>일치</b> — 7문단 첫째 유보 조건: 적시생산방식 확산으로 재고 변동 폭이 줄어 "경기 국면을 가려내는 민감도도 약해질 수 있다"고 하였다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 영어 ============ -->
+<section class="subject s-eng">
+  <h2>📗 TOEIC 영어 — Part 5 문장 완성 (5문제)</h2>
+
+  <div class="q" data-answer="2">
+    <div class="qtitle"><span class="num">영1</span>Because of the sharp ______ in raw material costs, the manufacturer decided to revise its pricing structure.</div>
+    <ul class="opts">
+      <li data-i="0">(A) increased</li>
+      <li data-i="1">(B) increasingly</li>
+      <li data-i="2">(C) increase</li>
+      <li data-i="3">(D) increasing</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (C) increase</div>
+      <ul>
+        <li>구조는 <b>the + 형용사(sharp) + ______ + in</b>이다. 관사와 형용사의 수식을 받고 전치사 in의 앞에 놓이는 자리이므로 <b>명사</b>가 와야 한다. increase는 '증가'라는 명사로 쓰이며, an increase in ~('~의 증가')는 자주 나오는 짝이다.</li>
+        <li>(A) increased — 과거형/과거분사. 형용사 sharp 뒤의 명사 자리에 올 수 없다.</li>
+        <li>(B) increasingly — 부사('점점 더'). 관사 the의 수식을 받을 수 없다.</li>
+        <li>(D) increasing — 동명사/현재분사. 앞에 이미 형용사 sharp가 있으므로 명사 자리를 채우는 말은 순수 명사형인 increase가 자연스럽다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="0">
+    <div class="qtitle"><span class="num">영2</span>All visitors must present a valid photo ID ______ entering the research facility.</div>
+    <ul class="opts">
+      <li data-i="0">(A) prior to</li>
+      <li data-i="1">(B) as soon as</li>
+      <li data-i="2">(C) in order to</li>
+      <li data-i="3">(D) so that</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (A) prior to</div>
+      <ul>
+        <li>빈칸 뒤는 <b>entering ~</b>이라는 동명사구이다. 동명사를 목적어로 받을 수 있는 것은 <b>전치사</b>이므로, '~에 앞서'라는 뜻의 전치사구 prior to가 정답이다.</li>
+        <li>(B) as soon as — 접속사. 뒤에 <b>주어+동사</b>가 있어야 한다.</li>
+        <li>(C) in order to — 뒤에 <b>동사원형</b>(enter)이 와야 하며, 의미도 '출입증 제시의 목적'으로 어색하다.</li>
+        <li>(D) so that — 목적/결과의 접속사로, 역시 뒤에 절이 필요하다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="1">
+    <div class="qtitle"><span class="num">영3</span>The new inventory system has considerably reduced the time ______ to process incoming orders.</div>
+    <ul class="opts">
+      <li data-i="0">(A) require</li>
+      <li data-i="1">(B) required</li>
+      <li data-i="2">(C) requiring</li>
+      <li data-i="3">(D) requirement</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (B) required</div>
+      <ul>
+        <li>문장에는 이미 본동사 has reduced가 있고, 빈칸은 앞의 명사 the time을 뒤에서 꾸미는 자리다. 시간이 '요구되는' 것이므로 <b>수동 의미의 과거분사</b> required가 알맞다. (= the time <u>that is</u> required to process ~)</li>
+        <li>(A) require — 동사원형. 한 절에 본동사가 둘일 수 없다.</li>
+        <li>(C) requiring — 능동 의미의 현재분사. '시간이 무언가를 요구한다'는 뜻이 되어 어색하다.</li>
+        <li>(D) requirement — 명사. the time 뒤에 명사가 연달아 올 근거가 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="1">
+    <div class="qtitle"><span class="num">영4</span>Ms. Tanaka's marketing proposals were far more persuasive than ______ submitted by the other candidates.</div>
+    <ul class="opts">
+      <li data-i="0">(A) these</li>
+      <li data-i="1">(B) those</li>
+      <li data-i="2">(C) that</li>
+      <li data-i="3">(D) it</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (B) those</div>
+      <ul>
+        <li>비교 대상은 앞에 나온 <b>복수명사 proposals</b>이다. 비교 구문에서 앞의 명사를 대신하면서 <b>뒤에서 수식(submitted by ~)을 받는</b> 대명사는 those(복수) / that(단수)이다. 여기서는 복수이므로 those.</li>
+        <li>(A) these — '이것들'로 <b>가까운 것</b>을 새로 가리키는 지시대명사여서, 뒤에서 수식받는 비교 대용 표현으로 쓰지 않는다.</li>
+        <li>(C) that — 형태는 맞지만 <b>단수</b>이므로 proposals를 받을 수 없다.</li>
+        <li>(D) it — 앞서 언급된 특정 단수 명사를 그대로 받으며, 뒤에서 수식받는 구조에 쓰이지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="2">
+    <div class="qtitle"><span class="num">영5</span>Employees are reminded that all expense reports must be submitted ______ with the company's revised reimbursement policy.</div>
+    <ul class="opts">
+      <li data-i="0">(A) accordance</li>
+      <li data-i="1">(B) according</li>
+      <li data-i="2">(C) in accordance</li>
+      <li data-i="3">(D) accordingly</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (C) in accordance</div>
+      <ul>
+        <li>뒤에 with가 이어지므로 '~에 따라'라는 뜻의 관용 표현 <b>in accordance with</b>를 완성해야 한다. 전치사 in이 함께 있어야 앞의 동사구 be submitted를 수식하는 부사구가 된다.</li>
+        <li>(A) accordance — 명사 단독. 앞에 전치사 in이 없어 문장 성분이 되지 못한다.</li>
+        <li>(B) according — according <b>to</b>가 짝이므로 뒤의 with와 결합하지 않는다.</li>
+        <li>(D) accordingly — '그에 따라서'라는 부사로 단독으로 쓰이며, 뒤에 with 구를 취하지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 수학 ============ -->
+<section class="subject s-math">
+  <h2>📐 수학 — 순열과 조합 (난이도 최상)</h2>
+
+  <div class="q" data-answer="3">
+    <div class="qtitle"><span class="num">수1</span>1부터 10까지의 자연수 중에서 서로 다른 4개의 수를 택할 때, <b>어떤 두 수도 연속하지 않고</b>(즉 택한 두 수의 차가 1인 경우가 없고) <b>택한 4개의 수의 합이 짝수</b>가 되는 경우의 수는?</div>
+    <ul class="opts">
+      <li data-i="0">① 15</li>
+      <li data-i="1">② 17</li>
+      <li data-i="2">③ 18</li>
+      <li data-i="3">④ 19</li>
+      <li data-i="4">⑤ 21</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : ④ 19</div>
+      <ul>
+        <li><b>1단계 — 연속 조건을 치환으로 없애기.</b> 택한 수를 작은 것부터 a₁ &lt; a₂ &lt; a₃ &lt; a₄ 라 하면, 연속하지 않는다는 조건은 a₂−a₁ ≥ 2, a₃−a₂ ≥ 2, a₄−a₃ ≥ 2 이다. 여기서 bᵢ = aᵢ − (i−1), 즉 b₁=a₁, b₂=a₂−1, b₃=a₃−2, b₄=a₄−3 으로 두면 간격 조건이 단순한 <b>b₁ &lt; b₂ &lt; b₃ &lt; b₄</b>로 바뀐다.</li>
+        <li><b>2단계 — 범위 확인.</b> a₁ ≥ 1 이므로 b₁ ≥ 1, a₄ ≤ 10 이므로 b₄ = a₄ − 3 ≤ 7. 따라서 (a₁,a₂,a₃,a₄)를 고르는 일은 <b>{1, 2, …, 7}에서 서로 다른 4개를 고르는 일</b>과 일대일로 대응한다. (참고로 연속 조건만 있을 때의 경우의 수는 ₇C₄ = 35이다.)</li>
+        <li><b>3단계 — 합의 짝홀 옮기기.</b> a₁+a₂+a₃+a₄ = (b₁+b₂+b₃+b₄) + (0+1+2+3) = (b들의 합) + <b>6</b>. 6은 짝수이므로 <b>a들의 합이 짝수 ⟺ b들의 합이 짝수</b>이다. 즉 문제는 "{1,…,7}에서 4개를 골라 합이 짝수인 경우의 수"로 완전히 바뀐다.</li>
+        <li><b>4단계 — 홀수의 개수로 분류.</b> {1,…,7} 안에는 홀수가 1, 3, 5, 7의 <b>4개</b>, 짝수가 2, 4, 6의 <b>3개</b> 있다. 합이 짝수가 되려면 <b>홀수를 짝수 개</b> 골라야 하므로 홀수를 0개, 2개, 4개 고르는 경우로 나눈다.
+          <br>· 홀수 0개 + 짝수 4개 : 짝수는 3개뿐이라 불가능 → 0
+          <br>· 홀수 2개 + 짝수 2개 : ₄C₂ × ₃C₂ = 6 × 3 = <b>18</b>
+          <br>· 홀수 4개 + 짝수 0개 : ₄C₄ × ₃C₀ = 1 × 1 = <b>1</b></li>
+        <li><b>5단계 — 합산.</b> 0 + 18 + 1 = <b>19</b>. 따라서 정답은 ④이다.</li>
+        <li><b>실수 주의</b> — ①·③은 홀수 4개를 고르는 경우(1,3,5,7)를 빠뜨리거나 짝수 4개 선택을 가능하다고 잘못 센 값이다. 또 3단계에서 더해지는 상수를 6이 아닌 다른 값으로 계산하면 짝홀 판정이 통째로 뒤집히므로, 치환 후 <b>상수항의 짝홀</b>을 반드시 확인해야 한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 일본어 ============ -->
+<section class="subject s-jp">
+  <h2>📕 일본어 — 오늘의 회화 문장</h2>
+
+  <div class="jp-box">
+    <div class="jp-sentence">すみません、ここで 写真(しゃしん)を 撮(と)っても いいですか。</div>
+    <div class="jp-kana">발음 : 스미마셍, 코코데 샤신오 톳테모 이이데스카<br>가나 표기 : すみません、ここで しゃしんを とっても いいですか。</div>
+    <div class="jp-ko">해석 : 실례합니다, 여기에서 사진을 찍어도 되나요?</div>
+
+    <h3>■ 문장 구조</h3>
+    <ul>
+      <li><span class="jp-word">すみません</span> — 실례합니다 / 죄송합니다. 말을 걸 때 쓰는 가장 무난한 표현.</li>
+      <li><span class="jp-word">ここで</span> — 여기에서. 조사 <b>で</b>는 <b>동작이 일어나는 장소</b>를 나타낸다.</li>
+      <li><span class="jp-word">写真(しゃしん)を</span> — 사진을. <b>を</b>는 목적어를 표시하는 조사.</li>
+      <li><span class="jp-word">撮(と)っても</span> — 찍어도. 撮(と)る의 て형 撮って + も.</li>
+      <li><span class="jp-word">いいですか</span> — 괜찮습니까? / 좋습니까?</li>
+    </ul>
+
+    <h3>■ 문법 포인트 : ～てもいいですか (허가 요청)</h3>
+    <ul>
+      <li>동사의 <b>て형 + も いいですか</b> = "~해도 됩니까?" 상대에게 <b>허락을 구하는</b> 가장 기본적인 표현이다.</li>
+      <li>허락할 때는 <b>はい、どうぞ。</b>(네, 그러세요) 또는 <b>ええ、いいですよ。</b>로 답한다.</li>
+      <li>금지할 때는 <b>～てはいけません</b>(~해서는 안 됩니다) 또는 부드럽게 <b>ちょっと…</b>(좀 곤란한데요…)라고 말끝을 흐리는 것이 일본어다운 거절 방식이다.</li>
+      <li>撮(と)る는 <b>1그룹 동사</b>이며 어미가 る이므로 て형은 촉음이 들어간 <b>撮(と)って</b>가 된다. 같은 발음의 取(と)る(집다)와 한자가 다르니 주의.</li>
+    </ul>
+
+    <h3>■ 함께 외우면 좋은 문장</h3>
+    <ul>
+      <li>ここに 座(すわ)っても いいですか。<br>→ 여기에 앉아도 되나요?</li>
+      <li>すみません、もう 一度(いちど) 言(い)っても いいですか。<br>→ 죄송한데, 한 번 더 말해도 될까요?</li>
+      <li>すみません、この 席(せき)は 空(あ)いていますか。<br>→ 실례합니다, 이 자리는 비어 있나요?</li>
+    </ul>
+  </div>
+</section>
+
+<footer>생성일시 : 2026-08-20 06:40 (KST, Asia/Seoul)</footer>
+</div>
+
+<script>
+document.querySelectorAll('.q').forEach(function (q) {
+  var answer = parseInt(q.dataset.answer, 10);
+  var opts = q.querySelectorAll('.opts li');
+  var box = q.querySelector('.ans');
+  var result = box.querySelector('.result');
+  var btn = q.querySelector('.btn');
+  var done = false;
+
+  function reveal(picked) {
+    opts.forEach(function (o, i) {
+      o.classList.add('locked');
+      if (i === answer) {
+        o.classList.add('correct');
+        o.innerHTML += '<span class="mark">✅ 정답</span>';
+      } else if (picked !== null && i === picked) {
+        o.classList.add('wrong');
+        o.innerHTML += '<span class="mark">❌ 내 선택</span>';
+      }
+    });
+    if (picked === null) {
+      result.textContent = '';
+    } else if (picked === answer) {
+      result.textContent = '🎉 정답입니다!';
+      result.className = 'result ok';
+    } else {
+      result.textContent = '❌ 오답입니다. 아래 해설을 확인하세요.';
+      result.className = 'result no';
+    }
+    box.classList.add('show');
+    btn.textContent = '해설 접기 / 펼치기';
+    done = true;
+  }
+
+  opts.forEach(function (o, i) {
+    o.addEventListener('click', function () {
+      if (done) return;
+      reveal(i);
+    });
+  });
+
+  btn.addEventListener('click', function () {
+    if (!done) { reveal(null); return; }
+    box.classList.toggle('show');
+  });
+});
+</script>
+</body>
+</html>
