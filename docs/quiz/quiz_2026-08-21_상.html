@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-21 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 16px;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  header.page {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  header.page h1 { margin: 0 0 8px; font-size: 24px; font-weight: 800; color: #0f172a; }
+  header.page .meta { font-size: 14px; color: #64748b; }
+  header.page .badge {
+    display: inline-block; margin-top: 8px; padding: 4px 12px;
+    background: #fee2e2; color: #b91c1c; border-radius: 999px;
+    font-size: 13px; font-weight: 700;
+  }
+
+  section.subject {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 26px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+  }
+  section.subject > h2 {
+    margin: -18px -18px 18px;
+    padding: 14px 18px;
+    font-size: 19px;
+    font-weight: 800;
+    color: #fff;
+    border-radius: 13px 13px 0 0;
+  }
+  .s-kor > h2 { background: #2563eb; }
+  .s-eng > h2 { background: #059669; }
+  .s-math > h2 { background: #7c3aed; }
+  .s-jp  > h2 { background: #db2777; }
+
+  .passage {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #2563eb;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 18px;
+    font-size: 15.5px;
+    text-align: justify;
+  }
+  .passage p { margin: 0 0 12px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 22px; padding-bottom: 4px; }
+  .q + .q { border-top: 1px dashed #e2e8f0; padding-top: 20px; }
+  .q .qtitle { font-weight: 700; margin-bottom: 12px; color: #0f172a; }
+  .q .qtitle .num {
+    display: inline-block; min-width: 26px; height: 26px; line-height: 26px;
+    text-align: center; background: #1e293b; color: #fff;
+    border-radius: 7px; font-size: 13px; margin-right: 8px;
+  }
+
+  .opts { list-style: none; margin: 0; padding: 0; }
+  .opts li {
+    border: 1px solid #dbe3ee;
+    background: #fff;
+    border-radius: 9px;
+    padding: 11px 13px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 15.5px;
+  }
+  .opts li:hover { background: #eff6ff; border-color: #93c5fd; }
+  .opts li.correct { background: #dcfce7; border-color: #16a34a; font-weight: 600; }
+  .opts li.wrong { background: #fee2e2; border-color: #dc2626; }
+  .opts li.locked { cursor: default; }
+  .opts li .mark { float: right; font-weight: 800; }
+
+  .btn {
+    display: inline-block; margin-top: 10px;
+    background: #1e293b; color: #fff; border: none;
+    padding: 9px 18px; border-radius: 8px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+  }
+  .btn:hover { background: #334155; }
+
+  .ans {
+    display: none;
+    margin-top: 12px;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-left: 5px solid #f59e0b;
+    border-radius: 9px;
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+  .ans.show { display: block; }
+  .ans .head { font-weight: 800; color: #92400e; margin-bottom: 8px; font-size: 15.5px; }
+  .ans .result { font-weight: 800; margin-bottom: 8px; }
+  .ans .result.ok { color: #15803d; }
+  .ans .result.no { color: #b91c1c; }
+  .ans ul { margin: 8px 0 0; padding-left: 20px; }
+  .ans li { margin-bottom: 5px; }
+
+  .jp-box {
+    background: #fdf2f8;
+    border: 1px solid #f9a8d4;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .jp-sentence { font-size: 22px; font-weight: 800; color: #831843; margin-bottom: 6px; line-height: 1.5; }
+  .jp-kana { font-size: 16px; color: #9d174d; margin-bottom: 10px; }
+  .jp-ko { font-size: 16.5px; font-weight: 700; margin-bottom: 14px; }
+  .jp-box h3 { font-size: 15px; margin: 14px 0 6px; font-weight: 800; color: #831843; }
+  .jp-box ul { margin: 0; padding-left: 20px; }
+  .jp-box li { margin-bottom: 5px; font-size: 15px; }
+  .jp-word { font-weight: 700; }
+
+  footer { text-align: center; color: #94a3b8; font-size: 13px; padding: 12px 0 30px; }
+
+  @media (max-width: 600px) {
+    body { padding: 10px; font-size: 15px; }
+    header.page h1 { font-size: 20px; }
+    section.subject { padding: 14px; }
+    section.subject > h2 { margin: -14px -14px 14px; padding: 12px 14px; font-size: 17px; }
+    .jp-sentence { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 21일 (금) · 생성 시각 06:39 (KST)</div>
+  <div class="badge">난이도 : 상</div>
+</header>
+
+<!-- ============ 국어 ============ -->
+<section class="subject s-kor">
+  <h2>📘 국어 — 독서(경제·금융) : 지급준비제도와 신용창조, 그리고 통화승수</h2>
+
+  <div class="passage">
+    <p>은행이 예금을 받아 그 돈을 대출한다는 설명은 익숙하다. 그러나 이 설명만으로는 한 나라의 통화량이 왜 중앙은행이 찍어 낸 현금보다 훨씬 큰지 알기 어렵다. 그 간극을 메우는 개념이 <strong>신용창조</strong>이다. 은행은 받은 예금을 전액 금고에 쌓아 두지 않는다. 예금자 모두가 같은 날 돈을 찾아가는 일은 좀처럼 없으므로, 일부만 남기고 나머지를 대출한다. 이때 남겨 두어야 하는 최소 비율을 법으로 정한 것이 <strong>지급준비율</strong>이며, 이 제도를 <strong>지급준비제도</strong>라 한다.</p>
+
+    <p>과정을 따라가 보자. 지급준비율이 10%이고 어떤 사람이 은행 A에 100만 원을 예금했다고 하자. 은행 A는 10만 원만 남기고 90만 원을 대출한다. 대출받은 사람이 그 돈으로 물건을 사면 판매자는 대금을 은행 B에 예금하고, 은행 B는 다시 9만 원을 남긴 뒤 81만 원을 대출한다. 이 연쇄가 이어지면 최초의 100만 원은 100 + 90 + 81 + … 이라는 <strong>등비급수</strong>를 이루어 최대 1,000만 원의 예금을 만들어 낸다. 새로 찍어 낸 현금은 한 푼도 없는데도 통화량이 부풀어 오른 것이다. 다만 여기서 늘어난 것은 <em>통화량</em>이지 사회 전체의 <em>순자산</em>이 아니다. 예금이라는 자산이 늘어난 만큼 대출이라는 부채도 똑같이 늘었기 때문이다.</p>
+
+    <p>이 배율을 나타내는 값이 <strong>통화승수</strong>로, 통화량을 <strong>본원통화</strong>로 나눈 값으로 정의된다. 본원통화란 중앙은행이 공급한 화폐, 즉 시중에 풀린 현금과 은행이 중앙은행에 맡긴 지급준비금의 합이다. 앞의 예처럼 사람들이 현금을 전혀 보유하지 않고 은행도 법정 준비금만 남긴다는 극단적 가정 아래에서는 통화승수가 지급준비율의 역수, 곧 10이 된다.</p>
+
+    <p>그러나 현실의 통화승수는 언제나 그 이론값보다 작다. 이유는 두 가지 <strong>누출</strong>에 있다. 첫째, 사람들은 대출받은 돈의 일부를 예금하지 않고 현금으로 들고 다닌다. 이렇게 은행 밖으로 빠져나간 현금은 다음 단계의 대출 재원이 되지 못한다. 따라서 <strong>현금보유비율이 높을수록</strong> 통화승수는 작아진다. 둘째, 은행은 법이 요구하는 것보다 더 많은 준비금을 쌓아 두기도 한다. 이를 <strong>초과지급준비금</strong>이라 하는데, 경기 전망이 어둡거나 대출의 부실 위험이 커 보일 때 은행은 대출을 늘리는 대신 이 여유 자금을 늘린다. 결국 통화승수는 중앙은행이 일방적으로 정하는 값이 아니라, <strong>가계의 현금 선호</strong>와 <strong>은행의 대출 의지</strong>가 함께 결정하는 값이다.</p>
+
+    <p>이 점은 통화정책의 한계를 설명해 준다. 중앙은행이 국채를 사들여 본원통화를 크게 늘려도, 은행이 그 돈을 초과지급준비금으로 쌓아 두기만 하면 시중 통화량은 기대만큼 늘지 않는다. 본원통화의 증가율보다 통화량의 증가율이 낮아지므로 <strong>통화승수는 오히려 떨어진다</strong>. 실제로 금융위기 직후 여러 나라에서 본원통화가 몇 배로 불어나는 동안 통화승수는 뚜렷하게 하락했다. 말을 물가로 끌고 갈 수는 있어도 물을 억지로 먹일 수는 없다는 비유가 여기에 들어맞는다.</p>
+
+    <p>그래서 오늘날 주요국 중앙은행은 지급준비율을 자주 조정하지 않는다. 지급준비율을 조금만 바꾸어도 파급 효과가 지나치게 크고 시점을 조절하기 어려운 데다, 준비금에 이자가 붙지 않는다면 그 자체가 은행에 부과되는 세금처럼 작용해 자금이 규제 밖의 영역으로 옮겨 가기 때문이다. 그 대신 중앙은행은 <strong>단기 정책금리</strong>를 목표로 삼아 공개시장운영으로 이를 유지하고, 지급준비금에 이자를 지급해 시중 금리의 하한을 관리하는 방식을 택한다. 지급준비제도의 무게중심이 통화량 조절 수단에서 <strong>금리 조절을 뒷받침하고 은행의 지급 능력을 확보하는 장치</strong>로 옮겨 간 것이다.</p>
+
+    <p>따라서 통화승수는 통화정책의 조절 손잡이라기보다, 금융 중개 기능이 얼마나 활발한지를 사후적으로 보여 주는 <strong>온도계</strong>에 가깝다. 이 값이 낮아졌다는 사실은 돈이 부족하다는 뜻이 아니라, 공급된 돈이 대출을 거쳐 실물로 흘러가는 통로가 좁아졌다는 뜻으로 읽어야 한다.</p>
+  </div>
+
+  <div class="q" data-answer="2">
+    <div class="qtitle"><span class="num">국1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</div>
+    <ul class="opts">
+      <li data-i="0">① 통화승수는 통화량을 본원통화로 나눈 값으로 정의된다.</li>
+      <li data-i="1">② 본원통화는 시중에 풀린 현금과 은행이 중앙은행에 맡긴 지급준비금을 합한 것이다.</li>
+      <li data-i="2">③ 가계의 현금보유비율이 높아지면 통화승수는 그만큼 커진다.</li>
+      <li data-i="3">④ 신용창조로 통화량이 늘어나도 사회 전체의 순자산이 늘어나는 것은 아니다.</li>
+      <li data-i="4">⑤ 은행이 초과지급준비금을 늘리면 본원통화가 늘어도 통화승수는 오히려 하락할 수 있다.</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : ③</div>
+      <ul>
+        <li>① <b>일치</b> — 3문단: "통화승수로, 통화량을 본원통화로 나눈 값으로 정의된다"고 하였다.</li>
+        <li>② <b>일치</b> — 3문단: 본원통화는 "시중에 풀린 현금과 은행이 중앙은행에 맡긴 지급준비금의 합"이라고 명시했다.</li>
+        <li>③ <b>불일치(정답)</b> — 4문단은 은행 밖으로 빠져나간 현금이 다음 단계의 대출 재원이 되지 못하므로 "현금보유비율이 <b>높을수록</b> 통화승수는 <b>작아진다</b>"고 하였다. 커진다는 진술은 방향이 반대다.</li>
+        <li>④ <b>일치</b> — 2문단 끝: 늘어난 것은 통화량이지 순자산이 아니며, "예금이라는 자산이 늘어난 만큼 대출이라는 부채도 똑같이 늘었"다고 하였다.</li>
+        <li>⑤ <b>일치</b> — 5문단: 은행이 돈을 초과지급준비금으로 쌓아 두면 "본원통화의 증가율보다 통화량의 증가율이 낮아지므로 통화승수는 오히려 떨어진다"고 하였다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 영어 ============ -->
+<section class="subject s-eng">
+  <h2>📗 TOEIC 영어 — Part 5 문장 완성 (5문제)</h2>
+
+  <div class="q" data-answer="1">
+    <div class="qtitle"><span class="num">영1</span>The renovation of the east wing will proceed as planned ______ the unexpected delay in permit approval.</div>
+    <ul class="opts">
+      <li data-i="0">(A) although</li>
+      <li data-i="1">(B) despite</li>
+      <li data-i="2">(C) nevertheless</li>
+      <li data-i="3">(D) even though</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (B) despite</div>
+      <ul>
+        <li>빈칸 뒤는 <b>the unexpected delay ~</b>라는 <b>명사구</b>이다. 명사구를 이끌면서 '~에도 불구하고'라는 양보의 뜻을 나타내는 <b>전치사</b> despite가 정답이다.</li>
+        <li>(A) although — 양보의 <b>접속사</b>. 뒤에 주어+동사를 갖춘 절이 와야 한다.</li>
+        <li>(C) nevertheless — '그럼에도 불구하고'라는 <b>접속부사</b>로, 뒤에 명사구를 목적어로 취할 수 없다.</li>
+        <li>(D) even though — 역시 접속사이므로 절이 필요하다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="3">
+    <div class="qtitle"><span class="num">영2</span>Had the supplier notified us earlier, we ______ an alternative shipping route.</div>
+    <ul class="opts">
+      <li data-i="0">(A) arrange</li>
+      <li data-i="1">(B) will arrange</li>
+      <li data-i="2">(C) had arranged</li>
+      <li data-i="3">(D) could have arranged</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (D) could have arranged</div>
+      <ul>
+        <li>문두의 <b>Had the supplier notified</b>는 If가 생략되어 had가 앞으로 나온 <b>가정법 과거완료</b>의 도치 형태다(= If the supplier had notified us earlier). 주절에는 <b>would/could/might + have + p.p.</b>가 와야 하므로 could have arranged가 정답이다.</li>
+        <li>(A) arrange — 현재형. 과거 사실의 반대를 가정하는 문장의 주절이 될 수 없다.</li>
+        <li>(B) will arrange — 미래형. 조건절이 과거완료이므로 시제가 맞지 않는다.</li>
+        <li>(C) had arranged — 과거완료는 <b>조건절</b>의 시제이지 주절의 형태가 아니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="0">
+    <div class="qtitle"><span class="num">영3</span>The board has not yet decided ______ of the two proposals offers the greater long-term benefit.</div>
+    <ul class="opts">
+      <li data-i="0">(A) which</li>
+      <li data-i="1">(B) whether</li>
+      <li data-i="2">(C) that</li>
+      <li data-i="3">(D) what</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (A) which</div>
+      <ul>
+        <li>빈칸은 decided의 목적어가 되는 명사절을 이끌면서 동시에 그 절의 <b>주어</b> 역할을 한다. 뒤에 <b>of the two proposals</b>가 이어져 <b>정해진 둘 중 하나</b>를 고르는 상황이므로 which가 알맞다. <b>which of the 복수명사</b>는 자주 나오는 짝이다.</li>
+        <li>(B) whether — '~인지 아닌지'. 뒤에 완전한 절이 필요한데, 여기서는 주어 자리가 비어 있고 of 구가 이어져 맞지 않는다.</li>
+        <li>(C) that — 명사절 접속사 that 뒤에는 <b>완전한 절</b>이 와야 한다.</li>
+        <li>(D) what — 선택 범위가 정해지지 않은 <b>불특정</b>의 것을 가리킨다. of the two처럼 대상이 둘로 한정된 문맥에는 which를 쓴다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="2">
+    <div class="qtitle"><span class="num">영4</span>All laboratory personnel are required to handle the specimens ______ to avoid contamination.</div>
+    <ul class="opts">
+      <li data-i="0">(A) care</li>
+      <li data-i="1">(B) careful</li>
+      <li data-i="2">(C) carefully</li>
+      <li data-i="3">(D) carefulness</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (C) carefully</div>
+      <ul>
+        <li>handle the specimens는 <b>동사 + 목적어</b>로 이미 완결되어 있다. 빈칸은 이 동작을 꾸미는 자리이므로 <b>부사</b> carefully가 와야 한다.</li>
+        <li>(A) care — 명사('주의') 또는 동사. handle의 목적어는 이미 the specimens이므로 명사가 또 올 수 없다.</li>
+        <li>(B) careful — 형용사. 뒤에 꾸밀 명사가 없고, 동사를 수식할 수도 없다.</li>
+        <li>(D) carefulness — 명사. (A)와 같은 이유로 들어갈 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" data-answer="1">
+    <div class="qtitle"><span class="num">영5</span>Ms. Delgado, ______ department oversees regional logistics, will present the quarterly figures on Thursday.</div>
+    <ul class="opts">
+      <li data-i="0">(A) who</li>
+      <li data-i="1">(B) whose</li>
+      <li data-i="2">(C) which</li>
+      <li data-i="3">(D) whom</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : (B) whose</div>
+      <ul>
+        <li>빈칸 바로 뒤에 <b>관사 없는 명사 department</b>가 놓이고 그 뒤에 동사 oversees가 이어진다. 즉 '그녀<b>의</b> 부서가 ~을 총괄한다'는 뜻이므로 <b>소유격 관계대명사</b> whose가 정답이다.</li>
+        <li>(A) who — 주격. 뒤에 바로 동사가 와야 하며, 명사 department가 끼어들 수 없다.</li>
+        <li>(C) which — 선행사가 사람(Ms. Delgado)이므로 쓸 수 없다.</li>
+        <li>(D) whom — 목적격. 뒤에 <b>주어 + 타동사</b>가 이어지고 목적어가 빠진 구조여야 한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 수학 ============ -->
+<section class="subject s-math">
+  <h2>📐 수학 — 순열과 조합 (난이도 최상)</h2>
+
+  <div class="q" data-answer="2">
+    <div class="qtitle"><span class="num">수1</span>집합 X = {1, 2, 3, 4, 5}에 대하여, X에서 X로의 함수 f 중에서 <b>모든 x ∈ X에 대하여 f(f(x)) = f(x)</b>를 만족시키는 함수의 개수는?</div>
+    <ul class="opts">
+      <li data-i="0">① 176</li>
+      <li data-i="1">② 186</li>
+      <li data-i="2">③ 196</li>
+      <li data-i="3">④ 206</li>
+      <li data-i="4">⑤ 216</li>
+    </ul>
+    <button class="btn">정답 보기</button>
+    <div class="ans">
+      <div class="result"></div>
+      <div class="head">정답 : ③ 196</div>
+      <ul>
+        <li><b>1단계 — 조건의 의미 해석.</b> f의 치역(값으로 실제 나타나는 원소들의 모임)을 A라 하자. y ∈ A이면 y = f(x)인 x가 있고, 조건에 의해 <b>f(y) = f(f(x)) = f(x) = y</b>이다. 즉 <b>치역에 속하는 원소는 모두 자기 자신으로 간다</b>(고정점이다). 거꾸로 치역의 모든 원소가 고정점이면 임의의 x에 대해 f(x) ∈ A이므로 f(f(x)) = f(x)가 자동으로 성립한다. 따라서 조건은 "<b>치역의 원소가 전부 고정점</b>"과 <b>동치</b>이다.</li>
+        <li><b>2단계 — 치역의 크기로 분류.</b> 치역 A의 크기를 k라 하자. ⑴ 어떤 k개짜리 집합을 치역으로 삼을지 고르는 방법은 <b>₅C<sub>k</sub></b>가지이다. ⑵ A의 원소들은 값이 자기 자신으로 <b>이미 결정</b>되어 있으므로 선택의 여지가 없다(1가지). ⑶ 남은 5 − k개의 원소는 각각 A의 어느 원소로든 보낼 수 있으므로 <b>k<sup>5−k</sup></b>가지이다.</li>
+        <li><b>3단계 — 셈이 중복·누락되지 않는지 확인.</b> 위 방법으로 만든 함수의 치역은 정확히 A가 된다(A의 원소는 모두 자기 자신이라는 값으로 실제 등장하므로). 서로 다른 A에서 만든 함수는 치역이 다르니 겹치지 않고, 조건을 만족하는 모든 함수는 자기 치역에서 한 번 세어지므로 빠짐도 없다.</li>
+        <li><b>4단계 — k = 1부터 5까지 계산.</b>
+          <br>· k = 1 : ₅C₁ × 1<sup>4</sup> = 5 × 1 = <b>5</b> (모든 값을 한 점으로 보내는 상수함수)
+          <br>· k = 2 : ₅C₂ × 2<sup>3</sup> = 10 × 8 = <b>80</b>
+          <br>· k = 3 : ₅C₃ × 3<sup>2</sup> = 10 × 9 = <b>90</b>
+          <br>· k = 4 : ₅C₄ × 4<sup>1</sup> = 5 × 4 = <b>20</b>
+          <br>· k = 5 : ₅C₅ × 5<sup>0</sup> = 1 × 1 = <b>1</b> (항등함수)</li>
+        <li><b>5단계 — 합산.</b> 5 + 80 + 90 + 20 + 1 = <b>196</b>. 따라서 정답은 ③이다.</li>
+        <li><b>실수 주의</b> — ⑴ k = 5일 때 5<sup>0</sup> = 1임을 놓치고 0으로 처리하면 195가 되어 오답이 된다. ⑵ 남은 원소를 <b>A의 원소로만</b> 보내야 한다는 점을 잊고 5<sup>5−k</sup>로 세면 값이 크게 부풀어 오른다. ⑶ 이 조건은 "f가 일대일"이나 "f∘f = f의 항등성"과는 다른 조건이므로, <b>치역 위에서만 항등</b>이라는 점을 정확히 붙잡아야 한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 일본어 ============ -->
+<section class="subject s-jp">
+  <h2>📕 일본어 — 오늘의 회화 문장</h2>
+
+  <div class="jp-box">
+    <div class="jp-sentence">日本(にほん)へ 行(い)った ことが ありますか。</div>
+    <div class="jp-kana">발음 : 니홍에 잇타 코토가 아리마스카<br>가나 표기 : にほんへ いった ことが ありますか。</div>
+    <div class="jp-ko">해석 : 일본에 가 본 적이 있습니까?</div>
+
+    <h3>■ 문장 구조</h3>
+    <ul>
+      <li><span class="jp-word">日本(にほん)へ</span> — 일본으로/일본에. 조사 <b>へ</b>는 이동의 <b>방향</b>을 나타내며, 조사로 쓰일 때는 '헤'가 아니라 <b>'에(e)'</b>로 읽는다.</li>
+      <li><span class="jp-word">行(い)った</span> — 갔다. 行(い)く의 <b>た형(과거형)</b>.</li>
+      <li><span class="jp-word">ことが あります</span> — (~한) 적이 있습니다. 形式名詞(형식명사) こと + が + あります.</li>
+      <li><span class="jp-word">か</span> — 의문을 나타내는 종조사.</li>
+    </ul>
+
+    <h3>■ 문법 포인트 : ～た ことが あります (경험)</h3>
+    <ul>
+      <li><b>동사의 た형 + ことが あります</b> = "~한 적이 있습니다". <b>과거의 경험</b>을 말하는 표현이다. 단순한 과거(行きました, 갔습니다)와 달리 '해 본 경험의 유무'에 초점이 있다.</li>
+      <li>부정은 <b>～た ことが ありません</b>(~한 적이 없습니다). 예: まだ 食(た)べた ことが ありません。(아직 먹어 본 적이 없습니다.)</li>
+      <li><b>주의할 점</b> — 어제·작년처럼 <b>시점이 특정된 일</b>에는 쓰지 않는다. ×「昨日(きのう) 行(い)った ことが あります」 → ○「昨日(きのう) 行(い)きました」.</li>
+      <li><b>行(い)く의 た형은 불규칙</b>이다. 1그룹 동사 중 어미가 く인 것은 보통 書(か)く → 書いた처럼 いた가 되지만, 行く만은 <b>行った</b>(촉음)로 변한다. 반드시 예외로 외워 둘 것.</li>
+      <li>대답은 <b>はい、あります。</b> / <b>いいえ、ありません。</b>로 하며, 「一度(いちど)も ありません」(한 번도 없습니다)처럼 횟수 표현을 덧붙이면 자연스럽다.</li>
+    </ul>
+
+    <h3>■ 함께 외우면 좋은 문장</h3>
+    <ul>
+      <li>すしを 食(た)べた ことが ありますか。<br>→ 초밥을 먹어 본 적이 있습니까?</li>
+      <li>はい、一度(いちど) あります。とても おいしかったです。<br>→ 네, 한 번 있습니다. 아주 맛있었습니다.</li>
+      <li>いいえ、まだ 一度(いちど)も ありません。<br>→ 아니요, 아직 한 번도 없습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>생성일시 : 2026-08-21 06:39 (KST, Asia/Seoul)</footer>
+</div>
+
+<script>
+document.querySelectorAll('.q').forEach(function (q) {
+  var answer = parseInt(q.dataset.answer, 10);
+  var opts = q.querySelectorAll('.opts li');
+  var box = q.querySelector('.ans');
+  var result = box.querySelector('.result');
+  var btn = q.querySelector('.btn');
+  var done = false;
+
+  function reveal(picked) {
+    opts.forEach(function (o, i) {
+      o.classList.add('locked');
+      if (i === answer) {
+        o.classList.add('correct');
+        o.innerHTML += '<span class="mark">✅ 정답</span>';
+      } else if (picked !== null && i === picked) {
+        o.classList.add('wrong');
+        o.innerHTML += '<span class="mark">❌ 내 선택</span>';
+      }
+    });
+    if (picked === null) {
+      result.textContent = '';
+    } else if (picked === answer) {
+      result.textContent = '🎉 정답입니다!';
+      result.className = 'result ok';
+    } else {
+      result.textContent = '❌ 오답입니다. 아래 해설을 확인하세요.';
+      result.className = 'result no';
+    }
+    box.classList.add('show');
+    btn.textContent = '해설 접기 / 펼치기';
+    done = true;
+  }
+
+  opts.forEach(function (o, i) {
+    o.addEventListener('click', function () {
+      if (done) return;
+      reveal(i);
+    });
+  });
+
+  btn.addEventListener('click', function () {
+    if (!done) { reveal(null); return; }
+    box.classList.toggle('show');
+  });
+});
+</script>
+</body>
+</html>
