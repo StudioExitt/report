@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-22 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 80px; }
+  header.top {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  header.top h1 { margin: 0 0 8px; font-size: 24px; font-weight: 800; color: #0f172a; }
+  header.top .meta { font-size: 14px; color: #64748b; }
+  .badge {
+    display: inline-block; background: #fee2e2; color: #b91c1c;
+    font-weight: 700; font-size: 13px; padding: 2px 10px; border-radius: 999px; margin-left: 6px;
+  }
+
+  section.sec { margin-top: 34px; }
+  .sec-head {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 20px; font-weight: 800; color: #ffffff;
+    padding: 12px 16px; border-radius: 12px 12px 0 0;
+  }
+  .sec-ko .sec-head { background: #2563eb; }
+  .sec-en .sec-head { background: #059669; }
+  .sec-ma .sec-head { background: #7c3aed; }
+  .sec-jp .sec-head { background: #db2777; }
+  .sec-body {
+    background: #ffffff; border: 1px solid #e2e8f0; border-top: none;
+    border-radius: 0 0 12px 12px; padding: 18px 18px 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+
+  .passage {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #2563eb;
+    border-radius: 8px; padding: 16px 18px; margin-bottom: 20px;
+    font-size: 15.5px; text-align: justify;
+  }
+  .passage p { margin: 0 0 14px; text-indent: 6px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 26px; padding-bottom: 6px; }
+  .q + .q { border-top: 1px dashed #e2e8f0; padding-top: 22px; }
+  .q-title { font-weight: 700; font-size: 16.5px; margin-bottom: 12px; color: #0f172a; }
+  .q-title .num {
+    display: inline-block; background: #1e293b; color: #fff; font-size: 13px;
+    border-radius: 6px; padding: 1px 8px; margin-right: 8px; font-weight: 700;
+  }
+  .stem { margin: 0 0 12px; font-size: 16px; }
+
+  ul.choices { list-style: none; margin: 0; padding: 0; }
+  ul.choices li {
+    border: 1px solid #cbd5e1; background: #fff; border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 8px; cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 15.5px; display: flex; gap: 8px; align-items: flex-start;
+  }
+  ul.choices li:hover { background: #f1f5f9; }
+  ul.choices li .mark { font-weight: 700; color: #475569; flex: 0 0 auto; }
+  ul.choices li.correct { background: #dcfce7; border-color: #16a34a; }
+  ul.choices li.wrong { background: #fee2e2; border-color: #dc2626; }
+  ul.choices li.locked { cursor: default; }
+  ul.choices li .res { margin-left: auto; font-weight: 800; font-size: 14px; flex: 0 0 auto; }
+  li.correct .res { color: #15803d; }
+  li.wrong .res { color: #b91c1c; }
+
+  .btn {
+    margin-top: 10px; background: #1e293b; color: #fff; border: none;
+    border-radius: 8px; padding: 9px 18px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  }
+  .btn:hover { background: #334155; }
+
+  .ans-box {
+    display: none; margin-top: 14px;
+    background: #fffbeb; border: 1px solid #fcd34d; border-left: 5px solid #f59e0b;
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .ans-box.open { display: block; }
+  .ans-box .ans-head { font-weight: 800; color: #b45309; margin-bottom: 8px; font-size: 15.5px; }
+  .ans-box .verdict { font-weight: 800; margin-bottom: 8px; font-size: 15px; }
+  .ans-box .verdict.ok { color: #15803d; }
+  .ans-box .verdict.no { color: #b91c1c; }
+  .ans-box ul { margin: 6px 0 0; padding-left: 20px; }
+  .ans-box li { margin-bottom: 6px; font-size: 15px; }
+  .ans-box p { margin: 6px 0; font-size: 15px; }
+
+  .jp-sent {
+    background: #fdf2f8; border: 1px solid #fbcfe8; border-left: 5px solid #db2777;
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 6px;
+  }
+  .jp-main { font-size: 22px; font-weight: 700; color: #831843; line-height: 1.9; }
+  .jp-read { font-size: 15px; color: #9d174d; margin-top: 6px; }
+  .jp-ko { font-size: 16.5px; margin-top: 10px; font-weight: 600; }
+  table.jp {
+    width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px;
+  }
+  table.jp th, table.jp td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+  table.jp th { background: #f8fafc; font-weight: 700; white-space: nowrap; }
+  .scroll { overflow-x: auto; }
+
+  footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 40px; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 14px 10px 60px; }
+    header.top h1 { font-size: 19px; }
+    .sec-head { font-size: 17px; padding: 10px 12px; }
+    .sec-body { padding: 14px 12px 18px; }
+    .passage { font-size: 15px; padding: 13px 13px; }
+    ul.choices li { font-size: 15px; padding: 9px 11px; }
+    .jp-main { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 22일 (토) · 국어 1 · 영어 5 · 수학 1 · 일본어 1 <span class="badge">난이도 상</span></div>
+</header>
+
+<!-- ================= 국어 ================= -->
+<section class="sec sec-ko">
+  <div class="sec-head">📘 국어 · 독서(경제) — 비대칭 정보와 신용할당</div>
+  <div class="sec-body">
+    <div class="passage">
+      <p>금융시장에서 자금은 여유 자금을 가진 대부자로부터 자금이 필요한 차입자에게로 흘러간다. 이때 거래의 성패를 좌우하는 것은 이자율만이 아니다. 차입자가 자금을 어떤 사업에 쓸 것인지, 그 사업이 얼마나 위험한지, 그리고 차입자가 상환 의지를 끝까지 유지할 것인지에 대한 정보는 차입자 자신은 잘 알지만 대부자는 충분히 알기 어렵다. 이처럼 거래 당사자 사이에 정보의 보유량이 다른 상태를 <b>비대칭 정보</b>라 하며, 이는 계약 이전에 발생하는 <b>역선택</b>과 계약 이후에 발생하는 <b>도덕적 해이</b>라는 두 문제를 낳는다.</p>
+
+      <p>역선택은 대부자가 차입자의 위험도를 구별하지 못할 때 나타난다. 은행이 개별 차입자의 위험도를 식별하지 못하면 평균적인 위험을 가정하여 하나의 이자율을 제시할 수밖에 없다. 그런데 이 이자율은 안전한 사업을 계획한 차입자에게는 지나치게 높고, 위험한 사업을 계획한 차입자에게는 오히려 낮다. 안전한 차입자는 이 조건을 받아들이지 않고 시장을 떠나며, 그 결과 남은 차입자 집단의 평균 위험도는 상승한다. 은행이 이에 대응해 이자율을 다시 올리면 상대적으로 안전한 차입자가 또 이탈하는 악순환이 이어진다. 자금을 필요로 하는 우량한 차입자가 존재함에도 거래가 성사되지 않는 시장 실패가 발생하는 것이다.</p>
+
+      <p>도덕적 해이는 자금이 집행된 이후의 문제다. 차입자가 사업에 실패하더라도 손실은 원리금 상환 불이행이라는 형태로 상당 부분 대부자에게 전가되는 반면, 사업이 크게 성공하면 원리금을 제외한 초과 이익은 모두 차입자의 몫이 된다. 이러한 손익의 비대칭적 배분 구조는 차입자로 하여금 애초에 계획했던 사업보다 더 위험한 사업으로 자금의 용도를 바꾸도록 유인한다. 이자율이 높을수록 차입자가 감당해야 할 고정 부담이 커지므로, 안전한 사업의 기대 수익만으로는 그 부담을 감당하기 어려워지고 위험 선호는 한층 강해진다.</p>
+
+      <p>여기서 주목할 점은 이자율이 두 얼굴을 지닌다는 사실이다. 이자율은 은행의 수익을 결정하는 <b>가격 변수</b>이면서, 동시에 어떤 차입자가 시장에 남고 어떤 사업이 선택되는지를 결정하는 <b>선별 장치</b>로도 작동한다. 이자율을 올리면 대출 한 건당 수취하는 이자 수입은 늘지만, 역선택과 도덕적 해이를 통해 대출 집단 전체의 부도 확률이 함께 높아진다. 따라서 은행이 기대하는 대출 수익률은 이자율에 대해 단조롭게 증가하지 않고, 어느 지점을 넘어서면 오히려 하락한다. 은행의 기대 수익률을 최대로 만드는 이 지점의 이자율을 <b>최적 이자율</b>이라 한다.</p>
+
+      <p>이 개념은 흥미로운 결론으로 이어진다. 자금에 대한 수요가 공급을 초과하는 상황이라면 통상적인 시장 논리로는 이자율이 상승해 초과 수요가 해소되어야 한다. 그러나 최적 이자율을 넘어선 인상은 은행의 기대 수익률을 오히려 떨어뜨리므로, 합리적인 은행은 이자율을 더 올리는 대신 대출 규모 자체를 제한하는 편을 택한다. 그 결과 제시된 이자율을 기꺼이 지불할 의사가 있고 겉으로 보기에 동일한 조건을 갖춘 차입자들 사이에서도 어떤 이는 대출을 받고 어떤 이는 거절당하는 현상이 나타난다. 이를 <b>신용할당</b>이라 하며, 이는 이자율에 의해 수요와 공급이 일치하지 않는 균형, 즉 초과 수요가 지속되는 균형이 존재할 수 있음을 보여 준다.</p>
+
+      <p>비대칭 정보의 폐해를 줄이기 위한 장치들도 발달해 왔다. 담보는 차입자가 실패 시 잃을 것을 만들어 손익 배분의 비대칭성을 완화하며, 동시에 자신의 사업에 확신이 있는 차입자만이 담보를 제공하려 한다는 점에서 위험도를 드러내는 <b>신호</b>로 기능한다. 신용평가기관이 생산하는 정보, 은행이 장기 거래 관계를 통해 축적하는 차입자에 대한 지식, 대출 계약서에 삽입되는 자금 용도 제한 조항 역시 같은 목적을 위한 수단이다. 다만 이러한 장치들은 정보 격차를 줄일 뿐 완전히 없애지는 못하며, 담보 가치의 평가나 정보의 수집에도 비용이 들기 때문에 신용할당을 완전히 소멸시키지는 못한다.</p>
+
+      <p>신용할당은 거시적으로도 의미를 갖는다. 경기가 악화되어 기업의 부도 위험이 전반적으로 높아지면 은행이 판단하는 최적 이자율은 낮아지고, 대출 심사는 강화되며 할당의 강도는 커진다. 이때 중앙은행이 정책금리를 인하하더라도, 은행이 자금을 회수하고 대출을 줄이는 국면에서는 실제로 자금을 공급받는 기업의 수가 늘지 않아 정책의 효과가 제한될 수 있다. 금리라는 가격 변수만으로는 포착되지 않는 신용의 <b>양적 측면</b>, 곧 대출이 실제로 누구에게 얼마나 공급되는가를 함께 살펴야 하는 이유가 여기에 있다.</p>
+    </div>
+
+    <div class="q" data-answer="4">
+      <div class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>역선택은 계약이 체결되기 전 차입자의 위험도를 대부자가 식별하기 어려워 발생하는 문제이다.</span></li>
+        <li data-i="2"><span class="mark">②</span><span>은행이 이자율을 인상하면 상대적으로 안전한 차입자가 이탈하여 남은 차입자 집단의 평균 위험도가 높아진다.</span></li>
+        <li data-i="3"><span class="mark">③</span><span>사업 실패의 손실은 상당 부분 대부자에게 전가되지만 초과 이익은 차입자가 갖는 구조가 도덕적 해이를 유발한다.</span></li>
+        <li data-i="4"><span class="mark">④</span><span>은행이 기대하는 대출 수익률은 이자율이 높아질수록 계속 증가하므로, 은행은 초과 수요가 있으면 이자율을 인상한다.</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>담보는 손익 배분의 비대칭성을 완화하는 동시에 차입자의 위험도를 드러내는 신호로도 기능한다.</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ④</div>
+        <ul>
+          <li><b>①  일치</b> — 1문단·2문단에서 역선택은 "계약 이전에 발생"하며, 은행이 "개별 차입자의 위험도를 식별하지 못"해 생긴다고 서술되어 있다.</li>
+          <li><b>②  일치</b> — 2문단의 "안전한 차입자는 … 시장을 떠나며, 그 결과 남은 차입자 집단의 평균 위험도는 상승한다"와 정확히 부합한다.</li>
+          <li><b>③  일치</b> — 3문단의 "손실은 … 대부자에게 전가되는 반면, … 초과 이익은 모두 차입자의 몫"이라는 손익의 비대칭적 배분 설명과 같다.</li>
+          <li><b>④  불일치(정답)</b> — 4문단은 기대 수익률이 "이자율에 대해 단조롭게 증가하지 않고, 어느 지점을 넘어서면 오히려 하락한다"고 했고, 5문단은 초과 수요 시에도 은행이 이자율 인상 대신 "대출 규모 자체를 제한"한다고 했다. 진술의 두 부분이 모두 글과 어긋난다.</li>
+          <li><b>⑤  일치</b> — 6문단에서 담보는 "손익 배분의 비대칭성을 완화"하며 위험도를 드러내는 "신호로 기능한다"고 명시했다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 영어 ================= -->
+<section class="sec sec-en">
+  <div class="sec-head">📗 영어 · TOEIC Part 5 (문장 완성형) 5문항</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">영어 1</span>Choose the best answer.</div>
+      <p class="stem">The board postponed the vote until all directors had been given ______ opportunity to review the revised merger terms.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>ample</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>amply</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>an ample</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>amplify</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (C) an ample</div>
+        <p><b>해석:</b> 이사회는 모든 이사들이 수정된 합병 조건을 검토할 충분한 기회를 갖게 될 때까지 표결을 연기했다.</p>
+        <ul>
+          <li><b>(A) ample</b> — 형용사 자체는 맞지만, <i>opportunity</i>는 가산 단수 명사이므로 관사 없이 쓸 수 없다.</li>
+          <li><b>(B) amply</b> — 부사. 명사 <i>opportunity</i>를 수식할 수 없다.</li>
+          <li><b>(C) an ample</b> — 정답. 「관사 + 형용사 + 가산 단수명사」 구조가 완성된다.</li>
+          <li><b>(D) amplify</b> — 동사(증폭하다). 자리 자체가 명사구여서 들어갈 수 없다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 2</span>Choose the best answer.</div>
+      <p class="stem">______ the supplier confirms the delivery date by Friday, we will have to source the components from an alternative vendor.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>Even if</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>Unless</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>Whereas</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>In case of</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) Unless</div>
+        <p><b>해석:</b> 공급업체가 금요일까지 납기일을 확정하지 않는 한, 우리는 다른 업체에서 부품을 조달해야 할 것이다.</p>
+        <ul>
+          <li><b>(A) Even if</b> — "확정하더라도 대체 업체를 써야 한다"가 되어 문맥상 부자연스럽다.</li>
+          <li><b>(B) Unless</b> — 정답. "~하지 않는 한"으로 조건과 결과가 자연스럽게 연결된다.</li>
+          <li><b>(C) Whereas</b> — 대조를 나타내는 접속사로, 미래 조건을 이끌 수 없다.</li>
+          <li><b>(D) In case of</b> — 전치사구여서 뒤에 「주어+동사」 절이 올 수 없다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="4">
+      <div class="q-title"><span class="num">영어 3</span>Choose the best answer.</div>
+      <p class="stem">Employees who wish to transfer to the Singapore office must submit their applications ______ than October 15.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>no sooner</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>rather</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>as late</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>no later</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (D) no later</div>
+        <p><b>해석:</b> 싱가포르 지사로 전근하고자 하는 직원은 늦어도 10월 15일까지 신청서를 제출해야 한다.</p>
+        <ul>
+          <li><b>(A) no sooner</b> — <i>no sooner ~ than</i>은 "~하자마자"라는 시간 구문으로, 마감 기한을 나타내지 못한다.</li>
+          <li><b>(B) rather</b> — <i>rather than</i>은 "~보다는"이라는 선택의 의미로 날짜 마감과 어울리지 않는다.</li>
+          <li><b>(C) as late</b> — <i>as late as</i> 형태여야 하며 <i>than</i>과 결합할 수 없다.</li>
+          <li><b>(D) no later</b> — 정답. <i>no later than + 날짜</i>는 "늦어도 ~까지"라는 마감 표현의 관용구이다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-title"><span class="num">영어 4</span>Choose the best answer.</div>
+      <p class="stem">The auditors found the accounting records to be largely ______ with the standards adopted by the parent company last year.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>consistent</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>consisting</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>consistency</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>consistently</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (A) consistent</div>
+        <p><b>해석:</b> 감사인들은 그 회계 기록이 작년에 모회사가 채택한 기준에 대체로 부합한다고 판단했다.</p>
+        <ul>
+          <li><b>(A) consistent</b> — 정답. <i>find + 목적어 + to be + 형용사</i> 구조이며 <i>be consistent with</i>(~와 일치하다)가 관용적으로 결합한다.</li>
+          <li><b>(B) consisting</b> — <i>consist of</i>로 쓰이며 <i>with</i>와 결합하지 않는다.</li>
+          <li><b>(C) consistency</b> — 명사. 부사 <i>largely</i>의 수식을 받을 수 없고 <i>with</i>와도 어울리지 않는다.</li>
+          <li><b>(D) consistently</b> — 부사. <i>to be</i> 뒤의 보어 자리에는 형용사가 와야 한다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">영어 5</span>Choose the best answer.</div>
+      <p class="stem">______ by the sharp drop in raw material prices, the manufacturer lowered its retail prices for the first time in five years.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>Encourage</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>Encouraging</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>Encouraged</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>Encouragement</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (C) Encouraged</div>
+        <p><b>해석:</b> 원자재 가격의 급락에 힘입어, 그 제조업체는 5년 만에 처음으로 소매가격을 인하했다.</p>
+        <ul>
+          <li><b>(A) Encourage</b> — 동사원형은 분사구문을 이끌 수 없다.</li>
+          <li><b>(B) Encouraging</b> — 능동 분사. 주어(제조업체)가 격려를 <i>받는</i> 대상이므로 수동이어야 한다.</li>
+          <li><b>(C) Encouraged</b> — 정답. 수동 분사구문으로, <i>Being encouraged by ~</i>에서 <i>Being</i>이 생략된 형태이다.</li>
+          <li><b>(D) Encouragement</b> — 명사. 뒤의 주절과 연결할 접속 기능이 없다.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 수학 ================= -->
+<section class="sec sec-ma">
+  <div class="sec-head">📕 수학 · 순열과 조합 (난이도 최상)</div>
+  <div class="sec-body">
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">수학 1</span>다음 조건을 모두 만족시키도록 7명을 일렬로 세우는 경우의 수는?</div>
+      <p class="stem">
+        남학생 4명(그중 한 명은 A)과 여학생 3명(그중 한 명은 B), 모두 7명을 일렬로 세우려고 한다.<br>
+        (가) 어느 두 여학생도 서로 이웃하지 않는다.<br>
+        (나) 맨 앞과 맨 뒤에는 모두 남학생이 선다.<br>
+        (다) A와 B는 서로 이웃한다.
+      </p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>48</span></li>
+        <li data-i="2"><span class="mark">②</span><span>72</span></li>
+        <li data-i="3"><span class="mark">③</span><span>96</span></li>
+        <li data-i="4"><span class="mark">④</span><span>120</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>144</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ② 72</div>
+        <p><b>[1단계] 자리 구조 확정</b><br>
+        남학생 4명을 먼저 일렬로 세우면 자리는 <code>_ 남 _ 남 _ 남 _ 남 _</code> 이고 빈칸(갭)은 5개이다. 조건 (가)에 의해 한 갭에 여학생은 최대 1명이며, 조건 (나)에 의해 양 끝 갭 2개는 쓸 수 없다. 따라서 여학생 3명은 <b>가운데 갭 3개에 정확히 한 명씩</b> 들어간다. 즉 배열은 반드시</p>
+        <p style="text-align:center"><b>남 여 남 여 남 여 남</b></p>
+        <p>꼴이며, 남학생 자리는 1·3·5·7번, 여학생 자리는 2·4·6번으로 <b>고정</b>된다.</p>
+
+        <p><b>[2단계] 조건 (다) — A와 B가 이웃</b><br>
+        A는 남학생 자리(1·3·5·7) 중 하나, B는 그 A와 이웃한 여학생 자리에 있어야 한다.</p>
+        <ul>
+          <li>A가 1번 → B는 2번 (1가지)</li>
+          <li>A가 3번 → B는 2번 또는 4번 (2가지)</li>
+          <li>A가 5번 → B는 4번 또는 6번 (2가지)</li>
+          <li>A가 7번 → B는 6번 (1가지)</li>
+        </ul>
+        <p>따라서 (A의 자리, B의 자리) 쌍은 1+2+2+1 = <b>6가지</b>이다.</p>
+
+        <p><b>[3단계] 나머지 인원 배치</b><br>
+        A를 제외한 남학생 3명을 남은 남학생 자리 3곳에 세우는 방법 3! = 6가지,<br>
+        B를 제외한 여학생 2명을 남은 여학생 자리 2곳에 세우는 방법 2! = 2가지.</p>
+
+        <p><b>[결론]</b> 6 × 6 × 2 = <b>72</b></p>
+        <p><b>※ 함정</b> — 조건 (나)를 놓치면 여학생을 5개 갭 중 3개에 배치( <sub>5</sub>P<sub>3</sub> )하게 되어 답이 576으로 커진다. (가)와 (나)가 결합하면 갭 선택의 자유도가 사라지고 배열 패턴이 하나로 결정된다는 점이 핵심이다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 일본어 ================= -->
+<section class="sec sec-jp">
+  <div class="sec-head">📙 일본어 회화 · 오늘의 한 문장</div>
+  <div class="sec-body">
+    <div class="jp-sent">
+      <div class="jp-main">来週の 土曜日、一緒に 映画を 見に 行きませんか。</div>
+      <div class="jp-read">らいしゅうの どようび、いっしょに えいがを みに いきませんか。<br>
+      [라이슈-노 도요-비, 잇쇼니 에-가오 미니 이키마셍카]</div>
+      <div class="jp-ko">→ 다음 주 토요일, 같이 영화 보러 가지 않을래요?</div>
+    </div>
+
+    <div class="scroll">
+      <table class="jp">
+        <tr><th>来週（らいしゅう）</th><td>다음 주. 今週（こんしゅう, 이번 주） / 先週（せんしゅう, 지난주）와 함께 묶어서 외운다.</td></tr>
+        <tr><th>土曜日（どようび）</th><td>토요일. 요일은 모두 「~曜日（ようび）」로 끝난다.</td></tr>
+        <tr><th>一緒に（いっしょに）</th><td>함께, 같이. 「一緒」의 촉음 「っ」에 주의 — '이쇼'가 아니라 '잇쇼'.</td></tr>
+        <tr><th>映画（えいが）</th><td>영화. 「映画館（えいがかん）」은 영화관.</td></tr>
+        <tr><th>見に（みに）</th><td>동사 見る(みる)의 ます형 어간 「見」 + 「に」 = 보러.</td></tr>
+        <tr><th>行きませんか（いきませんか）</th><td>行く(いく, 가다)의 부정 의문형 = 가지 않을래요?</td></tr>
+      </table>
+    </div>
+
+    <div class="ans-box open" style="margin-top:16px">
+      <div class="ans-head">문법 포인트</div>
+      <ul>
+        <li><b>① 「동사 ます형 + に + 行く/来る」= ~하러 가다/오다 (목적의 に)</b><br>
+        「見ます(みます)」에서 ます를 뗀 「見(み)」에 に를 붙여 <b>見に行く(みにいく, 보러 가다)</b>가 된다.<br>
+        예: 買います(かいます) → 買いに行く(かいにいく, 사러 가다) / 食べます(たべます) → 食べに行く(たべにいく, 먹으러 가다).<br>
+        ※ 한자어 동작 명사는 する를 떼고 바로 に를 붙인다: 勉強しに行く(べんきょうしにいく) → 「勉強に行く(べんきょうにいく)」도 가능.</li>
+
+        <li><b>② 「~ませんか」= 권유 표현</b><br>
+        형태는 정중체 부정 의문(「~하지 않습니까?」)이지만, 실제 기능은 <b>상대의 의향을 묻는 정중한 권유</b>다.<br>
+        비슷한 「~ましょうか」는 '(제가) ~할까요?'로 화자 쪽 제안에 가깝고, 「~ましょう」는 '~합시다'로 이미 합의된 느낌이 강하다.<br>
+        정중함의 정도: <b>~ませんか &gt; ~ましょうか &gt; ~ましょう</b> 순으로, 상대에게 거절할 여지를 가장 많이 남기는 표현이 「~ませんか」이다.</li>
+
+        <li><b>③ 조사 정리</b><br>
+        「映画<b>を</b>見る」의 を는 목적격 조사. 이때 <b>を는 항상 「お」로 발음</b>한다(wo가 아님).<br>
+        시간 명사 「来週の土曜日」처럼 큰 단위 + <b>の</b> + 작은 단위로 연결한다.</li>
+
+        <li><b>④ 대답 예시</b><br>
+        승낙: 「はい、いいですね。行きましょう。」(하이, 이-데스네. 이키마쇼-) — 네, 좋네요. 갑시다.<br>
+        거절: 「すみません、来週はちょっと…」(스미마셍, 라이슈-와 촛토…) — 죄송해요, 다음 주는 좀…<br>
+        ※ 일본어에서는 거절할 때 「ちょっと…」로 말끝을 흐리는 것이 자연스럽다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성 시각: <span id="gen"></span></footer>
+
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.q').forEach(function (q) {
+    var answer = q.getAttribute('data-answer');
+    var box = q.querySelector('.ans-box');
+    var verdict = q.querySelector('.verdict');
+    var btn = q.querySelector('.btn');
+    var lis = q.querySelectorAll('ul.choices li');
+    var done = false;
+
+    function reveal(picked) {
+      lis.forEach(function (li) {
+        li.classList.add('locked');
+        var i = li.getAttribute('data-i');
+        if (i === answer) {
+          li.classList.add('correct');
+          var s = document.createElement('span');
+          s.className = 'res';
+          s.textContent = '정답';
+          li.appendChild(s);
+        } else if (picked && i === picked) {
+          li.classList.add('wrong');
+          var w = document.createElement('span');
+          w.className = 'res';
+          w.textContent = '오답';
+          li.appendChild(w);
+        }
+      });
+      if (picked) {
+        if (picked === answer) {
+          verdict.textContent = '⭕ 정답입니다!';
+          verdict.className = 'verdict ok';
+        } else {
+          verdict.textContent = '❌ 오답입니다. (선택한 답: ' + picked + '번)';
+          verdict.className = 'verdict no';
+        }
+      } else {
+        verdict.textContent = '';
+        verdict.className = 'verdict';
+      }
+      box.classList.add('open');
+      btn.textContent = '정답 확인 완료';
+      done = true;
+    }
+
+    lis.forEach(function (li) {
+      li.addEventListener('click', function () {
+        if (done) return;
+        reveal(li.getAttribute('data-i'));
+      });
+    });
+
+    btn.addEventListener('click', function () {
+      if (done) { box.classList.toggle('open'); return; }
+      reveal(null);
+    });
+  });
+
+  var d = new Date();
+  var p = function (n) { return (n < 10 ? '0' : '') + n; };
+  document.getElementById('gen').textContent =
+    d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' +
+    p(d.getHours()) + ':' + p(d.getMinutes()) + ' (' +
+    Intl.DateTimeFormat().resolvedOptions().timeZone + ')';
+})();
+</script>
+</body>
+</html>
