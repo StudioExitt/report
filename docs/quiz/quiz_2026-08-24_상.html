@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-24 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 80px; }
+  header.top {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  header.top h1 { margin: 0 0 8px; font-size: 24px; font-weight: 800; color: #0f172a; }
+  header.top .meta { font-size: 14px; color: #64748b; }
+  .badge {
+    display: inline-block; background: #fee2e2; color: #b91c1c;
+    font-weight: 700; font-size: 13px; padding: 2px 10px; border-radius: 999px; margin-left: 6px;
+  }
+
+  section.sec { margin-top: 34px; }
+  .sec-head {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 20px; font-weight: 800; color: #ffffff;
+    padding: 12px 16px; border-radius: 12px 12px 0 0;
+  }
+  .sec-ko .sec-head { background: #2563eb; }
+  .sec-en .sec-head { background: #059669; }
+  .sec-ma .sec-head { background: #7c3aed; }
+  .sec-jp .sec-head { background: #db2777; }
+  .sec-body {
+    background: #ffffff; border: 1px solid #e2e8f0; border-top: none;
+    border-radius: 0 0 12px 12px; padding: 18px 18px 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+
+  .passage {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #2563eb;
+    border-radius: 8px; padding: 16px 18px; margin-bottom: 20px;
+    font-size: 15.5px; text-align: justify;
+  }
+  .passage p { margin: 0 0 14px; text-indent: 6px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 26px; padding-bottom: 6px; }
+  .q + .q { border-top: 1px dashed #e2e8f0; padding-top: 22px; }
+  .q-title { font-weight: 700; font-size: 16.5px; margin-bottom: 12px; color: #0f172a; }
+  .q-title .num {
+    display: inline-block; background: #1e293b; color: #fff; font-size: 13px;
+    border-radius: 6px; padding: 1px 8px; margin-right: 8px; font-weight: 700;
+  }
+  .stem { margin: 0 0 12px; font-size: 16px; }
+
+  ul.choices { list-style: none; margin: 0; padding: 0; }
+  ul.choices li {
+    border: 1px solid #cbd5e1; background: #fff; border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 8px; cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 15.5px; display: flex; gap: 8px; align-items: flex-start;
+  }
+  ul.choices li:hover { background: #f1f5f9; }
+  ul.choices li .mark { font-weight: 700; color: #475569; flex: 0 0 auto; }
+  ul.choices li.correct { background: #dcfce7; border-color: #16a34a; }
+  ul.choices li.wrong { background: #fee2e2; border-color: #dc2626; }
+  ul.choices li.locked { cursor: default; }
+  ul.choices li .res { margin-left: auto; font-weight: 800; font-size: 14px; flex: 0 0 auto; }
+  li.correct .res { color: #15803d; }
+  li.wrong .res { color: #b91c1c; }
+
+  .btn {
+    margin-top: 10px; background: #1e293b; color: #fff; border: none;
+    border-radius: 8px; padding: 9px 18px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  }
+  .btn:hover { background: #334155; }
+
+  .ans-box {
+    display: none; margin-top: 14px;
+    background: #fffbeb; border: 1px solid #fcd34d; border-left: 5px solid #f59e0b;
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .ans-box.open { display: block; }
+  .ans-box .ans-head { font-weight: 800; color: #b45309; margin-bottom: 8px; font-size: 15.5px; }
+  .ans-box .verdict { font-weight: 800; margin-bottom: 8px; font-size: 15px; }
+  .ans-box .verdict.ok { color: #15803d; }
+  .ans-box .verdict.no { color: #b91c1c; }
+  .ans-box ul { margin: 6px 0 0; padding-left: 20px; }
+  .ans-box li { margin-bottom: 6px; font-size: 15px; }
+  .ans-box p { margin: 6px 0; font-size: 15px; }
+
+  .jp-sent {
+    background: #fdf2f8; border: 1px solid #fbcfe8; border-left: 5px solid #db2777;
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 6px;
+  }
+  .jp-main { font-size: 22px; font-weight: 700; color: #831843; line-height: 1.9; }
+  .jp-read { font-size: 15px; color: #9d174d; margin-top: 6px; }
+  .jp-ko { font-size: 16.5px; margin-top: 10px; font-weight: 600; }
+  table.jp {
+    width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px;
+  }
+  table.jp th, table.jp td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+  table.jp th { background: #f8fafc; font-weight: 700; white-space: nowrap; }
+  .scroll { overflow-x: auto; }
+
+  footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 40px; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 14px 10px 60px; }
+    header.top h1 { font-size: 19px; }
+    .sec-head { font-size: 17px; padding: 10px 12px; }
+    .sec-body { padding: 14px 12px 18px; }
+    .passage { font-size: 15px; padding: 13px 13px; }
+    ul.choices li { font-size: 15px; padding: 9px 11px; }
+    .jp-main { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 24일 (월) · 국어 1 · 영어 5 · 수학 1 · 일본어 1 <span class="badge">난이도 상</span></div>
+</header>
+
+<!-- ================= 국어 ================= -->
+<section class="sec sec-ko">
+  <div class="sec-head">📘 국어 · 독서(경제) — 물가지수의 측정과 인플레이션</div>
+  <div class="sec-body">
+    <div class="passage">
+      <p>물가란 시장에서 거래되는 개별 상품들의 가격을 종합하여 평균한 수준을 말한다. 배추 한 포기의 값이 올랐다는 사실만으로 물가가 올랐다고 말할 수는 없다. 어떤 상품의 가격은 오르고 다른 상품의 가격은 내리기 때문에, 경제 전체의 가격 수준이 어느 방향으로 얼마나 움직였는지를 하나의 숫자로 나타낼 필요가 있다. 이때 사용하는 것이 <b>물가지수</b>이다. 물가지수는 특정 시점을 <b>기준시점</b>으로 삼아 그때의 물가 수준을 100으로 놓고, 비교하려는 시점의 물가 수준이 그에 견주어 몇에 해당하는지를 나타낸다. 따라서 물가지수의 값 자체는 절대적인 물가의 높낮이가 아니라 기준시점 대비 상대적인 크기를 뜻한다.</p>
+
+      <p>가장 널리 쓰이는 물가지수는 <b>소비자물가지수(CPI)</b>이다. 통계 당국은 가계가 실제로 자주 구입하는 수백 개의 대표 품목을 골라 하나의 묶음, 곧 <b>바스켓</b>을 구성하고, 각 품목이 가계 지출에서 차지하는 비중을 <b>가중치</b>로 부여한다. 쌀값이 10% 올랐을 때와 휴대전화 요금이 10% 올랐을 때가 지수에 미치는 영향이 서로 다른 것은 이 가중치 때문이다. 이때 CPI는 <b>기준시점의 소비량을 고정</b>한 채 가격만 바꾸어 비교하는 방식으로 작성되는데, 이를 <b>라스파이레스 방식</b>이라고 한다.</p>
+
+      <p>수량을 고정한다는 점은 계산을 간명하게 하지만 동시에 한계도 낳는다. 어떤 재화의 가격이 유독 크게 오르면 소비자는 값이 덜 오른 다른 재화로 소비를 옮겨 부담을 줄인다. 그런데 라스파이레스 방식은 소비량이 예전 그대로라고 가정하므로, 이러한 대체 행위로 절약된 부분을 반영하지 못한다. 그 결과 실제 생계비 상승보다 물가 상승률이 다소 <b>과대평가</b>되는데, 이를 <b>대체편의</b>라고 한다. 새로 등장한 상품이 바스켓에 뒤늦게 편입되거나, 같은 값에 성능이 좋아진 제품의 <b>품질 개선</b>이 가격 하락으로 제대로 계산되지 않는 것도 지수를 위쪽으로 밀어 올리는 요인이다.</p>
+
+      <p>한편 물가지수에는 계절이나 국제 정세에 따라 급격히 출렁이는 품목도 포함된다. 농산물은 작황에 따라, 석유류는 국제 유가에 따라 단기간에 크게 변동한다. 이런 품목이 지수를 흔들면 물가의 <b>기조적</b> 흐름을 읽기 어렵다. 그래서 변동이 큰 품목을 제외하고 산출한 <b>근원물가지수</b>를 함께 발표한다. 다만 근원물가지수에서 빠지는 품목들은 대개 가계가 자주 구입하는 것들이어서, 근원물가가 안정적이어도 사람들이 느끼는 체감 물가는 높을 수 있다. 이 간극을 메우기 위해 구입 빈도가 높은 품목만 모은 <b>생활물가지수</b>가 보조 지표로 쓰인다.</p>
+
+      <p>물가를 재는 또 다른 잣대로 <b>GDP디플레이터</b>가 있다. 이는 명목 GDP를 실질 GDP로 나눈 뒤 100을 곱한 값으로, 국내에서 <b>생산된</b> 모든 재화와 서비스의 가격 변화를 반영한다. 그래서 소비재뿐 아니라 자본재와 정부 서비스까지 포괄하지만, 수입 소비재는 국내 생산물이 아니므로 여기에서 <b>제외</b>된다. 국제 유가가 급등해도 CPI는 곧바로 오르는 반면 GDP디플레이터는 그만큼 오르지 않는 것은 이 때문이다. 또 GDP디플레이터는 비교시점의 생산량을 가중치로 삼는 <b>파셰 방식</b>에 해당하여, 수량이 고정되지 않는다는 점에서도 CPI와 구별된다.</p>
+
+      <p>물가지수가 지속적으로 오르는 현상이 <b>인플레이션</b>이다. 인플레이션은 화폐의 구매력을 떨어뜨리므로 금리를 이해하는 방식도 바꾸어 놓는다. 은행이 제시하는 <b>명목이자율</b>에서 물가상승률을 뺀 것이 <b>실질이자율</b>이며, 명목이자율이 5%라도 물가가 4% 올랐다면 실제로 늘어난 구매력은 1%에 지나지 않는다. 특히 <b>예상하지 못한</b> 인플레이션은 부를 재분배한다. 돈을 빌려준 사람은 가치가 떨어진 화폐로 돌려받아 손해를 보고, 빌린 사람은 그만큼 이득을 얻는다. 즉 예상 밖의 물가 상승은 채권자에게서 채무자에게로 부를 옮기는 셈이다.</p>
+
+      <p>그렇다면 물가는 아예 오르지 않는 편이 좋을까. 대다수 중앙은행은 물가안정목표를 0%가 아니라 2% 안팎으로 정한다. 첫째, 앞서 본 대체편의와 품질 개선의 미반영 탓에 측정된 물가상승률에는 실제보다 높게 나오는 <b>상방 편의</b>가 존재한다. 둘째, 명목이자율은 0 아래로 내리기 어렵기 때문에 평상시 물가상승률이 어느 정도 유지되어야 불황에 금리를 낮출 여지가 생긴다. 셋째, 물가가 계속 떨어지는 <b>디플레이션</b>에 빠지면 소비자는 구매를 미루고 기업은 투자를 줄여 침체가 깊어질 수 있다. 완만한 물가 상승을 용인하는 것은 그래서 소극적 타협이 아니라 적극적인 정책 선택이다.</p>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>소비자물가지수는 기준시점의 소비량을 고정한 라스파이레스 방식으로 작성되므로 대체편의가 나타날 수 있다.</span></li>
+        <li data-i="2"><span class="mark">②</span><span>GDP디플레이터는 수입 소비재의 가격 변동까지 직접 반영하기 때문에 국제 유가가 급등하면 소비자물가지수보다 더 크게 상승한다.</span></li>
+        <li data-i="3"><span class="mark">③</span><span>근원물가지수는 변동이 큰 품목을 제외하여 산출하므로 체감 물가와 차이가 생길 수 있다.</span></li>
+        <li data-i="4"><span class="mark">④</span><span>예상하지 못한 인플레이션은 채권자에게서 채무자에게로 부를 이전시키는 결과를 낳는다.</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>물가안정목표를 0%가 아니라 2% 안팎으로 두는 데에는 지수의 상방 편의와 명목이자율의 하한이 함께 고려된다.</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ②</div>
+        <ul>
+          <li><b>① 일치</b> — 2문단에서 CPI는 "기준시점의 소비량을 고정"한 라스파이레스 방식이라고 했고, 3문단에서 그 때문에 대체편의가 생긴다고 서술했다.</li>
+          <li><b>② 불일치(정답)</b> — 5문단은 GDP디플레이터가 국내에서 <b>생산된</b> 재화와 서비스를 대상으로 하므로 "수입 소비재는 … 제외"되며, 그래서 유가가 급등해도 "CPI는 곧바로 오르는 반면 GDP디플레이터는 그만큼 오르지 않는다"고 했다. 선지의 두 진술이 모두 글과 반대이다.</li>
+          <li><b>③ 일치</b> — 4문단에서 근원물가지수는 변동이 큰 품목을 제외하며, 그 품목들이 자주 구입하는 것이어서 체감 물가와 간극이 생긴다고 했다.</li>
+          <li><b>④ 일치</b> — 6문단의 "예상 밖의 물가 상승은 채권자에게서 채무자에게로 부를 옮기는 셈"과 정확히 부합한다.</li>
+          <li><b>⑤ 일치</b> — 7문단에서 목표를 2% 안팎으로 두는 이유로 상방 편의(첫째)와 명목이자율을 0 아래로 내리기 어렵다는 점(둘째)을 들었다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 영어 ================= -->
+<section class="sec sec-en">
+  <div class="sec-head">📗 영어 · TOEIC Part 5 (문장 완성형) 5문항</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 1</span>Choose the best answer.</div>
+      <p class="stem">The board finally approved the merger, ______ implications for regional employment are still being assessed by outside consultants.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>which</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>whose</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>that</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>what</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) whose</div>
+        <p><b>해석:</b> 이사회는 마침내 합병을 승인했는데, 그 합병이 지역 고용에 미치는 영향은 아직 외부 컨설턴트들이 평가하는 중이다.</p>
+        <ul>
+          <li><b>(A) which</b> — 주격/목적격 관계대명사. 뒤에 <i>implications</i>라는 명사가 바로 이어지므로 들어갈 수 없다. (which 뒤에는 동사나 불완전한 절이 온다.)</li>
+          <li><b>(B) whose (정답)</b> — <b>빈칸 뒤에 관사 없는 명사(implications)가 바로 오고, 그 뒤에 완전한 절</b>이 이어지면 소유격 관계대명사 자리다. the merger's implications를 대신한다.</li>
+          <li><b>(C) that</b> — 콤마 뒤의 계속적 용법에 쓸 수 없고, 뒤에 명사가 바로 올 수도 없다.</li>
+          <li><b>(D) what</b> — 선행사를 포함하는 관계대명사여서 앞의 the merger와 중복되고, 뒤에 명사를 직접 취하지도 못한다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 2</span>Choose the best answer.</div>
+      <p class="stem">All contractors entering the facility must ______ the revised security protocol at all times.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>comply</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>observe</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>adhere</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>conform</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) observe</div>
+        <p><b>해석:</b> 시설에 출입하는 모든 협력업체 직원은 개정된 보안 수칙을 항상 준수해야 한다.</p>
+        <ul>
+          <li><b>(A) comply</b> — 자동사. 반드시 <b>comply <u>with</u></b> the protocol처럼 전치사가 필요하다.</li>
+          <li><b>(B) observe (정답)</b> — '(규칙·법을) 준수하다'라는 뜻의 <b>타동사</b>로, 전치사 없이 목적어(the revised security protocol)를 바로 취한다.</li>
+          <li><b>(C) adhere</b> — 자동사. <b>adhere <u>to</u></b>의 형태로만 '준수하다'가 된다.</li>
+          <li><b>(D) conform</b> — 자동사. <b>conform <u>to/with</u></b>가 필요하다. 이 문제는 <b>자동사·타동사 구별</b> 유형으로, 빈칸 뒤에 전치사가 없다는 점이 결정적 단서다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">영어 3</span>Choose the best answer.</div>
+      <p class="stem">Had the vendor notified us of the shipping delay a week earlier, we ______ alternative arrangements with another supplier.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>will make</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>had made</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>would have made</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>would make</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (C) would have made</div>
+        <p><b>해석:</b> 그 업체가 배송 지연을 일주일 더 일찍 알려 주었더라면, 우리는 다른 공급업체와 대안을 마련했을 것이다.</p>
+        <ul>
+          <li><b>(A) will make</b> — 단순 미래. 가정법 과거완료의 주절에는 쓸 수 없다.</li>
+          <li><b>(B) had made</b> — 과거완료. 이미 if절(도치된 Had the vendor notified)이 과거완료이므로 주절에 다시 올 수 없다.</li>
+          <li><b>(C) would have made (정답)</b> — 문두의 <b>Had + 주어 + p.p.</b>는 <i>If the vendor had notified</i>에서 if가 생략되며 도치된 <b>가정법 과거완료</b>다. 주절은 반드시 <b>would/could/might + have + p.p.</b> 형태를 취한다.</li>
+          <li><b>(D) would make</b> — 가정법 <b>과거</b>의 주절 형태로, 현재 사실의 반대를 나타내므로 시제가 어긋난다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 4</span>Choose the best answer.</div>
+      <p class="stem">______ the sharp rise in raw material costs, the manufacturer managed to keep its retail prices unchanged throughout the quarter.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>Nevertheless</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>Notwithstanding</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>Even though</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>Whereas</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) Notwithstanding</div>
+        <p><b>해석:</b> 원자재 가격의 급격한 상승에도 불구하고, 그 제조업체는 분기 내내 소매가를 그대로 유지해 냈다.</p>
+        <ul>
+          <li><b>(A) Nevertheless</b> — 접속부사. 뒤에 명사구를 이끌 수 없고, 보통 앞 문장과 세미콜론·마침표로 연결된다.</li>
+          <li><b>(B) Notwithstanding (정답)</b> — '~에도 불구하고'라는 뜻의 <b>전치사</b>로, 뒤의 명사구 <i>the sharp rise ~</i>를 목적어로 취한다. despite / in spite of와 같은 자리에 쓰인다.</li>
+          <li><b>(C) Even though</b> — 접속사이므로 뒤에 <b>주어 + 동사</b>가 와야 한다.</li>
+          <li><b>(D) Whereas</b> — 대조를 나타내는 접속사로, 역시 절을 이끌어야 하며 의미도 '반면에'라 어색하다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 5</span>Choose the best answer.</div>
+      <p class="stem">The number of applicants for the overseas internship program ______ risen sharply since the company opened two new regional offices.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>have</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>has</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>having</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>are</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) has</div>
+        <p><b>해석:</b> 회사가 두 곳의 새 지역 사무소를 연 이후로 해외 인턴십 프로그램 지원자 수가 급격히 늘었다.</p>
+        <ul>
+          <li><b>(A) have</b> — 바로 앞의 복수명사 applicants에 이끌린 함정. 주어의 <b>핵</b>은 <i>The number</i>이므로 복수 동사는 쓸 수 없다.</li>
+          <li><b>(B) has (정답)</b> — <b>The number of + 복수명사</b>는 '~의 수'라는 뜻으로 <b>단수 취급</b>한다. 또한 since절과 호응하는 현재완료(has risen)가 필요하다. (반대로 <i>A number of + 복수명사</i>는 '많은'이라는 뜻으로 복수 취급한다.)</li>
+          <li><b>(C) having</b> — 준동사여서 문장의 본동사가 될 수 없다.</li>
+          <li><b>(D) are</b> — 수도 맞지 않고, risen(과거분사)과 결합해 진행형이나 수동태를 만들 수도 없다.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 수학 ================= -->
+<section class="sec sec-ma">
+  <div class="sec-head">📐 수학 · 경우의 수 (순열과 조합) — 난이도 최상</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">수학 1</span>다음 물음에 답하시오.</div>
+      <p class="stem">
+        숫자 1, 1, 2, 2, 3, 3, 4, 4 가 하나씩 적힌 8장의 카드를 일렬로 나열할 때,
+        <b>같은 숫자가 적힌 두 카드가 서로 이웃하지 않도록</b> 나열하는 경우의 수는?
+        (단, 같은 숫자가 적힌 카드끼리는 서로 구별하지 않는다.)
+      </p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>720</span></li>
+        <li data-i="2"><span class="mark">②</span><span>792</span></li>
+        <li data-i="3"><span class="mark">③</span><span>864</span></li>
+        <li data-i="4"><span class="mark">④</span><span>936</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>1008</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ③ 864</div>
+        <p><b>풀이 전략 — 여사건과 포함배제의 원리</b><br>
+        '어느 것도 이웃하지 않는' 조건은 직접 세기 어렵다. 대신 <b>숫자 k끼리 이웃하는 사건</b>을 A<sub>k</sub>(k = 1, 2, 3, 4)라 두고,
+        전체에서 A<sub>1</sub> ∪ A<sub>2</sub> ∪ A<sub>3</sub> ∪ A<sub>4</sub>를 빼는 방식으로 접근한다.</p>
+
+        <p><b>[0단계] 전체 경우의 수</b><br>
+        같은 것이 각각 2개씩 4쌍 있는 8개의 순열이므로<br>
+        n(S) = 8! ÷ (2!·2!·2!·2!) = 40320 ÷ 16 = <b>2520</b></p>
+
+        <p><b>[1단계] 한 종류가 이웃 — n(A<sub>k</sub>)</b><br>
+        예를 들어 1과 1을 하나로 묶으면 (11), 2, 2, 3, 3, 4, 4 로 <b>7개</b>를 나열하는 문제가 된다. 남은 중복은 2, 3, 4의 세 쌍이므로<br>
+        n(A<sub>k</sub>) = 7! ÷ 2!<sup>3</sup> = 5040 ÷ 8 = 630,&nbsp; 이런 k가 4개이므로 Σn(A<sub>k</sub>) = 4 × 630 = <b>2520</b></p>
+
+        <p><b>[2단계] 두 종류가 이웃 — n(A<sub>i</sub> ∩ A<sub>j</sub>)</b><br>
+        두 쌍을 묶으면 <b>6개</b>의 나열이고 남은 중복은 두 쌍이므로<br>
+        n = 6! ÷ 2!<sup>2</sup> = 720 ÷ 4 = 180,&nbsp; 두 종류를 고르는 방법이 <sub>4</sub>C<sub>2</sub> = 6가지이므로 합은 6 × 180 = <b>1080</b></p>
+
+        <p><b>[3단계] 세 종류가 이웃</b><br>
+        n = 5! ÷ 2! = 120 ÷ 2 = 60,&nbsp; <sub>4</sub>C<sub>3</sub> = 4가지이므로 합은 4 × 60 = <b>240</b></p>
+
+        <p><b>[4단계] 네 종류가 모두 이웃</b><br>
+        네 쌍을 모두 묶으면 서로 다른 4개의 순열이므로 n = 4! = <b>24</b></p>
+
+        <p><b>[5단계] 포함배제로 합집합 계산</b><br>
+        n(A<sub>1</sub> ∪ … ∪ A<sub>4</sub>) = 2520 − 1080 + 240 − 24 = <b>1656</b></p>
+
+        <p><b>[6단계] 여사건</b><br>
+        구하는 값 = 2520 − 1656 = <b>864</b></p>
+
+        <p><b>✔ 자주 하는 실수</b><br>
+        ⓐ 1단계에서 묶은 (11)을 다시 2!로 나누는 실수 — 두 카드가 서로 <b>구별되지 않으므로</b> 묶음 내부의 배열은 1가지뿐이다. (구별되는 카드였다면 ×2를 해야 한다.)<br>
+        ⓑ 2단계 이후 <sub>4</sub>C<sub>2</sub>, <sub>4</sub>C<sub>3</sub> 같은 <b>선택의 가짓수를 빠뜨리는</b> 실수.<br>
+        ⓒ 부호를 −, +, −, ⋯ 로 번갈아 붙이지 않는 실수. 항의 개수가 4개이므로 마지막 항의 부호는 (−1)<sup>4+1</sup> = −이다.</p>
+
+        <p><b>참고</b> — 같은 방식으로 1,1,2,2,3,3(6장)이면 6!/2!<sup>3</sup> − 3·(5!/2!<sup>2</sup>) + 3·(4!/2!) − 3! = 90 − 90 + 36 − 6 = <b>30</b>가지가 된다. 작은 경우로 검산해 보는 습관을 들이면 계산 실수를 줄일 수 있다.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 일본어 ================= -->
+<section class="sec sec-jp">
+  <div class="sec-head">🗾 일본어 · 오늘의 회화 문장 (고1 2학기 수준)</div>
+  <div class="sec-body">
+
+    <div class="jp-sent">
+      <div class="jp-main">明日、いっしょに映画を見に行きませんか。</div>
+      <div class="jp-read">
+        <b>히라가나:</b> あした、いっしょに えいがを みに いきませんか。<br>
+        <b>발음(한글):</b> 아시타, 잇쇼니 에-가오 미니 이키마셍카.
+      </div>
+      <div class="jp-ko">해석: 내일 같이 영화 보러 가지 않을래요?</div>
+    </div>
+
+    <div class="scroll">
+      <table class="jp">
+        <tr><th>단어</th><th>읽기</th><th>뜻</th></tr>
+        <tr><td>明日</td><td>あした</td><td>내일 (あす, みょうにち로도 읽음)</td></tr>
+        <tr><td>いっしょに</td><td>いっしょに</td><td>같이, 함께 (한자로는 一緒に)</td></tr>
+        <tr><td>映画</td><td>えいが</td><td>영화</td></tr>
+        <tr><td>見る</td><td>みる</td><td>보다 (2그룹 동사)</td></tr>
+        <tr><td>行く</td><td>いく</td><td>가다 (1그룹 동사)</td></tr>
+      </table>
+    </div>
+
+    <div class="ans-box open" style="margin-top:16px;">
+      <div class="ans-head">문장 설명 &amp; 문법 포인트</div>
+      <ul>
+        <li><b>① ～ませんか — 권유 표현</b><br>
+        동사의 <b>ます형</b>에 <b>ませんか</b>를 붙이면 '~하지 않을래요?'라는 <b>부드러운 권유</b>가 된다. 형태는 부정 의문문이지만 의미는 부정이 아니다.<br>
+        行きます(いきます) → 行き<b>ませんか</b>(いきませんか) / 食べます(たべます) → 食べ<b>ませんか</b>(たべませんか)<br>
+        더 적극적인 제안은 <b>～ましょうか</b>(~할까요?), <b>～ましょう</b>(~합시다)를 쓴다. 정중함은 <b>ませんか &gt; ましょうか &gt; ましょう</b> 순.<br>
+        대답: 「はい、いいですね。」(하이, 이-데스네 / 네, 좋아요) / 「すみません、明日はちょっと…」(すみません、あしたは ちょっと… / 죄송해요, 내일은 좀…)</li>
+
+        <li><b>② ます형 + に + 行く — 목적의 に</b><br>
+        「見<b>に</b>行く」(みに いく)의 に는 <b>이동의 목적</b>을 나타내어 '~하러 가다'가 된다. 앞에는 반드시 <b>동사의 ます형(ます를 뗀 형태)</b>이 온다.<br>
+        買います(かいます) → 買い<b>に</b>行く(かいに いく, 사러 가다) / 会います(あいます) → 会い<b>に</b>行く(あいに いく, 만나러 가다)<br>
+        ※ 「する」로 끝나는 명사는 <b>명사 + に行く</b> 형태를 쓴다: 買い物<b>に</b>行く(かいものに いく, 장 보러 가다), 旅行に行く(りょこうに いく).<br>
+        뒤에는 行く 외에 <b>来る(くる), 帰る(かえる)</b> 등 이동 동사가 온다.</li>
+
+        <li><b>③ 조사 を와 に의 구별</b><br>
+        「映画<b>を</b>見る」의 を는 목적격 조사이며 발음은 언제나 <b>お</b>이다.<br>
+        이 문장에는 を(목적어)와 に(목적)가 함께 나오는데, <b>を는 見る에, に는 行く에</b> 걸린다는 점을 의식하면 어순이 헷갈리지 않는다. → [映画を見]+[に行く]</li>
+
+        <li><b>④ 촉음 っ와 장음에 주의</b><br>
+        <b>いっしょに</b>의 작은 つ(촉음)는 한 박자를 쉬어 '잇쇼니'처럼 발음한다. 「いしょに」로 발음하면 다른 말이 된다.<br>
+        <b>映画(えいが)</b>의 えい는 실제로는 '에-'에 가까운 <b>장음</b>으로 발음된다.</li>
+
+        <li><b>⑤ 함께 외우면 좋은 확장 문장</b><br>
+        「今度の週末、いっしょにご飯を食べに行きませんか。」(こんどの しゅうまつ、いっしょに ごはんを たべに いきませんか) — 이번 주말에 같이 밥 먹으러 가지 않을래요?<br>
+        「駅前の新しい店に行ってみませんか。」(えきまえの あたらしい みせに いってみませんか) — 역 앞의 새 가게에 가 보지 않을래요?<br>
+        「何時に会いましょうか。」(なんじに あいましょうか) — 몇 시에 만날까요?</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+<footer>생성 시각: <span id="gen"></span></footer>
+
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.q').forEach(function (q) {
+    var answer = q.getAttribute('data-answer');
+    var box = q.querySelector('.ans-box');
+    var verdict = q.querySelector('.verdict');
+    var btn = q.querySelector('.btn');
+    var lis = q.querySelectorAll('ul.choices li');
+    var done = false;
+
+    function reveal(picked) {
+      lis.forEach(function (li) {
+        li.classList.add('locked');
+        var i = li.getAttribute('data-i');
+        if (i === answer) {
+          li.classList.add('correct');
+          var s = document.createElement('span');
+          s.className = 'res';
+          s.textContent = '정답';
+          li.appendChild(s);
+        } else if (picked && i === picked) {
+          li.classList.add('wrong');
+          var w = document.createElement('span');
+          w.className = 'res';
+          w.textContent = '오답';
+          li.appendChild(w);
+        }
+      });
+      if (picked) {
+        if (picked === answer) {
+          verdict.textContent = '⭕ 정답입니다!';
+          verdict.className = 'verdict ok';
+        } else {
+          verdict.textContent = '❌ 오답입니다. (선택한 답: ' + picked + '번)';
+          verdict.className = 'verdict no';
+        }
+      } else {
+        verdict.textContent = '';
+        verdict.className = 'verdict';
+      }
+      box.classList.add('open');
+      btn.textContent = '정답 확인 완료';
+      done = true;
+    }
+
+    lis.forEach(function (li) {
+      li.addEventListener('click', function () {
+        if (done) return;
+        reveal(li.getAttribute('data-i'));
+      });
+    });
+
+    btn.addEventListener('click', function () {
+      if (done) { box.classList.toggle('open'); return; }
+      reveal(null);
+    });
+  });
+
+  var d = new Date();
+  var p = function (n) { return (n < 10 ? '0' : '') + n; };
+  document.getElementById('gen').textContent =
+    d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' +
+    p(d.getHours()) + ':' + p(d.getMinutes()) + ' (' +
+    Intl.DateTimeFormat().resolvedOptions().timeZone + ')';
+})();
+</script>
+</body>
+</html>
