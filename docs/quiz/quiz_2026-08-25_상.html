@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-25 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 80px; }
+  header.top {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  header.top h1 { margin: 0 0 8px; font-size: 24px; font-weight: 800; color: #0f172a; }
+  header.top .meta { font-size: 14px; color: #64748b; }
+  .badge {
+    display: inline-block; background: #fee2e2; color: #b91c1c;
+    font-weight: 700; font-size: 13px; padding: 2px 10px; border-radius: 999px; margin-left: 6px;
+  }
+
+  section.sec { margin-top: 34px; }
+  .sec-head {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 20px; font-weight: 800; color: #ffffff;
+    padding: 12px 16px; border-radius: 12px 12px 0 0;
+  }
+  .sec-ko .sec-head { background: #2563eb; }
+  .sec-en .sec-head { background: #059669; }
+  .sec-ma .sec-head { background: #7c3aed; }
+  .sec-jp .sec-head { background: #db2777; }
+  .sec-body {
+    background: #ffffff; border: 1px solid #e2e8f0; border-top: none;
+    border-radius: 0 0 12px 12px; padding: 18px 18px 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+
+  .passage {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #2563eb;
+    border-radius: 8px; padding: 16px 18px; margin-bottom: 20px;
+    font-size: 15.5px; text-align: justify;
+  }
+  .passage p { margin: 0 0 14px; text-indent: 6px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 26px; padding-bottom: 6px; }
+  .q + .q { border-top: 1px dashed #e2e8f0; padding-top: 22px; }
+  .q-title { font-weight: 700; font-size: 16.5px; margin-bottom: 12px; color: #0f172a; }
+  .q-title .num {
+    display: inline-block; background: #1e293b; color: #fff; font-size: 13px;
+    border-radius: 6px; padding: 1px 8px; margin-right: 8px; font-weight: 700;
+  }
+  .stem { margin: 0 0 12px; font-size: 16px; }
+
+  ul.choices { list-style: none; margin: 0; padding: 0; }
+  ul.choices li {
+    border: 1px solid #cbd5e1; background: #fff; border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 8px; cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 15.5px; display: flex; gap: 8px; align-items: flex-start;
+  }
+  ul.choices li:hover { background: #f1f5f9; }
+  ul.choices li .mark { font-weight: 700; color: #475569; flex: 0 0 auto; }
+  ul.choices li.correct { background: #dcfce7; border-color: #16a34a; }
+  ul.choices li.wrong { background: #fee2e2; border-color: #dc2626; }
+  ul.choices li.locked { cursor: default; }
+  ul.choices li .res { margin-left: auto; font-weight: 800; font-size: 14px; flex: 0 0 auto; }
+  li.correct .res { color: #15803d; }
+  li.wrong .res { color: #b91c1c; }
+
+  .btn {
+    margin-top: 10px; background: #1e293b; color: #fff; border: none;
+    border-radius: 8px; padding: 9px 18px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  }
+  .btn:hover { background: #334155; }
+
+  .ans-box {
+    display: none; margin-top: 14px;
+    background: #fffbeb; border: 1px solid #fcd34d; border-left: 5px solid #f59e0b;
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .ans-box.open { display: block; }
+  .ans-box .ans-head { font-weight: 800; color: #b45309; margin-bottom: 8px; font-size: 15.5px; }
+  .ans-box .verdict { font-weight: 800; margin-bottom: 8px; font-size: 15px; }
+  .ans-box .verdict.ok { color: #15803d; }
+  .ans-box .verdict.no { color: #b91c1c; }
+  .ans-box ul { margin: 6px 0 0; padding-left: 20px; }
+  .ans-box li { margin-bottom: 6px; font-size: 15px; }
+  .ans-box p { margin: 6px 0; font-size: 15px; }
+
+  .jp-sent {
+    background: #fdf2f8; border: 1px solid #fbcfe8; border-left: 5px solid #db2777;
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 6px;
+  }
+  .jp-main { font-size: 22px; font-weight: 700; color: #831843; line-height: 1.9; }
+  .jp-read { font-size: 15px; color: #9d174d; margin-top: 6px; }
+  .jp-ko { font-size: 16.5px; margin-top: 10px; font-weight: 600; }
+  table.jp {
+    width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px;
+  }
+  table.jp th, table.jp td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+  table.jp th { background: #f8fafc; font-weight: 700; white-space: nowrap; }
+  .scroll { overflow-x: auto; }
+
+  footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 40px; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 14px 10px 60px; }
+    header.top h1 { font-size: 19px; }
+    .sec-head { font-size: 17px; padding: 10px 12px; }
+    .sec-body { padding: 14px 12px 18px; }
+    .passage { font-size: 15px; padding: 13px 13px; }
+    ul.choices li { font-size: 15px; padding: 9px 11px; }
+    .jp-main { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 25일 (화) · 국어 1 · 영어 5 · 수학 1 · 일본어 1 <span class="badge">난이도 상</span></div>
+</header>
+
+<!-- ================= 국어 ================= -->
+<section class="sec sec-ko">
+  <div class="sec-head">📘 국어 · 독서(경제) — 환율의 결정과 경상수지</div>
+  <div class="sec-body">
+    <div class="passage">
+      <p><b>환율</b>은 두 나라 화폐의 교환 비율이다. 우리나라에서는 보통 미국 달러 1단위를 얻기 위해 치러야 하는 원화의 양으로 나타내는데, 이를 <b>자국통화표시환율</b>이라고 한다. 이 방식에서 환율이 1,300원에서 1,400원으로 오르는 것은 달러 한 단위의 값이 비싸졌다는 뜻이므로 <b>원화 가치의 하락</b>을 의미한다. 환율의 숫자가 커지는 것과 자국 화폐의 가치가 커지는 것이 서로 반대 방향이라는 점은 환율을 이해할 때 가장 먼저 확인해야 할 사항이다.</p>
+
+      <p>환율은 외환시장에서 달러의 수요와 공급이 만나는 지점에서 결정된다. 수출 대금이 들어오거나 외국인이 국내 주식과 채권을 사들이면 달러의 <b>공급</b>이 늘어 환율은 내려간다. 반대로 수입 대금을 치르거나 내국인이 해외 자산을 사들이면 달러의 <b>수요</b>가 늘어 환율은 올라간다. 여기에 각국 통화 당국의 개입, 국제 정세의 변화 같은 요인도 더해진다. 다만 이러한 단기적 움직임과 별개로, 장기적으로 환율이 어느 수준에 머무르게 되는지를 설명하려는 이론들이 있다.</p>
+
+      <p>대표적인 것이 <b>구매력평가설</b>이다. 이 이론은 동일한 상품은 어느 나라에서나 같은 값에 팔려야 한다는 <b>일물일가의 법칙</b>을 국제적으로 확장한 것이다. 어떤 재화가 미국에서 5달러, 우리나라에서 6,500원이라면 환율은 1달러당 1,300원이어야 한다는 것이다. 만일 환율이 이보다 높다면 그 재화를 우리나라에서 사서 미국에 팔아 이익을 볼 수 있고, 이러한 거래가 반복되면 환율은 다시 균형으로 돌아간다. 구매력평가설에 따르면 물가가 상대적으로 더 많이 오른 나라의 화폐 가치는 그만큼 떨어지게 된다.</p>
+
+      <p>그러나 이 이론은 현실의 환율을 잘 설명하지 못할 때가 많다. 운송비와 관세가 존재하고, 이발이나 의료처럼 <b>교역이 불가능한 재화</b>가 국내 물가에 상당한 비중을 차지하기 때문이다. 무엇보다 구매력평가설은 재화의 거래만을 고려한 이론인데, 오늘날 외환시장에서 실제로 오가는 자금의 대부분은 상품 거래가 아니라 <b>금융 거래</b>에서 비롯된다. 그래서 구매력평가설은 단기의 환율 변동보다는 여러 해에 걸친 장기적 추세를 설명하는 데 적합한 것으로 평가된다.</p>
+
+      <p>금융 거래에 주목하는 설명이 <b>이자율평가설</b>이다. 투자자가 국내 자산에 투자해 얻는 수익률과 해외 자산에 투자해 얻는 수익률이 같아지는 지점에서 환율이 결정된다는 것이다. 해외 투자의 수익률은 그 나라의 이자율뿐 아니라 투자 기간 동안의 <b>환율 변동</b>에도 좌우된다. 따라서 우리나라의 이자율이 미국보다 낮다면, 투자자들이 국내 자산을 그대로 보유하도록 만들기 위해서는 앞으로 원화 가치가 오를 것이라는 <b>예상</b>이 필요하다. 이자율평가설은 이처럼 미래에 대한 기대가 현재의 환율에 곧바로 반영된다고 보므로, 환율이 왜 그토록 빠르게 움직이는지를 설명하는 데 유용하다.</p>
+
+      <p>환율이 오르면 우리 상품의 달러 표시 가격이 낮아지므로 수출에 유리하고, 수입품의 원화 표시 가격이 높아지므로 수입은 줄어든다. 그렇다면 환율 상승은 곧바로 <b>경상수지</b>를 개선할까. 그렇지 않다. 이미 체결된 계약의 물량은 단기간에 바뀌지 않는데, 수입품의 가격은 즉시 올라가기 때문이다. 그 결과 환율이 오른 직후에는 오히려 경상수지가 악화되었다가, 시간이 지나 수출과 수입의 물량이 조정된 뒤에야 개선되는 모습이 나타난다. 이렇게 경상수지가 그리는 궤적이 알파벳 J를 닮았다고 하여 <b>J커브 효과</b>라고 부른다.</p>
+
+      <p>더구나 환율 상승이 언제나 경상수지 개선으로 이어지는 것도 아니다. 가격이 변할 때 수출입 물량이 얼마나 민감하게 반응하는지를 <b>탄력성</b>이라 하는데, 수출과 수입의 가격탄력성을 합한 값이 1보다 커야 비로소 경상수지가 개선된다. 이를 <b>마셜-러너 조건</b>이라고 한다. 만약 우리 수출품이 다른 나라 제품으로 대체하기 어려운 것이거나 수입품이 원유처럼 반드시 사야 하는 것이라면 물량은 좀처럼 변하지 않고, 결국 비싸진 값만 치르는 결과가 될 수 있다.</p>
+
+      <p>환율은 물가에도 영향을 준다. 환율이 오르면 원자재와 부품의 도입 가격이 올라 국내 물가를 밀어 올리는데, 이를 <b>환율 전가</b>라고 한다. 수출 기업의 이익이 늘어나는 것과 수입 물가가 올라 가계의 부담이 커지는 것이 동시에 일어나는 셈이다. 그래서 통화 당국은 환율의 방향 자체를 어느 한쪽으로 끌고 가기보다, 급격한 <b>변동성</b>을 줄이는 데 정책의 초점을 맞추는 것이 일반적이다.</p>
+    </div>
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>자국통화표시환율에서 환율의 숫자가 커지는 것은 자국 화폐 가치의 하락을 뜻한다.</span></li>
+        <li data-i="2"><span class="mark">②</span><span>구매력평가설은 일물일가의 법칙을 국제적으로 확장한 것으로, 물가가 상대적으로 더 오른 나라의 화폐 가치는 하락한다고 본다.</span></li>
+        <li data-i="3"><span class="mark">③</span><span>구매력평가설은 외환시장의 자금 대부분을 차지하는 금융 거래를 반영하기 때문에 단기 환율 변동을 설명하는 데 특히 적합하다.</span></li>
+        <li data-i="4"><span class="mark">④</span><span>J커브 효과는 환율이 오른 직후 경상수지가 오히려 악화되었다가 나중에 개선되는 현상을 가리킨다.</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>수출과 수입의 가격탄력성의 합이 1보다 크지 않으면 환율이 올라도 경상수지가 개선되지 않을 수 있다.</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ③</div>
+        <ul>
+          <li><b>① 일치</b> — 1문단에서 자국통화표시환율은 달러 1단위에 치르는 원화의 양이며, 1,300원에서 1,400원으로 오르는 것은 "원화 가치의 하락"이라고 했다.</li>
+          <li><b>② 일치</b> — 3문단에서 구매력평가설은 일물일가의 법칙을 국제적으로 확장한 것이며, "물가가 상대적으로 더 많이 오른 나라의 화폐 가치는 그만큼 떨어진다"고 서술했다.</li>
+          <li><b>③ 불일치(정답)</b> — 4문단에 따르면 구매력평가설은 <b>재화의 거래만</b> 고려한 이론이어서 금융 거래를 반영하지 못하며, 그 때문에 단기 변동보다 <b>장기적 추세</b>를 설명하는 데 적합하다고 했다. 금융 거래에 주목하여 단기 변동을 설명하는 것은 5문단의 <b>이자율평가설</b>이다. 두 이론의 설명 대상을 뒤바꾼 선지이다.</li>
+          <li><b>④ 일치</b> — 6문단에서 환율 상승 직후에는 경상수지가 악화되었다가 물량이 조정된 뒤 개선되며, 그 궤적이 J를 닮아 J커브 효과라 한다고 했다.</li>
+          <li><b>⑤ 일치</b> — 7문단의 마셜-러너 조건, 즉 "수출과 수입의 가격탄력성을 합한 값이 1보다 커야 비로소 경상수지가 개선된다"는 진술과 부합한다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 영어 ================= -->
+<section class="sec sec-en">
+  <div class="sec-head">📗 영어 · TOEIC Part 5 (문장 완성형) 5문항</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 1</span>Choose the best answer.</div>
+      <p class="stem">______ the unexpected delay at customs, the shipment arrived at the distribution center two days ahead of schedule.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>Although</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>Despite</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>Even though</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>However</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) Despite</div>
+        <p><b>해석:</b> 통관에서의 예기치 못한 지연에도 불구하고, 화물은 예정보다 이틀 앞서 물류센터에 도착했다.</p>
+        <ul>
+          <li><b>(A) Although — 오답</b>: 접속사이므로 뒤에 「주어+동사」가 와야 한다. 여기서는 the unexpected delay라는 <b>명사구</b>만 있으므로 쓸 수 없다.</li>
+          <li><b>(B) Despite — 정답</b>: '~에도 불구하고'라는 뜻의 <b>전치사</b>로 뒤에 명사(구)를 취한다. 빈칸 뒤가 명사구이고 뒤 절과 양보 관계이므로 적절하다. (= In spite of)</li>
+          <li><b>(C) Even though — 오답</b>: Although와 마찬가지로 절을 이끄는 접속사이다.</li>
+          <li><b>(D) However — 오답</b>: 접속부사로, 두 문장을 세미콜론이나 마침표로 이은 뒤 사용한다. 명사구를 목적어로 취할 수 없다.</li>
+        </ul>
+        <p><b>포인트:</b> 빈칸 뒤가 <b>명사구면 전치사</b>(despite, in spite of, because of), <b>절이면 접속사</b>(although, even though, because)를 고른다.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-title"><span class="num">영어 2</span>Choose the best answer.</div>
+      <p class="stem">Not until the final quarter ______ the executive team acknowledge that the cost-cutting measures had fallen short of their targets.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>did</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>had</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>has</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>was</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (A) did</div>
+        <p><b>해석:</b> 마지막 분기가 되어서야 비로소 경영진은 비용 절감 조치가 목표에 미치지 못했음을 인정했다.</p>
+        <ul>
+          <li><b>(A) did — 정답</b>: 부정어구 <b>Not until ~</b>이 문두에 오면 주절이 <b>도치</b>되어 「조동사 + 주어 + 동사원형」 어순이 된다. 뒤에 원형 acknowledge가 있으므로 did가 알맞다.</li>
+          <li><b>(B) had — 오답</b>: had가 조동사로 쓰이려면 뒤에 과거분사 acknowledged가 와야 한다.</li>
+          <li><b>(C) has — 오답</b>: 뒤에 과거분사가 필요하고, 과거 시점을 나타내는 문맥과도 맞지 않는다.</li>
+          <li><b>(D) was — 오답</b>: be동사 뒤에 동사원형이 올 수 없다.</li>
+        </ul>
+        <p><b>포인트:</b> 문두 부정어(Not until, Never, Rarely, Seldom, Only when, Hardly)를 보면 <b>도치</b>를 의심한다. 일반동사 문장은 do/does/did를 쓰고 <b>본동사는 원형</b>이다.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">영어 3</span>Choose the best answer.</div>
+      <p class="stem">The consultant's recommendations were ______ enough that even the most skeptical department heads agreed to a three-month trial.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>persuade</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>persuasion</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>persuasive</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>persuasively</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (C) persuasive</div>
+        <p><b>해석:</b> 그 컨설턴트의 제안은 가장 회의적이던 부서장들조차 3개월간의 시범 운영에 동의할 만큼 충분히 설득력이 있었다.</p>
+        <ul>
+          <li><b>(A) persuade — 오답</b>: 동사. be동사 were 뒤에 동사원형이 올 수 없다.</li>
+          <li><b>(B) persuasion — 오답</b>: 명사('설득'). 주어가 recommendations인데 이를 '설득'과 동일시하는 것은 의미상 어색하며, 뒤의 enough that 구문과도 어울리지 않는다.</li>
+          <li><b>(C) persuasive — 정답</b>: 형용사('설득력 있는')로 be동사의 <b>보어</b> 자리에 알맞다. 「형용사 + enough (for ~) to / that절」은 '~할 만큼 충분히 …한'의 뜻이다.</li>
+          <li><b>(D) persuasively — 오답</b>: 부사는 보어가 될 수 없다. 부사라면 The consultant argued persuasively처럼 <b>동사</b>를 수식해야 한다.</li>
+        </ul>
+        <p><b>포인트:</b> enough는 형용사·부사를 <b>뒤에서</b> 수식한다(강조: strong enough, ○ / enough strong ×). 명사를 수식할 때만 앞에 온다(enough time).</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 4</span>Choose the best answer.</div>
+      <p class="stem">Had the vendor notified us of the price revision earlier, we ______ the renewal contract under entirely different terms.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>will negotiate</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>would have negotiated</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>had negotiated</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>are negotiating</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) would have negotiated</div>
+        <p><b>해석:</b> 그 공급업체가 가격 인상을 더 일찍 알려 주었더라면, 우리는 완전히 다른 조건으로 갱신 계약을 협상했을 것이다.</p>
+        <ul>
+          <li><b>(A) will negotiate — 오답</b>: 직설법 미래 표현으로, 과거 사실의 반대를 가정하는 문맥과 맞지 않는다.</li>
+          <li><b>(B) would have negotiated — 정답</b>: <b>가정법 과거완료</b>의 주절은 「would/could/might + have + p.p.」이다. If가 생략되어 <b>Had + 주어 + p.p.</b>로 도치된 조건절과 짝을 이룬다.</li>
+          <li><b>(C) had negotiated — 오답</b>: 과거완료는 <b>조건절</b>에 쓰이는 형태이며 주절에는 쓰지 않는다.</li>
+          <li><b>(D) are negotiating — 오답</b>: 현재진행형으로 시제가 전혀 맞지 않는다.</li>
+        </ul>
+        <p><b>포인트:</b> 문두의 <b>Had + 주어 + p.p.</b>는 If가 생략된 가정법 과거완료의 신호다. (= If the vendor had notified us …) 주절은 반드시 would have p.p. 형태.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-title"><span class="num">영어 5</span>Choose the best answer.</div>
+      <p class="stem">All reimbursement requests must be submitted ______ 30 days of the completion of the business trip.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>within</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>during</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>by</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>until</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (A) within</div>
+        <p><b>해석:</b> 모든 경비 정산 요청은 출장 종료일로부터 30일 이내에 제출되어야 한다.</p>
+        <ul>
+          <li><b>(A) within — 정답</b>: '~ 이내에'라는 뜻으로 <b>기간의 길이</b>를 나타내는 명사(30 days)와 함께 쓰인다. 「within + 기간 + of + 기준 시점」은 토익 빈출 형태이다.</li>
+          <li><b>(B) during — 오답</b>: during은 the vacation, the meeting처럼 <b>특정 기간을 가리키는 명사</b> 앞에 쓴다. 30 days 같은 숫자 기간에는 for/within을 쓴다.</li>
+          <li><b>(C) by — 오답</b>: '~까지'라는 <b>마감 시점</b>을 나타내므로 by Friday, by May 30처럼 시점 명사가 와야 한다.</li>
+          <li><b>(D) until — 오답</b>: 그 시점까지의 <b>상태 지속</b>을 나타낸다. submit처럼 한 번에 끝나는 동작과는 어울리지 않는다.</li>
+        </ul>
+        <p><b>포인트:</b> <b>by</b>(마감 시점) ↔ <b>until</b>(지속) ↔ <b>within</b>(기간 이내) ↔ <b>during</b>(특정 기간 중) ↔ <b>for</b>(기간의 길이)의 구별은 Part 5 단골 문제.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 수학 ================= -->
+<section class="sec sec-ma">
+  <div class="sec-head">📐 수학 · 경우의 수 (순열과 조합) — 난이도 최상</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">수학 1</span>다음 물음에 답하시오.</div>
+      <p class="stem">문자 <b>A, A, A, B, B, C, C, D</b> 의 8개를 일렬로 나열할 때, <b>같은 문자끼리는 서로 이웃하지 않도록</b> 나열하는 경우의 수는?</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>336</span></li>
+        <li data-i="2"><span class="mark">②</span><span>360</span></li>
+        <li data-i="3"><span class="mark">③</span><span>384</span></li>
+        <li data-i="4"><span class="mark">④</span><span>408</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>432</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ③ 384</div>
+        <p><b>[전략]</b> 가장 개수가 많은 A(3개)를 <b>나중에 끼워 넣는</b> 방식으로 접근한다. 즉 A를 제외한 <b>B, B, C, C, D</b>를 먼저 일렬로 나열한 뒤, 그 사이사이의 자리에 A 3개를 넣는다. 이때 A가 들어간 자리는 양옆이 갈라지므로, <b>B끼리·C끼리 붙어 있는 자리에는 반드시 A가 들어가야</b> 한다.</p>
+
+        <p><b>[1단계] B, B, C, C, D 를 나열하기</b><br>
+        같은 것이 있는 순열이므로 <span style="white-space:nowrap">5! ÷ (2!·2!) = 120 ÷ 4 = <b>30</b>(가지)</span></p>
+
+        <p><b>[2단계] 각 나열에서 &lsquo;붙어 있는 같은 문자 쌍&rsquo;의 개수 k 로 분류</b><br>
+        · BB가 이웃: BB를 한 덩어리로 → 4! ÷ 2! = <b>12</b>(가지)<br>
+        · CC가 이웃: 같은 방법으로 <b>12</b>(가지)<br>
+        · BB와 CC가 모두 이웃: 두 덩어리와 D의 배열 → 3! = <b>6</b>(가지)<br>
+        따라서 <b>k = 2</b>인 경우: 6가지<br>
+        <b>k = 1</b>인 경우: (12 − 6) + (12 − 6) = 12가지<br>
+        <b>k = 0</b>인 경우: 30 − 12 − 6 = 12가지</p>
+
+        <p><b>[3단계] A 3개를 끼워 넣기</b><br>
+        5개의 문자를 나열하면 양 끝을 포함해 빈자리는 <b>6곳</b>이다. A끼리 이웃하지 않아야 하므로 서로 <b>다른 3곳</b>을 골라야 하고, 그중 <b>k곳(붙어 있는 같은 문자 쌍의 자리)은 반드시 선택</b>해야 한다. 남은 6 − k 곳에서 3 − k 곳을 고르면 되므로 경우의 수는 <b><sub>6−k</sub>C<sub>3−k</sub></b>.<br>
+        · k = 0 → <sub>6</sub>C<sub>3</sub> = 20<br>
+        · k = 1 → <sub>5</sub>C<sub>2</sub> = 10<br>
+        · k = 2 → <sub>4</sub>C<sub>1</sub> = 4</p>
+
+        <p><b>[4단계] 합산</b><br>
+        12 × 20 + 12 × 10 + 6 × 4 = 240 + 120 + 24 = <b>384</b></p>
+
+        <ul>
+          <li><b>① 336, ② 360, ④ 408, ⑤ 432 — 오답</b>: k에 따른 분류를 하지 않고 <sub>6</sub>C<sub>3</sub> = 20을 일괄 적용하면 30 × 20 = 600처럼 크게 어긋나고, BB·CC 조건을 여사건으로만 대충 빼면 위와 같은 근삿값이 나온다.</li>
+          <li><b>[검산 아이디어]</b> 전체 나열의 수는 8! ÷ (3!·2!·2!) = 40320 ÷ 24 = 1680가지이며, 이 중 조건을 만족하는 384가지는 약 22.9%로 타당한 비율이다.</li>
+          <li><b>[핵심 개념]</b> ⓐ 같은 것이 있는 순열, ⓑ 이웃하지 않는 배열은 <b>먼저 배열 후 사이에 끼워 넣기</b>, ⓒ 반드시 포함해야 하는 자리를 고정한 뒤 나머지에서 조합으로 선택하기.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 일본어 ================= -->
+<section class="sec sec-jp">
+  <div class="sec-head">🗾 일본어 · 오늘의 회화 문장 (고1 2학기 수준)</div>
+  <div class="sec-body">
+
+    <div class="jp-sent">
+      <div class="jp-main">駅まで どうやって 行けば いいですか。</div>
+      <div class="jp-read">
+        <b>히라가나:</b> えきまで どうやって いけば いいですか。<br>
+        <b>발음(한글):</b> 에키마데 도-얏테 이케바 이-데스카.
+      </div>
+      <div class="jp-ko">해석: 역까지 어떻게 가면 되나요? (어떻게 가면 좋을까요?)</div>
+    </div>
+
+    <div class="scroll">
+      <table class="jp">
+        <tr><th>단어</th><th>읽기</th><th>뜻</th></tr>
+        <tr><td>駅</td><td>えき</td><td>역</td></tr>
+        <tr><td>まで</td><td>まで</td><td>~까지 (도착점을 나타내는 조사)</td></tr>
+        <tr><td>どうやって</td><td>どうやって</td><td>어떻게 (수단·방법)</td></tr>
+        <tr><td>行く</td><td>いく</td><td>가다 (1그룹 동사)</td></tr>
+        <tr><td>行けば</td><td>いけば</td><td>가면 (行く의 조건형 ば형)</td></tr>
+        <tr><td>いいです</td><td>いいです</td><td>좋습니다, 됩니다</td></tr>
+      </table>
+    </div>
+
+    <div class="ans-box open" style="margin-top:16px;">
+      <div class="ans-head">문장 설명 &amp; 문법 포인트</div>
+      <ul>
+        <li><b>① ～ばいいですか — 조언을 구하는 표현</b><br>
+        동사의 <b>조건형(ば형)</b> 뒤에 <b>いいですか</b>를 붙이면 '~하면 됩니까? / ~하면 좋을까요?'라는 뜻으로, 방법이나 지시를 물을 때 쓰는 아주 유용한 회화 표현이다.<br>
+        どこで 買え<b>ば</b>いいですか。(どこで かえば いいですか) — 어디에서 사면 되나요?<br>
+        何時に 来れ<b>ば</b>いいですか。(なんじに くれば いいですか) — 몇 시에 오면 되나요?<br>
+        대답은 「～ば いいですよ」 또는 「～てください」로 한다. → 「バスに 乗れば いいですよ。」(ばすに のれば いいですよ / 버스를 타면 됩니다.)</li>
+
+        <li><b>② 동사의 조건형(ば형) 만드는 법</b><br>
+        <b>1그룹</b>: 어미 う단 → <b>え단 + ば</b> … 行く(いく) → 行けば(いけば), 話す(はなす) → 話せば(はなせば), 待つ(まつ) → 待てば(まてば)<br>
+        <b>2그룹</b>: る를 떼고 <b>れば</b> … 見る(みる) → 見れば(みれば), 食べる(たべる) → 食べれば(たべれば)<br>
+        <b>3그룹</b>: する → すれば / 来る(くる) → 来れば(くれば)<br>
+        ※ 형용사는 い를 <b>ければ</b>로 바꾼다: 安い(やすい) → 安ければ(やすければ)</li>
+
+        <li><b>③ どうやって vs どう</b><br>
+        <b>どうやって</b>는 '어떤 방법으로'라는 <b>수단·절차</b>를 묻는 말로, 교통편이나 조작 방법을 물을 때 쓴다.<br>
+        <b>どう</b>는 '어떻게, 어떠한지'로 상태나 감상을 묻는 데 널리 쓰인다. → 「日本の 生活は どうですか。」(にほんの せいかつは どうですか / 일본 생활은 어떻습니까?)<br>
+        비슷한 표현으로 <b>どのように</b>(더 정중·격식), <b>どうしたら</b>(어떻게 하면)가 있다.</li>
+
+        <li><b>④ 조사 まで와 に의 차이</b><br>
+        <b>まで</b>는 '~까지'로 이동의 <b>범위·구간</b>을 나타내고, <b>に</b>는 도착 <b>지점</b> 자체를 가리킨다.<br>
+        駅<b>まで</b>歩きます(えきまで あるきます / 역까지 걷습니다) — 걷는 구간을 나타냄<br>
+        駅<b>に</b>着きます(えきに つきます / 역에 도착합니다) — 도착점을 나타냄<br>
+        ※ 「～までに」는 '~까지는(기한)'이라는 뜻으로 완전히 다르다: 5時<b>までに</b>来てください(ごじまでに きてください / 5시까지는 와 주세요).</li>
+
+        <li><b>⑤ 길을 물을 때 함께 외우면 좋은 문장</b><br>
+        「すみません、駅は どこですか。」(すみません、えきは どこですか) — 실례합니다, 역은 어디입니까?<br>
+        「ここから 遠いですか。」(ここから とおいですか) — 여기에서 먼가요?<br>
+        「歩いて どのくらい かかりますか。」(あるいて どのくらい かかりますか) — 걸어서 어느 정도 걸리나요?<br>
+        「まっすぐ 行って、二つ目の 角を 右に 曲がって ください。」(まっすぐ いって、ふたつめの かどを みぎに まがって ください) — 곧장 가서 두 번째 모퉁이를 오른쪽으로 도세요.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<footer>생성 시각: <span id="gen"></span></footer>
+
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.q').forEach(function (q) {
+    var answer = q.getAttribute('data-answer');
+    var box = q.querySelector('.ans-box');
+    var verdict = q.querySelector('.verdict');
+    var btn = q.querySelector('.btn');
+    var lis = q.querySelectorAll('ul.choices li');
+    var done = false;
+
+    function reveal(picked) {
+      lis.forEach(function (li) {
+        li.classList.add('locked');
+        var i = li.getAttribute('data-i');
+        if (i === answer) {
+          li.classList.add('correct');
+          var s = document.createElement('span');
+          s.className = 'res';
+          s.textContent = '정답';
+          li.appendChild(s);
+        } else if (picked && i === picked) {
+          li.classList.add('wrong');
+          var w = document.createElement('span');
+          w.className = 'res';
+          w.textContent = '오답';
+          li.appendChild(w);
+        }
+      });
+      if (picked) {
+        if (picked === answer) {
+          verdict.textContent = '⭕ 정답입니다!';
+          verdict.className = 'verdict ok';
+        } else {
+          verdict.textContent = '❌ 오답입니다. (선택한 답: ' + picked + '번)';
+          verdict.className = 'verdict no';
+        }
+      } else {
+        verdict.textContent = '';
+        verdict.className = 'verdict';
+      }
+      box.classList.add('open');
+      btn.textContent = '정답 확인 완료';
+      done = true;
+    }
+
+    lis.forEach(function (li) {
+      li.addEventListener('click', function () {
+        if (done) return;
+        reveal(li.getAttribute('data-i'));
+      });
+    });
+
+    btn.addEventListener('click', function () {
+      if (done) { box.classList.toggle('open'); return; }
+      reveal(null);
+    });
+  });
+
+  var d = new Date();
+  var p = function (n) { return (n < 10 ? '0' : '') + n; };
+  document.getElementById('gen').textContent =
+    d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' +
+    p(d.getHours()) + ':' + p(d.getMinutes()) + ' (' +
+    Intl.DateTimeFormat().resolvedOptions().timeZone + ')';
+})();
+</script>
+</body>
+</html>
