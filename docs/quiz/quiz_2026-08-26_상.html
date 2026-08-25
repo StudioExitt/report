@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-26 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 80px; }
+  header.top {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  header.top h1 { margin: 0 0 8px; font-size: 24px; font-weight: 800; color: #0f172a; }
+  header.top .meta { font-size: 14px; color: #64748b; }
+  .badge {
+    display: inline-block; background: #fee2e2; color: #b91c1c;
+    font-weight: 700; font-size: 13px; padding: 2px 10px; border-radius: 999px; margin-left: 6px;
+  }
+
+  section.sec { margin-top: 34px; }
+  .sec-head {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 20px; font-weight: 800; color: #ffffff;
+    padding: 12px 16px; border-radius: 12px 12px 0 0;
+  }
+  .sec-ko .sec-head { background: #2563eb; }
+  .sec-en .sec-head { background: #059669; }
+  .sec-ma .sec-head { background: #7c3aed; }
+  .sec-jp .sec-head { background: #db2777; }
+  .sec-body {
+    background: #ffffff; border: 1px solid #e2e8f0; border-top: none;
+    border-radius: 0 0 12px 12px; padding: 18px 18px 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+
+  .passage {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #2563eb;
+    border-radius: 8px; padding: 16px 18px; margin-bottom: 20px;
+    font-size: 15.5px; text-align: justify;
+  }
+  .passage p { margin: 0 0 14px; text-indent: 6px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 26px; padding-bottom: 6px; }
+  .q + .q { border-top: 1px dashed #e2e8f0; padding-top: 22px; }
+  .q-title { font-weight: 700; font-size: 16.5px; margin-bottom: 12px; color: #0f172a; }
+  .q-title .num {
+    display: inline-block; background: #1e293b; color: #fff; font-size: 13px;
+    border-radius: 6px; padding: 1px 8px; margin-right: 8px; font-weight: 700;
+  }
+  .stem { margin: 0 0 12px; font-size: 16px; }
+
+  ul.choices { list-style: none; margin: 0; padding: 0; }
+  ul.choices li {
+    border: 1px solid #cbd5e1; background: #fff; border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 8px; cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 15.5px; display: flex; gap: 8px; align-items: flex-start;
+  }
+  ul.choices li:hover { background: #f1f5f9; }
+  ul.choices li .mark { font-weight: 700; color: #475569; flex: 0 0 auto; }
+  ul.choices li.correct { background: #dcfce7; border-color: #16a34a; }
+  ul.choices li.wrong { background: #fee2e2; border-color: #dc2626; }
+  ul.choices li.locked { cursor: default; }
+  ul.choices li .res { margin-left: auto; font-weight: 800; font-size: 14px; flex: 0 0 auto; }
+  li.correct .res { color: #15803d; }
+  li.wrong .res { color: #b91c1c; }
+
+  .btn {
+    margin-top: 10px; background: #1e293b; color: #fff; border: none;
+    border-radius: 8px; padding: 9px 18px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  }
+  .btn:hover { background: #334155; }
+
+  .ans-box {
+    display: none; margin-top: 14px;
+    background: #fffbeb; border: 1px solid #fcd34d; border-left: 5px solid #f59e0b;
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .ans-box.open { display: block; }
+  .ans-box .ans-head { font-weight: 800; color: #b45309; margin-bottom: 8px; font-size: 15.5px; }
+  .ans-box .verdict { font-weight: 800; margin-bottom: 8px; font-size: 15px; }
+  .ans-box .verdict.ok { color: #15803d; }
+  .ans-box .verdict.no { color: #b91c1c; }
+  .ans-box ul { margin: 6px 0 0; padding-left: 20px; }
+  .ans-box li { margin-bottom: 6px; font-size: 15px; }
+  .ans-box p { margin: 6px 0; font-size: 15px; }
+
+  .jp-sent {
+    background: #fdf2f8; border: 1px solid #fbcfe8; border-left: 5px solid #db2777;
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 6px;
+  }
+  .jp-main { font-size: 22px; font-weight: 700; color: #831843; line-height: 1.9; }
+  .jp-read { font-size: 15px; color: #9d174d; margin-top: 6px; }
+  .jp-ko { font-size: 16.5px; margin-top: 10px; font-weight: 600; }
+  table.jp {
+    width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px;
+  }
+  table.jp th, table.jp td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+  table.jp th { background: #f8fafc; font-weight: 700; white-space: nowrap; }
+  .scroll { overflow-x: auto; }
+
+  footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 40px; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 14px 10px 60px; }
+    header.top h1 { font-size: 19px; }
+    .sec-head { font-size: 17px; padding: 10px 12px; }
+    .sec-body { padding: 14px 12px 18px; }
+    .passage { font-size: 15px; padding: 13px 13px; }
+    ul.choices li { font-size: 15px; padding: 9px 11px; }
+    .jp-main { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 26일 (수) · 국어 1 · 영어 5 · 수학 1 · 일본어 1 <span class="badge">난이도 상</span></div>
+</header>
+
+<!-- ================= 국어 ================= -->
+<section class="sec sec-ko">
+  <div class="sec-head">📘 국어 · 독서(경제) — 중앙은행의 통화정책과 파급 경로</div>
+  <div class="sec-body">
+    <div class="passage">
+      <p>중앙은행의 가장 중요한 임무는 물가를 안정시키는 일이다. 이를 위해 중앙은행이 사용하는 대표적인 수단이 <b>기준금리</b>이다. 기준금리는 중앙은행이 시중은행과 자금을 주고받을 때 적용하는 정책적 목표 금리로, 그 자체가 우리가 은행 창구에서 마주하는 예금 금리나 대출 금리는 아니다. 중앙은행은 기준금리를 하나의 <b>신호</b>로 제시하고, 실제 시장금리가 그 수준에 수렴하도록 자금의 양을 조절한다. 따라서 기준금리의 결정은 명령이 아니라 시장을 통한 유도에 가깝다.</p>
+
+      <p>이때 쓰이는 핵심 수단이 <b>공개시장운영</b>이다. 중앙은행이 시중은행이 보유한 국채를 사들이면 그 대금만큼 시중에 자금이 풀려 단기금리는 내려가고, 반대로 국채를 팔면 자금이 흡수되어 단기금리는 올라간다. 이 밖에 시중은행이 예금의 일정 비율을 중앙은행에 예치하도록 하는 <b>지급준비제도</b>, 중앙은행이 시중은행에 직접 자금을 빌려주는 <b>여수신제도</b>도 함께 활용된다. 다만 지급준비율은 조정 효과가 크고 급격하여 오늘날에는 자주 변경하지 않으며, 일상적인 금리 조절은 대체로 공개시장운영이 담당한다.</p>
+
+      <p>기준금리의 변화가 실물경제에 영향을 미치는 통로를 <b>파급 경로</b>라고 한다. 첫째는 <b>금리 경로</b>이다. 기준금리가 내려가면 대출금리가 낮아져 기업의 투자와 가계의 소비가 늘어난다. 둘째는 <b>자산가격 경로</b>로, 금리 하락은 주식이나 부동산의 가치를 높여 자산을 보유한 가계가 소비를 늘리게 만든다. 셋째는 <b>환율 경로</b>이다. 금리가 낮아지면 국내 자산의 매력이 줄어 자본이 빠져나가고 환율이 올라 수출에 유리해진다. 넷째는 <b>신용 경로</b>로, 금리 인하로 담보 가치가 상승하면 은행이 대출에 더 적극적으로 나서게 된다.</p>
+
+      <p>이 모든 경로에는 <b>시차</b>가 존재한다. 중앙은행이 금리를 조정해도 그 효과가 물가와 생산에 온전히 나타나기까지는 대체로 여러 분기가 걸린다. 그래서 중앙은행은 현재의 물가가 아니라 <b>앞으로 예상되는</b> 물가를 보고 정책을 결정해야 한다. 이러한 판단을 돕는 참고 기준으로 흔히 언급되는 것이 <b>테일러 준칙</b>이다. 이는 물가상승률이 목표보다 높거나 실제 생산이 잠재 생산 수준을 웃돌면 금리를 올리고, 그 반대의 경우에는 내리라는 대략적인 규칙이다. 그러나 이는 기계적으로 따라야 할 공식이 아니라 정책 방향을 가늠하는 참고 지표로 쓰인다.</p>
+
+      <p>정책의 효과는 사람들의 <b>기대</b>에도 크게 좌우된다. 중앙은행이 앞으로의 정책 방향을 미리 알려 주는 것을 <b>선제적 지침</b>이라고 하는데, 이는 당장 금리를 움직이지 않고도 장기금리에 영향을 줄 수 있다. 장기금리는 앞으로의 단기금리가 어떻게 움직일지에 대한 예상이 반영되어 형성되기 때문이다. 반대로 중앙은행의 말과 행동이 어긋나 신뢰를 잃으면, 같은 폭의 금리 조정으로도 이전만큼의 효과를 거두기 어려워진다.</p>
+
+      <p>그런데 금리 정책에는 한계가 있다. 명목금리는 0보다 크게 낮추기 어렵다는 <b>실효 하한</b>이 존재하기 때문이다. 금리를 더 내릴 수 없는데도 경기가 살아나지 않고, 돈을 아무리 풀어도 소비와 투자로 이어지지 않는 상태를 <b>유동성 함정</b>이라고 부른다. 이 상황에서 동원되는 것이 <b>양적완화</b>이다. 이는 단기금리를 조절하는 대신 중앙은행이 국채나 그 밖의 장기 자산을 대규모로 직접 매입하여 <b>장기금리</b>를 끌어내리는 방식이다. 즉 양적완화는 금리의 높낮이가 아니라 중앙은행이 공급하는 자금의 <b>양</b>에 초점을 둔 정책이다.</p>
+
+      <p>다만 이러한 비전통적 정책에도 대가가 따른다. 오랜 기간 저금리와 대규모 자금 공급이 이어지면 자산 가격이 지나치게 올라 <b>금융 불균형</b>이 쌓이고, 수익을 좇아 위험한 투자에 나서는 <b>위험 추구</b> 행태가 확산될 수 있다. 그래서 최근의 중앙은행은 물가안정이라는 본래의 목표와 함께 금융안정도 함께 고려해야 하는 처지에 놓여 있다. 두 목표가 서로 다른 방향을 가리킬 때, 예컨대 경기는 부진한데 가계부채는 빠르게 늘어날 때 정책의 선택은 한층 어려워진다.</p>
+    </div>
+
+    <div class="q" data-answer="4">
+      <div class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>기준금리는 예금이나 대출에 곧바로 적용되는 금리가 아니라, 시장금리가 따라오도록 제시하는 신호에 해당한다.</span></li>
+        <li data-i="2"><span class="mark">②</span><span>중앙은행이 시중은행의 국채를 매입하면 시중에 자금이 공급되어 단기금리가 하락한다.</span></li>
+        <li data-i="3"><span class="mark">③</span><span>통화정책의 효과에는 시차가 있으므로 중앙은행은 현재의 물가보다 예상되는 물가를 근거로 정책을 결정해야 한다.</span></li>
+        <li data-i="4"><span class="mark">④</span><span>양적완화는 실효 하한 아래로 명목금리를 더 낮추어 단기금리를 조절하는 정책으로, 자금 공급량과는 관계가 없다.</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>장기간의 저금리와 대규모 자금 공급은 자산 가격 상승과 위험 추구 행태를 통해 금융 불균형을 키울 수 있다.</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ④</div>
+        <ul>
+          <li><b>① 일치</b> — 1문단에서 기준금리는 "우리가 은행 창구에서 마주하는 예금 금리나 대출 금리는 아니"며 중앙은행이 제시하는 "신호"라고 했다.</li>
+          <li><b>② 일치</b> — 2문단의 "국채를 사들이면 그 대금만큼 시중에 자금이 풀려 단기금리는 내려가고"와 부합한다.</li>
+          <li><b>③ 일치</b> — 4문단에서 파급에는 시차가 있어 "현재의 물가가 아니라 앞으로 예상되는 물가를 보고" 정책을 결정해야 한다고 했다.</li>
+          <li><b>④ 불일치(정답)</b> — 6문단에 따르면 명목금리에는 0보다 크게 낮추기 어려운 <b>실효 하한</b>이 있어서, 양적완화는 <b>단기금리 조절 대신</b> 장기 자산을 대규모로 매입해 <b>장기금리</b>를 낮추는 방식이며 "자금의 <b>양</b>에 초점을 둔 정책"이라고 했다. 선지는 하한을 뚫고 금리를 더 내린다는 점, 단기금리를 조절한다는 점, 자금 공급량과 무관하다는 점이 모두 글과 어긋난다.</li>
+          <li><b>⑤ 일치</b> — 7문단에서 오랜 저금리와 대규모 자금 공급이 자산 가격 급등과 위험 추구를 낳아 금융 불균형을 쌓는다고 서술했다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 영어 ================= -->
+<section class="sec sec-en">
+  <div class="sec-head">📗 영어 · TOEIC Part 5 (문장 완성형) 5문항</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 1</span>Choose the best answer.</div>
+      <p class="stem">The revised safety guidelines, ______ last month, require all subcontractors to file inspection reports on a quarterly basis.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>issuing</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>issued</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>issue</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>to issue</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) issued</div>
+        <p><b>해석:</b> 지난달에 발표된 개정 안전 지침은 모든 협력업체가 분기별로 점검 보고서를 제출하도록 요구하고 있다.</p>
+        <ul>
+          <li><b>(A) issuing — 오답</b>: 현재분사는 <b>능동</b>의 의미다. 지침이 무언가를 '발표하는' 것이 아니라 '발표된' 것이므로 맞지 않는다.</li>
+          <li><b>(B) issued — 정답</b>: 콤마 사이의 삽입구는 <b>분사구</b>로, 수식받는 guidelines와 issue는 <b>수동</b> 관계이므로 과거분사가 알맞다. (= which were issued last month)</li>
+          <li><b>(C) issue — 오답</b>: 본동사 require가 이미 있으므로 또 하나의 정동사가 올 수 없다.</li>
+          <li><b>(D) to issue — 오답</b>: to부정사는 앞의 명사를 뒤에서 수식할 때 '앞으로 ~할'이라는 의미가 되어 last month(과거)와 충돌한다.</li>
+        </ul>
+        <p><b>포인트:</b> 명사와 분사의 관계가 <b>능동이면 -ing</b>, <b>수동이면 p.p.</b>. 「명사, + 분사구, + 본동사」 구조에서는 본동사 자리를 먼저 확인한다.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 2</span>Choose the best answer.</div>
+      <p class="stem">The number of applicants for the summer internship ______ risen sharply since the firm introduced its flexible work policy.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>have</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>has</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>having</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>are</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) has</div>
+        <p><b>해석:</b> 그 회사가 유연근무제를 도입한 이후 여름 인턴십 지원자 수가 급격히 증가했다.</p>
+        <ul>
+          <li><b>(A) have — 오답</b>: 바로 앞의 applicants(복수)에 이끌린 함정. 진짜 주어는 <b>The number</b>(단수)이다.</li>
+          <li><b>(B) has — 정답</b>: <b>The number of + 복수명사</b>는 '~의 수'라는 뜻으로 <b>단수 취급</b>한다. 또한 since절과 어울리는 <b>현재완료</b>(has risen)가 시제상으로도 알맞다.</li>
+          <li><b>(C) having — 오답</b>: 준동사여서 문장의 본동사가 될 수 없다.</li>
+          <li><b>(D) are — 오답</b>: 수도 맞지 않고, be동사 뒤에 risen(자동사의 과거분사)이 올 수도 없다.</li>
+        </ul>
+        <p><b>포인트:</b> <b>The number of + 복수명사 → 단수</b> / <b>A number of + 복수명사 → 복수</b>('많은 ~'). 수식어구에 가려진 진짜 주어를 찾는 것이 관건이다.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-title"><span class="num">영어 3</span>Choose the best answer.</div>
+      <p class="stem">______ of the two proposals addresses the long-term maintenance costs, so the committee has asked both teams for revisions.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>Neither</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>None</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>Either</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>Both</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (A) Neither</div>
+        <p><b>해석:</b> 두 제안서 중 어느 것도 장기 유지보수 비용을 다루고 있지 않아, 위원회는 두 팀 모두에게 수정을 요청했다.</p>
+        <ul>
+          <li><b>(A) Neither — 정답</b>: '(둘 중) 어느 쪽도 ~아니다'라는 뜻으로 <b>둘</b>을 대상으로 하며 <b>단수 취급</b>한다. 동사가 addresses(단수)이고, 뒤 절의 '수정 요청' 문맥과도 맞는다.</li>
+          <li><b>(B) None — 오답</b>: None은 <b>셋 이상</b>일 때 쓴다. of the two처럼 둘을 가리킬 때는 neither가 정확하다.</li>
+          <li><b>(C) Either — 오답</b>: '둘 중 하나는 ~하다'는 긍정의 뜻이 되어, 수정을 요청했다는 뒤 문장과 논리가 어긋난다.</li>
+          <li><b>(D) Both — 오답</b>: 복수 취급하므로 address가 되어야 하며, 의미도 문맥과 반대이다.</li>
+        </ul>
+        <p><b>포인트:</b> <b>둘</b> → both / either / neither, <b>셋 이상</b> → all / any / none. 동사의 수와 앞뒤 논리(so, but)를 함께 확인한다.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 4</span>Choose the best answer.</div>
+      <p class="stem">The logistics division is committed to ______ average delivery times by at least fifteen percent before the end of the fiscal year.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>reduce</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>reducing</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>reduced</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>reduction</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) reducing</div>
+        <p><b>해석:</b> 물류 부문은 회계연도가 끝나기 전까지 평균 배송 시간을 최소 15퍼센트 단축하는 데 전념하고 있다.</p>
+        <ul>
+          <li><b>(A) reduce — 오답</b>: 여기서 to는 to부정사의 to가 아니라 <b>전치사</b>이므로 동사원형이 올 수 없다.</li>
+          <li><b>(B) reducing — 정답</b>: <b>be committed to + -ing</b>('~하는 데 전념하다')는 전치사 to를 쓰는 대표 표현이다. 뒤에 목적어 delivery times를 취할 수 있는 것도 동명사뿐이다.</li>
+          <li><b>(C) reduced — 오답</b>: 과거분사는 전치사의 목적어가 될 수 없다.</li>
+          <li><b>(D) reduction — 오답</b>: 명사여서 문법적으로는 가능해 보이나, 바로 뒤 목적어를 취하려면 reduction <b>of</b> delivery times처럼 전치사가 필요하다.</li>
+        </ul>
+        <p><b>포인트:</b> <b>전치사 to + -ing</b> 표현 암기: be committed/dedicated/devoted to, look forward to, object to, be used to, contribute to, lead to.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-title"><span class="num">영어 5</span>Choose the best answer.</div>
+      <p class="stem">The leadership seminar will be postponed ______ at least twenty participants register by this Friday.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>unless</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>whereas</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>in case of</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>so that</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (A) unless</div>
+        <p><b>해석:</b> 이번 주 금요일까지 최소 스무 명이 등록하지 않으면 리더십 세미나는 연기될 것이다.</p>
+        <ul>
+          <li><b>(A) unless — 정답</b>: '~하지 않는 한(= if ~ not)'이라는 뜻의 조건 접속사. '등록하지 않으면 연기된다'는 문맥이 자연스럽고, 조건절이므로 미래 대신 <b>현재시제</b> register를 쓴 점도 단서가 된다.</li>
+          <li><b>(B) whereas — 오답</b>: '~인 반면에'라는 대조의 접속사로, 두 사실을 나란히 비교할 때 쓴다. 인과·조건 관계인 이 문장과 맞지 않는다.</li>
+          <li><b>(C) in case of — 오답</b>: 전치사구이므로 뒤에 명사(구)가 와야 한다. 절을 이끌려면 in case가 되어야 한다.</li>
+          <li><b>(D) so that — 오답</b>: '~하도록'이라는 목적을 나타내며 보통 뒤에 can/will이 온다. 연기의 목적이 등록이라는 의미가 되어 어색하다.</li>
+        </ul>
+        <p><b>포인트:</b> unless는 이미 부정의 뜻을 담고 있으므로 <b>not과 함께 쓰지 않는다</b>(unless they don't register ×). 시간·조건의 부사절에서는 미래를 <b>현재시제</b>로 대신한다.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 수학 ================= -->
+<section class="sec sec-ma">
+  <div class="sec-head">📐 수학 · 경우의 수 (순열과 조합) — 난이도 최상</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">수학 1</span>다음 물음에 답하시오.</div>
+      <p class="stem">서로 다른 6개의 문자 <b>a, b, c, d, e, f</b> 를 일렬로 나열할 때, 다음 세 조건을 <b>모두</b> 만족시키는 경우의 수는?<br>
+      &nbsp;&nbsp;(가) a는 b보다 <b>앞</b>에 온다.<br>
+      &nbsp;&nbsp;(나) c는 d보다 <b>앞</b>에 온다.<br>
+      &nbsp;&nbsp;(다) e와 f는 서로 <b>이웃하지 않는다</b>.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>96</span></li>
+        <li data-i="2"><span class="mark">②</span><span>108</span></li>
+        <li data-i="3"><span class="mark">③</span><span>120</span></li>
+        <li data-i="4"><span class="mark">④</span><span>132</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>144</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ③ 120</div>
+        <p><b>[전략]</b> (가), (나)처럼 <b>순서가 정해진 문자</b>가 있는 배열은 &lsquo;전체를 나열한 뒤 그 문자들의 순서 가짓수로 나누기&rsquo;를 이용한다. (다)의 &lsquo;이웃하지 않는다&rsquo;는 <b>여사건</b>(이웃하는 경우)을 빼서 구한다.</p>
+
+        <p><b>[1단계] (가), (나)만 만족하는 경우의 수</b><br>
+        6개를 일렬로 나열하는 방법은 6! = 720가지.<br>
+        이 중 a, b의 순서는 (a→b), (b→a) 두 가지가 서로 대응되므로 조건 (가)를 만족하는 것은 전체의 <b>1/2</b>. 마찬가지로 (나)를 만족하는 것도 <b>1/2</b>이며, 두 조건은 서로 <b>독립</b>이다.<br>
+        <span style="white-space:nowrap">∴ 720 × 1/2 × 1/2 = <b>180</b>(가지)</span></p>
+
+        <p><b>[2단계] (가), (나)를 만족하면서 e와 f가 <u>이웃하는</u> 경우의 수</b><br>
+        e, f를 한 덩어리로 묶으면 [ef], a, b, c, d 의 <b>5개</b>를 나열하는 문제가 된다. → 5! = 120가지<br>
+        덩어리 안에서 e, f의 순서는 2가지 → 120 × 2 = 240가지<br>
+        여기에 다시 (가), (나)를 적용하면 <span style="white-space:nowrap">240 × 1/2 × 1/2 = <b>60</b>(가지)</span></p>
+
+        <p><b>[3단계] 여사건 빼기</b><br>
+        180 − 60 = <b>120</b></p>
+
+        <p><b>[다른 풀이 — 자리 뽑기]</b><br>
+        6자리 중 a, b가 들어갈 자리 2곳을 고르면 순서는 (가)에 의해 <b>자동으로 하나</b>로 정해진다. 마찬가지로 c, d도 그렇다.<br>
+        ⓐ e, f가 이웃하지 않도록 두 자리를 먼저 고른다: <sub>6</sub>C<sub>2</sub> − 5 = 15 − 5 = 10(가지). (이웃한 자리 쌍은 (1,2), (2,3), …, (5,6)의 5가지)<br>
+        ⓑ e, f를 그 두 자리에 넣는 방법 2가지.<br>
+        ⓒ 남은 4자리 중 a, b가 쓸 2자리를 고르면 <sub>4</sub>C<sub>2</sub> = 6(가지)이고, 나머지 2자리는 c, d의 몫이며 순서는 모두 하나로 결정된다.<br>
+        ∴ 10 × 2 × 6 = <b>120</b> ✔</p>
+
+        <ul>
+          <li><b>① 96, ② 108, ④ 132, ⑤ 144 — 오답</b>: 흔한 실수는 (다)의 여사건을 뺄 때 (가), (나)의 1/2 × 1/2을 다시 적용하지 않아 180 − 240 처럼 계산이 무너지거나, e·f 덩어리 내부의 순서 2가지를 빠뜨려 180 − 30 = 150을 얻는 경우이다.</li>
+          <li><b>[핵심 개념]</b> ⓐ 순서가 고정된 원소가 k개면 전체 순열을 k!로 나눈다, ⓑ 이웃하는 조건은 <b>묶음(덩어리)</b>으로, 이웃하지 않는 조건은 <b>여사건</b> 또는 <b>사이 끼워 넣기</b>로 처리한다.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 일본어 ================= -->
+<section class="sec sec-jp">
+  <div class="sec-head">🗾 일본어 · 오늘의 회화 문장 (고1 2학기 수준)</div>
+  <div class="sec-body">
+
+    <div class="jp-sent">
+      <div class="jp-main">日本の 温泉に 行った ことが ありますか。</div>
+      <div class="jp-read">
+        <b>히라가나:</b> にほんの おんせんに いった ことが ありますか。<br>
+        <b>발음(한글):</b> 니혼노 온센니 잇타 코토가 아리마스카.
+      </div>
+      <div class="jp-ko">해석: 일본의 온천에 가 본 적이 있습니까?</div>
+    </div>
+
+    <div class="scroll">
+      <table class="jp">
+        <tr><th>단어</th><th>읽기</th><th>뜻</th></tr>
+        <tr><td>日本</td><td>にほん</td><td>일본 (にっぽん으로도 읽음)</td></tr>
+        <tr><td>温泉</td><td>おんせん</td><td>온천</td></tr>
+        <tr><td>行く</td><td>いく</td><td>가다 (1그룹 동사)</td></tr>
+        <tr><td>行った</td><td>いった</td><td>갔다 (行く의 た형, 예외적 촉음 변화)</td></tr>
+        <tr><td>こと</td><td>こと</td><td>일, 것 (형식명사)</td></tr>
+        <tr><td>あります</td><td>あります</td><td>있습니다 (무생물·사물의 존재)</td></tr>
+      </table>
+    </div>
+
+    <div class="ans-box open" style="margin-top:16px;">
+      <div class="ans-head">문장 설명 &amp; 문법 포인트</div>
+      <ul>
+        <li><b>① ～たことがあります — 경험 표현</b><br>
+        동사의 <b>た형</b>에 <b>ことが あります</b>를 붙이면 '~한 적이 있습니다'라는 <b>과거의 경험</b>을 나타낸다.<br>
+        부정은 <b>～たことが ありません</b>(~한 적이 없습니다). → 「まだ 食べた ことが ありません。」(まだ たべた ことが ありません / 아직 먹어 본 적이 없습니다.)<br>
+        ※ 어제·지난주처럼 <b>가까운 과거의 한 번뿐인 사실</b>에는 쓰지 않는다. 昨日 見た ことが あります(×) → 昨日 見ました(○, きのう みました).</li>
+
+        <li><b>② 동사의 た형 만들기 (=て형의 て를 た로)</b><br>
+        <b>1그룹</b>: う・つ・る → <b>った</b> (行く는 예외로 <b>行った</b>) / ぬ・ぶ・む → <b>んだ</b> / く → <b>いた</b>, ぐ → <b>いだ</b> / す → <b>した</b><br>
+        　買う(かう)→買った(かった), 待つ(まつ)→待った(まった), 読む(よむ)→読んだ(よんだ), 書く(かく)→書いた(かいた), 話す(はなす)→話した(はなした)<br>
+        <b>2그룹</b>: る를 떼고 <b>た</b> … 見る(みる)→見た(みた), 食べる(たべる)→食べた(たべた)<br>
+        <b>3그룹</b>: する→した / 来る(くる)→来た(きた)<br>
+        ※ <b>行く(いく)</b>는 く로 끝나지만 行いた가 아니라 <b>行った(いった)</b>가 되는 <b>예외 동사</b>이므로 반드시 외워 둔다.</li>
+
+        <li><b>③ 조사 に와 へ</b><br>
+        「温泉<b>に</b>行く」의 に는 이동의 <b>도착 지점</b>을 나타낸다. <b>へ</b>로 바꾸어도 뜻이 통하지만, へ는 <b>방향</b>에, に는 <b>도달점</b>에 초점이 있다.<br>
+        ※ へ가 조사로 쓰일 때는 '헤'가 아니라 <b>'에(え)'</b>로 발음한다.</li>
+
+        <li><b>④ あります와 います</b><br>
+        <b>あります</b>는 사물·식물처럼 <b>스스로 움직이지 않는</b> 것의 존재에, <b>います</b>는 사람·동물의 존재에 쓴다.<br>
+        여기서는 '경험(こと)'이라는 추상적인 대상이므로 <b>あります</b>를 쓴다. ことが いますは(×)</li>
+
+        <li><b>⑤ 함께 외우면 좋은 확장 문장</b><br>
+        「はい、二回 あります。」(はい、にかい あります) — 네, 두 번 있습니다.<br>
+        「いいえ、一度も ありません。」(いいえ、いちども ありません) — 아니요, 한 번도 없습니다.<br>
+        「いつか 行って みたいです。」(いつか いって みたいです) — 언젠가 가 보고 싶습니다.<br>
+        「北海道の 温泉が 一番 よかったです。」(ほっかいどうの おんせんが いちばん よかったです) — 홋카이도의 온천이 가장 좋았습니다.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<footer>생성 시각: <span id="gen"></span></footer>
+
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.q').forEach(function (q) {
+    var answer = q.getAttribute('data-answer');
+    var box = q.querySelector('.ans-box');
+    var verdict = q.querySelector('.verdict');
+    var btn = q.querySelector('.btn');
+    var lis = q.querySelectorAll('ul.choices li');
+    var done = false;
+
+    function reveal(picked) {
+      lis.forEach(function (li) {
+        li.classList.add('locked');
+        var i = li.getAttribute('data-i');
+        if (i === answer) {
+          li.classList.add('correct');
+          var s = document.createElement('span');
+          s.className = 'res';
+          s.textContent = '정답';
+          li.appendChild(s);
+        } else if (picked && i === picked) {
+          li.classList.add('wrong');
+          var w = document.createElement('span');
+          w.className = 'res';
+          w.textContent = '오답';
+          li.appendChild(w);
+        }
+      });
+      if (picked) {
+        if (picked === answer) {
+          verdict.textContent = '⭕ 정답입니다!';
+          verdict.className = 'verdict ok';
+        } else {
+          verdict.textContent = '❌ 오답입니다. (선택한 답: ' + picked + '번)';
+          verdict.className = 'verdict no';
+        }
+      } else {
+        verdict.textContent = '';
+        verdict.className = 'verdict';
+      }
+      box.classList.add('open');
+      btn.textContent = '정답 확인 완료';
+      done = true;
+    }
+
+    lis.forEach(function (li) {
+      li.addEventListener('click', function () {
+        if (done) return;
+        reveal(li.getAttribute('data-i'));
+      });
+    });
+
+    btn.addEventListener('click', function () {
+      if (done) { box.classList.toggle('open'); return; }
+      reveal(null);
+    });
+  });
+
+  var d = new Date();
+  var p = function (n) { return (n < 10 ? '0' : '') + n; };
+  document.getElementById('gen').textContent =
+    d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' +
+    p(d.getHours()) + ':' + p(d.getMinutes()) + ' (' +
+    Intl.DateTimeFormat().resolvedOptions().timeZone + ')';
+})();
+</script>
+</body>
+</html>
