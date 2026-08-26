@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-08-27 (난이도: 상)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: #f7f9fc;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 20px 16px 80px; }
+  header.top {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  header.top h1 { margin: 0 0 8px; font-size: 24px; font-weight: 800; color: #0f172a; }
+  header.top .meta { font-size: 14px; color: #64748b; }
+  .badge {
+    display: inline-block; background: #fee2e2; color: #b91c1c;
+    font-weight: 700; font-size: 13px; padding: 2px 10px; border-radius: 999px; margin-left: 6px;
+  }
+
+  section.sec { margin-top: 34px; }
+  .sec-head {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 20px; font-weight: 800; color: #ffffff;
+    padding: 12px 16px; border-radius: 12px 12px 0 0;
+  }
+  .sec-ko .sec-head { background: #2563eb; }
+  .sec-en .sec-head { background: #059669; }
+  .sec-ma .sec-head { background: #7c3aed; }
+  .sec-jp .sec-head { background: #db2777; }
+  .sec-body {
+    background: #ffffff; border: 1px solid #e2e8f0; border-top: none;
+    border-radius: 0 0 12px 12px; padding: 18px 18px 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+
+  .passage {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid #2563eb;
+    border-radius: 8px; padding: 16px 18px; margin-bottom: 20px;
+    font-size: 15.5px; text-align: justify;
+  }
+  .passage p { margin: 0 0 14px; text-indent: 6px; }
+  .passage p:last-child { margin-bottom: 0; }
+
+  .q { margin-bottom: 26px; padding-bottom: 6px; }
+  .q + .q { border-top: 1px dashed #e2e8f0; padding-top: 22px; }
+  .q-title { font-weight: 700; font-size: 16.5px; margin-bottom: 12px; color: #0f172a; }
+  .q-title .num {
+    display: inline-block; background: #1e293b; color: #fff; font-size: 13px;
+    border-radius: 6px; padding: 1px 8px; margin-right: 8px; font-weight: 700;
+  }
+  .stem { margin: 0 0 12px; font-size: 16px; }
+
+  ul.choices { list-style: none; margin: 0; padding: 0; }
+  ul.choices li {
+    border: 1px solid #cbd5e1; background: #fff; border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 8px; cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 15.5px; display: flex; gap: 8px; align-items: flex-start;
+  }
+  ul.choices li:hover { background: #f1f5f9; }
+  ul.choices li .mark { font-weight: 700; color: #475569; flex: 0 0 auto; }
+  ul.choices li.correct { background: #dcfce7; border-color: #16a34a; }
+  ul.choices li.wrong { background: #fee2e2; border-color: #dc2626; }
+  ul.choices li.locked { cursor: default; }
+  ul.choices li .res { margin-left: auto; font-weight: 800; font-size: 14px; flex: 0 0 auto; }
+  li.correct .res { color: #15803d; }
+  li.wrong .res { color: #b91c1c; }
+
+  .btn {
+    margin-top: 10px; background: #1e293b; color: #fff; border: none;
+    border-radius: 8px; padding: 9px 18px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+  }
+  .btn:hover { background: #334155; }
+
+  .ans-box {
+    display: none; margin-top: 14px;
+    background: #fffbeb; border: 1px solid #fcd34d; border-left: 5px solid #f59e0b;
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .ans-box.open { display: block; }
+  .ans-box .ans-head { font-weight: 800; color: #b45309; margin-bottom: 8px; font-size: 15.5px; }
+  .ans-box .verdict { font-weight: 800; margin-bottom: 8px; font-size: 15px; }
+  .ans-box .verdict.ok { color: #15803d; }
+  .ans-box .verdict.no { color: #b91c1c; }
+  .ans-box ul { margin: 6px 0 0; padding-left: 20px; }
+  .ans-box li { margin-bottom: 6px; font-size: 15px; }
+  .ans-box p { margin: 6px 0; font-size: 15px; }
+
+  .jp-sent {
+    background: #fdf2f8; border: 1px solid #fbcfe8; border-left: 5px solid #db2777;
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 6px;
+  }
+  .jp-main { font-size: 22px; font-weight: 700; color: #831843; line-height: 1.9; }
+  .jp-read { font-size: 15px; color: #9d174d; margin-top: 6px; }
+  .jp-ko { font-size: 16.5px; margin-top: 10px; font-weight: 600; }
+  table.jp {
+    width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px;
+  }
+  table.jp th, table.jp td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; }
+  table.jp th { background: #f8fafc; font-weight: 700; white-space: nowrap; }
+  .scroll { overflow-x: auto; }
+
+  footer { text-align: center; color: #94a3b8; font-size: 13px; margin-top: 40px; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 14px 10px 60px; }
+    header.top h1 { font-size: 19px; }
+    .sec-head { font-size: 17px; padding: 10px 12px; }
+    .sec-body { padding: 14px 12px 18px; }
+    .passage { font-size: 15px; padding: 13px 13px; }
+    ul.choices li { font-size: 15px; padding: 9px 11px; }
+    .jp-main { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 8월 27일 (목) · 국어 1 · 영어 5 · 수학 1 · 일본어 1 <span class="badge">난이도 상</span></div>
+</header>
+
+<!-- ================= 국어 ================= -->
+<section class="sec sec-ko">
+  <div class="sec-head">📘 국어 · 독서(경영/금융) — 기업의 자금 조달과 자본구조</div>
+  <div class="sec-body">
+    <div class="passage">
+      <p>기업이 사업에 필요한 돈을 마련하는 방법은 크게 두 갈래로 나뉜다. 하나는 주식을 발행해 투자자로부터 자금을 받는 <b>자기자본</b> 조달이고, 다른 하나는 은행에서 빌리거나 회사채를 발행하는 <b>타인자본</b> 조달이다. 둘 다 기업에 돈이 들어온다는 점은 같지만 성격은 전혀 다르다. 주식을 산 사람은 회사의 <b>주주</b>가 되어 의결권을 갖고 이익의 일부를 배당으로 받지만 원금을 돌려받을 권리는 없다. 반면 회사채를 산 사람은 <b>채권자</b>로서 경영에 참여하지 못하는 대신, 약속된 이자와 만기의 원금을 받을 권리를 갖는다.</p>
+
+      <p>이 차이는 기업이 어려워졌을 때 뚜렷해진다. 회사가 청산될 경우 남은 재산은 먼저 채권자에게 돌아가고, 주주는 그러고도 남은 것이 있을 때에만 몫을 받는다. 이를 <b>잔여재산 청구권</b>이라 하며, 주주가 채권자보다 <b>후순위</b>에 놓인다는 뜻이다. 그 대신 회사가 크게 성장하면 채권자는 정해진 이자만 받는 반면 주주는 그 이익을 고스란히 누린다. 즉 주주는 더 큰 위험을 지는 대가로 더 큰 수익의 가능성을 갖는 셈이다.</p>
+
+      <p>그렇다면 기업은 자기자본과 타인자본을 어떤 비율로 섞어야 할까. 이 비율을 <b>자본구조</b>라고 한다. 모딜리아니와 밀러는 세금이 없고 파산 비용도 없으며 정보가 완전한 이상적인 시장을 가정하면 <b>자본구조가 기업 가치에 영향을 주지 않는다</b>는 명제를 제시했다. 회사의 가치는 그 회사가 벌어들이는 현금흐름에서 나오는 것이지, 그 몫을 주주와 채권자가 어떻게 나누느냐에 따라 달라지지 않는다는 것이다. 이 명제의 의의는 현실을 그대로 설명하는 데 있는 것이 아니라, 자본구조가 가치에 영향을 준다면 그것은 반드시 가정이 깨지는 지점, 곧 세금이나 파산 비용 때문이라는 사실을 분명히 했다는 데 있다.</p>
+
+      <p>현실에는 세금이 있다. 기업이 지급하는 <b>이자는 비용으로 인정되어 과세 대상 이익을 줄여 주지만</b>, 주주에게 주는 배당은 그렇지 않다. 그래서 부채를 늘리면 세금을 덜 내는 효과가 생기는데 이를 <b>이자의 절세 효과</b>라고 한다. 이 점만 보면 부채는 많을수록 유리해 보인다. 그러나 부채가 늘수록 이자를 갚지 못할 위험도 함께 커진다. 실제로 파산에 이르면 소송과 자산 헐값 매각 같은 <b>직접 비용</b>이 발생하고, 파산에 이르지 않더라도 거래처가 떠나고 우수 인력이 이탈하는 <b>간접 비용</b>이 발생한다.</p>
+
+      <p>따라서 기업은 절세 효과라는 이득과 파산 비용이라는 손실이 균형을 이루는 지점에서 부채 비율을 정하게 된다. 이러한 설명을 <b>상충 이론</b>이라고 한다. 이 이론에 따르면 안정적인 현금흐름과 담보로 쓸 유형자산을 많이 가진 기업일수록 부채를 더 많이 쓸 수 있고, 매출의 변동이 크거나 무형자산 위주인 기업은 부채를 적게 쓰는 편이 낫다.</p>
+
+      <p>한편 현실의 기업이 실제로 돈을 마련하는 순서에 주목한 설명도 있다. 경영자는 회사의 사정을 외부 투자자보다 잘 아는데, 이러한 <b>정보 비대칭</b> 아래에서 주식을 새로 발행하면 시장은 &lsquo;주가가 고평가되어 있어 지금 파는 것&rsquo;이라는 신호로 받아들여 주가가 떨어지기 쉽다. 그래서 기업은 먼저 <b>내부 유보금</b>을 쓰고, 그다음으로 부채를 쓰며, 주식 발행은 가장 마지막에 선택하는 경향을 보인다. 이를 <b>자본조달 순위 이론</b>이라 한다. 이 이론은 목표로 삼는 최적의 부채 비율을 상정하지 않는다는 점에서 상충 이론과 구별된다.</p>
+
+      <p>기업이 부채로 자금을 조달할 때 그 비용을 좌우하는 것이 <b>신용등급</b>이다. 신용평가회사는 기업의 상환 능력을 평가해 등급을 매기고, 등급이 낮을수록 투자자는 더 높은 이자를 요구한다. 국채 금리와 회사채 금리의 차이를 <b>신용 스프레드</b>라 하는데, 이는 경기가 나빠질 것으로 예상될 때 확대되고 경기가 좋아질 것으로 기대될 때 축소되어 경기 국면을 읽는 지표로도 쓰인다.</p>
+
+      <p>주식과 채권의 성격을 함께 지닌 수단도 있다. <b>전환사채</b>는 평소에는 이자를 받는 채권이지만 정해진 조건에 따라 주식으로 바꿀 수 있는 권리가 붙어 있다. 투자자는 주가가 오르면 주식으로 바꾸어 이익을 얻을 수 있으므로, 그 권리의 가치만큼 기업은 <b>보통의 회사채보다 낮은 금리</b>로 자금을 조달할 수 있다. 다만 실제로 전환이 이루어지면 주식 수가 늘어 기존 주주의 지분율이 낮아지는 <b>희석</b>이 발생한다.</p>
+    </div>
+
+    <div class="q" data-answer="5">
+      <div class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>회사가 청산될 때 주주는 채권자보다 후순위로 잔여재산에 대한 권리를 갖는다.</span></li>
+        <li data-i="2"><span class="mark">②</span><span>모딜리아니와 밀러의 명제는 세금과 파산 비용이 없는 이상적 시장을 가정한 것이다.</span></li>
+        <li data-i="3"><span class="mark">③</span><span>이자는 과세 대상 이익을 줄여 주지만 배당은 그러한 효과가 없어 부채에는 절세 효과가 따른다.</span></li>
+        <li data-i="4"><span class="mark">④</span><span>자본조달 순위 이론은 상충 이론과 달리 목표로 삼는 최적의 부채 비율을 상정하지 않는다.</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>전환사채는 주식으로 바꿀 수 있는 권리가 붙어 있어 기업이 보통의 회사채보다 높은 금리를 부담해야 한다.</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ⑤</div>
+        <ul>
+          <li><b>① 일치</b> — 2문단에서 청산 시 남은 재산은 채권자에게 먼저 돌아가며 주주는 "후순위에 놓인다"고 했다.</li>
+          <li><b>② 일치</b> — 3문단의 "세금이 없고 파산 비용도 없으며 정보가 완전한 이상적인 시장을 가정하면"과 부합한다.</li>
+          <li><b>③ 일치</b> — 4문단에서 이자는 "비용으로 인정되어 과세 대상 이익을 줄여 주지만" 배당은 그렇지 않아 절세 효과가 생긴다고 했다.</li>
+          <li><b>④ 일치</b> — 6문단 마지막에서 자본조달 순위 이론은 "목표로 삼는 최적의 부채 비율을 상정하지 않는다는 점에서 상충 이론과 구별된다"고 명시했다.</li>
+          <li><b>⑤ 불일치(정답)</b> — 8문단은 전환 권리의 가치만큼 기업이 "보통의 회사채보다 <b>낮은</b> 금리로 자금을 조달할 수 있다"고 했다. 투자자가 주가 상승의 이익을 기대할 수 있어 그만큼 낮은 이자를 받아들이기 때문이다. 금리를 더 부담한다는 진술은 글과 정반대이다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 영어 ================= -->
+<section class="sec sec-en">
+  <div class="sec-head">📗 영어 · TOEIC Part 5 (문장 완성형) 5문항</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="1">
+      <div class="q-title"><span class="num">영어 1</span>Choose the best answer.</div>
+      <p class="stem">The extended warranty covers all manufacturing defects ______ damage resulting from improper installation.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>other than</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>as well as</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>rather</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>in addition</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (A) other than</div>
+        <p><b>해석:</b> 연장 보증은 부적절한 설치로 인한 손상을 제외한 모든 제조상의 결함을 보장한다.</p>
+        <ul>
+          <li><b>(A) other than — 정답</b>: '~을 제외하고(= except for)'라는 뜻의 전치사구로 뒤에 명사(구)를 취한다. all defects(모두 보장)와 improper installation(설치 잘못은 회사 책임이 아님)의 관계상 <b>제외</b>의 의미가 자연스럽다.</li>
+          <li><b>(B) as well as — 오답</b>: '~뿐만 아니라 …도'라는 <b>추가</b>의 의미여서, 설치 잘못까지 보장한다는 어색한 뜻이 된다.</li>
+          <li><b>(C) rather — 오답</b>: 부사로 단독 사용되며 명사를 연결하지 못한다. 연결하려면 rather <b>than</b>이 되어야 한다.</li>
+          <li><b>(D) in addition — 오답</b>: 접속부사로 명사를 목적어로 취할 수 없다. in addition <b>to</b>가 되어야 하며, 의미도 추가라서 문맥에 맞지 않는다.</li>
+        </ul>
+        <p><b>포인트:</b> 뒤에 명사가 오면 <b>전치사(구)</b>인지 확인 — other than / except for / in addition to / apart from. apart from은 문맥에 따라 제외·추가 둘 다 가능하다.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 2</span>Choose the best answer.</div>
+      <p class="stem">The training facility ______ the new technicians will be certified is scheduled to open in early October.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>which</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>where</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>that</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>what</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) where</div>
+        <p><b>해석:</b> 신입 기술자들이 자격 인증을 받게 될 그 교육 시설은 10월 초에 문을 열 예정이다.</p>
+        <ul>
+          <li><b>(A) which — 오답</b>: 관계대명사는 뒤 절에 <b>빠진 자리</b>(주어나 목적어)가 있어야 한다. the new technicians will be certified는 그 자체로 완전한 문장이다.</li>
+          <li><b>(B) where — 정답</b>: 선행사가 장소(facility)이고 뒤에 <b>완전한 절</b>이 이어지므로 관계부사 where가 알맞다. (= in which)</li>
+          <li><b>(C) that — 오답</b>: 관계대명사로 쓰려면 뒤 절이 불완전해야 한다.</li>
+          <li><b>(D) what — 오답</b>: what은 선행사를 포함하므로 앞에 facility 같은 선행사가 있으면 쓸 수 없다.</li>
+        </ul>
+        <p><b>포인트:</b> <b>뒤 절이 완전 → 관계부사</b>(where, when, why, how) 또는 <b>전치사 + which</b>, <b>뒤 절이 불완전 → 관계대명사</b>(who, which, that).</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="4">
+      <div class="q-title"><span class="num">영어 3</span>Choose the best answer.</div>
+      <p class="stem">Ms. Tanaka prepared the entire quarterly presentation ______, without any assistance from the design team.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>she</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>her</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>hers</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>herself</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (D) herself</div>
+        <p><b>해석:</b> 타나카 씨는 디자인 팀의 어떤 도움도 없이 분기 발표 자료 전체를 직접 준비했다.</p>
+        <ul>
+          <li><b>(A) she — 오답</b>: 주격 대명사는 이미 주어 Ms. Tanaka가 있는 자리에 다시 올 수 없다.</li>
+          <li><b>(B) her — 오답</b>: 목적격/소유격 자리인데, 목적어 the entire presentation이 이미 있고 뒤에 명사도 없다.</li>
+          <li><b>(C) hers — 오답</b>: 소유대명사('그녀의 것')로, 여기서는 의미가 통하지 않는다.</li>
+          <li><b>(D) herself — 정답</b>: '직접, 스스로'를 뜻하는 <b>강조 용법의 재귀대명사</b>. 문장에서 빼도 문법이 성립하며, without any assistance라는 문맥이 결정적 단서다.</li>
+        </ul>
+        <p><b>포인트:</b> 재귀대명사는 ⓐ <b>재귀 용법</b>(주어와 목적어가 같을 때, 생략 불가) ⓑ <b>강조 용법</b>(직접, 생략 가능)으로 나뉜다. by oneself(혼자서), for oneself(스스로 힘으로)도 함께 외운다.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 4</span>Choose the best answer.</div>
+      <p class="stem">According to the benchmark tests, the updated software processes large data sets ______ faster than the previous version.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>very</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>much</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>more</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>too</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) much</div>
+        <p><b>해석:</b> 벤치마크 테스트에 따르면, 업데이트된 소프트웨어는 대용량 데이터를 이전 버전보다 훨씬 더 빠르게 처리한다.</p>
+        <ul>
+          <li><b>(A) very — 오답</b>: very는 <b>원급</b>만 강조한다(very fast ○ / very faster ×).</li>
+          <li><b>(B) much — 정답</b>: <b>비교급 강조</b> 부사로 '훨씬'의 뜻이다. faster라는 비교급 앞이므로 알맞다.</li>
+          <li><b>(C) more — 오답</b>: faster가 이미 비교급이므로 more faster는 <b>이중 비교급</b>이 되어 틀리다.</li>
+          <li><b>(D) too — 오답</b>: '너무 ~한'이라는 뜻으로 원급을 수식하며, than과 함께 쓰지 않는다.</li>
+        </ul>
+        <p><b>포인트:</b> 비교급 강조어 = <b>much, far, even, still, a lot, considerably, significantly</b>. 원급 강조어 = very, quite, so. 「the 비교급 ~, the 비교급 …」 구문도 함께 정리해 둔다.</p>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 5</span>Choose the best answer.</div>
+      <p class="stem">By the time the new distribution center opens next spring, the company ______ three of its regional warehouses.</p>
+      <ul class="choices">
+        <li data-i="1"><span class="mark">(A)</span><span>closes</span></li>
+        <li data-i="2"><span class="mark">(B)</span><span>will have closed</span></li>
+        <li data-i="3"><span class="mark">(C)</span><span>had closed</span></li>
+        <li data-i="4"><span class="mark">(D)</span><span>has been closing</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: (B) will have closed</div>
+        <p><b>해석:</b> 새 물류센터가 내년 봄에 문을 열 무렵이면, 그 회사는 지역 창고 세 곳을 이미 폐쇄했을 것이다.</p>
+        <ul>
+          <li><b>(A) closes — 오답</b>: 단순 현재는 미래의 특정 시점까지 <b>완료</b>된다는 의미를 담지 못한다.</li>
+          <li><b>(B) will have closed — 정답</b>: <b>By the time + 현재시제 (미래 의미)</b>가 이끄는 절과 짝을 이루어 주절은 <b>미래완료</b>가 된다. '그때까지 ~해 놓았을 것이다'라는 뜻이다.</li>
+          <li><b>(C) had closed — 오답</b>: 과거완료는 By the time절이 <b>과거시제</b>일 때 쓴다. next spring과 충돌한다.</li>
+          <li><b>(D) has been closing — 오답</b>: 현재완료진행은 현재까지의 지속을 나타내어 미래 시점 기준과 맞지 않는다.</li>
+        </ul>
+        <p><b>포인트:</b> <b>By the time + 현재 → 주절 미래완료</b> / <b>By the time + 과거 → 주절 과거완료</b>. 시간·조건 부사절에서는 미래를 현재시제로 대신한다는 점이 함께 적용된다.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 수학 ================= -->
+<section class="sec sec-ma">
+  <div class="sec-head">📐 수학 · 경우의 수 (순열과 조합) — 난이도 최상</div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">수학 1</span>다음 물음에 답하시오.</div>
+      <p class="stem">오른쪽 그림과 같이 가로 방향 도로 5개 구간, 세로 방향 도로 4개 구간으로 이루어진 격자 모양의 도로망이 있다. 각 교차점을 좌표 <b>(x, y)</b> (x = 0, 1, …, 5, y = 0, 1, …, 4)로 나타낼 때, 지점 <b>A(0, 0)</b>에서 지점 <b>B(5, 4)</b>까지 도로를 따라 <b>최단 거리</b>로 가려고 한다.<br>
+      이때 지점 <b>P(2, 2)</b>를 반드시 <b>지나고</b>, 지점 (3, 3)과 (4, 3)을 잇는 <b>가로 구간은 공사 중이어서 지날 수 없다고</b> 할 때, 가능한 경로의 수는?</p>
+
+      <div style="overflow-x:auto; margin: 4px 0 14px;">
+        <svg viewBox="0 0 330 260" width="330" height="260" style="max-width:100%; height:auto; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
+          <g stroke="#94a3b8" stroke-width="1.5">
+            <line x1="30" y1="30" x2="280" y2="30"/><line x1="30" y1="80" x2="280" y2="80"/>
+            <line x1="30" y1="130" x2="280" y2="130"/><line x1="30" y1="180" x2="280" y2="180"/>
+            <line x1="30" y1="230" x2="280" y2="230"/>
+            <line x1="30" y1="30" x2="30" y2="230"/><line x1="80" y1="30" x2="80" y2="230"/>
+            <line x1="130" y1="30" x2="130" y2="230"/><line x1="180" y1="30" x2="180" y2="230"/>
+            <line x1="230" y1="30" x2="230" y2="230"/><line x1="280" y1="30" x2="280" y2="230"/>
+          </g>
+          <line x1="180" y1="80" x2="230" y2="80" stroke="#dc2626" stroke-width="4" stroke-dasharray="6 5"/>
+          <text x="205" y="70" font-size="12" fill="#dc2626" text-anchor="middle" font-weight="bold">공사중</text>
+          <circle cx="30" cy="230" r="5" fill="#2563eb"/><text x="18" y="248" font-size="13" fill="#1e293b" font-weight="bold">A(0,0)</text>
+          <circle cx="130" cy="130" r="5" fill="#7c3aed"/><text x="118" y="152" font-size="13" fill="#7c3aed" font-weight="bold">P(2,2)</text>
+          <circle cx="280" cy="30" r="5" fill="#2563eb"/><text x="248" y="22" font-size="13" fill="#1e293b" font-weight="bold">B(5,4)</text>
+          <text x="176" y="98" font-size="11" fill="#64748b">(3,3)</text>
+          <text x="228" y="98" font-size="11" fill="#64748b">(4,3)</text>
+        </svg>
+      </div>
+
+      <ul class="choices">
+        <li data-i="1"><span class="mark">①</span><span>30</span></li>
+        <li data-i="2"><span class="mark">②</span><span>33</span></li>
+        <li data-i="3"><span class="mark">③</span><span>36</span></li>
+        <li data-i="4"><span class="mark">④</span><span>40</span></li>
+        <li data-i="5"><span class="mark">⑤</span><span>42</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans-box">
+        <div class="verdict"></div>
+        <div class="ans-head">정답: ③ 36</div>
+        <p><b>[전략]</b> 최단 경로의 수는 오른쪽 이동(→)과 위쪽 이동(↑)을 나열하는 <b>같은 것이 있는 순열</b>, 즉 조합으로 계산한다. &lsquo;반드시 지나는 점&rsquo;은 <b>곱의 법칙</b>으로 구간을 나누고, &lsquo;지날 수 없는 구간&rsquo;은 <b>여사건</b>으로 뺀다.</p>
+
+        <p><b>[1단계] A → P → B (공사 구간을 무시했을 때)</b><br>
+        A(0,0) → P(2,2): →2개, ↑2개를 나열 → <sub>4</sub>C<sub>2</sub> = <b>6</b><br>
+        P(2,2) → B(5,4): →3개, ↑2개를 나열 → <sub>5</sub>C<sub>2</sub> = <b>10</b><br>
+        ∴ 6 × 10 = <b>60</b>(가지)</p>
+
+        <p><b>[2단계] 그중 공사 구간 (3,3) → (4,3)을 지나는 경우</b><br>
+        이 구간을 지나려면 경로가 <b>A → P → (3,3) → (4,3) → B</b> 순서를 따라야 한다.<br>
+        · A → P : <sub>4</sub>C<sub>2</sub> = 6<br>
+        · P(2,2) → (3,3) : →1개, ↑1개 → <sub>2</sub>C<sub>1</sub> = 2<br>
+        · (3,3) → (4,3) : 공사 구간을 지나는 것이므로 1가지 (고정)<br>
+        · (4,3) → B(5,4) : →1개, ↑1개 → <sub>2</sub>C<sub>1</sub> = 2<br>
+        ∴ 6 × 2 × 1 × 2 = <b>24</b>(가지)</p>
+
+        <p><b>[3단계] 여사건 빼기</b><br>
+        60 − 24 = <b>36</b></p>
+
+        <ul>
+          <li><b>[검산]</b> A에서 B까지의 전체 최단 경로는 <sub>9</sub>C<sub>4</sub> = 126가지이고, 그중 P를 지나는 것이 60가지, 다시 그중 공사 구간을 피하는 것이 36가지로 단계마다 값이 줄어드는 것이 자연스럽다.</li>
+          <li><b>① 30, ② 33, ④ 40, ⑤ 42 — 오답</b>: 흔한 실수는 ⓐ 공사 구간을 지나는 경로를 셀 때 P를 지나야 한다는 조건을 잊고 <sub>6</sub>C<sub>3</sub> × 1 × <sub>2</sub>C<sub>1</sub> = 40을 빼는 경우, ⓑ (3,3) 도달 경로를 A에서부터 다시 세어 중복 계산하는 경우이다.</li>
+          <li><b>[핵심 개념]</b> ⓐ (m, n)까지의 최단 경로 수 = <sub>m+n</sub>C<sub>m</sub>, ⓑ 경유점은 구간을 나누어 <b>곱하기</b>, ⓒ 통행 금지 구간은 <b>(전체) − (그 구간을 지나는 경우)</b>.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 일본어 ================= -->
+<section class="sec sec-jp">
+  <div class="sec-head">🗾 일본어 · 오늘의 회화 문장 (고1 2학기 수준)</div>
+  <div class="sec-body">
+
+    <div class="jp-sent">
+      <div class="jp-main">ここで 写真を 撮っても いいですか。</div>
+      <div class="jp-read">
+        <b>히라가나:</b> ここで しゃしんを とっても いいですか。<br>
+        <b>발음(한글):</b> 코코데 샤신오 톳테모 이-데스카.
+      </div>
+      <div class="jp-ko">해석: 여기에서 사진을 찍어도 됩니까?</div>
+    </div>
+
+    <div class="scroll">
+      <table class="jp">
+        <tr><th>단어</th><th>읽기</th><th>뜻</th></tr>
+        <tr><td>ここ</td><td>ここ</td><td>여기</td></tr>
+        <tr><td>で</td><td>で</td><td>~에서 (동작이 이루어지는 장소)</td></tr>
+        <tr><td>写真</td><td>しゃしん</td><td>사진</td></tr>
+        <tr><td>撮る</td><td>とる</td><td>(사진을) 찍다 (1그룹 동사)</td></tr>
+        <tr><td>撮って</td><td>とって</td><td>찍고, 찍어서 (撮る의 て형)</td></tr>
+        <tr><td>いいです</td><td>いいです</td><td>좋습니다, 괜찮습니다</td></tr>
+      </table>
+    </div>
+
+    <div class="ans-box open" style="margin-top:16px;">
+      <div class="ans-head">문장 설명 &amp; 문법 포인트</div>
+      <ul>
+        <li><b>① ～てもいいですか — 허가를 구하는 표현</b><br>
+        동사의 <b>て형</b>에 <b>も いいですか</b>를 붙이면 '~해도 됩니까?'라는 <b>허가 요청</b>이 된다. 여기서 も는 '~라도, ~해도'라는 양보의 뜻이다.<br>
+        <b>허락</b>: 「はい、どうぞ。」(네, 그러세요) / 「ええ、いいですよ。」(네, 괜찮아요)<br>
+        <b>거절</b>: 「すみません、ここは ちょっと…」(죄송해요, 여기는 좀…) — 일본어에서는 직접적인 금지보다 <b>말끝을 흐리는 완곡한 거절</b>이 훨씬 자연스럽다.<br>
+        더 정중하게 물을 때는 「～ても よろしいですか」를 쓴다.</li>
+
+        <li><b>② 금지 표현 ～てはいけません / ～ないでください</b><br>
+        「撮っては いけません」(とっては いけません) — 찍어서는 안 됩니다. (규칙·강한 금지)<br>
+        「撮らないで ください」(とらないで ください) — 찍지 말아 주세요. (부드러운 요청)<br>
+        회화에서 <b>ては</b>는 <b>ちゃ</b>로 줄어든다: 撮っちゃ だめ(とっちゃ だめ / 찍으면 안 돼).<br>
+        ※ 「～なくても いいです」는 '~하지 않아도 됩니다'라는 <b>불필요</b>의 뜻으로, 금지와 혼동하지 않도록 주의한다.</li>
+
+        <li><b>③ 동사의 て형 만들기 (1그룹 음편)</b><br>
+        う・つ・<b>る</b> → <b>って</b> … 撮る(とる) → <b>撮って</b>(とって), 買う(かう) → 買って(かって)<br>
+        ぬ・ぶ・む → <b>んで</b> … 読む(よむ) → 読んで(よんで)<br>
+        く → <b>いて</b>, ぐ → <b>いで</b> … 書く(かく) → 書いて(かいて) ※ 行く(いく)만 예외로 行って(いって)<br>
+        す → <b>して</b> … 話す(はなす) → 話して(はなして)<br>
+        2그룹은 る를 떼고 て(見る→見て), 3그룹은 する→して / 来る(くる)→来て(きて).</li>
+
+        <li><b>④ 조사 で와 に의 구별</b><br>
+        <b>で</b>는 <b>동작이 이루어지는 장소</b>, <b>に</b>는 <b>존재하는 장소나 도착 지점</b>을 나타낸다.<br>
+        ここ<b>で</b>写真を撮る(ここで しゃしんを とる / 여기에서 사진을 찍다) — 동작<br>
+        ここ<b>に</b>あります(ここに あります / 여기에 있습니다) — 존재<br>
+        ※ で에는 '수단'의 용법도 있다: スマホ<b>で</b>撮る(すまほで とる / 스마트폰으로 찍다).</li>
+
+        <li><b>⑤ 함께 외우면 좋은 확장 문장</b><br>
+        「ちょっと 手伝っても いいですか。」(ちょっと てつだっても いいですか) — 좀 도와드려도 될까요?<br>
+        「この 席に 座っても いいですか。」(この せきに すわっても いいですか) — 이 자리에 앉아도 될까요?<br>
+        「中に 入っても いいですか。」(なかに はいっても いいですか) — 안에 들어가도 될까요?<br>
+        「すみません、写真を 撮って もらえますか。」(すみません、しゃしんを とって もらえますか) — 죄송한데, 사진 좀 찍어 주시겠어요?</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<footer>생성 시각: <span id="gen"></span></footer>
+
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('.q').forEach(function (q) {
+    var answer = q.getAttribute('data-answer');
+    var box = q.querySelector('.ans-box');
+    var verdict = q.querySelector('.verdict');
+    var btn = q.querySelector('.btn');
+    var lis = q.querySelectorAll('ul.choices li');
+    var done = false;
+
+    function reveal(picked) {
+      lis.forEach(function (li) {
+        li.classList.add('locked');
+        var i = li.getAttribute('data-i');
+        if (i === answer) {
+          li.classList.add('correct');
+          var s = document.createElement('span');
+          s.className = 'res';
+          s.textContent = '정답';
+          li.appendChild(s);
+        } else if (picked && i === picked) {
+          li.classList.add('wrong');
+          var w = document.createElement('span');
+          w.className = 'res';
+          w.textContent = '오답';
+          li.appendChild(w);
+        }
+      });
+      if (picked) {
+        if (picked === answer) {
+          verdict.textContent = '⭕ 정답입니다!';
+          verdict.className = 'verdict ok';
+        } else {
+          verdict.textContent = '❌ 오답입니다. (선택한 답: ' + picked + '번)';
+          verdict.className = 'verdict no';
+        }
+      } else {
+        verdict.textContent = '';
+        verdict.className = 'verdict';
+      }
+      box.classList.add('open');
+      btn.textContent = '정답 확인 완료';
+      done = true;
+    }
+
+    lis.forEach(function (li) {
+      li.addEventListener('click', function () {
+        if (done) return;
+        reveal(li.getAttribute('data-i'));
+      });
+    });
+
+    btn.addEventListener('click', function () {
+      if (done) { box.classList.toggle('open'); return; }
+      reveal(null);
+    });
+  });
+
+  var d = new Date();
+  var p = function (n) { return (n < 10 ? '0' : '') + n; };
+  document.getElementById('gen').textContent =
+    d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' +
+    p(d.getHours()) + ':' + p(d.getMinutes()) + ' (' +
+    Intl.DateTimeFormat().resolvedOptions().timeZone + ')';
+})();
+</script>
+</body>
+</html>
