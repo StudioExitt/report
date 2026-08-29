@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 시험 2026-08-30 · 일본어 / 한국사</title>
+<style>
+  :root{
+    --bg:#f7f9fc; --card:#ffffff; --ink:#1f2933; --sub:#5b6b7c;
+    --line:#e3e9f0; --jp:#c2410c; --jp-bg:#fff6ed; --kh:#1d4ed8; --kh-bg:#eff4ff;
+    --ok:#15803d; --ok-bg:#effaf1; --no:#b91c1c; --no-bg:#fef2f2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Hiragino Kaku Gothic ProN",sans-serif;
+    line-height:1.65;-webkit-text-size-adjust:100%}
+  .wrap{max-width:840px;margin:0 auto;padding:20px 14px 60px}
+  header.top{text-align:center;padding:26px 16px;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;margin-bottom:22px}
+  header.top h1{margin:0 0 8px;font-size:1.5rem;font-weight:800;letter-spacing:-.02em}
+  header.top .meta{color:var(--sub);font-size:.86rem}
+  .badge{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:999px;
+    background:#eef2f7;color:var(--sub);font-size:.78rem;font-weight:700}
+
+  section.sec{margin-bottom:34px}
+  .sec-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:14px 14px 0 0;
+    color:#fff;font-weight:800;font-size:1.12rem}
+  .sec-jp .sec-head{background:linear-gradient(135deg,#ea580c,#c2410c)}
+  .sec-kh .sec-head{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+  .sec-head .tag{margin-left:auto;font-size:.74rem;font-weight:700;background:rgba(255,255,255,.22);
+    padding:3px 10px;border-radius:999px}
+  .sec-body{background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 14px 14px;padding:16px 14px 18px}
+
+  .q{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px;background:#fff}
+  .q:last-child{margin-bottom:0}
+  .q-head{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px}
+  .q-no{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    font-size:.82rem;font-weight:800;color:#fff}
+  .sec-jp .q-no{background:var(--jp)} .sec-kh .q-no{background:var(--kh)}
+  .q-type{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:#eef2f7;color:var(--sub)}
+  .q-text{font-weight:700;font-size:1rem;margin:6px 0 12px;white-space:pre-line}
+  .stim{border-left:4px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:10px 12px;
+    margin:0 0 12px;font-size:.95rem;white-space:pre-line}
+  .jpline{font-size:1.05rem;letter-spacing:.02em}
+  rt{font-size:.55em;color:var(--sub)}
+  .rd{font-size:.78em;color:var(--sub);margin-left:4px}
+
+  ul.opts{list-style:none;margin:0;padding:0}
+  ul.opts li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;
+    cursor:pointer;display:flex;gap:9px;align-items:flex-start;background:#fff;
+    transition:background .15s,border-color .15s;font-size:.96rem}
+  ul.opts li:hover{background:#f4f7fb}
+  ul.opts li .num{flex:none;font-weight:800;color:var(--sub)}
+  ul.opts li.correct{border-color:var(--ok);background:var(--ok-bg)}
+  ul.opts li.wrong{border-color:var(--no);background:var(--no-bg)}
+  ul.opts li .mark{margin-left:auto;font-weight:800;font-size:.9rem}
+  ul.opts li.correct .mark{color:var(--ok)} ul.opts li.wrong .mark{color:var(--no)}
+  ul.opts.locked li{cursor:default}
+
+  .btn{margin-top:6px;padding:9px 16px;border:none;border-radius:10px;background:#334155;color:#fff;
+    font-weight:700;font-size:.88rem;cursor:pointer}
+  .btn:hover{background:#1e293b}
+
+  .ans{display:none;margin-top:12px;border:1px solid var(--line);border-left:5px solid #94a3b8;
+    border-radius:10px;background:#f8fafc;padding:12px 13px}
+  .ans.show{display:block}
+  .verdict{font-weight:800;margin-bottom:8px;padding:7px 11px;border-radius:8px;display:inline-block;font-size:.9rem}
+  .verdict.ok{background:var(--ok-bg);color:var(--ok);border:1px solid #bbf7d0}
+  .verdict.no{background:var(--no-bg);color:var(--no);border:1px solid #fecaca}
+  .ans h4{margin:0 0 6px;font-size:.86rem;font-weight:800;color:var(--sub);letter-spacing:.04em}
+  .ans .key{font-weight:800;color:var(--ok);font-size:1rem;margin-bottom:8px}
+  .ans p{margin:0 0 10px;font-size:.93rem}
+  .ans ol.exp{margin:0;padding-left:20px;font-size:.9rem}
+  .ans ol.exp li{margin-bottom:5px}
+  .ans ol.exp li.k{color:var(--ok);font-weight:700}
+  footer{text-align:center;color:var(--sub);font-size:.78rem;padding-top:10px}
+  @media (max-width:480px){
+    .wrap{padding:14px 10px 46px}
+    header.top h1{font-size:1.25rem}
+    .sec-head{font-size:1rem;padding:12px 13px}
+    .q{padding:12px 11px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 시험 · 일본어 &amp; 한국사</h1>
+  <div class="meta">2026년 8월 30일 (일)</div>
+  <div class="badge">일본어 3문항 · 한국사 3문항 · 총 6문항</div>
+</header>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp">
+  <div class="sec-head">🇯🇵 일본어<span class="tag">6과 わあ、すごい! (선택·감탄·칭찬)</span></div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="3">
+      <div class="q-head"><span class="q-no">1</span><span class="q-type">빈칸 추론</span></div>
+      <div class="q-text">다음 대화의 빈칸 ㉠에 들어갈 응답으로 가장 알맞은 것은?</div>
+      <div class="stim jpline">A : にほんごが とても じょうずですね。
+<span class="rd">(니홍고가 토테모 죠-즈데스네 / 일본어를 아주 잘하시네요.)</span>
+B : ㉠ 。
+<span class="rd">(아니에요, 아직 멀었어요.)</span></div>
+      <ul class="opts">
+        <li><span class="num">①</span><span class="jpline">はい、わたしは じょうずです<span class="rd">하이, 와타시와 죠-즈데스</span></span></li>
+        <li><span class="num">②</span><span class="jpline">わあ、すごい!<span class="rd">와-, 스고이!</span></span></li>
+        <li><span class="num">③</span><span class="jpline">いいえ、まだまだです<span class="rd">이이에, 마다마다데스</span></span></li>
+        <li><span class="num">④</span><span class="jpline">それに します<span class="rd">소레니 시마스</span></span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ③</div>
+        <p>칭찬을 받았을 때 일본에서는 <b>겸손하게 낮추어 대답</b>하는 것이 자연스럽습니다. 대표적인 표현이 <b>「まだまだです」</b>(아직 멀었습니다), 「いいえ、そんな こと ありません」(아니에요, 그렇지 않아요), 「いえいえ」입니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>「じょうずだ」는 <b>남을 칭찬할 때만</b> 쓰는 말이라 자신에게 쓸 수 없습니다. 자신은 「とくいです」를 씁니다.</li>
+          <li>「わあ、すごい!」는 놀람·감탄 표현으로, 칭찬을 받은 사람의 응답으로는 어색합니다.</li>
+          <li class="k">「いいえ、まだまだです」= 아니에요, 아직 멀었어요. → 정답</li>
+          <li>「〜に します」는 선택·결정 표현이라 칭찬에 대한 대답이 될 수 없습니다.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-head"><span class="q-no">2</span><span class="q-type">선택형 · 문법</span></div>
+      <div class="q-text">지시어의 쓰임이 <u>모두 올바른</u> 것은?</div>
+      <ul class="opts">
+        <li><span class="num">①</span><span class="jpline">この ゆかたは いくらですか。/ どれ ゆかたに しますか。<span class="rd">코노 유카타와 이쿠라데스카 / 도레 유카타니 시마스카</span></span></li>
+        <li><span class="num">②</span><span class="jpline">それは なんですか。/ その うちわに します。<span class="rd">소레와 난데스카 / 소노 우치와니 시마스</span></span></li>
+        <li><span class="num">③</span><span class="jpline">あの げたは きれいですね。/ あれ げたに します。<span class="rd">아노 게타와 키레-데스네 / 아레 게타니 시마스</span></span></li>
+        <li><span class="num">④</span><span class="jpline">これ おびは いくらですか。/ どの おびが いいですか。<span class="rd">코레 오비와 이쿠라데스카 / 도노 오비가 이이데스카</span></span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ②</div>
+        <p>사물 자체를 가리킬 때는 <b>これ・それ・あれ・どれ</b>를 단독으로 쓰고, <b>명사 앞</b>에 올 때는 <b>この・その・あの・どの + 명사</b> 형태를 씁니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>「この ゆかた」는 맞지만, 「どれ ゆかた」는 틀립니다. → 「どの ゆかた」</li>
+          <li class="k">「それは」(단독) + 「その うちわ」(명사 수식) 모두 올바릅니다. → 정답</li>
+          <li>「あの げた」는 맞지만, 「あれ げた」는 틀립니다. → 「あの げた」</li>
+          <li>「どの おび」는 맞지만, 「これ おび」는 틀립니다. → 「この おび」</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="q" data-answer="4">
+      <div class="q-head"><span class="q-no">3</span><span class="q-type">틀린 것 찾기</span></div>
+      <div class="q-text">다음 중 <u>な</u>형용사의 활용이 바르지 <u>않은</u> 것은?</div>
+      <ul class="opts">
+        <li><span class="num">①</span><span class="jpline">はなびが きれいです。<span class="rd">하나비가 키레-데스 · 불꽃놀이가 예쁩니다.</span></span></li>
+        <li><span class="num">②</span><span class="jpline">にぎやかな まつりですね。<span class="rd">니기야카나 마츠리데스네 · 북적이는 축제네요.</span></span></li>
+        <li><span class="num">③</span><span class="jpline">かれは うたが へたです。<span class="rd">카레와 우타가 헤타데스 · 그는 노래를 못합니다.</span></span></li>
+        <li><span class="num">④</span><span class="jpline">きれいだ ゆかたを かいます。<span class="rd">키레-다 유카타오 카이마스 · 예쁜 유카타를 삽니다.</span></span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ④</div>
+        <p>な형용사는 <b>명사를 수식할 때 어미 だ를 な로 바꿉니다</b>. 따라서 「きれいだ ゆかた」가 아니라 <b>「きれいな ゆかた」</b>가 되어야 합니다. 서술형은 「きれいだ / きれいです」입니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>서술형 「きれいです」로 올바릅니다.</li>
+          <li>명사 「まつり」를 수식하므로 「にぎやかな」로 바르게 활용되었습니다.</li>
+          <li>「へただ」의 정중한 서술형 「へたです」이며, 잘하고 못하는 대상에는 조사 <b>が</b>를 씁니다.</li>
+          <li class="k">명사 수식인데 「きれいだ」를 그대로 썼습니다. → 정답(바르지 않은 것)</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 한국사 ===================== -->
+<section class="sec sec-kh">
+  <div class="sec-head">📕 한국사<span class="tag">I-01 제국주의 질서와 일제의 식민 통치 정책</span></div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="1">
+      <div class="q-head"><span class="q-no">4</span><span class="q-type">순서 배열</span></div>
+      <div class="q-text">20세기 전반 세계의 사건을 일어난 순서대로 바르게 나열한 것은?</div>
+      <div class="stim">(가) 파리 강화 회의가 열려 베르사유 조약이 체결되었다.
+(나) 사라예보 사건을 계기로 제1차 세계 대전이 일어났다.
+(다) 일본이 만주 사변을 일으키고 이듬해 만주국을 세웠다.
+(라) 독일이 폴란드를 침공하여 제2차 세계 대전이 시작되었다.</div>
+      <ul class="opts">
+        <li><span class="num">①</span>(나) → (가) → (다) → (라)</li>
+        <li><span class="num">②</span>(나) → (다) → (가) → (라)</li>
+        <li><span class="num">③</span>(가) → (나) → (라) → (다)</li>
+        <li><span class="num">④</span>(다) → (나) → (가) → (라)</li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ①</div>
+        <p>(나) 제1차 세계 대전 <b>1914</b> → (가) 파리 강화 회의 <b>1919</b> → (다) 만주 사변 <b>1931</b>(만주국 1932) → (라) 제2차 세계 대전 <b>1939</b> 순입니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li class="k">1914 → 1919 → 1931 → 1939. → 정답</li>
+          <li>만주 사변(1931)이 파리 강화 회의(1919)보다 앞설 수 없습니다.</li>
+          <li>파리 강화 회의는 제1차 세계 대전의 <b>전후 처리</b> 회의이므로 대전보다 앞설 수 없습니다.</li>
+          <li>만주 사변(1931)이 제일 앞에 올 수 없습니다.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="q" data-answer="3">
+      <div class="q-head"><span class="q-no">5</span><span class="q-type">틀린 것 찾기</span></div>
+      <div class="q-text">조선 총독부의 조직과 통치 구조에 대한 설명으로 <u>옳지 않은</u> 것은?</div>
+      <ul class="opts">
+        <li><span class="num">①</span>조선 총독은 일본 육해군 대장 중에서 임명되었으며 일왕에 직속되었다.</li>
+        <li><span class="num">②</span>총독은 입법·사법·행정권은 물론 군대를 동원할 수 있는 군사권까지 장악하였다.</li>
+        <li><span class="num">③</span>중추원은 한국인의 의사를 반영하는 의결 기구로, 총독의 정책을 견제하는 역할을 하였다.</li>
+        <li><span class="num">④</span>1910년대에는 헌병 사령관이 경무 총감을 겸하는 헌병 경찰제가 실시되었다.</li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ③</div>
+        <p>중추원은 <b>의결권이 없는 자문 기구</b>에 불과했고 친일 인사들로 구성되었으며, <b>3·1 운동 이전까지 한 번도 소집되지 않았습니다</b>. 한국인의 정치 참여를 허용하는 것처럼 보이기 위한 형식적 기구였습니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>총독은 현역 육해군 대장 중에서 임명되었고 일본 내각이 아니라 <b>일왕에 직속</b>되었습니다.</li>
+          <li>총독은 입법·사법·행정·군사권을 모두 쥔 절대적 권력자였습니다.</li>
+          <li class="k">중추원은 견제 기능이 없는 <b>자문 기구</b>였습니다. → 정답(옳지 않은 것)</li>
+          <li>헌병 사령관이 경무 총감을 겸하였고, 헌병 경찰은 즉결 심판권을 행사했습니다.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-head"><span class="q-no">6</span><span class="q-type">자료 분석 · 선택형</span></div>
+      <div class="q-text">다음 법령이 시행된 이후에 볼 수 있는 모습으로 옳은 것은?</div>
+      <div class="stim">제1조 국가 총동원이란 전시에 국방 목적을 달성하기 위하여 국가의 전력을 가장 유효하게 발휘하도록 인적·물적 자원을 통제·운용하는 것을 말한다.
+제4조 정부는 전시에 국가 총동원상 필요할 때에는 칙령이 정하는 바에 따라 제국 신민을 징용하여 총동원 업무에 종사하게 할 수 있다.</div>
+      <ul class="opts">
+        <li><span class="num">①</span>토지 조사령에 따라 기한 안에 토지를 신고하는 지주</li>
+        <li><span class="num">②</span>공출로 놋그릇을 빼앗기고 배급표로 식량을 받는 농민</li>
+        <li><span class="num">③</span>회사령에 따라 회사 설립 허가를 받으러 총독부에 가는 상인</li>
+        <li><span class="num">④</span>조선 태형령으로 헌병 경찰에게 태형을 받는 청년</li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ②</div>
+        <p>자료는 <b>국가 총동원법(1938)</b>입니다. 이 법에 따라 지원병제·학도 지원병제·징병제, 국민 징용령, 일본군 '위안부', 여자 정신 근로령 등 인력 동원과 함께 <b>쌀·놋그릇·절의 종까지 공출</b>하고 <b>배급제</b>를 실시하였습니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>토지 조사 사업은 1910~1918년으로 시기가 맞지 않습니다.</li>
+          <li class="k">1938년 이후 전시 동원 체제의 공출·배급제. → 정답</li>
+          <li>회사령은 1910년 제정, <b>1920년 폐지</b>되어 신고제로 바뀌었습니다.</li>
+          <li>조선 태형령(1912)은 1910년대 무단 통치의 내용이며 1920년에 폐지되었습니다.</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer id="gen"></footer>
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.q').forEach(function(q){
+    var correct = parseInt(q.dataset.answer,10);
+    var opts = q.querySelectorAll('ul.opts li');
+    var ans  = q.querySelector('.ans');
+    var btn  = q.querySelector('.btn');
+
+    function reveal(picked){
+      opts.forEach(function(li,i){
+        var isC = (i+1)===correct;
+        li.classList.remove('correct','wrong');
+        var old = li.querySelector('.mark'); if(old) old.remove();
+        if(isC){ li.classList.add('correct'); li.insertAdjacentHTML('beforeend','<span class="mark">✓ 정답</span>'); }
+        else if(picked && (i+1)===picked){ li.classList.add('wrong'); li.insertAdjacentHTML('beforeend','<span class="mark">✗ 오답</span>'); }
+      });
+      q.querySelector('ul.opts').classList.add('locked');
+      var v = ans.querySelector('.verdict');
+      if(picked){
+        if(!v){ v=document.createElement('div'); ans.insertBefore(v, ans.firstChild); }
+        var ok = picked===correct;
+        v.className = 'verdict ' + (ok?'ok':'no');
+        v.textContent = ok ? '⭕ 정답입니다! ('+picked+'번)' : '❌ 오답입니다. 선택 '+picked+'번 / 정답 '+correct+'번';
+      }
+      ans.classList.add('show');
+      btn.textContent = '정답 · 해설 닫기';
+      btn.dataset.open = '1';
+    }
+
+    opts.forEach(function(li,i){
+      li.addEventListener('click', function(){ reveal(i+1); });
+    });
+
+    btn.addEventListener('click', function(){
+      if(btn.dataset.open==='1'){
+        ans.classList.remove('show'); btn.textContent='정답 보기'; btn.dataset.open='0';
+      } else { reveal(0); }
+    });
+  });
+
+  document.getElementById('gen').textContent = (function(){var d=new Date();var p=function(n){return String(n).padStart(2,'0')};return '생성일시 : '+d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes())+' (로컬 시간, '+Intl.DateTimeFormat().resolvedOptions().timeZone+')'})();
+})();
+</script>
+</body>
+</html>
