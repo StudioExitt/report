@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-09-07</title>
+<style>
+  :root{
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 9월 7일 (일) · 국어 1문항 · 토익 5문항 · 수학 1문항 · 일본어 회화 1문장</div>
+  <div class="meta">생성 시각: 2026-09-07 06:20 (KST, Asia/Seoul)</div>
+</header>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (환율 전가 효과와 물가)</p>
+
+  <div class="passage">
+    <p>개방경제에서 환율은 국내 물가를 움직이는 중요한 변수이다. 원화 가치가 하락하여 환율이 오르면 같은 양의 상품을 들여오는 데 더 많은 원화가 필요하므로 수입품의 원화 표시 가격이 오른다. 이처럼 환율 변동이 국내 물가로 옮겨 가는 현상을 <b>환율 전가</b>라 하고, 환율이 1% 변동할 때 물가가 몇 % 변동하는지를 나타낸 값을 <b>전가율</b>이라 한다. 전가율이 1이면 환율 변동분이 물가에 남김없이 반영된다는 뜻이고, 0에 가까울수록 환율이 움직여도 물가는 거의 반응하지 않는다는 뜻이다.</p>
+
+    <p>전가는 한 번에 일어나지 않고 여러 단계를 거쳐 순차적으로 진행된다. 환율이 오르면 먼저 수입물가가 반응하고, 수입 원자재와 중간재를 쓰는 기업의 생산비가 올라 생산자물가가 뒤따라 오르며, 마지막으로 소비자물가가 움직인다. 그런데 이 단계를 내려갈수록 전가율은 작아진다. 소비자가 최종적으로 지불하는 가격에는 수입 원가뿐 아니라 국내에서 발생하는 운송비, 임대료, 임금, 유통 마진과 같은 <b>비교역재</b> 비용이 두껍게 얹혀 있기 때문이다. 환율은 이 비교역재 부분에는 직접 작용하지 못하므로, 소비자물가 단계의 전가율은 수입물가 단계보다 뚜렷하게 낮게 측정된다.</p>
+
+    <p>기업의 가격 결정 방식도 전가율을 낮추는 요인이다. 수출입 기업은 환율이 흔들릴 때마다 판매 가격을 곧바로 조정하기보다, 자신이 붙인 이윤 폭인 <b>마크업</b>을 늘리거나 줄여 가격을 일정하게 유지하려는 경향이 있다. 시장 점유율을 잃지 않으려면 경쟁자보다 먼저 가격을 올리는 일이 손해가 될 수 있고, 가격표와 계약을 다시 쓰는 데에도 이른바 <b>메뉴 비용</b>이 들기 때문이다. 그 결과 환율이 오른 초기에는 기업이 마진을 줄여 충격을 흡수하고, 환율 상승이 오래 이어져 되돌아오지 않는다고 판단될 때에야 비로소 가격에 반영한다.</p>
+
+    <p>결제에 쓰이는 통화의 종류도 전가의 속도를 좌우한다. 국제 무역의 상당 부분은 수출국이나 수입국의 통화가 아니라 달러화로 값이 매겨진다. 계약이 달러로 체결되어 있고 그 달러 가격이 당분간 고정되어 있다면, 원-달러 환율이 올라도 수입업자가 실제로 부담하는 가격은 계약이 갱신되는 시점에 가서야 바뀐다. 이 때문에 환율 충격은 단기에는 억눌려 있다가 시차를 두고 나타나며, 전가의 상당 부분이 여러 분기에 걸쳐 서서히 누적된다.</p>
+
+    <p>거시적 환경, 특히 통화 당국에 대한 신뢰도 역시 전가율을 결정한다. 물가가 이미 높고 변동이 심한 나라에서는 기업이 비용 상승을 가격에 옮겨도 소비자가 이를 자연스럽게 받아들이므로 전가가 강하게 나타난다. 반대로 중앙은행이 물가 안정 목표를 일관되게 지켜 온 나라에서는 사람들이 앞으로의 물가에 대해 갖는 예상, 곧 <b>기대인플레이션</b>이 목표 수준에 단단히 묶여 있다. 이 경우 기업은 환율 상승으로 인한 물가 상승을 일시적 현상으로 보고 가격 인상을 미루게 되어 전가율이 낮아진다. 즉 전가율이 낮다는 사실은 그 자체가 통화정책이 신뢰를 얻고 있다는 신호로 읽힐 수 있다.</p>
+
+    <p>전가에는 방향에 따른 <b>비대칭성</b>도 관찰된다. 환율이 올라 비용이 증가할 때에는 기업이 비교적 신속하게 가격을 올리지만, 환율이 내려 비용이 감소할 때에는 가격을 그만큼 빠르게 내리지 않는다. 인하된 가격을 다시 올리기가 어렵다는 부담과, 낮아진 원가를 마진으로 흡수하려는 유인이 함께 작용하기 때문이다. 이러한 하방 경직성 때문에 환율이 올랐다가 원래 수준으로 돌아와도 물가는 이전 수준으로 완전히 복귀하지 않는 경우가 많다.</p>
+
+    <p>따라서 전가율이 낮게 측정된다는 이유만으로 정책 당국이 환율 변동을 가볍게 볼 수는 없다. 한 번의 환율 상승이 소비자물가에 미치는 즉각적 영향은 작아 보이더라도, 시차를 두고 누적되는 효과와 하방 경직성이 겹치면 물가 수준은 조금씩 위로 밀려 올라간다. 더구나 낮은 전가율이 기대인플레이션의 안정에 기대고 있는 결과라면, 그 신뢰가 흔들리는 순간 전가율은 다시 높아질 수 있다. 환율 안정을 위한 대응과 물가 목표에 대한 일관된 신호가 함께 필요한 이유가 여기에 있다.</p>
+  </div>
+
+  <div class="q" id="q-kor">
+    <p class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>전가율이 0에 가까울수록 환율이 변동해도 물가는 거의 반응하지 않는다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>수입 원자재를 쓰는 기업의 생산비 상승은 생산자물가를 통해 소비자물가로 이어진다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>환율 변동의 전가율은 수입물가 단계보다 소비자물가 단계에서 더 크게 나타난다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>수출입 기업은 환율 변동 초기에 마크업을 조정하여 가격 변화를 억제하려는 경향이 있다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>기대인플레이션이 안정된 나라에서는 기업이 환율발 물가 상승을 일시적으로 보아 전가율이 낮아진다.</span></li>
+    </ul>
+    <div class="result" id="r-q-kor"></div>
+    <button class="reveal" data-target="q-kor">정답 보기</button>
+    <div class="exp" id="e-q-kor">
+      <p class="ans">정답 ③</p>
+      <ul>
+        <li><b>①  일치</b> — 2문단 첫 부분에서 "0에 가까울수록 환율이 움직여도 물가는 거의 반응하지 않는다"고 직접 서술하였다.</li>
+        <li><b>②  일치</b> — 2문단에서 수입물가 → 생산자물가 → 소비자물가로 이어지는 순차적 전달 경로를 제시하였다.</li>
+        <li><b>③  불일치 (정답)</b> — 2문단은 "단계를 내려갈수록 전가율은 작아진다", "소비자물가 단계의 전가율은 수입물가 단계보다 뚜렷하게 낮게 측정된다"고 하였다. 선택지는 크기 관계를 정반대로 뒤집었다. 소비자가격에는 환율이 직접 작용하지 못하는 비교역재 비용(운송비·임대료·임금·유통 마진)이 두껍게 얹혀 있기 때문이다.</li>
+        <li><b>④  일치</b> — 3문단에서 마크업을 늘리거나 줄여 가격을 일정하게 유지하려 하며, 초기에는 마진을 줄여 충격을 흡수한다고 하였다.</li>
+        <li><b>⑤  일치</b> — 5문단에서 기대인플레이션이 목표에 묶여 있으면 기업이 물가 상승을 일시적 현상으로 보아 가격 인상을 미루므로 전가율이 낮아진다고 하였다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅱ. 토익 영어 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="q-e1">
+    <p class="q-title"><span class="num">영어 1</span></p>
+    <p class="stem">The board of directors will ________ the revised merger proposal at next Tuesday's meeting.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>review</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>reviewing</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>reviewed</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>to review</span></li>
+    </ul>
+    <div class="result" id="r-q-e1"></div>
+    <button class="reveal" data-target="q-e1">정답 보기</button>
+    <div class="exp" id="e-q-e1">
+      <p class="ans">정답 (A) review</p>
+      <ul>
+        <li><b>해석</b> — 이사회는 다음 주 화요일 회의에서 수정된 합병 제안서를 검토할 것이다.</li>
+        <li><b>(A) review</b> — 조동사 will 뒤에는 반드시 동사원형이 온다. 정답.</li>
+        <li><b>(B) reviewing</b> — 현재분사/동명사는 조동사 뒤에 올 수 없다. be동사가 있어야 한다(will be reviewing).</li>
+        <li><b>(C) reviewed</b> — 과거형/과거분사로, will 뒤에 올 수 없다. 수동이라면 will be reviewed가 되어야 한다.</li>
+        <li><b>(D) to review</b> — to부정사는 조동사의 보어가 될 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e2">
+    <p class="q-title"><span class="num">영어 2</span></p>
+    <p class="stem">All employees must submit their expense reports ________ the end of the month.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>until</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>by</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>since</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>during</span></li>
+    </ul>
+    <div class="result" id="r-q-e2"></div>
+    <button class="reveal" data-target="q-e2">정답 보기</button>
+    <div class="exp" id="e-q-e2">
+      <p class="ans">정답 (B) by</p>
+      <ul>
+        <li><b>해석</b> — 모든 직원은 월말까지 경비 보고서를 제출해야 한다.</li>
+        <li><b>(B) by</b> — submit처럼 한 번에 완료되는 동작의 <b>마감 시한</b>에는 by를 쓴다. 정답.</li>
+        <li><b>(A) until</b> — 어떤 시점까지 상태·동작이 <b>계속</b>됨을 나타낸다(wait until, stay until). 일회성 제출에는 부적절.</li>
+        <li><b>(C) since</b> — "~이래로"라는 기점으로, 완료시제와 함께 쓰인다. 의미상 맞지 않는다.</li>
+        <li><b>(D) during</b> — 뒤에 기간 명사가 와야 한다(during the month). the end는 시점이므로 불가.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e3">
+    <p class="q-title"><span class="num">영어 3</span></p>
+    <p class="stem">The new inventory software has significantly improved the ________ of our order processing system.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>efficient</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>efficiently</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>efficiency</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>efficiencies</span></li>
+    </ul>
+    <div class="result" id="r-q-e3"></div>
+    <button class="reveal" data-target="q-e3">정답 보기</button>
+    <div class="exp" id="e-q-e3">
+      <p class="ans">정답 (C) efficiency</p>
+      <ul>
+        <li><b>해석</b> — 새 재고 관리 소프트웨어는 우리 주문 처리 시스템의 효율성을 크게 향상시켰다.</li>
+        <li><b>(C) efficiency</b> — 「the ___ of + 명사」 자리는 명사 자리이며, 추상명사 efficiency는 불가산으로 쓰여 the와 잘 어울린다. improve the efficiency of ~는 정형 표현이다. 정답.</li>
+        <li><b>(A) efficient</b> — 형용사이므로 the와 of 사이의 명사 자리에 올 수 없다.</li>
+        <li><b>(B) efficiently</b> — 부사로 명사 자리에 올 수 없다.</li>
+        <li><b>(D) efficiencies</b> — 복수형은 "여러 개별 효율 개선 항목"을 뜻하며 보통 관사 없이 쓴다(realize efficiencies). 특정 시스템 하나의 효율을 가리키는 여기서는 어색하다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e4">
+    <p class="q-title"><span class="num">영어 4</span></p>
+    <p class="stem">________ the heavy rain that began in the afternoon, the outdoor concert proceeded as scheduled.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>Although</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Despite</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>However</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Because of</span></li>
+    </ul>
+    <div class="result" id="r-q-e4"></div>
+    <button class="reveal" data-target="q-e4">정답 보기</button>
+    <div class="exp" id="e-q-e4">
+      <p class="ans">정답 (B) Despite</p>
+      <ul>
+        <li><b>해석</b> — 오후에 시작된 폭우에도 불구하고, 야외 콘서트는 예정대로 진행되었다.</li>
+        <li><b>(B) Despite</b> — 빈칸 뒤 the heavy rain은 명사구(that 이하는 이를 수식하는 관계절)이므로 <b>전치사</b>가 필요하고, 앞뒤가 양보 관계이므로 Despite가 맞다. 정답.</li>
+        <li><b>(A) Although</b> — 접속사이므로 뒤에 「주어+동사」 절이 와야 한다.</li>
+        <li><b>(C) However</b> — 접속부사로, 명사구를 이끌 수 없으며 보통 세미콜론이나 마침표 뒤에 온다.</li>
+        <li><b>(D) Because of</b> — 전치사구지만 인과 관계를 나타낸다. 폭우 "때문에" 예정대로 진행되었다는 것은 논리에 맞지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e5">
+    <p class="q-title"><span class="num">영어 5</span></p>
+    <p class="stem">Ms. Tanaka, ________ has managed the Osaka branch for over a decade, will be promoted to regional director.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>who</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>whom</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>whose</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>which</span></li>
+    </ul>
+    <div class="result" id="r-q-e5"></div>
+    <button class="reveal" data-target="q-e5">정답 보기</button>
+    <div class="exp" id="e-q-e5">
+      <p class="ans">정답 (A) who</p>
+      <ul>
+        <li><b>해석</b> — 10년 넘게 오사카 지점을 관리해 온 다나카 씨가 지역 담당 이사로 승진할 것이다.</li>
+        <li><b>(A) who</b> — 선행사가 사람(Ms. Tanaka)이고, 빈칸 뒤 has managed의 <b>주어</b>가 비어 있으므로 주격 관계대명사 who가 정답.</li>
+        <li><b>(B) whom</b> — 목적격이므로 뒤에 주어와 동사가 갖춰진 절이 와야 한다.</li>
+        <li><b>(C) whose</b> — 소유격이므로 바로 뒤에 명사가 와야 한다(whose team has managed ~).</li>
+        <li><b>(D) which</b> — 선행사가 사물일 때 쓴다. 사람인 Ms. Tanaka에는 쓸 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅲ. 수학 — 순열과 조합 (난이도 최상)</h2>
+  <p class="sec-desc">고등학교 1학년 경우의 수 · 순열과 조합</p>
+
+  <div class="q" id="q-math">
+    <p class="q-title"><span class="num">수학 1</span></p>
+    <p class="stem">남학생 4명과 여학생 4명, 모두 8명을 일렬로 세우려고 한다. 이때 <b>어느 두 여학생도 서로 이웃하지 않고</b>, 동시에 <b>특정한 남학생 A와 특정한 여학생 B는 서로 이웃하도록</b> 세우는 경우의 수는?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>864</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>960</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>1080</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>1152</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>1440</span></li>
+    </ul>
+    <div class="result" id="r-q-math"></div>
+    <button class="reveal" data-target="q-math">정답 보기</button>
+    <div class="exp" id="e-q-math">
+      <p class="ans">정답 ④ 1152</p>
+      <ul>
+        <li><b>[1단계] 자리 구조 파악</b><br>
+        어느 두 여학생도 이웃하지 않으려면, 먼저 남학생 4명을 일렬로 세운 뒤 그 사이사이와 양 끝에 생기는 <b>5개의 빈칸</b>
+        <br>&nbsp;&nbsp;<code>_ 남₁ _ 남₂ _ 남₃ _ 남₄ _</code><br>
+        을 g₀, g₁, g₂, g₃, g₄라 하고, 이 중 4개를 골라 여학생을 한 명씩 넣으면 된다. 즉 <b>빈칸 5개 중 1개만 비고</b> 나머지 4개가 채워진다.</li>
+
+        <li><b>[2단계] 조건 없는 전체 경우의 수 (참고)</b><br>
+        4! × ₅C₄ × 4! = 24 × 5 × 24 = <b>2880</b>가지.</li>
+
+        <li><b>[3단계] A와 B가 이웃할 조건</b><br>
+        남학생 A가 왼쪽에서 <i>i</i>번째 남학생 자리(i = 1, 2, 3, 4)에 있다면, A와 이웃하는 빈칸은 g<sub>i-1</sub>과 g<sub>i</sub> 두 곳뿐이다. 여학생 B는 이 두 칸 중 <b>실제로 채워진</b> 칸에 들어가야 한다.</li>
+
+        <li><b>[4단계] (비는 칸, A의 자리) 쌍의 개수 세기</b><br>
+        비는 칸 e (5가지) 와 A의 자리 i (4가지) 를 정하면, B가 들어갈 수 있는 칸의 수는<br>
+        &nbsp;&nbsp;n(e, i) = 2 − (e가 g<sub>i-1</sub> 또는 g<sub>i</sub> 이면 1, 아니면 0)<br>
+        따라서 모든 (e, i)에 대한 합 S는<br>
+        &nbsp;&nbsp;S = (5 × 4 × 2) − (e ∈ {i−1, i} 인 쌍의 개수)<br>
+        각 i마다 e = i−1, i 두 가지가 항상 0~4 범위 안에 있으므로 그런 쌍은 4 × 2 = 8개.<br>
+        &nbsp;&nbsp;<b>S = 40 − 8 = 32</b></li>
+
+        <li><b>[5단계] 나머지 인원 배열</b><br>
+        A의 자리와 B의 칸이 정해지면, 남은 남학생 3명을 남은 3개의 남학생 자리에 <b>3! = 6</b>가지, 남은 여학생 3명을 남은 3개의 채워진 칸에 <b>3! = 6</b>가지로 배열한다.</li>
+
+        <li><b>[6단계] 결론</b><br>
+        구하는 경우의 수 = S × 3! × 3! = 32 × 6 × 6 = <b>1152</b></li>
+
+        <li><b>[검산]</b> 전체 2880가지 중 1152가지이므로 비율은 1152 ÷ 2880 = 0.4.<br>
+        한편 채워진 칸 중 양 끝 칸의 여학생은 남학생 1명과, 가운데 칸의 여학생은 남학생 2명과 이웃한다. 비는 칸이 양 끝일 때 (남,여) 이웃 쌍은 1 + 2×3 = 7개, 가운데일 때는 2×1 + 2×2 = 6개이므로 평균 (2×7 + 3×6) ÷ 5 = 6.4개. 특정 (A, B) 한 쌍이 이웃할 확률은 6.4 ÷ (4×4) = 0.4로 일치한다. ✔</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅳ. 일본어 회화 — 오늘의 한 문장</h2>
+  <p class="sec-desc">고등학교 1학년 2학기 수준 · 권유 표현</p>
+
+  <div class="jp-card">
+    <p class="jp-main">明日、いっしょに 図書館で 勉強しませんか。</p>
+    <p class="jp-read">あした、いっしょに としょかんで べんきょうしませんか。</p>
+    <p class="jp-rom">Ashita, issho ni toshokan de benkyō shimasen ka.</p>
+    <p class="jp-ko">내일 같이 도서관에서 공부하지 않을래요?</p>
+
+    <table class="words">
+      <tr><th>한자</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>明日</td><td>あした</td><td>내일 (あす・みょうにち로도 읽음)</td></tr>
+      <tr><td>図書館</td><td>としょかん</td><td>도서관</td></tr>
+      <tr><td>勉強</td><td>べんきょう</td><td>공부</td></tr>
+      <tr><td>—</td><td>いっしょに</td><td>같이, 함께 (一緒に)</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문장 설명</h4>
+      <ul>
+        <li>상대에게 무언가를 함께 하자고 <b>권유</b>할 때 쓰는 가장 기본적인 문형이다. 학교 생활, 약속 잡기 장면에서 자주 등장한다.</li>
+        <li>어순은 「시간 + 부사 + 장소 + 동사」로, 한국어와 거의 같아 그대로 대응시켜 외우면 된다.</li>
+      </ul>
+    </div>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>～ませんか (권유)</b> — 동사의 ます형에 「ませんか」를 붙이면 "~하지 않겠습니까?, ~할래요?"라는 정중한 권유가 된다. 부정형이지만 뜻은 부정이 아니라 <b>제안</b>이다.<br>
+        예) 行(い)きませんか (가지 않을래요?) / 食(た)べませんか (먹지 않을래요?)</li>
+        <li><b>～ましょうか와의 차이</b> — 「勉強しましょうか」는 "공부합시다"에 가까워 화자의 의지가 강하다. 「～ませんか」는 상대의 의향을 먼저 묻는 표현이라 더 부드럽고 정중하다.</li>
+        <li><b>조사 で (장소)</b> — 동작이 일어나는 장소에는 「で」를 쓴다. 図書館<b>で</b>勉強する(도서관에서 공부하다). 존재의 장소인 「に」(図書館にいる)와 구별해야 한다.</li>
+        <li><b>する동사</b> — 「勉強」처럼 한자어 명사에 「する」를 붙이면 동사가 된다(勉強する = 공부하다). ます형은 불규칙하게 「します」이므로 부정 권유형은 <b>しませんか</b>가 된다.</li>
+        <li><b>明日의 읽기</b> — 회화에서는 보통 「あした」, 격식 있는 문장이나 뉴스에서는 「あす」「みょうにち」로 읽는다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성일시: 2026-09-07 06:20 (Asia/Seoul) · 데일리 학습 퀴즈</footer>
+
+</div>
+
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
