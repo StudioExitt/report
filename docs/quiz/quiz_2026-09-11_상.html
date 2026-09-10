@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-09-11</title>
+<style>
+  :root{
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 9월 11일 (금) · 국어 1문항 · 토익 5문항 · 수학 1문항 · 일본어 회화 1문장</div>
+  <div class="meta">생성 시각: 2026-09-11 06:36 (KST, Asia/Seoul)</div>
+</header>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (정보 비대칭과 시장의 실패)</p>
+
+  <div class="passage">
+    <p>시장에서 거래가 원활히 이루어지려면 사고파는 양쪽이 상품의 성질을 비슷한 수준으로 알고 있어야 한다. 그러나 현실의 많은 거래에서는 한쪽이 다른 쪽보다 훨씬 많은 정보를 쥐고 있다. 이처럼 거래 당사자가 가진 정보의 양이 서로 다른 상태를 <b>정보 비대칭</b>이라 한다. 정보 비대칭은 거래의 성립 자체를 어렵게 만들기도 하고, 거래가 이루어진 뒤의 행동을 바꾸어 놓기도 한다. 앞의 것을 <b>역선택</b>, 뒤의 것을 <b>도덕적 해이</b>라 부른다.</p>
+
+    <p>역선택은 거래가 이루어지기 <b>전</b>에 감추어진 특성 때문에 생긴다. 중고차 시장이 대표적인 예이다. 판매자는 자기 차의 상태를 잘 알지만 구매자는 겉모습만으로 이를 알기 어렵다. 구매자는 좋은 차와 나쁜 차가 섞여 있다고 보고 그 <b>평균</b>에 해당하는 값만 치르려 한다. 그런데 좋은 차를 가진 판매자에게는 이 평균 가격이 제 값에 못 미치므로 그는 시장에서 빠져나간다. 그 결과 남는 차의 평균 품질이 떨어지고, 이를 눈치챈 구매자가 가격을 더 낮추면 다시 상대적으로 나은 차가 빠져나간다. 이 악순환이 이어지면 결국 나쁜 물건만 거래되거나 시장 자체가 사라질 수 있다.</p>
+
+    <p>보험 시장에서도 같은 일이 벌어진다. 보험사가 가입자의 건강 상태를 알 수 없어 모두에게 같은 보험료를 매기면, 건강한 사람은 보험료가 비싸다고 느껴 가입하지 않고 병에 걸릴 위험이 큰 사람만 몰려든다. 그러면 보험금 지급이 늘어 보험사는 보험료를 올리게 되고, 그 인상은 다시 상대적으로 건강한 가입자를 밀어낸다. 요컨대 역선택은 정보를 <b>덜 가진</b> 쪽이 스스로를 지키려고 매긴 가격이 오히려 <b>바람직한 거래 상대를 몰아내는</b> 현상이다.</p>
+
+    <p>이를 완화하는 방법으로는 정보를 가진 쪽이 그것을 드러내는 <b>신호 보내기</b>와, 정보를 갖지 못한 쪽이 상대를 가려내는 <b>선별</b>이 있다. 중고차 판매자가 보증 기간을 붙이거나 성능 점검 기록을 제시하는 것, 구직자가 자격증을 취득하는 것은 신호 보내기에 해당한다. 신호가 제 구실을 하려면 <b>질이 낮은 쪽이 흉내 내기에는 비용이 지나치게 큰 것</b>이어야 한다. 누구나 손쉽게 붙일 수 있는 표시라면 좋은 물건과 나쁜 물건을 가려내는 힘을 잃기 때문이다. 한편 보험사가 여러 개의 자기 부담금 조건을 만들어 두고 가입자가 스스로 고르게 하는 것은 선별의 예이다.</p>
+
+    <p>도덕적 해이는 거래가 이루어진 <b>후</b>에 감추어진 행동 때문에 생긴다. 화재 보험에 든 사람이 예전만큼 화재 예방에 신경 쓰지 않는 것이 그러한 예이다. 자신이 조심해서 얻는 이득의 상당 부분이 보험사에게 돌아가는 반면 부주의의 대가는 자신이 거의 지지 않기 때문이다. 회사의 경영자가 주주의 이익보다 자신의 평판이나 보수를 앞세우는 것, 대출을 받은 기업이 애초에 밝힌 것보다 위험한 사업에 자금을 쓰는 것도 모두 여기에 속한다.</p>
+
+    <p>도덕적 해이를 줄이는 장치는 대체로 <b>결과에 대한 책임을 당사자에게 되돌려 주는</b> 방향으로 설계된다. 보험에서 자기 부담금을 두거나 보상 비율을 100%보다 낮게 정하는 것, 경영자의 보수를 성과와 연동하는 것, 은행이 대출에 담보를 요구하는 것이 그러하다. 다만 책임을 지나치게 무겁게 지우면 위험을 나누어 진다는 보험 본래의 기능이 약해지므로, 두 목표 사이에서 균형을 찾는 일이 중요하다.</p>
+
+    <p>정보 비대칭은 시장에 맡겨 두면 자원이 효율적으로 배분되지 못하는 <b>시장 실패</b>의 한 원인으로 꼽힌다. 그래서 각국은 기업의 회계 정보 공시를 의무화하고, 식품과 의약품에 성분 표시를 요구하며, 금융 상품의 위험을 설명하도록 규제한다. 이러한 제도는 정보를 가진 쪽이 그것을 밝히도록 강제함으로써 거래 상대가 스스로 판단할 근거를 갖추게 한다. 결국 정보 비대칭에 대한 대응은 정보를 없애는 일이 아니라, 정보가 <b>믿을 수 있는 형태로 전달되도록</b> 하는 일에 가깝다.</p>
+  </div>
+
+  <div class="q" id="q-kor">
+    <p class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>역선택은 거래가 이루어지기 전의 감추어진 특성에서, 도덕적 해이는 거래 이후의 감추어진 행동에서 비롯된다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>중고차 시장에서 구매자가 평균에 해당하는 값만 치르려 하면 좋은 차를 가진 판매자가 시장에서 빠져나간다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>보험사가 모두에게 같은 보험료를 매기면 건강한 사람이 먼저 가입하여 가입자의 평균 위험이 낮아진다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>신호가 제구실을 하려면 질이 낮은 쪽이 흉내 내는 데 드는 비용이 지나치게 커야 한다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>보상 비율을 낮추거나 담보를 요구하는 것은 결과에 대한 책임을 당사자에게 되돌려 주는 장치이다.</span></li>
+    </ul>
+    <div class="result" id="r-q-kor"></div>
+    <button class="reveal" data-target="q-kor">정답 보기</button>
+    <div class="exp" id="e-q-kor">
+      <p class="ans">정답 ③</p>
+      <ul>
+        <li><b>① 일치</b> — 1~2문단과 5문단에서 역선택은 거래 <b>전</b>의 "감추어진 특성", 도덕적 해이는 거래 <b>후</b>의 "감추어진 행동" 때문에 생긴다고 하였다.</li>
+        <li><b>② 일치</b> — 2문단에서 구매자가 평균에 해당하는 값만 치르려 하면 "좋은 차를 가진 판매자에게는 이 평균 가격이 제 값에 못 미치므로 그는 시장에서 빠져나간다"고 하였다.</li>
+        <li><b>③ 불일치 (정답)</b> — 3문단은 정반대로 서술한다. 같은 보험료를 매기면 "건강한 사람은 보험료가 비싸다고 느껴 가입하지 않고 <b>병에 걸릴 위험이 큰 사람만 몰려든다</b>"고 하였으므로, 가입자의 평균 위험은 낮아지는 것이 아니라 <b>높아진다</b>. '건강한 사람이 먼저 가입한다'와 '평균 위험이 낮아진다' 두 군데가 모두 뒤집혀 있다.</li>
+        <li><b>④ 일치</b> — 4문단에서 신호가 제 구실을 하려면 "질이 낮은 쪽이 흉내 내기에는 비용이 지나치게 큰 것이어야 한다"고 하였다.</li>
+        <li><b>⑤ 일치</b> — 6문단에서 자기 부담금, 보상 비율 인하, 성과 연동 보수, 담보 요구를 "결과에 대한 책임을 당사자에게 되돌려 주는" 장치로 묶어 설명하였다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅱ. 토익 영어 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="q-e1">
+    <p class="q-title"><span class="num">영어 1</span></p>
+    <p class="stem">The renovation of the lobby will be completed by the end of March, ________ the delivery of the new furniture is delayed again.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>in case of</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>because of</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>unless</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>whereas</span></li>
+    </ul>
+    <div class="result" id="r-q-e1"></div>
+    <button class="reveal" data-target="q-e1">정답 보기</button>
+    <div class="exp" id="e-q-e1">
+      <p class="ans">정답 (C) unless</p>
+      <ul>
+        <li><b>해석</b> — 새 가구 배송이 또다시 지연되지 <b>않는 한</b> 로비 개조 공사는 3월 말까지 완료될 것이다.</li>
+        <li><b>풀이</b> — 빈칸 뒤에 '주어(the delivery) + 동사(is delayed)'가 온 완전한 절이 있으므로 <b>접속사</b>가 필요하다. 의미상 '~하지 않는 한'이라는 조건이 자연스러우므로 unless가 정답이다.</li>
+        <li><b>(A) in case of</b> — 전치사구로 뒤에 <b>명사</b>가 와야 한다(in case of fire). 절을 이끌려면 in case가 되어야 한다.</li>
+        <li><b>(B) because of</b> — 역시 전치사구로 명사만 받는다. 절 앞에는 because를 써야 하고, 의미상으로도 인과가 아니라 조건이다.</li>
+        <li><b>(D) whereas</b> — 접속사이기는 하지만 '~인 반면에'라는 대조를 나타내 문맥과 맞지 않는다.</li>
+        <li><b>포인트</b> — unless = if ... not. 이미 부정의 뜻을 품고 있으므로 <b>뒤에 not을 다시 쓰지 않는다</b>. 「전치사구(because of / in case of / due to) + 명사」 vs 「접속사(because / in case / unless) + 절」 구분이 핵심.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e2">
+    <p class="q-title"><span class="num">영어 2</span></p>
+    <p class="stem">Employees who wish to attend the leadership workshop should submit their applications to the training coordinator ________.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>direct</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>directly</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>director</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>directing</span></li>
+    </ul>
+    <div class="result" id="r-q-e2"></div>
+    <button class="reveal" data-target="q-e2">정답 보기</button>
+    <div class="exp" id="e-q-e2">
+      <p class="ans">정답 (B) directly</p>
+      <ul>
+        <li><b>해석</b> — 리더십 워크숍에 참석하고자 하는 직원은 신청서를 교육 담당자에게 <b>직접</b> 제출해야 한다.</li>
+        <li><b>풀이</b> — 빈칸 앞에서 「submit + 목적어(their applications) + to + 명사」로 문장이 이미 완성되어 있다. 완전한 문장 뒤의 빈칸은 문장을 수식하는 <b>부사</b> 자리이므로 directly가 정답이다.</li>
+        <li><b>(A) direct</b> — 형용사(직접적인) 또는 동사(지시하다)로 쓰인다. 완전한 문장 뒤의 수식어 자리에는 올 수 없다.</li>
+        <li><b>(C) director</b> — 명사. 앞에 관사나 전치사가 없어 문장에 들어갈 자리가 없다.</li>
+        <li><b>(D) directing</b> — 분사·동명사로, 이 자리에 두면 수식 대상이 불분명해져 의미가 성립하지 않는다.</li>
+        <li><b>포인트</b> — 「문장이 이미 완전한가?」를 먼저 확인하는 것이 품사 문제의 지름길이다. 완전하면 <b>부사</b>, 목적어나 보어가 빠져 있으면 명사나 형용사를 고른다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e3">
+    <p class="q-title"><span class="num">영어 3</span></p>
+    <p class="stem">By the time the auditors arrive next Monday, the finance team ________ all of the quarterly expense reports.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>reviewed</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>has reviewed</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>is reviewing</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>will have reviewed</span></li>
+    </ul>
+    <div class="result" id="r-q-e3"></div>
+    <button class="reveal" data-target="q-e3">정답 보기</button>
+    <div class="exp" id="e-q-e3">
+      <p class="ans">정답 (D) will have reviewed</p>
+      <ul>
+        <li><b>해석</b> — 다음 주 월요일에 회계 감사관들이 도착할 <b>무렵이면</b> 재무팀은 분기 지출 보고서를 모두 검토해 놓았을 것이다.</li>
+        <li><b>풀이</b> — <i>By the time</i> + 현재 시제 절이 <b>미래의 한 시점</b>을 가리키고, 그 시점까지 완료될 일을 말하고 있으므로 주절에는 <b>미래완료</b>가 와야 한다. <i>next Monday</i>가 미래임을 확정해 준다.</li>
+        <li><b>(A) reviewed</b> — 단순 과거. 미래 시점을 가리키는 next Monday와 충돌한다.</li>
+        <li><b>(B) has reviewed</b> — 현재완료로 <b>현재까지</b>의 완료를 나타내므로 미래 시점 기준과 맞지 않는다.</li>
+        <li><b>(C) is reviewing</b> — 진행 중임을 나타낼 뿐, '그때까지 다 끝나 있다'는 완료의 의미를 담지 못한다.</li>
+        <li><b>포인트</b> — <b>By the time + 현재 시제 → 주절 미래완료</b>, <b>By the time + 과거 시제 → 주절 과거완료(had p.p.)</b>로 짝지어 외워 두면 이 유형은 즉시 풀린다. 시간·조건의 부사절에서는 미래를 현재 시제로 쓴다는 규칙도 함께 확인하자.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e4">
+    <p class="q-title"><span class="num">영어 4</span></p>
+    <p class="stem">The consulting firm offered several suggestions for improving productivity, but ________ of them addressed the shortage of skilled technicians.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>none</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>no</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>nothing</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>not</span></li>
+    </ul>
+    <div class="result" id="r-q-e4"></div>
+    <button class="reveal" data-target="q-e4">정답 보기</button>
+    <div class="exp" id="e-q-e4">
+      <p class="ans">정답 (A) none</p>
+      <ul>
+        <li><b>해석</b> — 그 컨설팅 회사는 생산성 향상을 위한 몇 가지 제안을 내놓았지만, 그중 <b>어느 것도</b> 숙련 기술자 부족 문제를 다루지 않았다.</li>
+        <li><b>풀이</b> — 빈칸은 뒤의 동사 addressed의 <b>주어</b> 자리이고 바로 뒤에 <i>of them</i>이 이어진다. 「<b>none of + 복수 명사/대명사</b>」 형태로 '~중 아무것도 없다'를 나타내는 대명사 none이 정답이다.</li>
+        <li><b>(B) no</b> — 한정사로 <b>명사 앞</b>에만 쓰인다(no suggestions). no of them이라는 형태는 존재하지 않는다.</li>
+        <li><b>(C) nothing</b> — 대명사이지만 of them과 결합해 '그것들 중 하나도'를 나타내지 않으며, 앞에 언급된 <b>가산 복수</b>(suggestions)를 받기에도 부적절하다.</li>
+        <li><b>(D) not</b> — 부정 부사로 주어 자리에 올 수 없다.</li>
+        <li><b>포인트</b> — <b>no + 명사</b> / <b>none of + the(소유격) + 복수 명사</b>의 대비를 기억하자. 같은 원리로 every는 명사 앞, every one of는 of구 앞에 쓴다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e5">
+    <p class="q-title"><span class="num">영어 5</span></p>
+    <p class="stem">All laboratory personnel are required to keep their identification badges ________ at all times while on the premises.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>visibly</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>visible</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>vision</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>visibility</span></li>
+    </ul>
+    <div class="result" id="r-q-e5"></div>
+    <button class="reveal" data-target="q-e5">정답 보기</button>
+    <div class="exp" id="e-q-e5">
+      <p class="ans">정답 (B) visible</p>
+      <ul>
+        <li><b>해석</b> — 모든 실험실 직원은 건물 내에 있는 동안 항상 신분증이 <b>보이는 상태로</b> 유지해야 한다.</li>
+        <li><b>풀이</b> — <i>keep</i>은 「keep + 목적어 + <b>목적격 보어</b>」 구조를 취하는 5형식 동사이다. 보어 자리에는 목적어의 <b>상태</b>를 설명하는 형용사가 오므로 visible이 정답이다.</li>
+        <li><b>(A) visibly</b> — 부사. 목적격 보어 자리에 부사는 올 수 없다.</li>
+        <li><b>(C) vision</b> — 명사(시력, 비전). 보어로 쓰면 '배지가 곧 시력이다'라는 뜻이 되어 성립하지 않는다.</li>
+        <li><b>(D) visibility</b> — 명사(가시성)로 역시 목적어와 동격 관계가 성립하지 않는다.</li>
+        <li><b>포인트</b> — keep, make, find, leave, consider 등 5형식 동사 뒤 「목적어 + ___」 자리는 <b>형용사</b>가 원칙이다. keep the door open, make the process easier처럼 짝으로 익혀 두자.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅲ. 수학 — 순열과 조합 (난이도 최상)</h2>
+  <p class="sec-desc">고등학교 1학년 경우의 수 · 같은 것이 있는 순열 + 사이 끼워 넣기(gap method)</p>
+
+  <div class="q" id="q-math">
+    <p class="q-title"><span class="num">수학 1</span></p>
+    <p class="stem">문자 <b>A, A, A, B, B, C, C</b> 7개를 일렬로 나열하려고 한다. 다음 두 조건을 모두 만족시키는 경우의 수는?<br>
+    &nbsp;&nbsp;(가) 어느 두 개의 <b>A</b>도 서로 이웃하지 않는다.<br>
+    &nbsp;&nbsp;(나) 두 개의 <b>C</b>는 서로 이웃하지 않는다.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>42</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>45</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>48</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>51</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>54</span></li>
+    </ul>
+    <div class="result" id="r-q-math"></div>
+    <button class="reveal" data-target="q-math">정답 보기</button>
+    <div class="exp" id="e-q-math">
+      <p class="ans">정답 ③ 48</p>
+      <ul>
+        <li><b>[0단계] 전체 경우의 수 확인</b><br>
+        조건이 없다면 A 3개, B 2개, C 2개를 나열하는 <b>같은 것이 있는 순열</b>이므로<br>
+        &nbsp;&nbsp;7! ÷ (3! × 2! × 2!) = 5040 ÷ 24 = <b>210</b>가지<br>
+        하지만 조건이 두 개이므로 전체에서 빼는 방식보다, <b>조건 (가)를 먼저 만족시켜 놓고</b> 그 안에서 (나)를 어기는 것을 빼는 편이 훨씬 간단하다.</li>
+
+        <li><b>[1단계] 조건 (가) 처리 — A를 사이에 끼워 넣기</b><br>
+        "어느 두 A도 이웃하지 않는다"는 조건은 <b>A를 뺀 나머지를 먼저 배열하고, 그 사이사이 빈 자리에 A를 하나씩 넣는</b> 방법으로 해결한다.<br>
+        ① 먼저 A를 제외한 <b>B, B, C, C</b> 4개를 일렬로 나열한다.<br>
+        &nbsp;&nbsp;4! ÷ (2! × 2!) = <b>6</b>가지<br>
+        ② 이렇게 나열하면 <b>_ ○ _ ○ _ ○ _ ○ _</b> 와 같이 양 끝을 포함해 빈 자리가 <b>5개</b> 생긴다.<br>
+        ③ 이 5개의 자리 중 <b>3개를 골라</b> A를 하나씩 넣으면 A끼리는 절대 이웃할 수 없다. A는 서로 같은 문자이므로 <b>순서를 따지지 않는 조합</b>이다.<br>
+        &nbsp;&nbsp;₅C₃ = 10가지<br>
+        ④ 따라서 조건 (가)를 만족하는 경우의 수는<br>
+        &nbsp;&nbsp;6 × 10 = <b>60</b>가지</li>
+
+        <li><b>[2단계] 그중 조건 (나)를 어기는 것 세기 — CC가 붙어 있는 경우</b><br>
+        1단계에서 만든 60가지 중 <b>두 C가 이웃한</b> 것을 빼야 한다. 최종 배열에서 두 C가 붙어 있으려면 <b>두 가지가 동시에</b> 성립해야 한다.<br>
+        &nbsp;&nbsp;· BBCC를 나열할 때 이미 C끼리 붙어 있고,<br>
+        &nbsp;&nbsp;· 그 두 C 사이의 빈 자리에 A를 넣지 않아야 한다.<br><br>
+        ① B, B, C, C를 나열할 때 두 C가 붙어 있는 경우 → CC를 한 덩어리로 묶으면 <b>[CC], B, B</b> 3개의 배열이므로<br>
+        &nbsp;&nbsp;3! ÷ 2! = <b>3</b>가지 (CCBB, BCCB, BBCC)<br>
+        ② 이때도 빈 자리는 여전히 <b>5개</b>이지만, <b>두 C 사이의 자리 1개는 쓸 수 없다</b>. 남은 <b>4개</b> 중에서 3개를 고른다.<br>
+        &nbsp;&nbsp;₄C₃ = 4가지<br>
+        ③ 따라서 (가)는 만족하지만 (나)를 어기는 경우는<br>
+        &nbsp;&nbsp;3 × 4 = <b>12</b>가지</li>
+
+        <li><b>[3단계] 결론</b><br>
+        &nbsp;&nbsp;(답) = 60 − 12 = <b>48</b>가지</li>
+
+        <li><b>[검산] 작은 경우로 확인하기</b><br>
+        BBCC의 배열 6가지를 실제로 나열해 보면 CC가 붙는 것은 <b>CCBB, BCCB, BBCC</b>의 3가지, 붙지 않는 것은 <b>CBCB, CBBC, BCBC</b>의 3가지이다.<br>
+        &nbsp;&nbsp;· C가 떨어져 있는 3가지 → 빈 자리 5개 중 3개를 자유롭게 고름 : 3 × ₅C₃ = 3 × 10 = 30<br>
+        &nbsp;&nbsp;· C가 붙어 있는 3가지 → 그 사이 자리에 A를 <b>반드시</b> 넣어야 하므로 나머지 4자리 중 2개 추가 선택 : 3 × ₄C₂ = 3 × 6 = 18<br>
+        &nbsp;&nbsp;합계 30 + 18 = <b>48</b> → 앞의 답과 일치한다.</li>
+
+        <li><b>[핵심 포인트]</b><br>
+        ① "<b>이웃하지 않는다</b>"는 조건은 이웃해도 되는 것을 먼저 배열한 뒤 <b>생긴 틈에 끼워 넣는</b> 것이 정석이다. 반대로 "<b>이웃한다</b>"는 조건은 한 덩어리로 <b>묶는다</b>.<br>
+        ② 끼워 넣는 대상이 <b>모두 같은 문자</b>이면 자리 선택은 순열이 아니라 <b>조합(₅C₃)</b>이다. 여기서 ₅P₃를 쓰면 답이 6배로 부풀어 오답이 된다.<br>
+        ③ 조건이 두 개일 때는 무작정 전체에서 빼지 말고, <b>다루기 쉬운 조건을 먼저 구조에 반영</b>한 뒤 남은 조건을 여사건으로 처리하면 계산이 크게 줄어든다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅳ. 일본어 회화 — 오늘의 한 문장</h2>
+  <p class="sec-desc">고등학교 1학년 2학기 수준 · 의무·필요 표현</p>
+
+  <div class="jp-card">
+    <p class="jp-main">明日は 早く 起きなければ なりません。</p>
+    <p class="jp-read">あしたは はやく おきなければ なりません。</p>
+    <p class="jp-rom">Ashita wa hayaku okinakereba narimasen.</p>
+    <p class="jp-ko">내일은 일찍 일어나야 합니다.</p>
+
+    <table class="words">
+      <tr><th>한자 / 표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>明日</td><td>あした</td><td>내일 (あす·みょうにち로도 읽음)</td></tr>
+      <tr><td>早く</td><td>はやく</td><td>일찍, 빨리 (早い의 부사형)</td></tr>
+      <tr><td>起きる</td><td>おきる</td><td>일어나다, 기상하다 (2그룹 동사)</td></tr>
+      <tr><td>起きない</td><td>おきない</td><td>일어나지 않다 (ない형)</td></tr>
+      <tr><td>なりません</td><td>なりません</td><td>안 됩니다 (なる의 정중 부정)</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문장 설명</h4>
+      <ul>
+        <li>다음 날의 <b>일정이나 계획을 밝히며 양해를 구할 때</b> 자주 쓰는 표현이다. 예를 들어 밤늦게까지 놀자는 권유를 정중히 거절할 때 "明日は 早く 起きなければ なりませんから…"처럼 이어서 말한다.</li>
+        <li>직역하면 "일찍 일어나지 <b>않으면 안 됩니다</b>"로, 이중 부정을 통해 의무를 나타내는 것이 일본어의 특징이다. 우리말의 "~해야 한다"에 해당한다.</li>
+        <li>「明日は」의 <b>は</b>는 '내일<b>은</b>(다른 날과 달리)'이라는 대비의 뜻을 담아, 평소와는 사정이 다르다는 느낌을 준다.</li>
+      </ul>
+    </div>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>~なければ なりません (의무·필요)</b> — 동사의 <b>ない형</b>에서 ない를 떼고 <b>なければ なりません</b>을 붙인다.<br>
+        · 1그룹 : 行(い)く → 行か<b>ない</b> → 行か<b>なければ なりません</b> (가야 합니다)<br>
+        · 2그룹 : 起(お)きる → 起き<b>ない</b> → 起き<b>なければ なりません</b><br>
+        · 3그룹 : する → し<b>ない</b> → し<b>なければ なりません</b> / 来(く)る → 来(こ)<b>ない</b> → 来(こ)<b>なければ なりません</b></li>
+        <li><b>회화체 줄임말</b> — 친구 사이의 반말에서는 <b>~なきゃ</b>, <b>~なくちゃ</b>로 줄여 쓴다.<br>
+        早(はや)く 起(お)き<b>なきゃ</b>。 (일찍 일어나야 해.) / 行(い)か<b>なくちゃ</b>。 (가야 해.)<br>
+        반말체 전체 형태는 「~なければ ならない」이다.</li>
+        <li><b>비슷한 표현 ~なくては いけません</b> — 뜻은 같지만 なければ ならない는 <b>일반적·객관적</b> 규칙에, なくては いけない는 <b>그 상황에서의 개별적</b> 사정에 쓰이는 경향이 있다. 시험에서는 사실상 같은 뜻으로 본다.</li>
+        <li><b>반대 표현 ~なくても いいです</b> — '~하지 않아도 됩니다'라는 불필요를 나타낸다.<br>
+        明日(あした)は 早(はや)く 起(お)き<b>なくても いいです</b>。 (내일은 일찍 일어나지 않아도 됩니다.)<br>
+        허가의 「~ても いいです(~해도 됩니다)」와 짝으로 정리해 두자.</li>
+        <li><b>早く의 정체</b> — い형용사 「早(はや)い」의 어미 い를 <b>く</b>로 바꾼 부사형으로 동사를 꾸민다. 「早い」와 발음이 같은 「速(はや)い」는 <b>속도</b>가 빠르다는 뜻이라 표기가 다르다.<br>
+        早(はや)く 起(お)きる (일찍 일어나다) / 足(あし)が 速(はや)い (발이 빠르다)</li>
+        <li><b>起きる vs 起こす</b> — 「起(お)きる」는 스스로 일어나는 <b>자동사</b>, 「起(お)こす」는 남을 깨우는 <b>타동사</b>이다.<br>
+        七時(しちじ)に 起(お)きます。 (7시에 일어납니다.) / 母(はは)が 私(わたし)を 起(お)こします。 (엄마가 저를 깨웁니다.)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성일시: 2026-09-11 06:36 (Asia/Seoul) · 데일리 학습 퀴즈</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

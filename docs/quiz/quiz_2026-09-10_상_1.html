@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 퀴즈 2026-09-10 (난이도: 상)</title>
+<style>
+  :root{
+    --bg:#f7f9fc; --card:#ffffff; --line:#e2e8f0; --ink:#1f2937; --sub:#5b6675;
+    --kor:#2563eb; --eng:#059669; --math:#d97706; --jp:#db2777;
+    --ok:#16a34a; --no:#dc2626;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+       line-height:1.75;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px;}
+  header.top{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 20px;text-align:center;
+             box-shadow:0 2px 10px rgba(15,23,42,.05);margin-bottom:22px;}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{color:var(--sub);font-size:.9rem;}
+  .badge{display:inline-block;background:#eef2ff;color:#4338ca;border-radius:999px;padding:2px 12px;font-weight:700;font-size:.82rem;margin-top:8px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 0 18px;margin-bottom:26px;overflow:hidden;
+              box-shadow:0 2px 10px rgba(15,23,42,.05);}
+  .sec-head{padding:14px 20px;font-weight:800;font-size:1.15rem;color:#fff;display:flex;align-items:center;gap:10px;}
+  .s-kor .sec-head{background:var(--kor)} .s-eng .sec-head{background:var(--eng)}
+  .s-math .sec-head{background:var(--math)} .s-jp .sec-head{background:var(--jp)}
+  .sec-head small{font-weight:600;opacity:.9;font-size:.8rem;}
+  .sec-body{padding:18px 20px 0;}
+  .passage{background:#f8fafc;border:1px solid var(--line);border-left:5px solid var(--kor);
+           border-radius:10px;padding:16px 18px;margin-bottom:18px;font-size:.98rem;}
+  .passage p{margin:0 0 12px;text-indent:.4em;}
+  .q{border-top:1px dashed var(--line);padding-top:18px;margin-top:18px;}
+  .q:first-child{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:800;margin-bottom:12px;}
+  .q-title .num{display:inline-block;background:#1f2937;color:#fff;border-radius:8px;
+                padding:1px 9px;margin-right:8px;font-size:.86rem;}
+  ol.choices{list-style:none;margin:0;padding:0;}
+  ol.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px 14px;margin-bottom:8px;
+                cursor:pointer;transition:.15s;font-size:.97rem;display:flex;gap:9px;align-items:flex-start;}
+  ol.choices li:hover{background:#f1f5f9;}
+  ol.choices li .mark{font-weight:800;color:var(--sub);flex:0 0 auto;}
+  ol.choices li.correct{background:#ecfdf5;border-color:var(--ok);color:#065f46;font-weight:600;}
+  ol.choices li.wrong{background:#fef2f2;border-color:var(--no);color:#991b1b;font-weight:600;}
+  ol.choices li.locked{cursor:default;}
+  .btn{margin-top:6px;background:#1f2937;color:#fff;border:none;border-radius:10px;
+       padding:9px 18px;font-size:.92rem;font-weight:700;cursor:pointer;}
+  .btn:hover{background:#374151;}
+  .ans{display:none;margin-top:12px;background:#fffdf5;border:1px solid #fde68a;border-left:5px solid #f59e0b;
+       border-radius:10px;padding:14px 16px;font-size:.94rem;}
+  .ans.show{display:block;}
+  .ans .head{font-weight:800;margin-bottom:8px;color:#92400e;}
+  .ans ul{margin:8px 0 0;padding-left:18px;}
+  .ans li{margin-bottom:5px;}
+  .result{font-weight:800;margin-bottom:8px;}
+  .result.ok{color:var(--ok)} .result.no{color:var(--no)}
+  .jp-card{background:#fff7fb;border:1px solid #fbcfe8;border-left:5px solid var(--jp);border-radius:12px;padding:16px 18px;}
+  .jp-sent{font-size:1.28rem;font-weight:800;line-height:2;margin-bottom:6px;}
+  .jp-kana{color:#9d174d;font-weight:700;margin-bottom:10px;}
+  .jp-mean{font-weight:700;margin-bottom:12px;}
+  .jp-card h4{margin:14px 0 6px;font-size:.95rem;font-weight:800;}
+  .jp-card ul{margin:0;padding-left:18px;}
+  table.gram{width:100%;border-collapse:collapse;margin-top:8px;font-size:.9rem;}
+  table.gram th,table.gram td{border:1px solid #fbcfe8;padding:7px 9px;text-align:left;}
+  table.gram th{background:#fce7f3;}
+  footer{text-align:center;color:var(--sub);font-size:.85rem;margin-top:30px;}
+  @media (max-width:600px){
+    .wrap{padding:14px 10px 40px;}
+    header.top h1{font-size:1.28rem;}
+    .sec-body{padding:14px 13px 0;}
+    .sec-head{font-size:1.02rem;padding:12px 14px;}
+    .jp-sent{font-size:1.1rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈</h1>
+  <div class="meta">2026년 9월 10일 (목) · 국어 1 · 영어 5 · 수학 1 · 일본어 1</div>
+  <div class="badge">난이도 : 상</div>
+</header>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec s-kor">
+  <div class="sec-head">📘 국어 — 독서(경제) <small>내용 불일치 찾기</small></div>
+  <div class="sec-body">
+    <div class="passage">
+      <p>중앙은행이 물가와 경기를 조절하기 위해 사용하는 대표적인 수단은 정책금리이다. 정책금리는 중앙은행이 시중은행과 초단기 자금을 거래할 때 적용하는 기준이 되는 금리로, 이 금리가 변하면 은행 간 자금 조달 비용이 달라지고 그 변화가 예금·대출 금리, 채권 수익률, 나아가 주식과 부동산 같은 자산 가격에까지 순차적으로 파급된다. 이러한 전달 과정을 통화정책의 파급 경로라고 부른다.</p>
+      <p>파급 경로 가운데 가장 먼저 작동하는 것은 금리 경로이다. 정책금리가 인하되면 기업의 자금 조달 비용이 낮아져 설비투자가 늘고, 가계는 저축의 기회비용이 줄어 소비를 앞당긴다. 다음으로 자산가격 경로가 있다. 금리가 낮아지면 미래 현금흐름을 현재가치로 환산할 때 적용하는 할인율이 낮아지므로 자산의 이론적 가치가 올라가고, 자산을 보유한 가계는 스스로 부유해졌다고 느껴 소비를 늘린다. 이를 부(富)의 효과라 한다. 한편 환율 경로도 작동한다. 자국 금리가 상대적으로 낮아지면 자본이 해외로 이동해 자국 통화의 가치가 떨어지고, 수출품의 가격 경쟁력이 높아져 순수출이 증가한다.</p>
+      <p>그러나 이 과정이 항상 매끄럽게 작동하는 것은 아니다. 통화정책은 결정에서 실물 경제에 효과가 나타나기까지 대체로 여러 분기의 시차를 두는데, 이를 외부 시차라 한다. 그래서 중앙은행은 현재의 물가가 아니라 １년 이상 뒤의 물가를 내다보고 정책을 결정해야 한다. 여기서 중요한 개념이 실질금리이다. 명목금리에서 기대 인플레이션을 뺀 값이 실질금리이며, 실제 경제 주체의 투자와 소비 결정에 영향을 주는 것은 명목금리가 아니라 실질금리이다. 명목금리를 그대로 두더라도 기대 인플레이션이 높아지면 실질금리는 오히려 낮아져 통화정책이 완화적으로 작동한다.</p>
+      <p>정책 대응의 준칙을 제시한 것으로 널리 알려진 것이 테일러 준칙이다. 이 준칙은 실제 물가상승률이 목표치를 웃돌거나 실제 총생산이 잠재 총생산을 웃도는 경우 정책금리를 올리고, 반대의 경우 내리도록 권고한다. 특히 물가가 목표치보다 １%p 높아졌을 때 정책금리를 １%p보다 더 크게 올려야 한다는 점이 핵심인데, 그래야 실질금리가 상승해 총수요를 실제로 억제할 수 있기 때문이다. 명목금리를 물가 상승분만큼만 올리면 실질금리는 그대로여서 긴축 효과가 생기지 않는다.</p>
+      <p>정책금리가 이미 ０에 가까운 수준까지 내려간 상황에서는 추가 인하 여지가 사라지는데, 이를 실효 하한이라 한다. 이때 중앙은행은 장기 국채를 대량으로 매입해 시장에 유동성을 공급하는 양적 완화나, 앞으로 상당 기간 저금리를 유지하겠다고 미리 알리는 선제적 지침을 사용한다. 선제적 지침은 정책금리 자체를 움직이지 않으면서도 시장이 예상하는 미래 단기금리의 경로를 낮춤으로써 장기금리를 끌어내리는 방식으로 작동한다.</p>
+      <p>다만 완화적 통화정책이 장기간 이어지면 부작용도 따른다. 낮은 금리가 계속되면 금융기관은 더 높은 수익을 좇아 위험이 큰 자산에 자금을 배분하려는 유인을 갖게 되는데, 이를 위험 추구 경로라고 한다. 또한 가계 부채가 빠르게 늘어 훗날 금리가 정상화될 때 상환 부담이 급격히 커질 수 있다. 그래서 최근의 중앙은행은 물가 안정이라는 본래 목표와 함께 금융 안정까지 함께 고려하는 방향으로 정책 운영의 폭을 넓히고 있다.</p>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</div>
+      <ol class="choices">
+        <li data-i="0"><span class="mark">①</span><span>정책금리의 변동은 예금·대출 금리를 거쳐 자산 가격에까지 순차적으로 파급된다.</span></li>
+        <li data-i="1"><span class="mark">②</span><span>명목금리를 그대로 유지한 채 기대 인플레이션이 높아지면 실질금리가 상승해 긴축 효과가 나타난다.</span></li>
+        <li data-i="2"><span class="mark">③</span><span>자국 금리가 상대적으로 낮아지면 자국 통화 가치가 하락해 순수출이 늘어날 수 있다.</span></li>
+        <li data-i="3"><span class="mark">④</span><span>선제적 지침은 정책금리를 조정하지 않고도 시장의 미래 금리 예상을 바꾸어 장기금리에 영향을 준다.</span></li>
+        <li data-i="4"><span class="mark">⑤</span><span>저금리가 오래 지속되면 금융기관이 위험 자산으로 자금을 배분하려는 유인이 커질 수 있다.</span></li>
+      </ol>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="head">정답 : ②</div>
+        <ul>
+          <li><b>① 일치</b> — 1문단에서 정책금리 변화가 "예금·대출 금리, 채권 수익률, 나아가 주식과 부동산 같은 자산 가격에까지 순차적으로 파급된다"고 하였다.</li>
+          <li><b>② 불일치(정답)</b> — 3문단은 "기대 인플레이션이 높아지면 실질금리는 오히려 <u>낮아져</u> 통화정책이 완화적으로 작동한다"고 하였다. 실질금리 = 명목금리 − 기대 인플레이션이므로 방향이 반대이며, '긴축 효과'라는 진술도 글과 어긋난다.</li>
+          <li><b>③ 일치</b> — 2문단 환율 경로 설명과 정확히 부합한다.</li>
+          <li><b>④ 일치</b> — 5문단에서 선제적 지침은 "정책금리 자체를 움직이지 않으면서도" 미래 단기금리 경로에 대한 예상을 낮춰 장기금리를 끌어내린다고 하였다.</li>
+          <li><b>⑤ 일치</b> — 6문단의 '위험 추구 경로' 설명과 일치한다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec s-eng">
+  <div class="sec-head">📗 영어 — TOEIC Part 5 <small>문장 완성 5문항</small></div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="1">
+      <div class="q-title"><span class="num">영어 1</span>The board postponed the vote ______ the auditors had verified the revised quarterly figures.</div>
+      <ol class="choices">
+        <li data-i="0"><span class="mark">(A)</span><span>during</span></li>
+        <li data-i="1"><span class="mark">(B)</span><span>until</span></li>
+        <li data-i="2"><span class="mark">(C)</span><span>despite</span></li>
+        <li data-i="3"><span class="mark">(D)</span><span>whereas</span></li>
+      </ol>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="head">정답 : (B) until</div>
+        <p>해석 : 이사회는 회계 감사인이 수정된 분기 실적을 검증할 때까지 표결을 연기했다.</p>
+        <ul>
+          <li>(A) during — 전치사라 뒤에 절이 올 수 없다.</li>
+          <li>(B) until — '~할 때까지'라는 시간 접속사로 postpone과 의미가 자연스럽게 호응한다. <b>정답</b></li>
+          <li>(C) despite — 전치사이며 양보 의미로 문맥에도 맞지 않는다.</li>
+          <li>(D) whereas — 대조를 나타내는 접속사로, 연기의 종료 시점을 나타내는 문맥에 어울리지 않는다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">영어 2</span>All maintenance requests must be submitted ______ to the facilities team rather than to individual supervisors.</div>
+      <ol class="choices">
+        <li data-i="0"><span class="mark">(A)</span><span>direct</span></li>
+        <li data-i="1"><span class="mark">(B)</span><span>direction</span></li>
+        <li data-i="2"><span class="mark">(C)</span><span>directly</span></li>
+        <li data-i="3"><span class="mark">(D)</span><span>directed</span></li>
+      </ol>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="head">정답 : (C) directly</div>
+        <p>해석 : 모든 유지보수 요청은 개별 관리자가 아니라 시설팀에 직접 제출되어야 한다.</p>
+        <ul>
+          <li>(A) direct — 형용사/동사 형태로 수동태 동사구를 수식할 수 없다.</li>
+          <li>(B) direction — 명사여서 자리에 맞지 않는다.</li>
+          <li>(C) directly — 완전한 수동태 <i>be submitted</i>를 수식하는 부사 자리. <b>정답</b></li>
+          <li>(D) directed — 과거분사로, 이미 submitted가 본동사이므로 중복된다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="0">
+      <div class="q-title"><span class="num">영어 3</span>Ms. Alvarez was promoted to regional director in ______ of her exceptional performance in the Asian market.</div>
+      <ol class="choices">
+        <li data-i="0"><span class="mark">(A)</span><span>recognition</span></li>
+        <li data-i="1"><span class="mark">(B)</span><span>attention</span></li>
+        <li data-i="2"><span class="mark">(C)</span><span>observation</span></li>
+        <li data-i="3"><span class="mark">(D)</span><span>impression</span></li>
+      </ol>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="head">정답 : (A) recognition</div>
+        <p>해석 : 알바레스 씨는 아시아 시장에서의 뛰어난 성과를 인정받아 지역 이사로 승진했다.</p>
+        <ul>
+          <li>(A) recognition — <i>in recognition of</i>(~을 인정하여)라는 고정 표현. <b>정답</b></li>
+          <li>(B) attention — <i>in attention of</i>라는 표현은 없다.</li>
+          <li>(C) observation — '관찰'로 승진 사유를 나타내지 못한다.</li>
+          <li>(D) impression — <i>under the impression that</i> 형태로 쓰이며 여기에 맞지 않는다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="3">
+      <div class="q-title"><span class="num">영어 4</span>______ the new packaging line been installed earlier, the factory could have met the holiday demand.</div>
+      <ol class="choices">
+        <li data-i="0"><span class="mark">(A)</span><span>If</span></li>
+        <li data-i="1"><span class="mark">(B)</span><span>Unless</span></li>
+        <li data-i="2"><span class="mark">(C)</span><span>Whether</span></li>
+        <li data-i="3"><span class="mark">(D)</span><span>Had</span></li>
+      </ol>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="head">정답 : (D) Had</div>
+        <p>해석 : 새 포장 라인이 더 일찍 설치되었더라면 공장은 연휴 수요를 맞출 수 있었을 것이다.</p>
+        <ul>
+          <li>(A) If — if를 쓰려면 <i>If the new packaging line had been installed</i>처럼 어순이 도치되지 않아야 한다.</li>
+          <li>(B) Unless — 도치 구문을 만들 수 없고 의미도 반대이다.</li>
+          <li>(C) Whether — 명사절 접속사로 주절 <i>could have met</i>과 호응하지 않는다.</li>
+          <li>(D) Had — 가정법 과거완료에서 if가 생략되어 <i>Had + 주어 + p.p.</i>로 도치된 형태. <b>정답</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-title"><span class="num">영어 5</span>The consulting firm's proposal was far more detailed than ______ submitted by its competitors.</div>
+      <ol class="choices">
+        <li data-i="0"><span class="mark">(A)</span><span>they</span></li>
+        <li data-i="1"><span class="mark">(B)</span><span>those</span></li>
+        <li data-i="2"><span class="mark">(C)</span><span>them</span></li>
+        <li data-i="3"><span class="mark">(D)</span><span>either</span></li>
+      </ol>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="head">정답 : (B) those</div>
+        <p>해석 : 그 컨설팅 회사의 제안서는 경쟁사들이 제출한 것들보다 훨씬 더 상세했다.</p>
+        <ul>
+          <li>(A) they — 주격 대명사로 뒤의 분사구의 수식을 받는 비교 대상이 될 수 없다.</li>
+          <li>(B) those — 앞의 proposal(s)을 대신하는 지시대명사로, <i>those (which were) submitted</i> 구조. <b>정답</b></li>
+          <li>(C) them — 목적격이라 비교 구문의 대상 명사구 자리에 부적합하다.</li>
+          <li>(D) either — 둘 중 하나를 가리키므로 복수 경쟁사들의 제안서를 받을 수 없다.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec s-math">
+  <div class="sec-head">📙 수학 — 경우의 수(순열과 조합) <small>난이도 최상</small></div>
+  <div class="sec-body">
+    <div class="q" data-answer="2">
+      <div class="q-title"><span class="num">수학 1</span>
+        문자 A, A, B, B, C, C 의 6개를 일렬로 나열할 때, <b>같은 문자끼리 서로 이웃하지 않도록</b> 나열하는 경우의 수는?
+      </div>
+      <ol class="choices">
+        <li data-i="0"><span class="mark">①</span><span>24</span></li>
+        <li data-i="1"><span class="mark">②</span><span>28</span></li>
+        <li data-i="2"><span class="mark">③</span><span>30</span></li>
+        <li data-i="3"><span class="mark">④</span><span>36</span></li>
+        <li data-i="4"><span class="mark">⑤</span><span>42</span></li>
+      </ol>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="head">정답 : ③ 30</div>
+        <p><b>[풀이] 여사건 + 포함배제의 원리</b></p>
+        <ul>
+          <li>전체 경우의 수 : 같은 문자가 2개씩 있으므로 <b>6! / (2!·2!·2!) = 720 / 8 = 90</b></li>
+          <li>사건 정의 : A끼리 이웃 = X, B끼리 이웃 = Y, C끼리 이웃 = Z</li>
+          <li>|X| : AA를 한 덩어리로 묶으면 (AA), B, B, C, C 의 5개 배열 → <b>5!/(2!·2!) = 30</b>. 같은 방식으로 |Y| = |Z| = 30 → 합 <b>90</b></li>
+          <li>|X∩Y| : (AA), (BB), C, C 의 4개 배열 → <b>4!/2! = 12</b>. 세 쌍 중 두 쌍을 고르는 3가지 → 합 <b>36</b></li>
+          <li>|X∩Y∩Z| : (AA), (BB), (CC) 의 3개 배열 → <b>3! = 6</b></li>
+          <li>적어도 한 쌍이 이웃 : 90 − 36 + 6 = <b>60</b></li>
+          <li>따라서 구하는 값 : <b>90 − 60 = 30</b></li>
+        </ul>
+        <p><b>[검산 — 직접 구성법]</b> 6개 자리 중 A가 놓일 두 자리를 이웃하지 않게 고르는 방법은 ₅C₂ = 10가지. 각 경우 남은 4자리에 B, B, C, C를 이웃하지 않게 배치하는 수를 세어 모두 더하면 역시 30이 된다.</p>
+        <p><b>[오답 함정]</b> ④ 36은 |X∩Y| 부분합만 계산한 값, ⑤ 42는 포함배제에서 마지막 항 +6을 빼먹었을 때 나오는 값이다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec s-jp">
+  <div class="sec-head">📕 일본어 — 오늘의 회화 문장 <small>고1 2학기 수준</small></div>
+  <div class="sec-body">
+    <div class="jp-card">
+      <div class="jp-sent">今度の 週末に 何を する つもりですか。</div>
+      <div class="jp-kana">읽기(가나) : こんどの しゅうまつに なにを する つもりですか。<br>발음(한글) : 콘도노 슈-마츠니 나니오 스루 츠모리데스카</div>
+      <div class="jp-mean">해석 : 이번 주말에 무엇을 할 예정입니까?</div>
+
+      <h4>▪ 문장 설명</h4>
+      <ul>
+        <li>주말 계획을 묻는 가장 기본적인 회화 표현으로, 친구·선생님 모두에게 쓸 수 있는 정중체(です・ます) 문장이다.</li>
+        <li>대답은 「映画(えいが)を 見(み)る つもりです。(영화를 볼 예정입니다.)」처럼 <b>동사 기본형 + つもりです</b>로 하면 된다.</li>
+      </ul>
+
+      <h4>▪ 어휘</h4>
+      <table class="gram">
+        <tr><th>표기</th><th>읽기</th><th>뜻</th></tr>
+        <tr><td>今度</td><td>こんど</td><td>이번, 다음번</td></tr>
+        <tr><td>週末</td><td>しゅうまつ</td><td>주말</td></tr>
+        <tr><td>何</td><td>なに / なん</td><td>무엇</td></tr>
+        <tr><td>する</td><td>する</td><td>하다 (불규칙동사)</td></tr>
+        <tr><td>つもり</td><td>つもり</td><td>작정, 예정, 생각</td></tr>
+      </table>
+
+      <h4>▪ 문법 포인트</h4>
+      <ul>
+        <li><b>동사 사전형 + つもりです</b> : '~할 작정이다/예정이다'. 말하는 사람의 <u>의지가 담긴 계획</u>을 나타낸다. 부정은 「~ない つもりです(~하지 않을 작정이다)」.</li>
+        <li>비슷한 표현 「~予定(よてい)です」는 이미 확정된 일정(회의, 출장 등)에 쓰고, 「つもり」는 개인의 의지에 쓴다는 차이가 있다.</li>
+        <li><b>に</b> : 「週末に」의 に는 <u>시간</u>을 나타내는 조사. 단, 「今日(きょう)・明日(あした)・今週(こんしゅう)」처럼 상대적 시간 표현에는 に를 붙이지 않는다.</li>
+        <li><b>何</b>의 읽기 : 뒤에 오는 소리에 따라 「なに」와 「なん」이 갈린다. 「何を する」는 <u>なに</u>を する로 읽고, 「何ですか」는 <u>なん</u>ですか로 읽는다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성 시각 : <span id="gen"></span></footer>
+</div>
+
+<script>
+document.querySelectorAll('.q').forEach(function(q){
+  var answer = parseInt(q.dataset.answer, 10);
+  var ans = q.querySelector('.ans');
+  var btn = q.querySelector('.btn');
+  var items = q.querySelectorAll('ol.choices li');
+  var done = false;
+
+  function reveal(picked){
+    ans.classList.add('show');
+    items.forEach(function(li, i){
+      li.classList.add('locked');
+      if(i === answer) li.classList.add('correct');
+      else if(picked !== null && i === picked) li.classList.add('wrong');
+    });
+    if(picked !== null && !q.querySelector('.result')){
+      var d = document.createElement('div');
+      var ok = picked === answer;
+      d.className = 'result ' + (ok ? 'ok' : 'no');
+      d.textContent = ok ? '✅ 정답입니다!' : '❌ 오답입니다. 정답과 해설을 확인하세요.';
+      ans.insertBefore(d, ans.firstChild);
+    }
+    btn.textContent = '해설 접기 / 펼치기';
+    done = true;
+  }
+
+  items.forEach(function(li, i){
+    li.addEventListener('click', function(){
+      if(done) return;
+      reveal(i);
+    });
+  });
+
+  btn.addEventListener('click', function(){
+    if(!done) reveal(null);
+    else ans.classList.toggle('show');
+  });
+});
+
+document.getElementById('gen').textContent =
+  new Date().toLocaleString('ko-KR', { dateStyle:'full', timeStyle:'medium' });
+</script>
+</body>
+</html>

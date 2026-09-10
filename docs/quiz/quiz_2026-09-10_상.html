@@ -264,3 +264,184 @@
     </div>
   </div>
 </section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅲ. 수학 — 순열과 조합 (난이도 최상)</h2>
+  <p class="sec-desc">고등학교 1학년 경우의 수 · 최단 경로 + 여사건과 포함배제</p>
+
+  <div class="q" id="q-math">
+    <p class="q-title"><span class="num">수학 1</span></p>
+    <p class="stem">좌표평면 위에 가로 6칸, 세로 4칸의 바둑판 모양 도로망이 있다. 점 A(0, 0)에서 점 B(6, 4)까지 <b>오른쪽 또는 위쪽으로만</b> 이동하여 최단 거리로 가려고 한다. 그런데 다음 세 곳을 지날 수 없다.<br>
+    &nbsp;&nbsp;· 점 (2, 2)와 점 (3, 2)를 잇는 <b>가로 도로</b><br>
+    &nbsp;&nbsp;· 점 (4, 3)과 점 (4, 4)를 잇는 <b>세로 도로</b><br>
+    &nbsp;&nbsp;· 교차점 <b>(4, 1)</b> 전체<br>
+    이때 A에서 B까지 가는 최단 경로의 수는?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>76</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>78</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>80</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>82</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>84</span></li>
+    </ul>
+    <div class="result" id="r-q-math"></div>
+    <button class="reveal" data-target="q-math">정답 보기</button>
+    <div class="exp" id="e-q-math">
+      <p class="ans">정답 ④ 82</p>
+      <ul>
+        <li><b>[0단계] 기본 원리</b><br>
+        오른쪽 이동을 R, 위쪽 이동을 U라 하면 A(0,0)에서 B(6,4)로 가는 최단 경로는 R 6개와 U 4개를 일렬로 배열하는 것과 같다. 즉 <b>같은 것이 있는 순열</b>이며, 그 수는<br>
+        &nbsp;&nbsp;10! ÷ (6! × 4!) = <b>₁₀C₄ = 210</b>가지<br>
+        일반적으로 (0,0) → (a, b)의 최단 경로 수는 <b>₍ₐ₊b₎Cb</b>이다.</li>
+
+        <li><b>[1단계] 전략 세우기 — 여사건 + 포함배제</b><br>
+        금지 조건이 3개이므로 직접 세는 것은 매우 번거롭다. 전체에서 <b>금지된 것을 지나는 경로</b>를 빼되, 두 가지를 동시에 지나는 경로는 두 번 빠지므로 다시 더해 주는 <b>포함배제의 원리</b>를 쓴다.<br>
+        &nbsp;&nbsp;(답) = 210 − (E + F + P) + (E∩F + F∩P + E∩P) − (E∩F∩P)<br>
+        E = 가로 도로 (2,2)→(3,2)를 지나는 경로, F = 세로 도로 (4,3)→(4,4)를 지나는 경로, P = 점 (4,1)을 지나는 경로.</li>
+
+        <li><b>[2단계] E 계산 — 특정 <u>도로(변)</u>를 지나는 경로</b><br>
+        도로를 지나려면 반드시 <b>(2,2)에 도착 → 그 도로를 건너 (3,2)로 → B까지</b>의 순서를 거친다. 곱의 법칙으로 세 구간을 곱한다.<br>
+        &nbsp;&nbsp;A(0,0)→(2,2) : ₄C₂ = 6<br>
+        &nbsp;&nbsp;도로를 건너는 방법 : 1<br>
+        &nbsp;&nbsp;(3,2)→B(6,4) : 오른쪽 3, 위 2 → ₅C₂ = 10<br>
+        &nbsp;&nbsp;<b>E = 6 × 1 × 10 = 60</b></li>
+
+        <li><b>[3단계] F 계산</b><br>
+        &nbsp;&nbsp;A→(4,3) : ₇C₃ = 35<br>
+        &nbsp;&nbsp;(4,4)→B(6,4) : 오른쪽 2, 위 0 → ₂C₀ = 1<br>
+        &nbsp;&nbsp;<b>F = 35 × 1 × 1 = 35</b></li>
+
+        <li><b>[4단계] P 계산 — 특정 <u>점</u>을 지나는 경로</b><br>
+        &nbsp;&nbsp;A→(4,1) : ₅C₁ = 5<br>
+        &nbsp;&nbsp;(4,1)→B(6,4) : 오른쪽 2, 위 3 → ₅C₂ = 10<br>
+        &nbsp;&nbsp;<b>P = 5 × 10 = 50</b></li>
+
+        <li><b>[5단계] 교집합 — 여기가 이 문제의 핵심</b><br>
+        <b>① E ∩ F</b> : (2,2)→(3,2) 도로를 건넌 뒤 (4,3)→(4,4) 도로까지 가는 경로. 순서가 (2,2) → (3,2) → (4,3) → (4,4) → B로 정해진다.<br>
+        &nbsp;&nbsp;6 × 1 × [(3,2)→(4,3) : 오른쪽 1, 위 1 = ₂C₁ = 2] × 1 × 1 = <b>12</b><br><br>
+        <b>② F ∩ P</b> : (4,1)을 지난 뒤 (4,3)→(4,4) 도로를 건너는 경로.<br>
+        &nbsp;&nbsp;[A→(4,1) = 5] × [(4,1)→(4,3) : 위로만 2칸이므로 <b>1가지</b>] × 1 × [(4,4)→B = 1] = <b>5</b><br><br>
+        <b>③ E ∩ P</b> : E를 건너면 (3,2)에 있게 되는데, P = (4,1)은 <b>y좌표가 더 작다</b>. 아래로는 갈 수 없으므로 E 이후에 P를 지날 수 없다. 반대로 P(4,1)에서 (2,2)로 가려면 x좌표가 줄어야 하므로 이 역시 불가능하다.<br>
+        &nbsp;&nbsp;<b>E ∩ P = 0</b> (따라서 <b>E ∩ F ∩ P = 0</b>)</li>
+
+        <li><b>[6단계] 결론</b><br>
+        &nbsp;&nbsp;210 − (60 + 35 + 50) + (12 + 5 + 0) − 0<br>
+        &nbsp;&nbsp;= 210 − 145 + 17 = <b>82</b>가지</li>
+
+        <li><b>[검산] 격자에 수를 적어 확인하기</b><br>
+        각 교차점에 "A에서 그 점까지 오는 경로 수"를 적고, <b>왼쪽 수 + 아래 수</b>로 채워 나가되 금지된 도로·점은 더하지 않는다. (4,1)은 0으로 두고, (3,2)에는 (2,2)에서 오는 몫을 더하지 않으며, (4,4)에는 (4,3)에서 오는 몫을 더하지 않는다. y=4행을 왼쪽부터 채워 가면 B(6,4)에 <b>82</b>가 나온다.</li>
+
+        <li><b>[핵심 포인트]</b> ① <b>점</b> 금지는 두 구간의 곱, <b>도로(변)</b> 금지는 세 구간(앞 + 변 + 뒤)의 곱으로 센다. ② 금지 조건이 여러 개면 <b>포함배제</b>가 필수이며, 교집합을 빠뜨리면 답이 작아진다. ③ 오른쪽·위쪽으로만 갈 수 있으므로 <b>순서가 뒤바뀌는 교집합은 0</b>이라는 판단을 반드시 먼저 해야 계산량이 줄어든다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅳ. 일본어 회화 — 오늘의 한 문장</h2>
+  <p class="sec-desc">고등학교 1학년 2학기 수준 · 이유 말하기 표현</p>
+
+  <div class="jp-card">
+    <p class="jp-main">風邪を ひいたので、今日は 早く 帰ります。</p>
+    <p class="jp-read">かぜを ひいたので、きょうは はやく かえります。</p>
+    <p class="jp-rom">Kaze o hiita node, kyō wa hayaku kaerimasu.</p>
+    <p class="jp-ko">감기에 걸렸기 때문에, 오늘은 일찍 돌아갑니다(집에 갑니다).</p>
+
+    <table class="words">
+      <tr><th>한자 / 표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>風邪</td><td>かぜ</td><td>감기 (바람 風[かぜ]와 발음이 같음)</td></tr>
+      <tr><td>ひく</td><td>ひく</td><td>(감기에) 걸리다</td></tr>
+      <tr><td>ひいた</td><td>ひいた</td><td>걸렸다 (ひく의 た형)</td></tr>
+      <tr><td>今日</td><td>きょう</td><td>오늘</td></tr>
+      <tr><td>早く</td><td>はやく</td><td>일찍, 빨리 (早い의 부사형)</td></tr>
+      <tr><td>帰る</td><td>かえる</td><td>돌아가다, 귀가하다</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문장 설명</h4>
+      <ul>
+        <li>몸이 좋지 않아 <b>먼저 자리를 뜰 때</b> 쓰는 표현이다. 학교나 아르바이트처럼 예의를 갖춰야 하는 자리에서 이유를 밝히고 양해를 구하는 말로 자주 쓰인다.</li>
+        <li>감기에 걸린다는 말은 반드시 <b>「風邪を ひく」</b>라는 짝으로 외워야 한다. 「風邪に なる」나 「風邪を する」라고는 하지 않는다.</li>
+        <li>더 정중하게 말하려면 앞에 「すみませんが(죄송하지만)」를 붙여 「すみませんが、風邪を ひいたので 今日は 早く 帰ります」라고 한다.</li>
+      </ul>
+    </div>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>~ので (이유·원인)</b> — '~이기 때문에'라는 뜻으로 앞에 이유, 뒤에 결과가 온다. 보통형(반말체)에 붙는다는 점에 주의한다. 「帰ります<b>ので</b>」처럼 정중체에 붙이면 더 격식 있는 말투가 되지만, 학교 회화에서는 보통형＋ので 형태가 기본이다.</li>
+        <li><b>から와의 차이</b> — 「から」는 화자의 <b>주관적</b> 판단·의지를 강하게 드러내고, 「ので」는 <b>객관적</b> 사정을 담담히 전해 더 정중하게 들린다. 그래서 변명이나 양해를 구할 때는 ので가 더 자연스럽다.<br>
+        風邪を ひいた<b>から</b> 帰る。(감기 걸렸으니까 갈래.) → 다소 직설적<br>
+        風邪を ひいた<b>ので</b> 帰ります。(감기에 걸려서 돌아가겠습니다.) → 정중</li>
+        <li><b>접속 형태 주의</b> — ので는 동사·い형용사에는 보통형이 그대로 붙지만, <b>な형용사와 명사</b>에는 「だ」가 <b>な</b>로 바뀐다.<br>
+        · 동사 : 行(い)く <b>ので</b> / 行った <b>ので</b><br>
+        · い형용사 : 高(たか)い <b>ので</b><br>
+        · な형용사 : 静(しず)かだ → 静か<b>な</b> ので<br>
+        · 명사 : 学生(がくせい)だ → 学生<b>な</b> ので</li>
+        <li><b>ひく의 た형</b> — ひく는 1그룹 동사이지만 어간이 「い」로 끝나 て형·た형에서 <b>ひいて / ひいた</b>가 된다. (書(か)く → 書いた와 같은 い음편)</li>
+        <li><b>早く</b> — い형용사 「早(はや)い」의 어미 い를 <b>く</b>로 바꾸면 동사를 꾸미는 부사가 된다. 早い → 早<b>く</b> 帰る, 安(やす)い → 安<b>く</b> 買(か)う.</li>
+        <li><b>조사 は의 대비</b> — 「今日は」의 は는 '오늘<b>은</b>(평소와 달리)'이라는 대비의 뜻을 담는다. 「今日」만 쓰는 것보다 양해를 구하는 느낌이 살아난다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성일시: 2026-09-10 06:25 (Asia/Seoul) · 데일리 학습 퀴즈</footer>
+
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
