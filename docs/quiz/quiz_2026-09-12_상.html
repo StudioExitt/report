@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-09-12</title>
+<style>
+  :root{
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 9월 12일 (토) · 국어 1문항 · 토익 5문항 · 수학 1문항 · 일본어 회화 1문장</div>
+  <div class="meta">생성 시각: 2026-09-12 11:30 (KST, Asia/Seoul)</div>
+</header>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (소비자 물가 지수와 물가의 측정)</p>
+
+  <div class="passage">
+    <p>물가는 여러 상품의 가격을 하나로 묶어 나타낸 값이다. 개별 상품의 가격은 저마다 다른 방향으로 움직이므로, 이를 종합해 하나의 수치로 보여 주는 지표가 필요하다. 이때 널리 쓰이는 것이 <b>소비자 물가 지수</b>이다. 이 지수는 가계가 실제로 사들이는 상품과 서비스를 골라 묶음을 만든 뒤, 그 묶음을 사는 데 드는 비용이 기준 시점에 비해 얼마나 달라졌는지를 나타낸다. 기준 시점의 지수를 100으로 두므로, 지수가 108이라면 같은 묶음을 사는 데 드는 돈이 기준 시점보다 8% 늘었다는 뜻이다.</p>
+
+    <p>이 지수를 만들 때 핵심이 되는 것은 <b>가중치</b>이다. 가계가 쌀에 쓰는 돈과 휴대 전화 요금에 쓰는 돈이 다른데도 두 품목의 가격 변화를 똑같이 반영한다면 실제 살림살이의 변화를 제대로 담아낼 수 없다. 그래서 각 품목이 가계 지출에서 차지하는 몫만큼 비중을 두어 평균을 낸다. 이처럼 지출 비중을 반영한 평균을 가중 평균이라 하며, 지출 몫이 큰 품목일수록 지수를 끌어올리거나 끌어내리는 힘이 크다.</p>
+
+    <p>그런데 소비자 물가 지수는 <b>기준 시점의 묶음을 그대로 고정해 두고</b> 값만 비교한다. 이 방식은 계산이 간편하고 시점 간 비교가 분명하다는 장점이 있지만, 값이 오른 상품 대신 값이 덜 오른 상품으로 소비를 옮기는 사람들의 <b>대체 행동</b>을 반영하지 못한다. 쇠고기 값이 크게 오르자 사람들이 돼지고기를 더 사 먹었다면 실제 생활비 부담은 지수가 보여 주는 것만큼 늘지 않았을 수 있다. 이 때문에 고정된 묶음에 기초한 지수는 물가 상승률을 <b>다소 부풀려</b> 나타내는 경향이 있다고 지적된다. 상품의 품질이 좋아진 부분을 가격 상승과 구분해 내기 어렵다는 점도 같은 방향으로 작용한다.</p>
+
+    <p>소비자 물가 지수는 또한 <b>일시적인 충격에 크게 흔들린다</b>는 문제를 안고 있다. 농산물 가격은 태풍이나 가뭄 같은 날씨에 따라 급등락하고, 석유류 가격은 산유국의 사정이나 국제 정세에 좌우된다. 이런 품목의 변동이 지수를 크게 움직이면, 물가의 밑바탕에 깔린 흐름이 무엇인지 판단하기 어려워진다. 그래서 통계 당국은 농산물과 석유류처럼 변동이 심한 품목을 빼고 계산한 <b>근원 물가 지수</b>를 함께 발표한다. 근원 물가는 단기적인 잡음을 걷어 내고 물가의 <b>기조적인 흐름</b>을 보여 주기 때문에 통화 정책을 결정할 때 특히 눈여겨보는 지표이다.</p>
+
+    <p>다만 근원 물가가 언제나 더 나은 지표인 것은 아니다. 가계가 체감하는 부담은 장바구니 물가와 기름값에서 오는데, 근원 물가는 바로 그 항목들을 제외하기 때문이다. 실제로 소비자 물가 상승률이 높은데도 근원 물가 상승률은 낮게 나오는 시기에는, 통계가 현실을 반영하지 못한다는 불만이 나오기도 한다. 그래서 물가를 볼 때는 <b>두 지수를 함께</b> 살펴 단기 충격과 기조적 흐름을 나누어 읽어야 한다.</p>
+
+    <p>물가 통계는 그 자체로 정책의 근거가 될 뿐 아니라 <b>여러 계약의 기준</b>으로도 쓰인다. 연금이나 임금을 물가에 연동해 조정하고, 실질 소득이나 실질 금리를 계산할 때도 물가 지수가 쓰인다. 명목 금리에서 물가 상승률을 뺀 값이 실질 금리이므로, 물가 지수가 실제보다 높게 측정되면 실질 금리는 <b>낮게</b> 계산된다. 통계상의 작은 편의(偏倚)가 정책 판단과 소득 분배에까지 영향을 미치는 셈이다.</p>
+
+    <p>이러한 한계를 줄이기 위해 통계 당국은 몇 해에 한 번씩 <b>품목과 가중치를 새로 정한다</b>. 소비 구조가 달라지면 예전의 묶음이 더 이상 가계의 살림을 대표하지 못하기 때문이다. 사라진 상품을 빼고 새로 등장한 상품을 넣으며, 지출 비중이 달라진 만큼 가중치를 고쳐 잡는다. 결국 물가 지수는 완성된 사실을 그대로 옮겨 놓은 값이 아니라, <b>현실에 가깝게 다가가려는 계속된 조정의 결과</b>로 이해하는 편이 알맞다.</p>
+  </div>
+
+  <div class="q" id="q-kor">
+    <p class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</p>
+    <ul class="choices" data-answer="4">
+      <li data-idx="0"><span class="mk">①</span><span>소비자 물가 지수는 기준 시점의 지수를 100으로 두고, 같은 묶음을 사는 데 드는 비용의 변화를 나타낸다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>각 품목의 가격 변화는 가계 지출에서 차지하는 몫만큼 비중을 두어 평균에 반영된다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>묶음을 고정해 두는 방식은 소비자의 대체 행동을 담지 못해 물가 상승률을 다소 부풀릴 수 있다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>근원 물가 지수는 농산물과 석유류처럼 변동이 심한 품목을 제외하고 계산한다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>물가 지수가 실제보다 높게 측정되면 명목 금리에서 물가 상승률을 뺀 실질 금리는 높게 계산된다.</span></li>
+    </ul>
+    <div class="result" id="r-q-kor"></div>
+    <button class="reveal" data-target="q-kor">정답 보기</button>
+    <div class="exp" id="e-q-kor">
+      <p class="ans">정답 ⑤</p>
+      <ul>
+        <li><b>① 일치</b> — 1문단에서 "기준 시점의 지수를 100으로 두므로, 지수가 108이라면 같은 묶음을 사는 데 드는 돈이 기준 시점보다 8% 늘었다"고 하였다.</li>
+        <li><b>② 일치</b> — 2문단에서 "각 품목이 가계 지출에서 차지하는 몫만큼 비중을 두어 평균을 낸다"고 하며 이를 가중 평균이라 하였다.</li>
+        <li><b>③ 일치</b> — 3문단에서 고정된 묶음은 대체 행동을 반영하지 못해 물가 상승률을 "다소 부풀려" 나타내는 경향이 있다고 하였다.</li>
+        <li><b>④ 일치</b> — 4문단에서 통계 당국이 "농산물과 석유류처럼 변동이 심한 품목을 빼고 계산한 근원 물가 지수를 함께 발표한다"고 하였다.</li>
+        <li><b>⑤ 불일치 (정답)</b> — 6문단은 "명목 금리에서 물가 상승률을 뺀 값이 실질 금리이므로, 물가 지수가 실제보다 높게 측정되면 실질 금리는 <b>낮게</b> 계산된다"고 하였다. 빼는 값이 커지면 결과는 작아지므로 '높게 계산된다'는 서술은 글의 내용과 정반대이다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅱ. 토익 영어 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="q-e1">
+    <p class="q-title"><span class="num">영어 1</span></p>
+    <p class="stem">The logistics company ________ warehouses were damaged in the storm has requested an extension on all deliveries.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>which</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>who</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>whose</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>of which</span></li>
+    </ul>
+    <div class="result" id="r-q-e1"></div>
+    <button class="reveal" data-target="q-e1">정답 보기</button>
+    <div class="exp" id="e-q-e1">
+      <p class="ans">정답 (C) whose</p>
+      <ul>
+        <li><b>해석</b> — 창고가 폭풍으로 피해를 입은 그 물류 회사는 모든 배송의 기한 연장을 요청하였다.</li>
+        <li><b>풀이</b> — 빈칸 뒤에 관사 없는 명사 <i>warehouses</i>가 바로 오고 그 뒤에 동사 <i>were damaged</i>가 이어진다. 즉 빈칸은 뒤 명사를 꾸미는 <b>소유격 관계대명사</b> 자리이므로 whose가 정답이다. '그 회사<b>의</b> 창고'라는 관계가 성립한다.</li>
+        <li><b>(A) which</b> — 주격·목적격 관계대명사로, 뒤에 <b>주어가 빠진 절</b>이나 <b>목적어가 빠진 절</b>이 와야 한다. 여기서는 warehouses라는 주어가 이미 있어 들어갈 수 없다.</li>
+        <li><b>(B) who</b> — 선행사가 사람일 때 쓰는 주격 관계대명사인데, 선행사 company는 사물이고 뒤 절에 주어도 이미 있다.</li>
+        <li><b>(D) of which</b> — 「the warehouses <b>of which</b> were damaged」처럼 쓰지 않는다. 이 형태를 쓰려면 <i>the warehouses of which were damaged</i>가 아니라 <b>of which the warehouses were damaged</b> 어순이 되어야 한다.</li>
+        <li><b>포인트</b> — <b>whose + 무관사 명사 + 동사</b>는 소유격 관계대명사의 전형적인 신호다. 빈칸 뒤가 「명사 + 동사」로 완전하면 whose, 「동사」로 바로 시작하면 who/which를 고른다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e2">
+    <p class="q-title"><span class="num">영어 2</span></p>
+    <p class="stem">For a complete list of safety procedures, please ________ to page 12 of the employee handbook.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>refer</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>remind</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>review</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>respond</span></li>
+    </ul>
+    <div class="result" id="r-q-e2"></div>
+    <button class="reveal" data-target="q-e2">정답 보기</button>
+    <div class="exp" id="e-q-e2">
+      <p class="ans">정답 (A) refer</p>
+      <ul>
+        <li><b>해석</b> — 안전 절차의 전체 목록은 직원 안내서 12쪽을 <b>참조하시기 바랍니다</b>.</li>
+        <li><b>풀이</b> — 「refer <b>to</b> + 자료」는 '~을 참조하다'라는 뜻의 고정 표현이다. 뒤에 전치사 to가 있고 문맥이 '자료를 찾아보라'는 안내이므로 refer가 정답이다.</li>
+        <li><b>(B) remind</b> — 'remind + 사람 + of/that'의 형태로 '~에게 상기시키다'라는 뜻이며, 사람 목적어가 반드시 필요하다. remind to page라는 형태는 성립하지 않는다.</li>
+        <li><b>(C) review</b> — '검토하다'라는 뜻의 <b>타동사</b>로 to 없이 목적어를 바로 받는다. review page 12라면 가능하지만 빈칸 뒤 to와 어울리지 않는다.</li>
+        <li><b>(D) respond</b> — respond to는 '~에 응답하다'로, 응답의 대상은 질문·요청·이메일 등이다. 안내서의 특정 쪽은 응답 대상이 될 수 없다.</li>
+        <li><b>포인트</b> — 토익 빈출 짝: <b>refer to</b>(참조하다) / <b>reply·respond to</b>(응답하다) / <b>remind A of B</b>(A에게 B를 상기시키다) / <b>review + 목적어</b>(검토하다). 전치사 유무만 확인해도 절반은 걸러진다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e3">
+    <p class="q-title"><span class="num">영어 3</span></p>
+    <p class="stem">The board of directors has postponed ________ a final decision until the results of the market survey are available.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>to make</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>making</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>made</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>make</span></li>
+    </ul>
+    <div class="result" id="r-q-e3"></div>
+    <button class="reveal" data-target="q-e3">정답 보기</button>
+    <div class="exp" id="e-q-e3">
+      <p class="ans">정답 (B) making</p>
+      <ul>
+        <li><b>해석</b> — 이사회는 시장 조사 결과가 나올 때까지 최종 결정을 내리는 것을 <b>미루었다</b>.</li>
+        <li><b>풀이</b> — <i>postpone</i>은 목적어로 <b>동명사만</b> 취하는 동사이다. 따라서 making이 정답이다.</li>
+        <li><b>(A) to make</b> — postpone은 to부정사를 목적어로 받지 않는다. 이 자리에 to부정사를 쓰는 동사는 decide, plan, hope 등이다.</li>
+        <li><b>(C) made</b> — 과거분사로, 이미 has postponed라는 본동사가 있어 또 하나의 동사 형태가 들어갈 자리가 없다.</li>
+        <li><b>(D) make</b> — 동사원형은 목적어 자리에 올 수 없다.</li>
+        <li><b>포인트</b> — <b>동명사만 받는 동사</b>는 묶어서 외우자 : postpone, delay, avoid, consider, suggest, recommend, finish, mind, enjoy, deny, give up. 반대로 <b>to부정사만 받는 동사</b>는 decide, plan, hope, agree, refuse, offer, promise, afford 등이다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e4">
+    <p class="q-title"><span class="num">영어 4</span></p>
+    <p class="stem">All travel expense claims must ________ by the department head before they are forwarded to accounting.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>approve</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>approving</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>have approved</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>be approved</span></li>
+    </ul>
+    <div class="result" id="r-q-e4"></div>
+    <button class="reveal" data-target="q-e4">정답 보기</button>
+    <div class="exp" id="e-q-e4">
+      <p class="ans">정답 (D) be approved</p>
+      <ul>
+        <li><b>해석</b> — 모든 출장비 청구서는 회계부로 넘겨지기 전에 부서장의 <b>승인을 받아야</b> 한다.</li>
+        <li><b>풀이</b> — 주어 <i>claims</i>(청구서)는 승인하는 주체가 아니라 <b>승인받는 대상</b>이고, 행위자가 <i>by the department head</i>로 제시되어 있으므로 <b>수동태</b>가 필요하다. 조동사 must 뒤이므로 「must + be p.p.」 형태인 be approved가 정답이다.</li>
+        <li><b>(A) approve</b> — 능동태가 되어 '청구서가 부서장을 승인한다'는 뜻이 되어 성립하지 않는다.</li>
+        <li><b>(B) approving</b> — 조동사 뒤에는 -ing형이 올 수 없다.</li>
+        <li><b>(C) have approved</b> — 「must have p.p.」는 '~했음이 틀림없다'는 <b>과거에 대한 추측</b>이다. 의미도 맞지 않고 능동이라는 점에서도 틀렸다.</li>
+        <li><b>포인트</b> — 수동태 판별의 두 신호는 ① 주어가 동작을 <b>당하는</b> 대상인가, ② 뒤에 <b>by + 행위자</b>가 있는가이다. 조동사와 결합하면 반드시 「조동사 + <b>be</b> + p.p.」 어순이 된다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e5">
+    <p class="q-title"><span class="num">영어 5</span></p>
+    <p class="stem">Attendance at this year's international trade show was considerably higher than ________ of the previous year.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>those</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>it</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>that</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>them</span></li>
+    </ul>
+    <div class="result" id="r-q-e5"></div>
+    <button class="reveal" data-target="q-e5">정답 보기</button>
+    <div class="exp" id="e-q-e5">
+      <p class="ans">정답 (C) that</p>
+      <ul>
+        <li><b>해석</b> — 올해 국제 무역 박람회의 참석자 수는 작년의 <b>그것</b>보다 상당히 많았다.</li>
+        <li><b>풀이</b> — 비교 대상은 '올해의 attendance'와 '작년의 attendance'이다. 앞에 나온 <b>단수 명사를 대신</b>하면서 뒤에 of구의 수식을 받을 수 있는 대명사는 <b>that</b>이다.</li>
+        <li><b>(A) those</b> — 복수 명사를 받는 형태다. attendance는 <b>불가산·단수</b>로 쓰였으므로 수가 맞지 않는다.</li>
+        <li><b>(B) it</b> — it은 앞에 나온 <b>바로 그것</b>을 가리켜 '올해의 참석자 수'가 되어 버린다. '작년의 것'이라는 다른 대상을 가리키려면 that을 써야 하고, it 뒤에 of구를 붙여 수식하지도 않는다.</li>
+        <li><b>(D) them</b> — 목적격 복수 대명사로 than 뒤 비교 대상 자리에 쓰기에 부적절하고 수도 맞지 않는다.</li>
+        <li><b>포인트</b> — 비교 구문의 반복을 피하는 대명사는 <b>단수 → that of</b>, <b>복수 → those of</b>로 짝지어 외운다. 예) The climate of Korea is milder than <b>that of</b> Russia. / The prices here are lower than <b>those of</b> other stores.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅲ. 수학 — 순열과 조합 (난이도 최상)</h2>
+  <p class="sec-desc">고등학교 1학년 경우의 수 · 나머지에 따른 분류 + 조합의 경우의 수</p>
+
+  <div class="q" id="q-math">
+    <p class="q-title"><span class="num">수학 1</span></p>
+    <p class="stem">1부터 15까지의 자연수가 하나씩 적힌 15장의 카드가 있다. 이 중에서 서로 다른 <b>4장</b>을 동시에 뽑을 때, 뽑은 네 수의 <b>합이 3의 배수</b>가 되는 경우의 수는?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>420</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>440</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>455</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>470</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>490</span></li>
+    </ul>
+    <div class="result" id="r-q-math"></div>
+    <button class="reveal" data-target="q-math">정답 보기</button>
+    <div class="exp" id="e-q-math">
+      <p class="ans">정답 ③ 455</p>
+      <ul>
+        <li><b>[1단계] 3으로 나눈 나머지로 카드를 분류한다</b><br>
+        합이 3의 배수인지는 각 수를 <b>3으로 나눈 나머지</b>만으로 결정된다. 1~15를 나머지별로 나누면<br>
+        &nbsp;&nbsp;· 나머지 0 : 3, 6, 9, 12, 15 → <b>5장</b><br>
+        &nbsp;&nbsp;· 나머지 1 : 1, 4, 7, 10, 13 → <b>5장</b><br>
+        &nbsp;&nbsp;· 나머지 2 : 2, 5, 8, 11, 14 → <b>5장</b><br>
+        세 묶음이 모두 5장씩으로 딱 나뉜다는 점이 이 문제의 열쇠이다.</li>
+
+        <li><b>[2단계] 나머지의 합이 3의 배수가 되는 조합을 모두 찾는다</b><br>
+        각 묶음에서 뽑는 장수를 차례로 (a, b, c)라 하자. a + b + c = 4이고, 나머지의 총합 <b>0·a + 1·b + 2·c = b + 2c</b>가 3의 배수여야 한다.<br>
+        a+b+c=4를 만족하는 (a, b, c)를 모두 적어 b+2c를 확인하면 다음 <b>5가지</b>만 조건을 만족한다.<br>
+        &nbsp;&nbsp;· (4, 0, 0) → b+2c = 0 ✔<br>
+        &nbsp;&nbsp;· (1, 3, 0) → 3 ✔<br>
+        &nbsp;&nbsp;· (1, 0, 3) → 6 ✔<br>
+        &nbsp;&nbsp;· (0, 2, 2) → 2+4 = 6 ✔<br>
+        &nbsp;&nbsp;· (2, 1, 1) → 1+2 = 3 ✔<br>
+        (0,4,0)은 4, (0,0,4)는 8, (2,2,0)은 2, (3,1,0)은 1 … 처럼 나머지 경우는 모두 3의 배수가 아니어서 탈락한다.</li>
+
+        <li><b>[3단계] 각 경우의 수를 조합으로 센다</b><br>
+        뽑는 것이므로 순서를 따지지 않는 <b>조합</b>이고, 각 묶음은 5장이므로<br>
+        &nbsp;&nbsp;· (4, 0, 0) : ₅C₄ = <b>5</b><br>
+        &nbsp;&nbsp;· (1, 3, 0) : ₅C₁ × ₅C₃ = 5 × 10 = <b>50</b><br>
+        &nbsp;&nbsp;· (1, 0, 3) : ₅C₁ × ₅C₃ = 5 × 10 = <b>50</b><br>
+        &nbsp;&nbsp;· (0, 2, 2) : ₅C₂ × ₅C₂ = 10 × 10 = <b>100</b><br>
+        &nbsp;&nbsp;· (2, 1, 1) : ₅C₂ × ₅C₁ × ₅C₁ = 10 × 5 × 5 = <b>250</b></li>
+
+        <li><b>[4단계] 결론</b><br>
+        &nbsp;&nbsp;5 + 50 + 50 + 100 + 250 = <b>455</b>가지</li>
+
+        <li><b>[검산] 대칭성으로 확인하기</b><br>
+        전체 경우의 수는 ₁₅C₄ = (15×14×13×12) ÷ 24 = <b>1365</b>이다.<br>
+        나머지 0·1·2인 카드가 <b>정확히 5장씩</b>으로 완전히 대칭이므로, 네 수의 합을 3으로 나눈 나머지가 0, 1, 2가 되는 경우의 수는 서로 같아야 한다. 따라서<br>
+        &nbsp;&nbsp;1365 ÷ 3 = <b>455</b> → 4단계의 답과 정확히 일치한다.</li>
+
+        <li><b>[핵심 포인트]</b><br>
+        ① 합의 <b>배수 조건</b>은 원소 하나하나가 아니라 <b>나머지(잉여류)</b>로 분류해 다루는 것이 정석이다.<br>
+        ② 각 묶음에서 몇 장을 뽑을지를 (a, b, c)로 놓고 <b>빠짐없이 나열</b>한 뒤 조건을 거르는 습관이 중요하다. 한 경우라도 빠뜨리면 답이 크게 달라진다.<br>
+        ③ <b>동시에 뽑는다</b>는 표현은 순서를 따지지 않는다는 뜻이므로 순열이 아니라 조합이다. 여기서 ₅P₄를 쓰면 안 된다.<br>
+        ④ 세 묶음의 개수가 똑같이 나뉘는 문제에서는 <b>전체 ÷ 3</b>이라는 대칭 논법으로 빠르게 검산할 수 있다. 다만 묶음 크기가 다르면 이 논법은 성립하지 않으므로 반드시 개수를 먼저 확인해야 한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅳ. 일본어 회화 — 오늘의 한 문장</h2>
+  <p class="sec-desc">고등학교 1학년 2학기 수준 · 경험 표현</p>
+
+  <div class="jp-card">
+    <p class="jp-main">日本の 温泉に 行った ことが ありますか。</p>
+    <p class="jp-read">にほんの おんせんに いった ことが ありますか。</p>
+    <p class="jp-rom">Nihon no onsen ni itta koto ga arimasu ka.</p>
+    <p class="jp-ko">일본의 온천에 가 본 적이 있습니까?</p>
+
+    <table class="words">
+      <tr><th>한자 / 표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>日本</td><td>にほん</td><td>일본 (にっぽん으로도 읽음)</td></tr>
+      <tr><td>温泉</td><td>おんせん</td><td>온천</td></tr>
+      <tr><td>行く</td><td>いく</td><td>가다 (1그룹 동사)</td></tr>
+      <tr><td>行った</td><td>いった</td><td>갔다 (行く의 た형, 예외 활용)</td></tr>
+      <tr><td>こと</td><td>こと</td><td>것, 일 (형식 명사)</td></tr>
+      <tr><td>あります</td><td>あります</td><td>있습니다 (ある의 정중형)</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문장 설명</h4>
+      <ul>
+        <li>처음 만난 사람과 <b>화제를 열 때</b> 아주 자주 쓰는 문장이다. 여행·음식·문화 이야기로 자연스럽게 이어 갈 수 있다.</li>
+        <li>대답은 「はい、<b>あります</b>。」(네, 있습니다) / 「いいえ、<b>ありません</b>。」(아니요, 없습니다)로 한다. 「はい、そうです」로 답하지 않는 점에 주의하자. 한 번 더 이어 가려면 「一度(いちど) 行(い)った ことが あります。」(한 번 가 본 적이 있습니다)처럼 횟수를 덧붙인다.</li>
+        <li>「温泉<b>に</b> 行く」의 <b>に</b>는 <b>도착 지점·방향</b>을 나타내는 조사이다. 「へ」로 바꿔 써도 뜻이 통하지만, 목적지가 분명할 때는 に가 더 자연스럽다.</li>
+      </ul>
+    </div>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>~た ことが あります (경험)</b> — 동사의 <b>た형</b>에 「ことが あります」를 붙여 '~한 적이 있습니다'라는 <b>과거의 경험</b>을 나타낸다. 부정은 「~た ことが ありません」(~한 적이 없습니다)이다.<br>
+        · 食(た)べる → 食(た)べ<b>た ことが あります</b> (먹어 본 적이 있습니다)<br>
+        · 見(み)る → 見(み)<b>た ことが ありません</b> (본 적이 없습니다)</li>
+        <li><b>1그룹 동사의 た형 만들기</b> — 어미에 따라 소리가 바뀐다(음편).<br>
+        · く → いた : 書(か)く → 書(か)<b>いた</b> &nbsp;/&nbsp; ぐ → いだ : 泳(およ)ぐ → 泳(およ)<b>いだ</b><br>
+        · う·つ·る → った : 買(か)う → 買(か)<b>った</b>, 待(ま)つ → 待(ま)<b>った</b>, 帰(かえ)る → 帰(かえ)<b>った</b><br>
+        · ぬ·ぶ·む → んだ : 飲(の)む → 飲(の)<b>んだ</b> &nbsp;/&nbsp; す → した : 話(はな)す → 話(はな)<b>した</b></li>
+        <li><b>行く는 예외</b> — 어미가 「く」이지만 「行(い)<b>いた</b>」가 아니라 <b>行(い)った</b>가 된다. 시험에 자주 나오는 함정이므로 따로 외워 두자.</li>
+        <li><b>과거형 문장과의 차이</b> — 「日本(にほん)に 行(い)きました」는 <b>언제 있었던 하나의 사실</b>을 말하지만, 「日本(にほん)に 行(い)った ことが あります」는 <b>지금까지의 경험 유무</b>를 말한다. 그래서 어제·작년처럼 시점이 정해진 일에는 경험 표현을 쓰지 않는다.<br>
+        · (○) 去年(きょねん) 日本(にほん)に 行(い)きました。 (작년에 일본에 갔습니다.)<br>
+        · (×) 去年(きょねん) 日本(にほん)に 行(い)った ことが あります。</li>
+        <li><b>함께 쓰는 표현</b> — 횟수를 나타내는 말과 잘 어울린다.<br>
+        一度(いちど) 한 번 / 二度(にど) 두 번 / 何度(なんど)も 몇 번이나 / 一度(いちど)も ~ない 한 번도 ~않다<br>
+        「一度(いちど)も 行(い)った ことが ありません。」(한 번도 가 본 적이 없습니다.)</li>
+        <li><b>비슷한 꼴 「~ことが できます」</b> — 같은 형식 명사 こと를 쓰지만 이쪽은 <b>동사 원형</b>에 붙어 <b>가능</b>을 나타낸다.<br>
+        泳(およ)ぐ ことが できます。 (수영할 수 있습니다.) ↔ 泳(およ)いだ ことが あります。 (수영해 본 적이 있습니다.)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성일시: 2026-09-12 11:30 (Asia/Seoul) · 데일리 학습 퀴즈</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

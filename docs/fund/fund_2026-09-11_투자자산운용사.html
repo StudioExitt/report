@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>투자자산운용사 문제은행 2026-09-11</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --line:#e2e8f0; --ink:#1e293b; --sub:#64748b;
+    --brand:#1d4ed8; --brand-soft:#eff6ff; --ok:#059669; --ok-soft:#ecfdf5;
+    --no:#dc2626; --no-soft:#fef2f2; --warn:#b45309;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.65;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px;}
+  header.top{background:linear-gradient(135deg,#1d4ed8,#0ea5e9);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 20px rgba(29,78,216,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;}
+  header.top p{margin:2px 0;font-size:.9rem;opacity:.95;}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 24px;}
+  .stat{flex:1 1 120px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px;text-align:center;}
+  .stat b{display:block;font-size:1.3rem;color:var(--brand);}
+  .stat span{font-size:.78rem;color:var(--sub);}
+  section.unit{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:0 0 8px;margin-bottom:26px;overflow:hidden;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  .unit-head{background:var(--brand-soft);border-bottom:2px solid #bfdbfe;padding:14px 18px;}
+  .unit-head h2{margin:0;font-size:1.12rem;font-weight:800;color:#1e3a8a;}
+  .unit-head small{color:var(--sub);font-weight:600;}
+  .q{padding:18px;border-bottom:1px dashed var(--line);}
+  .q:last-child{border-bottom:none;}
+  .q-title{font-weight:700;margin:0 0 12px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--brand);color:#fff;border-radius:6px;
+    padding:1px 8px;font-size:.8rem;margin-right:8px;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;
+    cursor:pointer;background:#fbfdff;transition:.15s;font-size:.95rem;}
+  ul.choices li:hover{border-color:var(--brand);background:#f0f7ff;}
+  ul.choices li .mark{float:right;font-weight:800;}
+  li.correct{background:var(--ok-soft);border-color:var(--ok);color:#065f46;font-weight:600;}
+  li.wrong{background:var(--no-soft);border-color:var(--no);color:#991b1b;font-weight:600;}
+  li.locked{cursor:default;}
+  .btn{margin-top:6px;background:#fff;border:1.5px solid var(--brand);color:var(--brand);
+    border-radius:9px;padding:8px 16px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .btn:hover{background:var(--brand);color:#fff;}
+  .ans-box{display:none;margin-top:12px;border:1.5px solid #cbd5e1;border-left:6px solid var(--brand);
+    border-radius:10px;background:#f8fafc;padding:14px;}
+  .ans-box.show{display:block;}
+  .verdict{font-weight:800;margin-bottom:8px;font-size:.95rem;}
+  .verdict.ok{color:var(--ok);} .verdict.no{color:var(--no);}
+  .ans-line{font-weight:800;color:#1e3a8a;margin-bottom:8px;}
+  .exp{font-size:.9rem;color:#334155;}
+  .exp .each{margin-top:8px;padding-top:8px;border-top:1px dotted #cbd5e1;}
+  .exp .each div{margin:3px 0;}
+  footer{text-align:center;color:var(--sub);font-size:.82rem;margin-top:30px;}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 40px;} header.top h1{font-size:1.22rem;}
+    .q{padding:14px 12px;} ul.choices li{font-size:.92rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>금융투자협회 투자자산운용사 문제은행</h1>
+  <p>13개 단위 · 단위별 2문제 · 총 26문제 (4지선다)</p>
+  <p id="gen"></p>
+</header>
+
+<div class="stats">
+  <div class="stat"><b id="s-total">26</b><span>전체 문항</span></div>
+  <div class="stat"><b id="s-done">0</b><span>푼 문항</span></div>
+  <div class="stat"><b id="s-ok">0</b><span>정답</span></div>
+  <div class="stat"><b id="s-rate">0%</b><span>정답률</span></div>
+</div>
+
+<div id="root"></div>
+
+<footer>학습용 자료 · 실제 시험 문항과 다를 수 있습니다.</footer>
+</div>
+
+<script>
+const DATA = [
+{unit:"세제", items:[
+ {q:"우리나라 소득세법상 금융소득 종합과세에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["이자소득과 배당소득의 합계액이 연 2천만원을 초과하면 초과분이 종합과세된다.",
+     "비과세·분리과세 금융소득은 종합과세 기준금액 판정 시 제외한다.",
+     "2천만원 이하의 금융소득은 원천징수로 납세의무가 종결되는 것이 원칙이다.",
+     "종합과세되는 배당소득에 대해서는 이중과세 조정을 위한 배당세액공제가 적용되지 않는다."],
+  a:3,
+  e:["금융소득종합과세는 이자·배당 합계 2천만원 초과분을 다른 종합소득과 합산한다.",
+     "비과세·분리과세 금융소득은 기준금액 판정에서 제외된다.",
+     "기준금액 이하는 14%(지방세 별도) 원천징수로 분리과세 종결된다.",
+     "정답: Gross-up 대상 배당소득은 배당세액공제로 법인세와의 이중과세를 조정하므로 '적용되지 않는다'는 설명은 틀리다."]},
+ {q:"거주자의 양도소득세에 대한 설명으로 옳은 것은?",
+  c:["국내 상장주식의 소액주주 장내 양도차익은 원칙적으로 과세되지 않는다.",
+     "양도소득 기본공제는 자산 종류 구분 없이 연 500만원을 일괄 적용한다.",
+     "장기보유특별공제는 모든 부동산에 보유기간과 무관하게 적용된다.",
+     "양도차손은 어떠한 경우에도 다른 자산의 양도차익과 통산할 수 없다."],
+  a:0,
+  e:["정답: 상장주식 소액주주가 장내에서 양도하는 경우 양도소득세 과세대상이 아니다(증권거래세만 부담).",
+     "기본공제는 소득 그룹별로 각각 연 250만원이다.",
+     "장기보유특별공제는 3년 이상 보유한 토지·건물 등에 한해 적용되며 미등기자산 등은 배제된다.",
+     "동일 소득 그룹 내에서는 양도차손익 통산이 가능하다."]}
+]},
+{unit:"금융상품", items:[
+ {q:"ETF(상장지수펀드)에 대한 설명으로 가장 거리가 먼 것은?",
+  c:["거래소에 상장되어 주식처럼 실시간 매매가 가능하다.",
+     "지정참가회사(AP)의 설정·환매를 통해 시장가격과 순자산가치의 괴리가 축소된다.",
+     "일반 공모펀드보다 통상 총보수가 낮은 편이다.",
+     "ETF의 시장가격은 언제나 순자산가치(NAV)와 정확히 일치한다."],
+  a:3,
+  e:["ETF는 상장되어 장중 실시간 매매가 가능하다.",
+     "AP·LP의 차익거래로 괴리율이 축소되는 구조다.",
+     "인덱스 운용이 일반적이어서 보수가 상대적으로 낮다.",
+     "정답: 수급·유동성에 따라 프리미엄/디스카운트가 발생하므로 항상 일치하지 않는다."]},
+ {q:"ELS(주가연계증권)에 대한 설명으로 옳지 않은 것은?",
+  c:["발행사인 증권회사의 신용위험에 노출된다.",
+     "예금자보호법에 의해 원리금이 보호된다.",
+     "기초자산 가격이 일정 조건을 충족하면 조기상환될 수 있다.",
+     "낙인(Knock-In) 조건이 있는 상품은 원금손실 가능성이 있다."],
+  a:1,
+  e:["ELS는 증권사 발행 파생결합증권으로 발행사 신용위험을 부담한다.",
+     "정답: ELS는 예금이 아니므로 예금자보호 대상이 아니다.",
+     "조기상환 평가일에 조건 충족 시 조기상환된다.",
+     "낙인 발생 후 조건 미충족 시 손실이 발생할 수 있다."]}
+]},
+{unit:"부동산투자", items:[
+ {q:"부동산의 특성 중 '부동성(위치의 고정성)'에서 파생되는 현상으로 가장 적절한 것은?",
+  c:["부동산 시장이 지역시장으로 국지화된다.",
+     "부동산의 물리적 공급이 장기적으로 무한히 증가한다.",
+     "부동산이 완전 동질적 재화가 된다.",
+     "부동산 감가상각이 전혀 발생하지 않는다."],
+  a:0,
+  e:["정답: 이동이 불가능하므로 시장이 지역별로 분화되고 국지성을 갖는다.",
+     "부동성이 아니라 부증성에 의해 물리적 공급은 제약된다.",
+     "개별성으로 인해 부동산은 이질적이다.",
+     "건물은 영속성이 없어 감가상각이 발생한다."]},
+ {q:"수익환원법(직접환원법)으로 부동산 가치를 산정할 때, 순영업소득(NOI)이 6억원이고 환원이율이 5%라면 수익가액은?",
+  c:["60억원","120억원","30억원","300억원"],
+  a:1,
+  e:["60억원은 계산 착오다.",
+     "정답: 6억원 ÷ 0.05 = 120억원.",
+     "30억원은 환원이율을 20%로 본 값이다.",
+     "300억원은 환원이율을 2%로 본 값이다."]}
+]},
+{unit:"대안투자", items:[
+ {q:"PEF(사모투자합자회사)에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["무한책임사원(GP)은 회사의 업무집행을 담당한다.",
+     "유한책임사원(LP)은 출자액을 한도로 책임을 진다.",
+     "일반적으로 투자기간이 길고 유동성이 낮다.",
+     "유한책임사원은 상시적으로 투자대상 선정 및 운용에 직접 관여해야 한다."],
+  a:3,
+  e:["GP가 업무집행사원으로서 운용을 담당한다.",
+     "LP는 출자가액 한도의 유한책임을 진다.",
+     "통상 5~10년의 만기와 낮은 환금성이 특징이다.",
+     "정답: LP가 운용에 상시 관여하면 유한책임이 훼손될 수 있어 원칙적으로 관여하지 않는다."]},
+ {q:"헤지펀드 전략 중 '주식 롱숏(Equity Long/Short)' 전략에 대한 설명으로 옳은 것은?",
+  c:["저평가 종목 매수와 고평가 종목 매도를 결합해 시장위험을 일부 헤지한다.",
+     "항상 시장중립(베타=0)을 유지해야 한다.",
+     "차입을 전혀 사용하지 않는다.",
+     "채권 간 가격 괴리를 이용하는 전략이다."],
+  a:0,
+  e:["정답: 롱·숏 포지션을 결합해 종목선택 알파를 추구하고 시장위험을 축소한다.",
+     "순노출을 조정하며 반드시 베타 0은 아니다(시장중립은 별도 전략).",
+     "레버리지를 활용하는 경우가 많다.",
+     "채권 상대가치는 Fixed Income Arbitrage 전략이다."]}
+]},
+{unit:"해외증권투자", items:[
+ {q:"해외증권 투자 시 환위험에 대한 설명으로 옳지 않은 것은?",
+  c:["환헤지를 하면 환율 변동에 따른 손익 변동성을 줄일 수 있다.",
+     "선물환 매도를 통해 외화자산의 환위험을 헤지할 수 있다.",
+     "환헤지 비용은 양 통화 간 금리차와 관련이 있다.",
+     "환헤지를 100% 실행하면 현지 자산가격 변동 위험도 함께 제거된다."],
+  a:3,
+  e:["환헤지는 환율 변동성 축소 효과가 있다.",
+     "외화자산 보유자는 선물환 매도로 헤지한다.",
+     "이자율평형에 따라 금리차가 헤지비용(스왑포인트)을 결정한다.",
+     "정답: 환헤지는 환율위험만 제거할 뿐 기초자산의 가격변동 위험은 남는다."]},
+ {q:"국제분산투자의 효과에 대한 설명으로 가장 적절한 것은?",
+  c:["국가 간 상관계수가 낮을수록 분산효과가 커진다.",
+     "글로벌 금융위기 시 국가 간 상관관계는 일반적으로 낮아진다.",
+     "국제분산투자는 개별 종목의 비체계적 위험만 제거한다.",
+     "환위험은 국제분산투자에서 고려할 필요가 없다."],
+  a:0,
+  e:["정답: 상관계수가 낮을수록 포트폴리오 위험 감소 효과가 크다.",
+     "위기 시에는 상관관계가 오히려 상승(동조화)한다.",
+     "국내 기준의 체계적 위험도 일부 분산할 수 있다.",
+     "환위험은 국제투자의 핵심 고려 요소다."]}
+]},
+{unit:"투자분석(기본적·기술적)", items:[
+ {q:"어떤 기업의 ROE가 12%, 배당성향이 40%일 때 지속가능성장률(g)은?",
+  c:["4.8%","7.2%","12.0%","3.0%"],
+  a:1,
+  e:["4.8%는 ROE×배당성향으로 잘못 계산한 값이다.",
+     "정답: g = ROE × 유보율 = 12% × (1-0.4) = 7.2%.",
+     "12%는 유보율을 반영하지 않은 값이다.",
+     "3.0%는 근거가 없다."]},
+ {q:"기술적 분석에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["과거 가격과 거래량 패턴을 이용해 추세를 예측한다.",
+     "차트의 패턴이 반복된다는 가정에 기초한다.",
+     "기업의 내재가치를 재무제표로 산출하여 매매시점을 판단한다.",
+     "이동평균선, RSI 등의 지표를 활용한다."],
+  a:2,
+  e:["가격·거래량 등 시장 데이터를 활용한다.",
+     "역사적 패턴의 반복성을 전제한다.",
+     "정답: 재무제표로 내재가치를 산출하는 것은 기본적 분석이다.",
+     "이동평균, 오실레이터 등은 대표적 기술적 지표다."]}
+]},
+{unit:"리스크관리", items:[
+ {q:"VaR(Value at Risk)에 대한 설명으로 옳지 않은 것은?",
+  c:["일정 신뢰수준과 보유기간에서 발생할 수 있는 최대손실 추정치이다.",
+     "신뢰수준을 99%에서 95%로 낮추면 VaR 값은 작아진다.",
+     "VaR은 신뢰수준을 초과하는 극단손실의 크기를 알려준다.",
+     "델타-노말법, 역사적 시뮬레이션법, 몬테카를로법 등으로 측정한다."],
+  a:2,
+  e:["VaR의 정의에 부합한다.",
+     "신뢰수준이 낮아지면 임계값이 작아져 VaR도 감소한다.",
+     "정답: 꼬리손실의 크기는 VaR이 아니라 기대손실(ES/CVaR)이 알려준다.",
+     "대표적인 세 가지 VaR 측정방법이다."]},
+ {q:"위험의 유형에 대한 연결이 가장 적절하지 않은 것은?",
+  c:["시장위험 – 금리·주가·환율 변동에 따른 손실 위험",
+     "신용위험 – 거래상대방의 채무불이행 위험",
+     "유동성위험 – 내부통제 실패나 시스템 오류로 인한 손실 위험",
+     "운영위험 – 부적절한 내부프로세스·인력·시스템 및 외부사건으로 인한 위험"],
+  a:2,
+  e:["시장위험의 정의로 적절하다.",
+     "신용위험의 정의로 적절하다.",
+     "정답: 내부통제 실패·시스템 오류는 운영위험이며, 유동성위험은 적정가격에 청산·자금조달이 어려운 위험이다.",
+     "바젤의 운영위험 정의와 일치한다."]}
+]},
+{unit:"직무윤리", items:[
+ {q:"금융투자업 종사자의 직무윤리 중 '신임의무(Fiduciary Duty)'와 가장 거리가 먼 것은?",
+  c:["선량한 관리자로서의 주의의무",
+     "충실의무(고객 이익 우선)",
+     "이해상충 발생 시 회사 이익을 우선할 의무",
+     "고객에 대한 정보의 비밀유지"],
+  a:2,
+  e:["선관주의의무는 신임의무의 핵심이다.",
+     "충실의무로서 고객이익을 최우선한다.",
+     "정답: 이해상충 시에는 고객이익을 우선해야 하며 회사 이익을 우선할 수 없다.",
+     "비밀유지의무 역시 신임관계에서 도출된다."]},
+ {q:"금융소비자보호와 관련된 설명으로 옳지 않은 것은?",
+  c:["적합성 원칙에 따라 일반금융소비자의 정보를 파악하고 부적합한 상품을 권유해서는 안 된다.",
+     "설명의무 위반으로 손해가 발생한 경우 손해배상책임이 발생할 수 있다.",
+     "불확실한 사항에 대해 단정적 판단을 제공하는 행위는 금지된다.",
+     "요청하지 않은 투자권유를 방문·전화로 하는 행위는 모든 상품에서 자유롭게 허용된다."],
+  a:3,
+  e:["적합성 원칙의 내용이다.",
+     "설명의무 위반 시 손해배상책임(입증책임 전환 포함)이 인정된다.",
+     "단정적 판단 제공은 금지행위다.",
+     "정답: 불초청 권유는 원칙적으로 금지되며 예외적으로만 허용된다."]}
+]},
+{unit:"법규(자본시장법)", items:[
+ {q:"자본시장법상 집합투자업자의 영업행위 규칙에 대한 설명으로 옳지 않은 것은?",
+  c:["집합투자재산을 신탁업자에게 보관·관리하도록 해야 한다.",
+     "자기 또는 관계인수인이 인수한 증권을 집합투자재산으로 매수하는 행위는 제한된다.",
+     "집합투자재산 운용 시 자산운용보고서를 투자자에게 교부해야 한다.",
+     "집합투자업자는 고유재산과 집합투자재산을 자유롭게 거래할 수 있다."],
+  a:3,
+  e:["집합투자재산은 신탁업자가 보관·관리한다.",
+     "이해관계인과의 거래 제한 규정에 해당한다.",
+     "원칙적으로 3개월마다 자산운용보고서를 교부한다.",
+     "정답: 고유재산과 집합투자재산 간 거래는 원칙적으로 금지된다."]},
+ {q:"자본시장법상 '전문투자자'에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["국가, 한국은행, 금융기관 등은 전문투자자에 해당한다.",
+     "전문투자자에 대해서는 설명의무 등 일부 투자자보호 규제가 완화된다.",
+     "일정 요건을 갖춘 일반투자자는 전문투자자로 전환을 신청할 수 있다.",
+     "전문투자자는 어떠한 경우에도 일반투자자로 대우받을 수 없다."],
+  a:3,
+  e:["법령상 절대적 전문투자자에 해당한다.",
+     "전문투자자에게는 적합성·설명의무 등이 적용되지 않거나 완화된다.",
+     "요건 충족 시 전문투자자 전환이 가능하다.",
+     "정답: 일부 전문투자자는 서면 요청으로 일반투자자 대우를 받을 수 있다."]}
+]},
+{unit:"주식투자", items:[
+ {q:"배당평가모형(항상성장모형)에서 다음 기 배당 D1=1,000원, 요구수익률 10%, 성장률 4%일 때 주식의 이론가격은?",
+  c:["10,000원","16,667원","25,000원","14,286원"],
+  a:1,
+  e:["10,000원은 성장률을 반영하지 않은 값이다.",
+     "정답: 1,000 ÷ (0.10-0.04) = 16,666.7원.",
+     "25,000원은 할인율 4%를 적용한 오답이다.",
+     "14,286원은 할인율 7%를 적용한 오답이다."]},
+ {q:"PER(주가수익비율)에 대한 설명으로 옳지 않은 것은?",
+  c:["주가를 주당순이익으로 나눈 값이다.",
+     "이익 성장성이 높을수록 일반적으로 PER이 높게 형성된다.",
+     "당기순이익이 적자인 기업에도 PER 지표를 유용하게 적용할 수 있다.",
+     "동일 업종 내 상대비교에 주로 활용된다."],
+  a:2,
+  e:["PER = 주가 ÷ EPS.",
+     "성장성이 높으면 고PER이 정당화될 수 있다.",
+     "정답: EPS가 음수이면 PER 산출이 무의미하여 PBR·EV/EBITDA 등을 사용한다.",
+     "상대가치평가의 대표적 지표다."]}
+]},
+{unit:"채권투자", items:[
+ {q:"채권의 듀레이션에 대한 설명으로 옳지 않은 것은?",
+  c:["다른 조건이 같다면 만기가 길수록 듀레이션은 길어진다.",
+     "표면이자율이 높을수록 듀레이션은 짧아진다.",
+     "무이표채의 듀레이션은 잔존만기와 같다.",
+     "시장이자율이 상승하면 듀레이션은 길어진다."],
+  a:3,
+  e:["만기와 듀레이션은 정(+)의 관계다.",
+     "쿠폰이 클수록 현금흐름 회수가 빨라 듀레이션이 짧아진다.",
+     "할인채는 만기 시 단일 현금흐름이므로 듀레이션=만기.",
+     "정답: 시장이자율이 상승하면 듀레이션은 짧아진다."]},
+ {q:"수정듀레이션이 4.0인 채권의 시장수익률이 0.5%p 상승할 때, 볼록성을 고려하지 않은 채권가격의 근사 변화율은?",
+  c:["-2.0%","+2.0%","-0.5%","-4.0%"],
+  a:0,
+  e:["정답: -수정듀레이션 × Δy = -4.0 × 0.5% = -2.0%.",
+     "금리 상승 시 가격은 하락한다.",
+     "-0.5%는 듀레이션을 반영하지 않은 값이다.",
+     "-4.0%는 금리변동 1%p를 가정한 값이다."]}
+]},
+{unit:"파생상품투자", items:[
+ {q:"주가지수선물의 이론가격이 현물가격보다 높게 형성되는 일반적인 이유로 가장 적절한 것은?",
+  c:["보유비용(이자비용)이 배당수익률보다 크기 때문",
+     "배당수익률이 이자율보다 크기 때문",
+     "선물의 거래비용이 현물보다 낮기 때문",
+     "선물의 만기가 짧기 때문"],
+  a:0,
+  e:["정답: F = S×(1+(r-d)×t)이므로 r>d이면 콘탱고(선물>현물)가 된다.",
+     "d>r이면 백워데이션이 나타난다.",
+     "거래비용은 이론가격 산식의 핵심 변수가 아니다.",
+     "만기가 짧으면 오히려 베이시스가 축소된다."]},
+ {q:"옵션 민감도(그릭)에 대한 설명으로 옳지 않은 것은?",
+  c:["델타는 기초자산 가격 변화에 대한 옵션가격의 변화분이다.",
+     "감마는 기초자산 가격 변화에 대한 델타의 변화분이다.",
+     "세타는 시간 경과에 따른 옵션가격의 변화분이며, 매수 포지션에서는 일반적으로 음(-)이다.",
+     "베가는 이자율 변화에 대한 옵션가격의 민감도이다."],
+  a:3,
+  e:["델타의 정의로 옳다.",
+     "감마의 정의로 옳다.",
+     "시간가치 감소로 옵션 매수자는 세타가 음수다.",
+     "정답: 베가는 변동성 민감도이며, 이자율 민감도는 로(Rho)이다."]}
+]},
+{unit:"포트폴리오 성과분석", items:[
+ {q:"포트폴리오 수익률 12%, 무위험수익률 3%, 표준편차 15%일 때 샤프지수(Sharpe ratio)는?",
+  c:["0.60","0.80","0.20","1.20"],
+  a:0,
+  e:["정답: (12%-3%) ÷ 15% = 0.60.",
+     "0.80은 표준편차를 11.25%로 본 값이다.",
+     "0.20은 초과수익률을 3%로 본 오답이다.",
+     "1.20은 무위험이자율을 차감하지 않은 값에 가깝다."]},
+ {q:"성과평가지표에 대한 설명으로 옳지 않은 것은?",
+  c:["트레이너지수는 초과수익률을 베타로 나눈 값이다.",
+     "젠센의 알파는 CAPM 균형수익률을 초과하는 성과를 의미한다.",
+     "정보비율은 초과수익률을 추적오차로 나눈 값이다.",
+     "샤프지수는 체계적 위험만을 반영한 지표이다."],
+  a:3,
+  e:["트레이너지수 = (Rp-Rf)/βp.",
+     "젠센알파 = Rp - [Rf + βp(Rm-Rf)].",
+     "정보비율 = 초과수익률 / 트래킹에러.",
+     "정답: 샤프지수는 총위험(표준편차)을 사용하며, 체계적 위험만 쓰는 것은 트레이너지수다."]}
+]}
+];
+
+const LB=["①","②","③","④"];
+let idx=0, done=0, ok=0, total=0;
+const root=document.getElementById('root');
+
+DATA.forEach(function(u){
+  const sec=document.createElement('section');
+  sec.className='unit';
+  sec.innerHTML='<div class="unit-head"><h2>'+u.unit+' <small>('+u.items.length+'문항)</small></h2></div>';
+  u.items.forEach(function(it){
+    idx++; total++;
+    const n=idx;
+    const div=document.createElement('div');
+    div.className='q';
+    let html='<p class="q-title"><span class="num">Q'+n+'</span>'+it.q+'</p><ul class="choices" id="ch'+n+'">';
+    it.c.forEach(function(c,i){ html+='<li data-i="'+i+'">'+LB[i]+' '+c+'</li>'; });
+    html+='</ul><button class="btn" id="bt'+n+'">정답 보기</button>';
+    html+='<div class="ans-box" id="ab'+n+'"><div class="verdict" id="vd'+n+'"></div>'+
+          '<div class="ans-line">정답: '+LB[it.a]+' '+it.c[it.a]+'</div><div class="exp"><div class="each">';
+    it.e.forEach(function(e,i){ html+='<div><b>'+LB[i]+'</b> '+e+'</div>'; });
+    html+='</div></div></div>';
+    div.innerHTML=html;
+    sec.appendChild(div);
+
+    setTimeout(function(){
+      const ul=document.getElementById('ch'+n), box=document.getElementById('ab'+n),
+            vd=document.getElementById('vd'+n), bt=document.getElementById('bt'+n);
+      let answered=false;
+      function reveal(sel){
+        box.classList.add('show');
+        Array.prototype.forEach.call(ul.children,function(li){
+          const i=+li.dataset.i;
+          li.classList.add('locked');
+          if(i===it.a) li.classList.add('correct');
+          if(sel!==null && i===sel && i!==it.a) li.classList.add('wrong');
+          if(i===it.a && !li.querySelector('.mark')) li.insertAdjacentHTML('afterbegin','<span class="mark">✔ 정답</span>');
+          if(sel!==null && i===sel && i!==it.a) li.insertAdjacentHTML('afterbegin','<span class="mark">✘ 선택</span>');
+        });
+        if(sel===null){ vd.textContent='정답과 해설을 확인하세요.'; vd.className='verdict'; }
+        else if(sel===it.a){ vd.textContent='⭕ 정답입니다!'; vd.className='verdict ok'; }
+        else { vd.textContent='❌ 오답입니다. (선택: '+LB[sel]+' / 정답: '+LB[it.a]+')'; vd.className='verdict no'; }
+        bt.textContent='해설 접기';
+      }
+      Array.prototype.forEach.call(ul.children,function(li){
+        li.addEventListener('click',function(){
+          if(answered) return;
+          answered=true;
+          const sel=+li.dataset.i;
+          done++; if(sel===it.a) ok++;
+          upd(); reveal(sel);
+        });
+      });
+      bt.addEventListener('click',function(){
+        if(box.classList.contains('show')){ box.classList.remove('show'); bt.textContent='정답 보기'; return; }
+        if(!answered){ answered=true; done++; upd(); reveal(null); }
+        else { box.classList.add('show'); bt.textContent='해설 접기'; }
+      });
+    },0);
+  });
+  root.appendChild(sec);
+});
+
+function upd(){
+  document.getElementById('s-done').textContent=done;
+  document.getElementById('s-ok').textContent=ok;
+  document.getElementById('s-rate').textContent=(done?Math.round(ok/done*100):0)+'%';
+}
+document.getElementById('s-total').textContent=total;
+
+(function(){
+  const d=new Date();
+  const p=function(x){return String(x).padStart(2,'0')};
+  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  document.getElementById('gen').textContent='생성일시: '+d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+
+    ' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())+' ('+tz+')';
+})();
+</script>
+</body>
+</html>
