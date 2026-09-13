@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>투자자산운용사 문제은행 2026-09-13</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --line:#e2e8f0; --ink:#1e293b; --sub:#64748b;
+    --brand:#1d4ed8; --brand-soft:#eff6ff; --ok:#059669; --ok-soft:#ecfdf5;
+    --no:#dc2626; --no-soft:#fef2f2; --warn:#b45309;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.65;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px;}
+  header.top{background:linear-gradient(135deg,#1d4ed8,#0ea5e9);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 20px rgba(29,78,216,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;}
+  header.top p{margin:2px 0;font-size:.9rem;opacity:.95;}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 24px;}
+  .stat{flex:1 1 120px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px;text-align:center;}
+  .stat b{display:block;font-size:1.3rem;color:var(--brand);}
+  .stat span{font-size:.78rem;color:var(--sub);}
+  section.unit{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:0 0 8px;margin-bottom:26px;overflow:hidden;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  .unit-head{background:var(--brand-soft);border-bottom:2px solid #bfdbfe;padding:14px 18px;}
+  .unit-head h2{margin:0;font-size:1.12rem;font-weight:800;color:#1e3a8a;}
+  .unit-head small{color:var(--sub);font-weight:600;}
+  .q{padding:18px;border-bottom:1px dashed var(--line);}
+  .q:last-child{border-bottom:none;}
+  .q-title{font-weight:700;margin:0 0 12px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--brand);color:#fff;border-radius:6px;
+    padding:1px 8px;font-size:.8rem;margin-right:8px;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;
+    cursor:pointer;background:#fbfdff;transition:.15s;font-size:.95rem;}
+  ul.choices li:hover{border-color:var(--brand);background:#f0f7ff;}
+  ul.choices li .mark{float:right;font-weight:800;}
+  li.correct{background:var(--ok-soft);border-color:var(--ok);color:#065f46;font-weight:600;}
+  li.wrong{background:var(--no-soft);border-color:var(--no);color:#991b1b;font-weight:600;}
+  li.locked{cursor:default;}
+  .btn{margin-top:6px;background:#fff;border:1.5px solid var(--brand);color:var(--brand);
+    border-radius:9px;padding:8px 16px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .btn:hover{background:var(--brand);color:#fff;}
+  .ans-box{display:none;margin-top:12px;border:1.5px solid #cbd5e1;border-left:6px solid var(--brand);
+    border-radius:10px;background:#f8fafc;padding:14px;}
+  .ans-box.show{display:block;}
+  .verdict{font-weight:800;margin-bottom:8px;font-size:.95rem;}
+  .verdict.ok{color:var(--ok);} .verdict.no{color:var(--no);}
+  .ans-line{font-weight:800;color:#1e3a8a;margin-bottom:8px;}
+  .exp{font-size:.9rem;color:#334155;}
+  .exp .each{margin-top:8px;padding-top:8px;border-top:1px dotted #cbd5e1;}
+  .exp .each div{margin:3px 0;}
+  .tip{margin-top:10px;background:#fffbeb;border:1px solid #fcd34d;border-left:6px solid #f59e0b;
+    border-radius:10px;padding:11px 13px;font-size:.88rem;color:#7c2d12;}
+  .tip b{display:block;color:#92400e;margin-bottom:4px;font-size:.86rem;}
+  footer{text-align:center;color:var(--sub);font-size:.82rem;margin-top:30px;}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 40px;} header.top h1{font-size:1.22rem;}
+    .q{padding:14px 12px;} ul.choices li{font-size:.92rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>금융투자협회 투자자산운용사 문제은행</h1>
+  <p>13개 단위 · 단위별 2문제 · 총 26문제 (4지선다)</p>
+  <p id="gen"></p>
+</header>
+
+<div class="stats">
+  <div class="stat"><b id="s-total">26</b><span>전체 문항</span></div>
+  <div class="stat"><b id="s-done">0</b><span>푼 문항</span></div>
+  <div class="stat"><b id="s-ok">0</b><span>정답</span></div>
+  <div class="stat"><b id="s-rate">0%</b><span>정답률</span></div>
+</div>
+
+<div id="root"></div>
+
+<footer>학습용 자료 · 실제 시험 문항과 다를 수 있습니다.</footer>
+</div>
+
+<script>
+const DATA = [
+{unit:"세제", items:[
+ {q:"우리나라 소득세법상 '분리과세'되는 소득으로 가장 거리가 먼 것은?",
+  c:["일용근로자의 근로소득","연 2천만원 이하의 국내 이자·배당소득","복권 당첨금 등 기타소득 중 무조건 분리과세 대상","사업소득 중 부동산임대소득"],
+  a:3,
+  e:["일용근로소득은 6% 세율로 원천징수되어 분리과세로 종결된다.",
+     "금융소득 2천만원 이하는 14% 원천징수로 분리과세된다.",
+     "복권당첨금은 금액에 관계없이 무조건 분리과세(3억 초과분 30%) 대상이다.",
+     "정답: 부동산임대소득은 사업소득으로 종합소득에 합산과세된다. 다만 주택임대수입 2천만원 이하인 경우 분리과세를 선택할 수 있을 뿐 원칙은 종합과세다."],
+  tip:"종합소득 = 이자·배당·사업·근로·연금·기타소득 6가지. 이 중 분리과세로 끝나는 대표 사례는 ①일용근로 ②2천만원 이하 금융소득 ③1,500만원 이하 사적연금(선택) ④300만원 이하 기타소득(선택) ⑤복권·승마 등 무조건 분리과세다."},
+ {q:"상속세와 증여세를 비교한 설명으로 옳지 않은 것은?",
+  c:["상속세는 유산세 방식, 증여세는 유산취득세 방식을 기본으로 한다.",
+     "두 세목 모두 10%~50%의 5단계 초과누진세율을 적용한다.",
+     "상속세 신고기한은 상속개시일이 속하는 달의 말일부터 6개월 이내이다.",
+     "증여재산공제는 증여자별로 10년간 합산하지 않고 매 건마다 새로 적용된다."],
+  a:3,
+  e:["상속세는 피상속인의 유산총액 기준(유산세), 증여세는 수증자가 받은 재산 기준(유산취득세)이다.",
+     "세율 체계는 1억 이하 10%부터 30억 초과 50%까지 동일하다.",
+     "상속세 신고기한은 6개월(비거주자 9개월), 증여세는 3개월이다.",
+     "정답: 증여재산공제(배우자 6억, 직계존비속 5천만원 등)는 10년간 합산하여 한도를 적용한다. 매 건 새로 적용되지 않는다."],
+  tip:"10년 합산 규정은 증여세 회피를 막는 핵심 장치다. 또한 상속개시일 전 10년(상속인)·5년(상속인 외) 이내 사전증여재산은 상속재산에 가산되고, 이미 낸 증여세는 증여세액공제로 차감된다."}
+]},
+{unit:"금융상품", items:[
+ {q:"연금저축계좌와 개인형퇴직연금(IRP)에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["연금저축과 IRP를 합산한 세액공제 한도는 연 900만원이다.",
+     "IRP는 위험자산(주식형 등)에 적립금의 100%까지 투자할 수 있다.",
+     "연금수령 시에는 연령에 따라 3.3%~5.5%의 연금소득세가 원천징수된다.",
+     "연금저축 단독으로는 연 600만원까지 세액공제를 받을 수 있다."],
+  a:1,
+  e:["연금저축 600만원 + IRP 추가 300만원 = 총 900만원 한도가 맞다.",
+     "정답: IRP는 퇴직연금 규제에 따라 위험자산 투자한도가 적립금의 70%로 제한된다. 100% 투자는 불가하다.",
+     "연금수령 시 70세 미만 5.5%, 70~79세 4.4%, 80세 이상 3.3%가 적용된다.",
+     "연금저축 단독 세액공제 한도는 600만원이다."],
+  tip:"세액공제율은 총급여 5,500만원(종합소득 4,500만원) 이하 16.5%, 초과 시 13.2%다. 단 안전자산으로 분류되는 TDF(생애주기펀드)는 70% 한도 규제에서 예외로 인정되어 100% 편입이 가능하다."},
+ {q:"주택연금(주택담보노후연금)에 대한 설명으로 옳지 않은 것은?",
+  c:["부부 중 연장자가 만 55세 이상이면 가입할 수 있다.",
+     "가입자가 사망하면 배우자에게 동일 금액으로 연금이 승계된다.",
+     "연금 수령 총액이 주택 처분가액을 초과하면 상속인에게 차액을 청구한다.",
+     "한국주택금융공사가 연금 지급을 보증한다."],
+  a:2,
+  e:["2020년 이후 가입연령이 만 55세로 낮아졌다.",
+     "신탁방식 가입 시 배우자에게 자동 승계되며 금액도 동일하다.",
+     "정답: 주택연금은 비소구(non-recourse) 구조로, 수령액이 처분가액을 초과해도 상속인에게 추가 청구하지 않는다. 반대로 남으면 상속인에게 돌려준다.",
+     "HF(주택금융공사)의 보증으로 금융기관이 연금을 지급한다."],
+  tip:"주택연금은 '역모기지'로, 장수위험과 주택가격 하락위험을 공사가 부담한다. 가입 가능 주택가격은 공시가격 12억원 이하이며, 지급방식은 종신지급형·확정기간형·대출상환형·우대형으로 구분된다."}
+]},
+{unit:"부동산", items:[
+ {q:"부동산 감정평가 3방식과 그 시산가액의 연결로 옳지 않은 것은?",
+  c:["원가방식 - 복성가격(적산가액)","비교방식 - 비준가격(유추가액)","수익방식 - 수익가격(수익가액)","비교방식 - 적산임료"],
+  a:3,
+  e:["원가법에 의한 시산가액은 적산가액(복성가격)이다.",
+     "거래사례비교법에 의한 시산가액은 비준가격이다.",
+     "수익환원법에 의한 시산가액은 수익가액이다.",
+     "정답: 적산임료는 임대료를 구하는 '적산법(원가방식)'의 결과다. 비교방식의 임료는 비준임료다."],
+  tip:"3방식 6방법: 가격은 원가법·거래사례비교법·수익환원법, 임료는 적산법·임대사례비교법·수익분석법. 감정평가에 관한 규칙상 토지는 공시지가기준법, 건물은 원가법이 주된 방법이다."},
+ {q:"어떤 상업용 부동산의 가능총소득이 10억원, 공실 및 대손충당금이 1억원, 영업경비가 3억원일 때 순영업소득(NOI)은?",
+  c:["6억원","7억원","9억원","10억원"],
+  a:0,
+  e:["정답: 유효총소득 = 10억 - 1억 = 9억원, NOI = 9억 - 3억(영업경비) = 6억원이다.",
+     "7억원은 영업경비를 2억으로 계산한 오답이다.",
+     "9억원은 유효총소득(EGI)이며 영업경비를 차감하지 않은 값이다.",
+     "10억원은 가능총소득(PGI)이다."],
+  tip:"현금흐름 단계: PGI → (-공실/대손) EGI → (-영업경비) NOI → (-부채상환액 DS) 세전현금흐름(BTCF) → (-영업소득세) 세후현금흐름(ATCF). 영업경비에 감가상각비·부채상환액·소득세는 포함하지 않는 점이 자주 출제된다."}
+]},
+{unit:"대안투자", items:[
+ {q:"부동산투자회사(REITs)에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["자기관리 리츠는 실체가 있는 회사로 상근 임직원을 둔다.",
+     "위탁관리 리츠는 명목회사로 자산관리회사(AMC)에 자산운용을 위탁한다.",
+     "배당가능이익의 90% 이상을 배당하면 법인세 소득공제 혜택을 받을 수 있다.",
+     "자기관리 리츠도 배당요건 충족 시 배당금에 대한 법인세 소득공제를 받는다."],
+  a:3,
+  e:["자기관리 리츠는 자산운용 전문인력을 두고 직접 운용하는 실체회사다.",
+     "위탁관리·CR리츠는 페이퍼컴퍼니로 AMC에 위탁한다.",
+     "90% 이상 배당 시 지급배당금 소득공제를 적용한다.",
+     "정답: 자기관리 리츠는 실체회사이므로 지급배당 소득공제 대상에서 제외되어 법인세를 부담한다."],
+  tip:"리츠 최저자본금은 자기관리 70억원, 위탁관리·CR 50억원. 1인당 주식소유한도는 발행주식총수의 50%이며, 영업인가 후 2년 내 발행주식의 30% 이상을 일반에 공모해야 한다."},
+ {q:"특별자산펀드의 대표적 투자대상인 '선박펀드'와 '인프라펀드'에 대한 설명으로 옳지 않은 것은?",
+  c:["인프라펀드는 사회기반시설에 투자하여 장기간 안정적 현금흐름을 추구한다.",
+     "선박펀드는 용선료 수입이 주된 현금흐름원이다.",
+     "인프라 사업의 MRG(최소운영수입보장)는 사업의 수요위험을 낮추는 장치다.",
+     "특별자산펀드는 반드시 환매금지형(폐쇄형)으로 설정할 필요가 없다."],
+  a:3,
+  e:["인프라(도로·항만·발전 등)는 장기·안정 현금흐름이 특징이다.",
+     "선박펀드는 선박을 매입해 해운사에 빌려주고 용선료를 받는다.",
+     "MRG는 실제 수입이 협약수입에 미달할 때 정부가 보전해 주는 장치다.",
+     "정답: 시가 산정이 곤란한 자산(부동산·특별자산)에 자산총액의 50%를 초과 투자하는 펀드는 환매금지형으로 설정해야 한다."],
+  tip:"환매금지형 의무 설정 대상: ①부동산펀드 ②특별자산펀드 ③혼합자산펀드 ④각 펀드 자산총액의 20%를 초과하여 시장성 없는 자산에 투자하는 펀드. 폐쇄형은 설정일로부터 90일 이내 상장 의무가 있다."}
+]},
+{unit:"해외증권", items:[
+ {q:"해외투자 시 통화선도(선물환)를 이용한 환헤지에 대한 설명으로 옳은 것은?",
+  c:["이자율평형이론상 고금리 통화는 선물환에서 할증(프리미엄)된다.",
+     "100% 환헤지를 하면 해외자산의 가격변동위험까지 제거된다.",
+     "환헤지 비율이 높을수록 헤지비용과 만기 롤오버 위험이 커진다.",
+     "환헤지를 하면 항상 헤지하지 않은 경우보다 수익률이 높아진다."],
+  a:2,
+  e:["틀린 서술이다. 이자율평형이론상 고금리 통화는 선물환에서 할인(discount), 저금리 통화는 할증(premium)된다.",
+     "환헤지는 환위험만 제거하며 기초자산 가격변동위험은 남는다.",
+     "정답: 헤지비율이 높을수록 선물환 스프레드 비용과 만기 시 롤오버(연장) 부담, 증거금 관리 부담이 커진다.",
+     "환율이 헤지 방향과 반대로 움직이면 헤지가 오히려 손실이 된다."],
+  tip:"환헤지의 숨은 위험은 '오버헤지'다. 해외주식은 가격이 변동하므로 평가금액이 늘면 헤지가 부족(언더헤지), 줄면 초과(오버헤지)가 된다. 그래서 주식형은 부분헤지, 채권형은 전액헤지를 선호하는 것이 일반적이다."},
+ {q:"신흥시장(Emerging Market) 투자의 위험으로 가장 거리가 먼 것은?",
+  c:["정치적 불안정에 따른 국가위험(country risk)","자본송금 제한 등 자본통제 위험","거래량 부족에 따른 유동성 위험","선진국 대비 낮은 주가 변동성 위험"],
+  a:3,
+  e:["정권 교체·국유화 등 국가위험이 크다.",
+     "이익 송금 제한·외환통제 등의 위험이 존재한다.",
+     "시장 규모가 작아 유동성 위험이 크다.",
+     "정답: 신흥시장은 선진시장보다 변동성이 '높다'. 낮은 변동성은 신흥시장의 위험 요인이 될 수 없다."],
+  tip:"신흥시장 투자 매력은 높은 성장성과 선진시장과의 상대적으로 낮은 상관관계에 따른 분산효과다. 다만 위기 시에는 상관계수가 1에 수렴하며 동반 급락하는 경향이 있어 분산효과가 가장 필요한 국면에서 사라진다는 점이 한계다."}
+]},
+{unit:"투자분석", items:[
+ {q:"EV/EBITDA 배수에 대한 설명으로 옳지 않은 것은?",
+  c:["EV는 시가총액에 순차입금을 더하여 산출한다.",
+     "감가상각 정책이나 자본구조 차이의 영향을 PER보다 덜 받는다.",
+     "적자기업이나 감가상각비가 큰 장치산업 평가에 유용하다.",
+     "EV/EBITDA가 높을수록 기업이 저평가된 것으로 해석한다."],
+  a:3,
+  e:["EV = 시가총액 + 순차입금(총차입금 - 현금성자산).",
+     "EBITDA는 이자·세금·상각 전 이익이므로 회계정책과 자본구조 영향이 작다.",
+     "당기순이익이 적자여도 EBITDA는 양(+)일 수 있어 평가가 가능하다.",
+     "정답: 배수가 '낮을수록' 저평가로 본다. 높을수록 고평가다."],
+  tip:"EV/EBITDA의 역수는 대략 투자원금 회수기간을 의미한다. 예컨대 배수 5배는 기업 인수 후 영업현금흐름으로 5년이면 인수대금을 회수한다는 의미로, M&A 실무에서 널리 쓰인다."},
+ {q:"어느 기업의 당기순이익이 100억원, 발행주식수 1,000만주, 현재 주가가 20,000원이다. 이 기업의 PER은?",
+  c:["10배","20배","2배","200배"],
+  a:1,
+  e:["10배는 EPS를 2,000원이 아닌 다른 값으로 계산한 오답이다.",
+     "정답: EPS = 100억 ÷ 1,000만주 = 1,000원. PER = 20,000 ÷ 1,000 = 20배다.",
+     "2배는 시가총액과 순이익의 관계를 잘못 계산한 값이다.",
+     "200배는 EPS를 100원으로 잘못 본 경우다."],
+  tip:"시가총액(2,000억원) ÷ 당기순이익(100억원) = 20배로 계산해도 동일하다. PER은 이익의 질을 반영하지 못하므로, 일회성 이익이 포함된 해에는 PER이 낮아 보이는 착시가 발생한다는 점에 주의해야 한다."}
+]},
+{unit:"리스크관리", items:[
+ {q:"VaR 측정방법에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["델타-노말법은 수익률의 정규분포를 가정하며 계산이 간편하다.",
+     "역사적 시뮬레이션은 특정 분포를 가정하지 않고 과거 실제 자료를 사용한다.",
+     "몬테카를로 시뮬레이션은 비선형 상품 평가에 적합하나 계산비용이 크다.",
+     "델타-노말법은 옵션 등 비선형 상품의 위험을 정확히 측정한다."],
+  a:3,
+  e:["델타-노말(분산-공분산)법은 정규분포 가정하에 선형 근사로 계산한다.",
+     "역사적 시뮬레이션은 과거 데이터를 그대로 재현하므로 분포 가정이 불필요하다.",
+     "몬테카를로법은 유연하지만 연산 부담과 모형위험이 크다.",
+     "정답: 델타-노말법은 선형 근사이므로 옵션의 감마(볼록성) 효과를 반영하지 못해 비선형 상품 측정에 부적합하다."],
+  tip:"보완지표로 델타-감마 근사, 그리고 VaR을 초과하는 손실의 평균인 기대손실(ES, CVaR)이 쓰인다. 바젤 규제도 시장위험 자본규제 기준을 VaR에서 ES(97.5% 신뢰수준)로 전환했다."},
+ {q:"위기상황분석(Stress Test)에 대한 설명으로 옳지 않은 것은?",
+  c:["VaR이 포착하지 못하는 극단적 사건의 영향을 평가한다.",
+     "역사적 시나리오와 가상 시나리오를 모두 활용할 수 있다.",
+     "발생 확률을 제시하기 어렵다는 한계가 있다.",
+     "정상적인 시장 상황에서의 일상적 손실 수준을 측정하는 기법이다."],
+  a:3,
+  e:["꼬리위험(tail risk)을 보완하는 것이 스트레스 테스트의 목적이다.",
+     "1997년 외환위기, 2008년 금융위기 같은 실제 사건과 가상 충격을 모두 쓴다.",
+     "확률을 부여하지 않고 '만약 ~라면'을 보는 방식이므로 확률 제시가 어렵다.",
+     "정답: 정상 시장의 일상적 손실은 VaR의 영역이다. 스트레스 테스트는 비정상적·극단적 상황을 다룬다."],
+  tip:"VaR과 스트레스 테스트는 보완관계다. VaR은 '평상시 99% 구간의 최대손실', 스트레스 테스트는 '그 1%의 꼬리에서 무슨 일이 벌어지는가'를 본다. 위기 시 상관계수 급등(correlation breakdown)을 시나리오에 반영하는 것이 실무의 핵심이다."}
+]},
+{unit:"직무윤리", items:[
+ {q:"금융투자업 종사자의 '이해상충 방지의무'에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["이해상충 발생 가능성을 파악·평가하고 투자자에게 미리 알려야 한다.",
+     "이해상충 가능성을 낮추기 어려운 경우 거래를 해서는 안 된다.",
+     "정보교류 차단장치(Chinese Wall) 구축은 이해상충 방지의 대표적 수단이다.",
+     "투자자에게 이해상충 사실을 알리기만 하면 낮추지 않고 거래할 수 있다."],
+  a:3,
+  e:["자본시장법상 파악·평가·공시 의무가 규정되어 있다.",
+     "낮출 수 없으면 거래 자체가 금지된다(거래 회피).",
+     "부서 간 정보교류 차단은 필수 통제장치다.",
+     "정답: 알린 후 '투자자 보호에 문제가 없는 수준으로 낮춘 뒤' 거래해야 한다. 고지만으로는 부족하다."],
+  tip:"3단계 원칙으로 외우면 좋다: ①공시(Disclosure) → ②회피 수준까지 낮추기(Control) → ③불가 시 거래 포기(Avoid). 순서를 바꾸어 '고지만 하면 된다'로 제시하는 것이 전형적인 오답 유형이다."},
+ {q:"금융투자회사의 준법감시인에 대한 설명으로 옳지 않은 것은?",
+  c:["이사회 결의를 거쳐 임면하며 사내이사 또는 업무집행책임자 중에서 선임한다.",
+     "임기는 2년 이상으로 한다.",
+     "준법감시인은 영업·자산운용 업무를 겸직할 수 없다.",
+     "준법감시인 해임은 이사회 출석이사 과반수 찬성으로 가능하다."],
+  a:3,
+  e:["사내이사 또는 업무집행책임자 중에서 이사회 결의로 임면한다.",
+     "임기는 2년 이상으로 신분이 보장된다.",
+     "독립성 확보를 위해 영업·운용·자산관리 등 겸직이 금지된다.",
+     "정답: 해임은 이사 총수의 3분의 2 이상 찬성이라는 가중요건이 필요하다."],
+  tip:"준법감시(Compliance)는 사전예방, 내부감사는 사후적발이라는 점에서 구분된다. 준법감시인의 신분보장 장치(2년 임기, 3분의 2 해임요건, 겸직금지)는 독립성 확보 목적이며 시험 단골 포인트다."}
+]},
+{unit:"법규", items:[
+ {q:"자본시장법상 투자자문업과 투자일임업에 대한 설명으로 옳지 않은 것은?",
+  c:["투자자문업은 금융투자상품의 가치나 투자판단에 관한 자문에 응하는 업이다.",
+     "투자일임업은 투자자로부터 운용권한을 위임받아 재산을 운용하는 업이다.",
+     "투자자문·일임업자는 계약 체결 전 서면자료를 미리 교부해야 한다.",
+     "투자일임업자는 투자자의 개별성을 고려하지 않고 일괄 운용할 수 있다."],
+  a:3,
+  e:["자문업의 정의로 옳다.",
+     "일임업의 정의로 옳다.",
+     "계약 체결 권유 시 서면자료 교부 의무가 있다.",
+     "정답: 투자일임은 투자자별 재산상황·투자목적을 고려한 개별 운용이 원칙이다. 일괄 운용은 집합투자에 해당할 수 있어 금지된다."],
+  tip:"일임과 집합투자의 경계는 '2인 이상에게서 모은 재산을 통합 운용하는가'이다. 일임재산을 통합 운용하면 무인가 집합투자업이 된다. 다만 랩어카운트는 개별 계좌 단위로 운용된다는 점에서 일임업으로 인정된다."},
+ {q:"자본시장법상 미공개중요정보 이용행위 금지에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["규제 대상에는 회사 임직원뿐 아니라 주요주주, 계약체결자도 포함된다.",
+     "1차 정보수령자도 규제 대상에 포함된다.",
+     "정보가 공시된 후 일정한 주지기간이 경과해야 '공개된 정보'로 본다.",
+     "상장법인의 임원이라면 정보 이용 여부와 무관하게 매매만으로 처벌된다."],
+  a:3,
+  e:["내부자 범위에는 준내부자(계약체결자·감독당국 등)도 포함된다.",
+     "정보를 전달받은 1차 수령자까지 규제 대상이다.",
+     "법정 주지기간(예: 전자공시 후 3시간 등)이 지나야 공개로 인정된다.",
+     "정답: 미공개중요정보를 '이용'해야 성립한다. 단순 임원 신분만으로 모든 매매가 처벌되지는 않는다."],
+  tip:"불공정거래 3대 유형은 ①미공개중요정보 이용 ②시세조종 ③부정거래행위다. 2015년 도입된 '시장질서 교란행위'는 2차 이상 정보수령자나 해킹 등으로 취득한 정보 이용까지 과징금으로 규율하여 사각지대를 메웠다."}
+]},
+{unit:"주식", items:[
+ {q:"자기자본이익률(ROE)을 듀퐁(Du Pont) 분석으로 분해한 것으로 옳은 것은?",
+  c:["매출액순이익률 × 총자산회전율 × 재무레버리지","매출액순이익률 × 총자산회전율 × 배당성향","영업이익률 × 유동비율 × 부채비율","총자산순이익률 × 배당성향 × 유보율"],
+  a:0,
+  e:["정답: ROE = (순이익/매출액) × (매출액/총자산) × (총자산/자기자본) = 수익성 × 활동성 × 안정성(레버리지)이다.",
+     "배당성향은 ROE 분해 요소가 아니다.",
+     "유동비율과 부채비율의 곱은 ROE로 환원되지 않는다.",
+     "총자산순이익률(ROA) × 재무레버리지 = ROE이며, 배당성향·유보율은 성장률 계산 요소다."],
+  tip:"ROE가 높아도 원인이 레버리지 확대라면 위험이 함께 커진 것이다. 듀퐁 분석의 목적은 'ROE 개선이 마진 때문인가, 회전율 때문인가, 빚 때문인가'를 가려내는 데 있다. 지속가능성장률 g = ROE × 유보율과 연결해서 정리하면 좋다."},
+ {q:"주식시장의 매매제도에 대한 설명으로 옳지 않은 것은?",
+  c:["단일가매매는 일정 시간 주문을 모아 하나의 가격으로 체결하는 방식이다.",
+     "가격우선·시간우선·수량우선의 순서로 매매체결 원칙이 적용된다.",
+     "서킷브레이커(CB)는 지수 급락 시 시장 전체 매매를 일시 중단하는 제도이다.",
+     "시장가주문은 지정가주문보다 체결 우선순위가 낮다."],
+  a:3,
+  e:["시가·종가 결정 등에 단일가매매가 적용된다.",
+     "체결원칙은 가격 → 시간 → 수량(→ 위탁매매 우선) 순이다.",
+     "CB는 코스피/코스닥 지수가 8%·15%·20% 하락 시 단계별로 발동된다.",
+     "정답: 시장가주문은 가격을 지정하지 않아 가장 유리한 가격으로 즉시 체결되므로 지정가주문보다 우선한다."],
+  tip:"사이드카는 선물가격 5%(코스닥 6%) 이상 변동이 1분 이상 지속될 때 프로그램매매 호가를 5분간 정지시키는 제도로, 시장 전체를 멈추는 서킷브레이커와 구분된다. VI(변동성완화장치)는 개별 종목 단위의 완충장치다."}
+]},
+{unit:"채권", items:[
+ {q:"전환사채(CB)와 신주인수권부사채(BW)에 대한 설명으로 옳지 않은 것은?",
+  c:["CB는 전환권 행사 시 사채가 소멸하고 주식으로 전환된다.",
+     "분리형 BW는 신주인수권만 별도로 거래할 수 있다.",
+     "BW는 권리 행사 시에도 사채가 존속하는 것이 원칙이다(비분리형 대용납입 제외).",
+     "CB와 BW 모두 일반 회사채보다 표면이자율이 높게 발행된다."],
+  a:3,
+  e:["전환 시 사채권은 소멸하고 주주가 된다.",
+     "분리형 BW는 워런트를 떼어 거래할 수 있다(현재 공모 발행만 허용).",
+     "BW는 신주대금을 따로 납입하므로 사채가 남는다.",
+     "정답: 주식전환·인수 옵션이라는 부가가치를 투자자에게 주므로 표면이자율은 일반 회사채보다 '낮게' 발행된다."],
+  tip:"주식관련사채의 가치 = 일반사채가치(straight bond value) + 옵션가치. 그래서 주가가 낮을 때는 채권 성격(하방 방어), 주가가 오르면 주식 성격(상방 참여)을 띤다. 교환사채(EB)는 발행사가 보유한 '타사 주식'과 교환된다는 점에서 CB와 다르다."},
+ {q:"액면가 10,000원, 표면금리 5%(연 1회 이자지급), 잔존만기 1년인 채권이 9,800원에 거래될 때 만기수익률(YTM)에 가장 가까운 값은?",
+  c:["약 5.0%","약 7.1%","약 3.0%","약 10.2%"],
+  a:1,
+  e:["5.0%는 표면금리이며 할인 매입 효과를 반영하지 않은 값이다.",
+     "정답: 1년 후 현금흐름 = 10,000 + 500 = 10,500원. YTM = (10,500 - 9,800) ÷ 9,800 = 약 7.14%다.",
+     "3.0%는 할증 매입을 가정한 값으로 방향이 반대다.",
+     "10.2%는 이자를 두 배로 계산한 오답이다."],
+  tip:"채권가격 < 액면가(할인채)면 YTM > 표면금리, 가격 = 액면이면 YTM = 표면금리, 가격 > 액면(할증채)이면 YTM < 표면금리라는 3가지 관계는 계산 없이도 선지를 걸러내는 데 유용하다."}
+]},
+{unit:"파생상품", items:[
+ {q:"금리스왑(IRS)에 대한 설명으로 가장 적절하지 않은 것은?",
+  c:["고정금리와 변동금리를 교환하는 거래이다.",
+     "원금은 교환하지 않고 이자 차액만 정산하는 것이 일반적이다.",
+     "금리 상승을 예상하는 차입자는 고정금리 지급(receive floating) 포지션이 유리하다.",
+     "통화스왑과 달리 서로 다른 통화 간 원금교환이 수반된다."],
+  a:3,
+  e:["IRS의 정의로 옳다.",
+     "동일 통화·동일 원금이므로 명목원금 기준 차액결제한다.",
+     "금리 상승 시 고정금리를 지급하는 쪽이 이득이므로 옳다.",
+     "정답: 서로 다른 통화의 원금교환은 통화스왑(CRS)의 특징이다. IRS는 동일 통화로 원금교환이 없다."],
+  tip:"스왑레이트가 상승할 것으로 보면 pay fixed(고정지급·변동수취), 하락할 것으로 보면 receive fixed 포지션을 취한다. 'pay fixed IRS'는 채권 매도(듀레이션 음수)와 유사한 금리 익스포저를 갖는다는 점을 함께 기억하면 헤지 문제에 응용할 수 있다."},
+ {q:"현재 주가 100, 행사가격 95인 콜옵션의 프리미엄이 8일 때, 이 옵션의 내재가치와 시간가치는?",
+  c:["내재가치 5, 시간가치 3","내재가치 8, 시간가치 0","내재가치 3, 시간가치 5","내재가치 0, 시간가치 8"],
+  a:0,
+  e:["정답: 콜의 내재가치 = max(S - X, 0) = 100 - 95 = 5. 시간가치 = 프리미엄 8 - 내재가치 5 = 3이다.",
+     "프리미엄 전액이 내재가치가 되려면 시간가치가 0, 즉 만기여야 한다.",
+     "내재가치와 시간가치가 뒤바뀐 값이다.",
+     "내재가치 0은 외가격(OTM) 옵션의 경우다."],
+  tip:"시간가치는 등가격(ATM)에서 가장 크고, 깊은 내가격·외가격으로 갈수록 작아진다. 또한 시간가치는 만기가 가까울수록 가속적으로 감소하는데(세타, 시간가치 감소), 옵션 매도자는 이 감소분을 수익원으로 삼는다."}
+]},
+{unit:"성과분석", items:[
+ {q:"젠센의 알파(Jensen's alpha)에 대한 설명으로 옳지 않은 것은?",
+  c:["CAPM이 제시하는 기대수익률을 초과한 부분을 의미한다.",
+     "체계적 위험(베타) 1단위당 초과수익을 나타내는 지표이다.",
+     "알파가 양(+)이면 운용자의 종목선택 능력이 우수했다고 평가한다.",
+     "벤치마크 대비 위험조정 성과를 절대금액(수익률)으로 보여준다."],
+  a:1,
+  e:["알파 = 실현수익률 - [무위험 + 베타×(시장수익률 - 무위험)]이다.",
+     "정답: 위험 1단위당 초과수익 개념은 트레이너지수(베타 기준)와 샤프지수(총위험 기준)다. 알파는 '단위당'이 아니라 초과수익률 그 자체다.",
+     "양의 알파는 선택 능력의 근거로 해석한다.",
+     "알파는 비율이 아닌 수익률(%) 형태의 절대 지표다."],
+  tip:"세 지표의 분모를 구분하자. 샤프 = 초과수익 ÷ 총위험(표준편차), 트레이너 = 초과수익 ÷ 베타, 정보비율 = 초과수익 ÷ 추적오차. 알파만 나눗셈이 없는 절대값 지표다. 분산이 잘 된 포트폴리오는 트레이너, 단일 펀드 전체 평가는 샤프가 적절하다."},
+ {q:"성과요인 분석(Performance Attribution)에서 초과성과의 원천을 분해할 때 일반적으로 포함되지 않는 것은?",
+  c:["자산배분 효과(asset allocation)","종목선택 효과(security selection)","상호작용 효과(interaction)","운용보수 인하 효과"],
+  a:3,
+  e:["벤치마크 대비 자산군 비중 차이에서 오는 효과다.",
+     "각 자산군 내에서 종목을 잘 골라 얻은 효과다.",
+     "배분과 선택이 동시에 작용한 교차항이다.",
+     "정답: 운용보수는 비용 항목이지 운용능력에서 비롯된 초과성과의 원천이 아니다."],
+  tip:"Brinson 모형은 초과수익을 배분·선택·상호작용 3가지로 분해한다. 자산배분이 장기 성과 변동의 대부분을 설명한다는 실증 결과가 있어, 성과 부진의 원인이 '무엇을 샀느냐'보다 '어디에 얼마를 뒀느냐'인 경우가 많다는 점이 실무적 시사점이다."}
+]}
+];
+
+const LB=["①","②","③","④"];
+let idx=0, done=0, ok=0, total=0;
+const root=document.getElementById('root');
+
+DATA.forEach(function(u){
+  const sec=document.createElement('section');
+  sec.className='unit';
+  sec.innerHTML='<div class="unit-head"><h2>'+u.unit+' <small>('+u.items.length+'문항)</small></h2></div>';
+  u.items.forEach(function(it){
+    idx++; total++;
+    const n=idx;
+    const div=document.createElement('div');
+    div.className='q';
+    let html='<p class="q-title"><span class="num">Q'+n+'</span>'+it.q+'</p><ul class="choices" id="ch'+n+'">';
+    it.c.forEach(function(c,i){ html+='<li data-i="'+i+'">'+LB[i]+' '+c+'</li>'; });
+    html+='</ul><button class="btn" id="bt'+n+'">정답 보기</button>';
+    html+='<div class="ans-box" id="ab'+n+'"><div class="verdict" id="vd'+n+'"></div>'+
+          '<div class="ans-line">정답: '+LB[it.a]+' '+it.c[it.a]+'</div><div class="exp"><div class="each">';
+    it.e.forEach(function(e,i){ html+='<div><b>'+LB[i]+'</b> '+e+'</div>'; });
+    html+='</div></div>';
+    if(it.tip) html+='<div class="tip"><b>📚 심화 학습 · 관련 자료</b>'+it.tip+'</div>';
+    html+='</div>';
+    div.innerHTML=html;
+    sec.appendChild(div);
+
+    setTimeout(function(){
+      const ul=document.getElementById('ch'+n), box=document.getElementById('ab'+n),
+            vd=document.getElementById('vd'+n), bt=document.getElementById('bt'+n);
+      let answered=false;
+      function reveal(sel){
+        box.classList.add('show');
+        Array.prototype.forEach.call(ul.children,function(li){
+          const i=+li.dataset.i;
+          li.classList.add('locked');
+          if(i===it.a) li.classList.add('correct');
+          if(sel!==null && i===sel && i!==it.a) li.classList.add('wrong');
+          if(i===it.a && !li.querySelector('.mark')) li.insertAdjacentHTML('afterbegin','<span class="mark">✔ 정답</span>');
+          if(sel!==null && i===sel && i!==it.a) li.insertAdjacentHTML('afterbegin','<span class="mark">✘ 선택</span>');
+        });
+        if(sel===null){ vd.textContent='정답과 해설을 확인하세요.'; vd.className='verdict'; }
+        else if(sel===it.a){ vd.textContent='⭕ 정답입니다!'; vd.className='verdict ok'; }
+        else { vd.textContent='❌ 오답입니다. (선택: '+LB[sel]+' / 정답: '+LB[it.a]+')'; vd.className='verdict no'; }
+        bt.textContent='해설 접기';
+      }
+      Array.prototype.forEach.call(ul.children,function(li){
+        li.addEventListener('click',function(){
+          if(answered) return;
+          answered=true;
+          const sel=+li.dataset.i;
+          done++; if(sel===it.a) ok++;
+          upd(); reveal(sel);
+        });
+      });
+      bt.addEventListener('click',function(){
+        if(box.classList.contains('show')){ box.classList.remove('show'); bt.textContent='정답 보기'; return; }
+        if(!answered){ answered=true; done++; upd(); reveal(null); }
+        else { box.classList.add('show'); bt.textContent='해설 접기'; }
+      });
+    },0);
+  });
+  root.appendChild(sec);
+});
+
+function upd(){
+  document.getElementById('s-done').textContent=done;
+  document.getElementById('s-ok').textContent=ok;
+  document.getElementById('s-rate').textContent=(done?Math.round(ok/done*100):0)+'%';
+}
+document.getElementById('s-total').textContent=total;
+
+(function(){
+  const d=new Date();
+  const p=function(x){return String(x).padStart(2,'0')};
+  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  document.getElementById('gen').textContent='생성일시: '+d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+
+    ' '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())+' ('+tz+')';
+})();
+</script>
+</body>
+</html>
