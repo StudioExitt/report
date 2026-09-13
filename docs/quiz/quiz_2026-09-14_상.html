@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-09-14</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 9월 14일 (월) · 국어 1문항 · 토익 5문항 · 수학 1문항 · 일본어 회화 1문장</div>
+  <div class="meta">생성 시각: 2026-09-14 06:36 (KST, Asia/Seoul)</div>
+</header>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (재정 정책과 승수 효과)</p>
+
+  <div class="passage">
+    <p>정부가 세금을 걷고 이를 지출하는 활동을 <b>재정</b>이라 하며, 경기의 흐름을 조절하기 위해 정부 지출과 조세를 의도적으로 조정하는 것을 <b>재정 정책</b>이라 한다. 중앙은행이 금리를 움직여 경기에 영향을 주는 통화 정책과 달리, 재정 정책은 정부가 직접 돈을 쓰거나 걷는 방식으로 총수요에 곧바로 작용한다는 점에서 차이가 있다.</p>
+
+    <p>경기가 침체해 생산과 고용이 줄어들면 정부는 지출을 늘리거나 세금을 깎는 <b>확장적 재정 정책</b>을 편다. 반대로 경기가 지나치게 과열되어 물가가 빠르게 오르면 지출을 줄이거나 세금을 올리는 <b>긴축적 재정 정책</b>을 쓴다. 이때 정부의 지출은 단순히 그 금액만큼만 소득을 늘리는 데 그치지 않는다. 정부가 도로 공사에 1조 원을 쓰면 그 돈은 건설 노동자와 자재 업체의 소득이 되고, 이들이 소득의 일부를 다시 소비하면 그 소비는 또 다른 사람의 소득이 된다. 이처럼 지출이 소득을 낳고 그 소득이 다시 소비를 낳는 연쇄가 이어지면서, 처음 투입한 금액보다 국민 소득이 더 크게 늘어난다. 이를 <b>승수 효과</b>라 한다.</p>
+
+    <p>승수 효과의 크기는 사람들이 늘어난 소득 가운데 얼마를 소비에 쓰는지에 달려 있다. 추가로 생긴 소득 중 소비로 돌아가는 비율을 <b>한계 소비 성향</b>이라 하는데, 이 값이 클수록 연쇄의 고리가 길게 이어져 승수는 커진다. 반대로 사람들이 늘어난 소득을 대부분 저축하거나, 수입품을 사는 데 써서 그 돈이 국외로 빠져나가면 연쇄는 일찍 끊어지고 승수는 작아진다. 따라서 <b>같은 금액을 쓰더라도 어디에 쓰는가</b>에 따라 정책의 효과는 크게 달라진다.</p>
+
+    <p>확장적 재정 정책이 언제나 기대한 만큼 효과를 내는 것은 아니다. 정부가 지출을 늘리려면 재원이 필요한데, 국채를 발행해 시장에서 돈을 빌리면 자금을 빌리려는 수요가 늘어 <b>시중 금리가 올라간다</b>. 금리가 오르면 기업은 설비 투자를 미루고 가계는 대출을 줄이게 되므로, 정부 지출이 늘린 총수요의 일부가 민간 투자의 감소로 상쇄된다. 정부가 민간을 밀어낸다는 뜻에서 이를 <b>구축 효과</b>라 한다. 구축 효과가 클수록 승수 효과는 그만큼 깎여 나간다. 다만 경기가 깊이 가라앉아 놀고 있는 설비와 인력이 많고 금리도 이미 낮은 상황에서는 정부가 돈을 빌려도 금리가 크게 오르지 않아 구축 효과는 작게 나타난다.</p>
+
+    <p>재정 정책에는 시간과 관련된 약점도 있다. 경기가 나빠졌다는 사실을 통계로 확인하는 데 시간이 걸리고(<b>인식 시차</b>), 예산을 편성하고 국회의 의결을 거치는 데 다시 시간이 걸리며(<b>실행 시차</b>), 집행된 예산이 실제로 소득과 고용을 늘리기까지 또 시간이 걸린다(<b>효과 시차</b>). 특히 실행 시차는 정치적 합의가 필요해 길어지기 쉬운데, 이는 회의 한 번으로 금리를 바꿀 수 있는 통화 정책과 뚜렷이 대비된다. 시차가 길어지면 경기가 이미 회복된 뒤에 부양책이 집행되어 오히려 과열을 부추길 수도 있다.</p>
+
+    <p>이러한 약점을 덜어 주는 장치가 <b>자동 안정화 장치</b>이다. 소득이 많을수록 높은 세율을 매기는 누진 소득세는 호황기에 세금을 더 걷어 과열을 식히고, 불황기에는 소득이 줄면서 세 부담도 함께 줄어 충격을 덜어 준다. 실업 급여 역시 실업자가 늘어나는 불황기에 지출이 자동으로 늘어 소비의 급격한 위축을 막는다. 이들은 <b>정부가 따로 결정을 내리지 않아도</b> 경기 변동에 맞추어 작동하므로 시차 문제에서 비교적 자유롭다.</p>
+
+    <p>그러나 재정 정책은 결국 <b>나라 살림의 건전성</b>이라는 제약을 받는다. 지출이 수입을 넘어서면 재정 적자가 생기고, 적자가 쌓이면 국가 채무가 늘어 이자 부담이 커진다. 채무가 지나치게 불어나면 국가 신용도가 떨어져 빌리는 비용 자체가 올라가고, 정작 위기가 닥쳤을 때 쓸 수 있는 여력이 줄어든다. 그래서 재정 정책은 <b>경기 대응</b>이라는 목표와 <b>재정 건전성</b>이라는 목표 사이에서 균형을 찾아야 하며, 통화 정책과 어긋나지 않게 짜였을 때 비로소 제 효과를 낼 수 있다.</p>
+  </div>
+
+  <div class="q" id="q-kor">
+    <p class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>정부 지출이 소득을 낳고 그 소득이 다시 소비를 낳는 연쇄로 국민 소득이 처음 투입한 금액보다 더 크게 늘어나는 것을 승수 효과라 한다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>늘어난 소득을 수입품을 사는 데 쓰면 연쇄가 일찍 끊어져 승수는 작아진다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>정부가 국채를 발행해 재원을 마련하면 시중 금리가 올라 민간 투자가 줄어들 수 있다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>경기가 깊이 침체해 유휴 설비가 많고 금리가 이미 낮은 상황에서는 구축 효과가 오히려 크게 나타난다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>누진 소득세와 실업 급여는 정부가 따로 결정을 내리지 않아도 작동하므로 시차 문제에서 비교적 자유롭다.</span></li>
+    </ul>
+    <div class="result" id="r-q-kor"></div>
+    <button class="reveal" data-target="q-kor">정답 보기</button>
+    <div class="exp" id="e-q-kor">
+      <p class="ans">정답 ④</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단에서 "지출이 소득을 낳고 그 소득이 다시 소비를 낳는 연쇄가 이어지면서, 처음 투입한 금액보다 국민 소득이 더 크게 늘어난다. 이를 승수 효과라 한다"고 하였다.</li>
+        <li><b>② 일치</b> — 3문단에서 "수입품을 사는 데 써서 그 돈이 국외로 빠져나가면 연쇄는 일찍 끊어지고 승수는 작아진다"고 하였다.</li>
+        <li><b>③ 일치</b> — 4문단에서 국채 발행 → "시중 금리가 올라간다" → "기업은 설비 투자를 미루고" → 구축 효과로 이어지는 과정을 설명하였다.</li>
+        <li><b>④ 불일치 (정답)</b> — 4문단의 마지막 문장은 "경기가 깊이 가라앉아 놀고 있는 설비와 인력이 많고 금리도 이미 낮은 상황에서는 정부가 돈을 빌려도 금리가 크게 오르지 않아 <b>구축 효과는 작게 나타난다</b>"고 하였다. 선택지는 이를 <b>'크게 나타난다'로 정반대로</b> 뒤집었다. 구축 효과의 출발점이 '금리 상승'임을 기억하면, 금리가 오르기 어려운 상황에서는 효과도 작아진다고 추론할 수 있다.</li>
+        <li><b>⑤ 일치</b> — 6문단에서 자동 안정화 장치는 "정부가 따로 결정을 내리지 않아도 경기 변동에 맞추어 작동하므로 시차 문제에서 비교적 자유롭다"고 하였다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅱ. 토익 영어 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="q-e1">
+    <p class="q-title"><span class="num">영어 1</span></p>
+    <p class="stem">The board of directors ________ to postpone the vote until the external audit has been completed.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>have decided</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>has decided</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>deciding</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>decision</span></li>
+    </ul>
+    <div class="result" id="r-q-e1"></div>
+    <button class="reveal" data-target="q-e1">정답 보기</button>
+    <div class="exp" id="e-q-e1">
+      <p class="ans">정답 (B) has decided</p>
+      <ul>
+        <li><b>해석</b> — 이사회는 외부 감사가 완료될 때까지 표결을 연기하기로 <b>결정했다</b>.</li>
+        <li><b>풀이</b> — 주어는 <b>The board</b>이고 <b>of directors</b>는 주어를 꾸미는 전치사구일 뿐이다. 전치사구 안의 명사는 결코 수 일치의 기준이 되지 않으므로, 단수 주어에 맞는 <b>has decided</b>가 정답이다.</li>
+        <li><b>(A) have decided</b> — 바로 앞의 복수 명사 directors에 맞춘 함정. 수 일치는 주어의 <b>핵(head noun)</b>인 board를 기준으로 한다.</li>
+        <li><b>(C) deciding</b> — 분사/동명사로는 문장의 본동사 자리를 채울 수 없다.</li>
+        <li><b>(D) decision</b> — 명사. 주어 뒤에 동사가 없어 문장이 성립하지 않는다.</li>
+        <li><b>포인트</b> — 주어와 동사 사이에 낀 <b>of구·관계사절·전치사구</b>는 손으로 가리고 읽어라. a number of + 복수(복수 취급), the number of + 복수(단수 취급)도 함께 정리해 두자.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e2">
+    <p class="q-title"><span class="num">영어 2</span></p>
+    <p class="stem">The consultant ________ recommendations we adopted last quarter will return to review our progress in October.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>who</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>whom</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>whose</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>which</span></li>
+    </ul>
+    <div class="result" id="r-q-e2"></div>
+    <button class="reveal" data-target="q-e2">정답 보기</button>
+    <div class="exp" id="e-q-e2">
+      <p class="ans">정답 (C) whose</p>
+      <ul>
+        <li><b>해석</b> — 우리가 지난 분기에 채택한 <b>권고안을 낸 그</b> 컨설턴트가 10월에 다시 와서 우리의 진척 상황을 검토할 것이다.</li>
+        <li><b>풀이</b> — 빈칸 <b>바로 뒤에 관사 없는 명사 recommendations</b>가 오고, 그 뒤에 「we adopted」라는 완전한 절이 이어진다. 즉 '컨설턴트<b>의</b> 권고안'이라는 소유 관계이므로 소유격 관계대명사 <b>whose</b>가 정답이다.</li>
+        <li><b>(A) who</b> — 주격. 뒤에 동사가 바로 와야 한다(The consultant who <b>made</b> the recommendations ~).</li>
+        <li><b>(B) whom</b> — 목적격. 뒤에 「주어 + 동사」가 오고 그 동사의 <b>목적어가 비어</b> 있어야 한다. 여기서는 adopted의 목적어 자리를 recommendations가 이미 채우고 있다.</li>
+        <li><b>(D) which</b> — 선행사가 사람(consultant)이므로 쓸 수 없고, 소유 관계를 나타내지도 못한다.</li>
+        <li><b>포인트</b> — <b>관계사 + 명사</b>가 붙어 있으면 십중팔구 <b>whose</b>. 사물이 선행사여도 소유격은 whose를 그대로 쓴다(the company whose shares ~).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e3">
+    <p class="q-title"><span class="num">영어 3</span></p>
+    <p class="stem">Employees must submit their travel reimbursement requests ________ 30 days of returning from a business trip.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>within</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>during</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>among</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>by</span></li>
+    </ul>
+    <div class="result" id="r-q-e3"></div>
+    <button class="reveal" data-target="q-e3">정답 보기</button>
+    <div class="exp" id="e-q-e3">
+      <p class="ans">정답 (A) within</p>
+      <ul>
+        <li><b>해석</b> — 직원들은 출장에서 돌아온 뒤 <b>30일 이내에</b> 출장비 정산 신청서를 제출해야 한다.</li>
+        <li><b>풀이</b> — 빈칸 뒤에 <b>30 days</b>라는 기간의 <b>길이</b>가 왔다. '그 기간 안에'라는 마감의 의미를 나타내는 전치사는 <b>within</b>이다. within ~ of -ing(~한 지 … 이내에)는 토익 단골 표현이다.</li>
+        <li><b>(B) during</b> — 뒤에 <b>특정 기간을 가리키는 명사</b>(during the holiday, during the meeting)가 온다. during 30 days처럼 숫자로 된 기간 길이와는 쓰지 않는다(그 경우 for 30 days).</li>
+        <li><b>(C) among</b> — '~ 사이에(셋 이상)'로 위치·범위를 나타내며 기간과 어울리지 않는다.</li>
+        <li><b>(D) by</b> — '~까지'라는 마감을 뜻하지만 뒤에는 <b>시점</b>(by Friday, by May 1)이 와야 한다. 기간의 길이 앞에는 쓸 수 없다.</li>
+        <li><b>포인트</b> — 기간 전치사 정리: <b>for + 기간 길이</b>(지속) / <b>during + 특정 기간 명사</b> / <b>within + 기간 길이</b>(이내) / <b>by + 시점</b>(마감) / <b>until + 시점</b>(계속).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e4">
+    <p class="q-title"><span class="num">영어 4</span></p>
+    <p class="stem">After reviewing the inspection report, the manufacturer agreed ________ all defective units at no additional cost.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>replacing</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>replacement</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>to replace</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>replaced</span></li>
+    </ul>
+    <div class="result" id="r-q-e4"></div>
+    <button class="reveal" data-target="q-e4">정답 보기</button>
+    <div class="exp" id="e-q-e4">
+      <p class="ans">정답 (C) to replace</p>
+      <ul>
+        <li><b>해석</b> — 검사 보고서를 검토한 뒤, 제조사는 추가 비용 없이 모든 결함 제품을 <b>교체하기로</b> 동의했다.</li>
+        <li><b>풀이</b> — 동사 <b>agree</b>는 목적어로 <b>to부정사</b>만 취한다(agree to do). 따라서 to replace가 정답이다.</li>
+        <li><b>(A) replacing</b> — 동명사. agree는 동명사를 목적어로 쓰지 않는다.</li>
+        <li><b>(B) replacement</b> — 명사. agree는 명사를 직접 목적어로 취하지 않으며, 명사를 쓰려면 agree <b>to</b> the replacement처럼 전치사가 필요하다.</li>
+        <li><b>(D) replaced</b> — 과거형/과거분사. 이미 본동사 agreed가 있으므로 동사가 또 올 수 없다.</li>
+        <li><b>포인트</b> — <b>to부정사만</b> 취하는 동사: agree, decide, plan, hope, promise, refuse, offer, manage, fail, afford.<br><b>동명사만</b> 취하는 동사: enjoy, avoid, consider, suggest, recommend, finish, postpone, mind, deny.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e5">
+    <p class="q-title"><span class="num">영어 5</span></p>
+    <p class="stem">________ in 1998 as a small family business, the firm has since grown into the region's largest logistics provider.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>Founding</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Founded</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>To found</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Founds</span></li>
+    </ul>
+    <div class="result" id="r-q-e5"></div>
+    <button class="reveal" data-target="q-e5">정답 보기</button>
+    <div class="exp" id="e-q-e5">
+      <p class="ans">정답 (B) Founded</p>
+      <ul>
+        <li><b>해석</b> — 1998년에 작은 가족 사업체로 <b>설립된</b> 그 회사는 이후 그 지역 최대의 물류 업체로 성장했다.</li>
+        <li><b>풀이</b> — 콤마 앞은 주어가 생략된 <b>분사구문</b>이고, 그 의미상 주어는 주절의 <b>the firm</b>이다. 회사는 스스로 설립하는 것이 아니라 <b>설립되는</b> 대상이므로 수동의 의미를 지닌 <b>과거분사</b> Founded가 정답이다. (= As it was founded in 1998 ~)</li>
+        <li><b>(A) Founding</b> — 현재분사(능동). '회사가 (무언가를) 설립하면서'가 되어 뒤에 목적어도 필요하고 의미도 맞지 않는다.</li>
+        <li><b>(C) To found</b> — 목적을 나타내는 to부정사. '설립하기 위해서 회사가 성장했다'가 되어 논리가 성립하지 않는다.</li>
+        <li><b>(D) Founds</b> — 3인칭 단수 동사. 접속사 없이 두 개의 동사가 이어질 수 없다.</li>
+        <li><b>포인트</b> — 문두 분사구문의 판별법은 단 하나, <b>주절의 주어와의 관계</b>다. 주어가 <b>하는</b> 쪽이면 -ing, <b>당하는</b> 쪽이면 p.p. 뒤에 목적어가 있는지 확인하면 더 확실하다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수(순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상</p>
+
+  <div class="q" id="q-math">
+    <p class="q-title"><span class="num">수학 1</span>다음 조건을 만족시키는 최단 경로의 수는?</p>
+    <p class="stem">
+      오른쪽 그림과 같은 도로망에서 지점 A에서 지점 B까지 최단 거리로 가려고 한다.<br>
+      좌표로 나타내면 <b>A(0, 0)</b>, <b>B(6, 4)</b>이고, 이동은 <b>오른쪽 또는 위쪽</b>으로만 한 칸씩 한다.<br>
+      이때 두 지점 <b>P(2, 1)</b>, <b>Q(4, 3)</b> 을 <b>모두 지나지 않는</b> 경로의 수를 구하시오.<br>
+      <span style="font-size:.9em;color:#5b6472">(※ 'P와 Q 중 어느 한 곳도 지나지 않는' 경로를 뜻한다.)</span>
+    </p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>42</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>48</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>54</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>60</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>66</span></li>
+    </ul>
+    <div class="result" id="r-q-math"></div>
+    <button class="reveal" data-target="q-math">정답 보기</button>
+    <div class="exp" id="e-q-math">
+      <p class="ans">정답 ③ 54</p>
+      <ul>
+        <li><b>[0단계] 최단 경로의 수를 세는 기본 원리</b><br>
+        (0,0)에서 (m,n)까지 최단 거리로 가려면 오른쪽으로 m번, 위쪽으로 n번 움직여야 한다. 전체 m+n번의 이동 중 <b>어느 순번에 오른쪽으로 갈지</b>만 정하면 경로가 하나로 정해지므로, 경로의 수는<br>
+        &nbsp;&nbsp;<b>ₘ₊ₙCₘ</b> 가지이다.</li>
+
+        <li><b>[1단계] 전략 — '지나지 않는' 것은 여사건으로</b><br>
+        특정 지점을 '지나지 않는' 조건은 직접 세기 어렵다. <b>전체 − (P 또는 Q를 지나는 경우)</b>로 접근하고, 'P 또는 Q'는 겹침이 있으므로 <b>포함·배제</b>를 쓴다.<br>
+        &nbsp;&nbsp;n(P<sup>c</sup>∩Q<sup>c</sup>) = 전체 − { n(P) + n(Q) − n(P∩Q) }</li>
+
+        <li><b>[2단계] 전체 경로의 수</b><br>
+        A(0,0) → B(6,4) : 오른쪽 6번, 위쪽 4번, 모두 10번 이동<br>
+        &nbsp;&nbsp;₁₀C₄ = (10·9·8·7)/(4·3·2·1) = <b>210</b></li>
+
+        <li><b>[3단계] P(2,1)을 지나는 경로</b><br>
+        · A → P : 오른쪽 2, 위쪽 1 → ₃C₁ = <b>3</b><br>
+        · P → B : 오른쪽 4, 위쪽 3 → ₇C₃ = 35<br>
+        &nbsp;&nbsp;3 × 35 = <b>105</b></li>
+
+        <li><b>[4단계] Q(4,3)을 지나는 경로</b><br>
+        · A → Q : 오른쪽 4, 위쪽 3 → ₇C₃ = 35<br>
+        · Q → B : 오른쪽 2, 위쪽 1 → ₃C₁ = 3<br>
+        &nbsp;&nbsp;35 × 3 = <b>105</b></li>
+
+        <li><b>[5단계] P와 Q를 모두 지나는 경로</b><br>
+        P(2,1) → Q(4,3)은 오른쪽 2, 위쪽 2이므로 ₄C₂ = 6. (P에서 Q로 가는 것이 가능한지 반드시 확인해야 한다. 4≥2, 3≥1이므로 가능하다.)<br>
+        &nbsp;&nbsp;3 × 6 × 3 = <b>54</b></li>
+
+        <li><b>[6단계] 포함·배제로 마무리</b><br>
+        &nbsp;&nbsp;n(P ∪ Q) = 105 + 105 − 54 = <b>156</b><br>
+        &nbsp;&nbsp;구하는 값 = 210 − 156 = <b>54</b></li>
+
+        <li><b>[검산] 반대쪽에서 세어 보기</b><br>
+        P를 지나지 않는 경로는 210 − 105 = 105가지. 이 중에서 Q를 지나는 것을 빼면 된다.<br>
+        'Q는 지나되 P는 지나지 않는' 경로 = n(Q) − n(P∩Q) = 105 − 54 = 51<br>
+        &nbsp;&nbsp;105 − 51 = <b>54</b> → 6단계와 일치한다.</li>
+
+        <li><b>[자주 하는 실수]</b><br>
+        ① <b>문제 해석</b> — "모두 지나지 않는다"를 '둘 다 지나는 것은 아니다'(즉 210 − 54 = 156)로 읽는 실수. 여기서는 <b>어느 하나도 지나지 않는다</b>는 뜻이다. 실제 시험에서는 지문을 끝까지 읽어 이 차이를 반드시 확인해야 한다.<br>
+        ② <b>포함·배제를 빠뜨리는 실수</b> — 210 − 105 − 105 = 0으로 계산하면 P와 Q를 모두 지나는 54가지를 두 번 뺀 것이 되어 답이 0이 되어 버린다. 반드시 <b>겹친 부분을 다시 더해</b> 주어야 한다.<br>
+        ③ <b>구간 분할의 곱셈</b> — A→P→B처럼 경유점이 있으면 각 구간의 경로 수를 <b>곱</b>한다. 더하지 않도록 주의한다.<br>
+        ④ <b>두 경유점의 순서</b> — 좌표를 비교해 P가 Q보다 왼쪽·아래에 있는지 확인해야 한다. 만약 한쪽이 다른 쪽의 오른쪽·아래에 있다면 둘을 모두 지나는 경로는 <b>0가지</b>가 된다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅳ. 일본어 회화 — 오늘의 한 문장</h2>
+  <p class="sec-desc">고등학교 1학년 2학기 수준 · 허가를 구하는 표현</p>
+
+  <div class="jp-card">
+    <p class="jp-main">すみません、ここで 写真を 撮っても いいですか。</p>
+    <p class="jp-read">すみません、ここで しゃしんを とっても いいですか。</p>
+    <p class="jp-rom">Sumimasen, koko de shashin o totte mo ii desu ka.</p>
+    <p class="jp-ko">실례합니다, 여기서 사진을 찍어도 될까요?</p>
+
+    <table class="words">
+      <tr><th>한자 / 표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>すみません</td><td>すみません</td><td>실례합니다, 죄송합니다</td></tr>
+      <tr><td>ここ</td><td>ここ</td><td>여기</td></tr>
+      <tr><td>で</td><td>で</td><td>~에서 (동작이 일어나는 장소)</td></tr>
+      <tr><td>写真</td><td>しゃしん</td><td>사진</td></tr>
+      <tr><td>を</td><td>を</td><td>~을/를 (목적격 조사)</td></tr>
+      <tr><td>撮る</td><td>とる</td><td>(사진을) 찍다</td></tr>
+      <tr><td>撮っても</td><td>とっても</td><td>찍어도 (撮る의 て형 + も)</td></tr>
+      <tr><td>いいです</td><td>いいです</td><td>좋습니다, 괜찮습니다</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문장 설명</h4>
+      <ul>
+        <li>미술관·가게·신사 등에서 <b>허락을 구할 때</b> 그대로 쓸 수 있는 문장이다. 앞에 「すみません」을 붙이면 훨씬 공손해진다.</li>
+        <li>허락하는 대답은 「はい、どうぞ。」(네, 그러세요) / 「ええ、いいですよ。」(네, 괜찮아요).<br>
+        거절하는 대답은 「すみません、ここは ちょっと…。」(죄송하지만 여기는 좀…) / 「いいえ、写真(しゃしん)は だめです。」(아니요, 사진은 안 됩니다)처럼 한다. 일본어에서는 <b>「ちょっと…」로 말끝을 흐리는 것이 부드러운 거절</b>이라는 점을 알아 두자.</li>
+        <li>「ここ<b>で</b>」의 <b>で</b>는 동작이 이루어지는 <b>장소</b>를 나타낸다. 존재 장소를 나타내는 <b>に</b>와 구별해야 한다.<br>
+        · 教室(きょうしつ)<b>で</b> 勉強(べんきょう)します。(교실<b>에서</b> 공부합니다 — 동작)<br>
+        · 教室(きょうしつ)<b>に</b> います。(교실<b>에</b> 있습니다 — 존재)</li>
+      </ul>
+    </div>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>~ても いいですか (허가 요청)</b> — 동사의 <b>て형</b>에 「も いいですか」를 붙여 '~해도 됩니까?'라는 허락을 구한다.<br>
+        · 入(はい)る → 入(はい)<b>っても いいですか</b> (들어가도 됩니까?)<br>
+        · 使(つか)う → 使(つか)<b>っても いいですか</b> (써도 됩니까?)<br>
+        · 帰(かえ)る → 帰(かえ)<b>っても いいですか</b> (돌아가도 됩니까?)</li>
+        <li><b>금지는 ~ては いけません / ~ては だめです</b> — 거절할 때의 짝이 되는 표현이다.<br>
+        · ここで 写真(しゃしん)を 撮(と)<b>っては いけません</b>。(여기서 사진을 찍어서는 안 됩니다)<br>
+        회화에서는 「撮(と)<b>っちゃ だめ</b>」처럼 줄여 말하기도 한다.</li>
+        <li><b>撮る의 て형 — 촉음편(促音便)</b> — 撮(と)る는 1그룹(5단) 동사이고, 어미가 <b>る</b>이므로 て형에서 <b>っ</b>로 바뀐다.<br>
+        · 撮(と)る → 撮(と)<b>って</b> &nbsp;/&nbsp; 買(か)う → 買(か)<b>って</b> &nbsp;/&nbsp; 待(ま)つ → 待(ま)<b>って</b><br>
+        (う·つ·る로 끝나는 1그룹 동사는 모두 <b>って</b>가 된다)</li>
+        <li><b>같은 발음, 다른 한자</b> — 「とる」는 문맥에 따라 한자가 달라진다.<br>
+        · 写真(しゃしん)を <b>撮</b>る (사진을 찍다) / 手(て)に <b>取</b>る (손에 들다) / 年(とし)を <b>取</b>る (나이를 먹다)</li>
+        <li><b>「とっても」의 중의성</b> — 「とっても」는 '찍어도'라는 뜻 외에, 「とても」(매우)를 강조한 회화체 <b>「とっても」(아주)</b>로도 쓰인다. 문맥으로 구별해야 한다.<br>
+        · とっても おいしいです。(아주 맛있습니다)</li>
+        <li><b>허가·의무 표현 한눈에 정리</b><br>
+        · ~ても いいです : ~해도 좋다 <b>(허가)</b><br>
+        · ~ては いけません : ~해서는 안 된다 <b>(금지)</b><br>
+        · ~なければ なりません : ~하지 않으면 안 된다 <b>(의무)</b><br>
+        · ~なくても いいです : ~하지 않아도 된다 <b>(불필요)</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성일시: 2026-09-14 06:36 (Asia/Seoul) · 데일리 학습 퀴즈</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
