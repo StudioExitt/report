@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-09-15</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 9월 15일 (화) · 국어 1문항 · 토익 5문항 · 수학 1문항 · 일본어 회화 1문장</div>
+  <div class="meta">생성 시각: 2026-09-15 06:23 (KST, Asia/Seoul)</div>
+</header>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (채권 가격과 금리의 관계)</p>
+
+  <div class="passage">
+    <p>기업이나 정부가 큰돈을 빌릴 때 발행하는 증서를 <b>채권</b>이라 한다. 채권에는 빌린 금액과 갚을 날짜, 그리고 그때까지 지급할 이자가 적혀 있다. 같은 자금 조달 수단이라도 <b>주식</b>은 회사의 주인이 되는 몫을 나누어 파는 것이어서 주주는 경영에 참여할 <b>의결권</b>을 얻는 대신 이익이 나야 배당을 받는다. 반면 채권을 산 사람은 회사의 주인이 아니라 <b>돈을 빌려준 사람</b>이므로 경영에 관여할 권리는 없지만, 회사의 실적과 무관하게 <b>약속된 이자</b>를 받고 만기에 원금을 돌려받는다.</p>
+
+    <p>채권이 처음 발행될 때에는 세 가지가 정해진다. 만기에 돌려받을 원금인 <b>액면가</b>, 해마다 액면가의 몇 퍼센트를 이자로 줄지 정한 <b>표면 금리</b>, 그리고 원금을 갚는 날인 <b>만기</b>이다. 이 세 가지는 발행 시점에 확정되어 <b>만기까지 바뀌지 않는다</b>. 액면가 100만 원, 표면 금리 5%, 만기 3년인 채권을 샀다면 해마다 5만 원을 받고 3년 뒤에 100만 원을 돌려받는 것이다.</p>
+
+    <p>그런데 채권은 만기까지 반드시 들고 있어야 하는 것이 아니라 <b>유통 시장</b>에서 사고팔 수 있다. 여기서 채권의 <b>가격</b>이 움직인다. 앞의 채권을 가진 사람이 있다고 하자. 그 사이 시중 금리가 올라 새로 발행되는 같은 조건의 채권이 7%의 이자를 준다면, 5%밖에 주지 않는 기존 채권을 액면가 그대로 사려는 사람은 없다. 사겠다는 사람이 나타나려면 <b>가격을 깎아</b> 싸게 사서 얻는 이득이 부족한 이자를 메워 주어야 한다. 반대로 시중 금리가 3%로 떨어지면 5%를 주는 기존 채권은 귀해져 액면가보다 비싸게 팔린다. 이처럼 <b>시장 금리와 채권 가격은 서로 반대 방향으로 움직인다</b>.</p>
+
+    <p>그래서 채권 투자자는 표면 금리가 아니라 <b>만기 수익률</b>을 본다. 만기 수익률이란 지금의 <b>시장 가격</b>으로 채권을 사서 만기까지 보유할 때 실제로 얻게 되는 연평균 수익률로, 받는 이자뿐 아니라 <b>싸게 사거나 비싸게 산 차액</b>까지 반영한 값이다. 표면 금리는 발행 때 못 박힌 고정된 숫자이지만 만기 수익률은 가격이 움직일 때마다 함께 변한다. 흔히 '채권 금리가 올랐다'고 할 때의 금리는 표면 금리가 아니라 바로 이 만기 수익률을 가리키며, 따라서 그 말은 곧 <b>채권 가격이 떨어졌다</b>는 말과 같다.</p>
+
+    <p>금리가 같은 폭으로 움직여도 모든 채권의 가격이 똑같이 흔들리지는 않는다. 만기가 <b>길수록</b> 앞으로 받을 이자와 원금이 먼 미래에 몰려 있어, 금리가 조금만 변해도 그 가치가 크게 달라진다. 즉 <b>만기가 긴 채권일수록 금리 변동에 대한 가격 변동 폭이 크다</b>. 이러한 민감도를 나타내는 지표를 <b>듀레이션</b>이라 한다. 금리가 떨어질 것으로 보면 장기 채권을 사서 가격 상승을 크게 누리려 하고, 금리가 오를 것 같으면 단기 채권으로 갈아타 손실을 줄이려 하는 것은 이 때문이다.</p>
+
+    <p>채권에는 <b>돈을 떼일 위험</b>도 따른다. 발행자가 약속한 이자나 원금을 갚지 못하는 것을 <b>부도</b>라 하고, 그 가능성을 <b>신용 위험</b>이라 한다. 신용 평가 회사는 발행자의 상환 능력을 따져 등급을 매기는데, 등급이 낮을수록 투자자는 위험을 감수하는 대가로 <b>더 높은 금리</b>를 요구한다. 국가가 발행해 가장 안전하다고 여겨지는 국채의 금리와 특정 회사채의 금리 차이를 <b>신용 스프레드</b>라 하며, 경기가 나빠져 기업의 부도 걱정이 커지면 이 폭은 벌어진다.</p>
+
+    <p>만기에 따른 금리를 이어 그린 곡선을 <b>수익률 곡선</b>이라 한다. 돈을 오래 빌려줄수록 그동안의 물가 상승과 불확실성을 감수해야 하므로, 곡선은 보통 만기가 길수록 금리가 높은 <b>우상향</b> 모양을 띤다. 그런데 이따금 <b>장기 금리가 단기 금리보다 낮아지는</b> 역전 현상이 나타난다. 이는 시장 참가자들이 머지않아 경기가 나빠져 금리가 내려갈 것이라 보고 미리 장기 채권을 사들인 결과로 해석되며, 그래서 금리 역전은 오래전부터 <b>경기 침체의 전조</b>로 주목받아 왔다.</p>
+  </div>
+
+  <div class="q" id="q-kor">
+    <p class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span>채권을 산 사람은 주주와 달리 경영에 관여할 권리는 없지만 회사의 실적과 무관하게 약속된 이자를 받는다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>시장 금리가 오르면 이미 발행된 채권의 가격도 함께 올라 액면가보다 비싸게 팔린다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>액면가와 표면 금리, 만기는 발행 시점에 확정되어 만기까지 바뀌지 않는다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>신용 등급이 낮은 발행자일수록 투자자는 위험을 감수하는 대가로 더 높은 금리를 요구한다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>장기 금리가 단기 금리보다 낮아지는 현상은 경기 침체의 전조로 해석되어 왔다.</span></li>
+    </ul>
+    <div class="result" id="r-q-kor"></div>
+    <button class="reveal" data-target="q-kor">정답 보기</button>
+    <div class="exp" id="e-q-kor">
+      <p class="ans">정답 ②</p>
+      <ul>
+        <li><b>① 일치</b> — 1문단에서 채권을 산 사람은 "회사의 주인이 아니라 돈을 빌려준 사람이므로 경영에 관여할 권리는 없지만, 회사의 실적과 무관하게 약속된 이자를 받고 만기에 원금을 돌려받는다"고 하였다.</li>
+        <li><b>② 불일치 (정답)</b> — 3문단은 시중 금리가 <b>올라</b> 새 채권이 7%를 주면 5%짜리 기존 채권은 "가격을 깎아" 팔아야 한다고 하였고, 시중 금리가 <b>떨어질</b> 때 비로소 기존 채권이 "액면가보다 비싸게 팔린다"고 하였다. 즉 <b>시장 금리와 채권 가격은 서로 반대 방향으로</b> 움직인다. 선택지는 이를 '함께 오른다'며 같은 방향으로 뒤집었다. 4문단의 "채권 금리가 올랐다 = 채권 가격이 떨어졌다"는 설명과도 어긋난다.</li>
+        <li><b>③ 일치</b> — 2문단에서 액면가·표면 금리·만기 세 가지는 "발행 시점에 확정되어 만기까지 바뀌지 않는다"고 하였다.</li>
+        <li><b>④ 일치</b> — 6문단에서 "등급이 낮을수록 투자자는 위험을 감수하는 대가로 더 높은 금리를 요구한다"고 하였다.</li>
+        <li><b>⑤ 일치</b> — 7문단에서 금리 역전은 "오래전부터 경기 침체의 전조로 주목받아 왔다"고 하였다.</li>
+        <li><b>[풀이 요령]</b> — 경제 지문에서 <b>'반대로 움직인다', '비례한다', '커진다/작아진다'</b> 같은 <b>방향 서술</b>은 선택지를 뒤집기 가장 쉬운 자리다. 지문을 읽을 때 방향을 나타내는 표현에 표시해 두고, 선택지와 화살표 방향이 같은지만 대조하면 빠르게 걸러낼 수 있다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅱ. 토익 영어 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="q-e1">
+    <p class="q-title"><span class="num">영어 1</span></p>
+    <p class="stem">The newly installed packaging line operates ________ faster than the equipment it replaced.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>considerable</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>considerably</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>consideration</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>considered</span></li>
+    </ul>
+    <div class="result" id="r-q-e1"></div>
+    <button class="reveal" data-target="q-e1">정답 보기</button>
+    <div class="exp" id="e-q-e1">
+      <p class="ans">정답 (B) considerably</p>
+      <ul>
+        <li><b>해석</b> — 새로 설치된 포장 라인은 그것이 대체한 장비보다 <b>상당히</b> 더 빠르게 작동한다.</li>
+        <li><b>풀이</b> — 빈칸 뒤의 <b>faster</b>는 비교급이고, 비교급을 꾸미는 것은 <b>부사</b>이다. 따라서 considerably가 정답이다.</li>
+        <li><b>(A) considerable</b> — 형용사. 명사를 꾸미므로 비교급 앞에 올 수 없다(a considerable <b>amount</b> ○).</li>
+        <li><b>(C) consideration</b> — 명사. 문장 구조상 들어갈 자리가 없다.</li>
+        <li><b>(D) considered</b> — 과거분사. 이미 본동사 operates가 있고 비교급을 수식하지도 못한다.</li>
+        <li><b>포인트</b> — <b>비교급 강조 부사</b>를 통째로 외워 두자: <b>much / far / even / still / a lot / considerably / significantly / substantially</b> + 비교급.<br>단, <b>very</b>는 비교급을 꾸미지 <b>못한다</b>(very faster ✕ / much faster ○). 이는 토익의 단골 함정이다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e2">
+    <p class="q-title"><span class="num">영어 2</span></p>
+    <p class="stem">________ the heavy rainfall on Saturday morning, the outdoor concert proceeded exactly as scheduled.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>Although</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Despite</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Even though</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Whereas</span></li>
+    </ul>
+    <div class="result" id="r-q-e2"></div>
+    <button class="reveal" data-target="q-e2">정답 보기</button>
+    <div class="exp" id="e-q-e2">
+      <p class="ans">정답 (B) Despite</p>
+      <ul>
+        <li><b>해석</b> — 토요일 아침의 폭우<b>에도 불구하고</b>, 야외 콘서트는 예정대로 정확히 진행되었다.</li>
+        <li><b>풀이</b> — 빈칸 뒤 콤마까지가 <b>the heavy rainfall on Saturday morning</b>, 즉 <b>명사구</b>이다. 동사가 없으므로 접속사는 올 수 없고, 명사구를 이끄는 <b>전치사</b> Despite가 정답이다.</li>
+        <li><b>(A) Although / (C) Even though / (D) Whereas</b> — 모두 <b>접속사</b>로, 뒤에 「주어 + 동사」를 갖춘 절이 와야 한다. (Although <b>it rained</b> heavily, ~ ○)</li>
+        <li><b>포인트</b> — 양보를 뜻하는 말을 <b>품사별로</b> 갈라 두자.<br>· <b>전치사(+명사)</b> : despite, in spite of, notwithstanding<br>· <b>접속사(+절)</b> : although, though, even though, even if, while<br>빈칸 뒤에 <b>동사가 있으면 접속사</b>, <b>명사만 있으면 전치사</b>로 판단하면 한 번에 풀린다. <b>despite of</b>는 존재하지 않는 형태이니 주의.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e3">
+    <p class="q-title"><span class="num">영어 3</span></p>
+    <p class="stem">All visiting vendors are required to ________ with the updated safety regulations before entering the production floor.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>observe</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>obey</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>comply</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>follow</span></li>
+    </ul>
+    <div class="result" id="r-q-e3"></div>
+    <button class="reveal" data-target="q-e3">정답 보기</button>
+    <div class="exp" id="e-q-e3">
+      <p class="ans">정답 (C) comply</p>
+      <ul>
+        <li><b>해석</b> — 방문하는 모든 협력 업체는 생산 현장에 들어가기 전에 개정된 안전 규정을 <b>준수해야</b> 한다.</li>
+        <li><b>풀이</b> — 네 단어 모두 '준수하다'라는 뜻을 가질 수 있지만, 빈칸 뒤에 <b>전치사 with</b>가 있다는 것이 결정적 단서다. <b>comply</b>는 자동사로 반드시 <b>comply with</b> 형태로 쓰인다.</li>
+        <li><b>(A) observe / (B) obey / (D) follow</b> — 모두 <b>타동사</b>여서 전치사 없이 목적어를 바로 받는다(observe the rules / obey the law / follow the guidelines). with와 함께 쓸 수 없다.</li>
+        <li><b>포인트</b> — 어휘 문제로 보이지만 실제로는 <b>「동사 + 전치사」 짝짓기</b> 문제다. 빈칸 뒤 전치사를 먼저 확인하는 습관을 들이자.<br>· <b>comply with</b> = <b>conform to</b> = <b>adhere to</b> = <b>abide by</b> (규정을 준수하다)<br>· 명사형은 <b>compliance with</b>, 형용사형은 <b>in compliance with</b>로 역시 with를 쓴다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e4">
+    <p class="q-title"><span class="num">영어 4</span></p>
+    <p class="stem">By the time the merger is finalized next spring, the two firms ________ against each other for nearly a decade.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>compete</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>had competed</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>will have competed</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>are competing</span></li>
+    </ul>
+    <div class="result" id="r-q-e4"></div>
+    <button class="reveal" data-target="q-e4">정답 보기</button>
+    <div class="exp" id="e-q-e4">
+      <p class="ans">정답 (C) will have competed</p>
+      <ul>
+        <li><b>해석</b> — 내년 봄 합병이 마무리될 무렵이면, 두 회사는 거의 10년 동안 서로 경쟁해 온 것이 <b>될 것이다</b>.</li>
+        <li><b>풀이</b> — <b>By the time</b>(~할 무렵이면) + <b>next spring</b>이라는 <b>미래 시점</b>이 제시되었고, 그 시점까지 <b>계속되어 온 기간</b>(for nearly a decade)을 말하고 있다. 미래의 한 시점까지의 완료·계속을 나타내는 <b>미래완료</b>가 정답이다.</li>
+        <li><b>(A) compete</b> — 단순 현재. 기간의 누적을 나타내지 못한다.</li>
+        <li><b>(B) had competed</b> — 과거완료. 기준 시점이 <b>과거</b>일 때 쓴다(By the time the merger <b>was</b> finalized ~).</li>
+        <li><b>(D) are competing</b> — 현재진행. 미래 시점까지의 완료 의미가 없다.</li>
+        <li><b>포인트</b> — <b>by the time</b> 구문의 시제 짝을 기억하자. 시간 부사절에서는 <b>미래 대신 현재 시제</b>를 쓰므로, 종속절 <b>is finalized</b>가 현재형인 것에 속아 주절까지 현재로 고르면 안 된다.<br>· by the time + <b>현재</b>시제 → 주절 <b>will have p.p.</b><br>· by the time + <b>과거</b>시제 → 주절 <b>had p.p.</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e5">
+    <p class="q-title"><span class="num">영어 5</span></p>
+    <p class="stem">The maintenance technicians repaired the backup generator ________, without any assistance from the manufacturer.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>they</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>their</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>them</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>themselves</span></li>
+    </ul>
+    <div class="result" id="r-q-e5"></div>
+    <button class="reveal" data-target="q-e5">정답 보기</button>
+    <div class="exp" id="e-q-e5">
+      <p class="ans">정답 (D) themselves</p>
+      <ul>
+        <li><b>해석</b> — 정비 기술자들은 제조사의 아무런 도움 없이 <b>그들 스스로</b> 예비 발전기를 수리했다.</li>
+        <li><b>풀이</b> — 「주어 + 동사 + 목적어」가 이미 완전하게 갖추어져 있으므로 빈칸은 <b>없어도 되는 자리</b>다. 이렇게 완전한 문장 뒤에 덧붙어 '직접, 스스로'를 뜻하는 것은 <b>재귀대명사의 강조 용법</b>이다. 뒤의 <b>without any assistance</b>가 이 의미를 확정해 준다.</li>
+        <li><b>(A) they</b> — 주격. 주어 The technicians가 이미 있어 들어갈 수 없다.</li>
+        <li><b>(B) their</b> — 소유격. 뒤에 꾸밀 명사가 없다.</li>
+        <li><b>(C) them</b> — 목적격. 목적어 자리는 the backup generator가 차지했고, 주어와 동일 대상을 가리킬 때는 목적격이 아니라 재귀대명사를 써야 한다.</li>
+        <li><b>포인트</b> — 재귀대명사의 두 용법을 구분하자.<br>· <b>재귀 용법</b> : 주어와 목적어가 같을 때, <b>빼면 문장이 깨진다</b>. (He introduced <b>himself</b>.)<br>· <b>강조 용법</b> : '직접·스스로'의 뜻으로, <b>빼도 문장이 성립한다</b>. 주어 바로 뒤나 문장 끝에 온다. (The CEO <b>himself</b> signed it.)<br>· 관용 표현 <b>by oneself</b>(혼자서) = on one's own도 함께 외워 두자.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수(순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상</p>
+
+  <div class="q" id="q-math">
+    <p class="q-title"><span class="num">수학 1</span>다음 조건을 만족시키는 경우의 수는?</p>
+    <p class="stem">
+      1부터 12까지의 자연수가 하나씩 적힌 12장의 카드가 있다.<br>
+      이 중에서 서로 다른 <b>5장</b>을 뽑되, 다음 두 조건을 모두 만족시키도록 한다.<br><br>
+      &nbsp;&nbsp;(가) 뽑은 카드에 적힌 <b>어떤 두 수도 연속하는 자연수가 아니다.</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(즉, 두 수의 차가 1인 쌍이 하나도 없다.)<br>
+      &nbsp;&nbsp;(나) 뽑은 5개의 수 중 <b>가장 작은 수가 3 이하</b>이다.<br><br>
+      이때 가능한 경우의 수를 구하시오. (뽑는 순서는 생각하지 않는다.)
+    </p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>45</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>50</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>55</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>60</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>65</span></li>
+    </ul>
+    <div class="result" id="r-q-math"></div>
+    <button class="reveal" data-target="q-math">정답 보기</button>
+    <div class="exp" id="e-q-math">
+      <p class="ans">정답 ③ 55</p>
+      <ul>
+        <li><b>[1단계] 전략 세우기</b><br>
+        조건 (나)의 '최솟값이 3 이하'는 직접 세려면 최솟값이 1일 때, 2일 때, 3일 때로 나누어야 해서 번거롭다. 반대쪽인 <b>'최솟값이 4 이상'</b>은 세기가 훨씬 쉬우므로 <b>여사건</b>으로 접근한다.<br>
+        &nbsp;&nbsp;(구하는 값) = <b>(조건 (가)만 만족) − (조건 (가)를 만족하면서 최솟값이 4 이상)</b></li>
+
+        <li><b>[2단계] 핵심 도구 — '연속하지 않게 뽑는' 경우의 수 공식</b><br>
+        1부터 <b>n</b>까지의 수 중에서 <b>k</b>개를 <b>어느 두 개도 연속하지 않게</b> 뽑는 경우의 수는<br>
+        &nbsp;&nbsp;<b>ₙ₋ₖ₊₁Cₖ</b> 가지이다.<br><br>
+        <b>왜 그런가? (일대일대응으로 증명)</b><br>
+        뽑은 수를 작은 것부터 a₁ &lt; a₂ &lt; ⋯ &lt; a<sub>k</sub> 라 하자. 연속하지 않으므로 이웃한 두 수의 차는 항상 <b>2 이상</b>이다.<br>
+        여기서 각 수에서 앞의 개수만큼을 빼어 새로운 수를<br>
+        &nbsp;&nbsp;<b>b<sub>i</sub> = a<sub>i</sub> − (i − 1)</b><br>
+        로 정의한다. 그러면 b<sub>i₊₁</sub> − b<sub>i</sub> = (a<sub>i₊₁</sub> − a<sub>i</sub>) − 1 ≥ 2 − 1 = 1 이므로 b들은 그냥 <b>서로 다르기만 한</b> 수가 된다. 또 b₁ ≥ 1이고 b<sub>k</sub> = a<sub>k</sub> − (k−1) ≤ n − k + 1 이다.<br>
+        즉 <b>'1~n에서 연속 없이 k개 뽑기'</b>가 <b>'1~(n−k+1)에서 자유롭게 k개 뽑기'</b>와 빠짐없이 짝지어진다. (거꾸로 a<sub>i</sub> = b<sub>i</sub> + (i−1)로 되돌릴 수 있으므로 일대일대응이다.)<br>
+        따라서 구하는 수는 <b>ₙ₋ₖ₊₁Cₖ</b> 이다.</li>
+
+        <li><b>[3단계] 조건 (가)만 만족하는 경우의 수</b><br>
+        n = 12, k = 5 이므로<br>
+        &nbsp;&nbsp;₁₂₋₅₊₁C₅ = <b>₈C₅</b> = ₈C₃ = (8·7·6)/(3·2·1) = <b>56</b></li>
+
+        <li><b>[4단계] 여사건 — 최솟값이 4 이상인 경우</b><br>
+        최솟값이 4 이상이라는 것은 1, 2, 3을 쓰지 않고 <b>4부터 12까지의 9개</b> 수 중에서만 뽑는다는 뜻이다. 이 구간에서도 연속 조건은 그대로이므로 n = 9, k = 5를 대입하면<br>
+        &nbsp;&nbsp;₉₋₅₊₁C₅ = <b>₅C₅</b> = <b>1</b><br>
+        실제로 그 유일한 경우는 <b>{4, 6, 8, 10, 12}</b> 이다. 4부터 12까지는 9칸뿐인데 연속하지 않게 5개를 놓으려면 한 칸도 남김없이 한 칸씩 띄워야 하므로 이 하나밖에 없다.</li>
+
+        <li><b>[5단계] 마무리</b><br>
+        &nbsp;&nbsp;56 − 1 = <b>55</b></li>
+
+        <li><b>[다른 풀이] 최솟값으로 직접 나누기</b><br>
+        · <b>최솟값 = 1</b> : 나머지 4개는 3~12(10개)에서 연속 없이 → ₁₀₋₄₊₁C₄ = ₇C₄ = <b>35</b><br>
+        · <b>최솟값 = 2</b> : 나머지 4개는 4~12(9개)에서 연속 없이 → ₉₋₄₊₁C₄ = ₆C₄ = <b>15</b><br>
+        · <b>최솟값 = 3</b> : 나머지 4개는 5~12(8개)에서 연속 없이 → ₈₋₄₊₁C₄ = ₅C₄ = <b>5</b><br>
+        &nbsp;&nbsp;35 + 15 + 5 = <b>55</b> → 5단계와 일치한다. ✔<br>
+        (※ 최솟값을 m으로 고정하면 나머지는 반드시 m+2 이상에서 골라야 한다는 점에 주의. m+1은 m과 연속이므로 제외된다.)</li>
+
+        <li><b>[자주 하는 실수]</b><br>
+        ① <b>공식을 ₙ₋ₖCₖ로 잘못 외우는 실수</b> — 반드시 <b>+1</b>이 붙는다. 작은 수로 검산하자. n=4, k=2일 때 {1,3},{1,4},{2,4}로 3가지인데, ₄₋₂₊₁C₂ = ₃C₂ = 3 ✔ (₄₋₂C₂ = ₂C₂ = 1은 틀림).<br>
+        ② <b>최솟값 조건을 '4 이상'이 아닌 '3 초과'로 헷갈리는 실수</b> — '3 이하'의 여사건은 '4 이상'이다. 등호가 어느 쪽에 붙는지 반드시 확인한다.<br>
+        ③ <b>여사건을 전체(₁₂C₅ = 792)에서 빼는 실수</b> — 여사건은 <b>조건 (가)를 이미 만족하는 56가지 안에서</b>만 따져야 한다. 조건이 둘일 때는 <b>어느 집합 안에서의 여사건인지</b>를 항상 분명히 해야 한다.<br>
+        ④ <b>직접 풀이에서 m+1을 빼먹는 실수</b> — 최솟값을 1로 고정했다면 2는 쓸 수 없으므로 남은 범위는 2~12가 아니라 <b>3~12</b>이다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅳ. 일본어 회화 — 오늘의 한 문장</h2>
+  <p class="sec-desc">고등학교 1학년 2학기 수준 · 경험을 말하는 표현</p>
+
+  <div class="jp-card">
+    <p class="jp-main">わたしは 一度 日本へ 行った ことが あります。</p>
+    <p class="jp-read">わたしは いちど にほんへ いった ことが あります。</p>
+    <p class="jp-rom">Watashi wa ichido Nihon e itta koto ga arimasu.</p>
+    <p class="jp-ko">저는 한 번 일본에 가 본 적이 있습니다.</p>
+
+    <table class="words">
+      <tr><th>한자 / 표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>私(わたし)</td><td>わたし</td><td>나, 저</td></tr>
+      <tr><td>は</td><td>わ</td><td>~은/는 (주제 조사, 「하」가 아니라 <b>「와」</b>로 읽음)</td></tr>
+      <tr><td>一度</td><td>いちど</td><td>한 번</td></tr>
+      <tr><td>日本</td><td>にほん</td><td>일본</td></tr>
+      <tr><td>へ</td><td>え</td><td>~에, ~로 (방향 조사, 「헤」가 아니라 <b>「에」</b>로 읽음)</td></tr>
+      <tr><td>行く</td><td>いく</td><td>가다</td></tr>
+      <tr><td>行った</td><td>いった</td><td>갔다 (行く의 た형)</td></tr>
+      <tr><td>こと</td><td>こと</td><td>일, 것 (형식 명사)</td></tr>
+      <tr><td>が</td><td>が</td><td>~이/가 (주격 조사)</td></tr>
+      <tr><td>あります</td><td>あります</td><td>있습니다 (사물·사실의 존재)</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문장 설명</h4>
+      <ul>
+        <li>자기소개나 처음 만난 사람과의 대화에서 <b>경험을 말할 때</b> 바로 쓸 수 있는 문장이다. 「~た ことが あります」는 '(과거에) ~해 본 적이 있다'라는 뜻으로, 지금까지 살면서 겪어 본 일을 말한다.</li>
+        <li>질문할 때는 끝을 「~ことが ありますか」로 바꾼다.<br>
+        · 日本(にほん)へ 行(い)った ことが <b>ありますか</b>。(일본에 가 본 적이 있습니까?)<br>
+        대답은 「はい、あります。」 / 「いいえ、ありません。」 또는 「いいえ、まだ ありません。」(아니요, 아직 없습니다)처럼 한다.</li>
+        <li><b>「一度(いちど)」</b>는 '한 번'이라는 횟수를 나타내며, 경험 표현과 짝을 이루어 자주 쓰인다.<br>
+        · 一度(いちど)も ありません。(한 번도 없습니다) — 「も」가 붙고 뒤가 부정이면 '한 번도 ~않다'가 된다.<br>
+        · 二度(にど) / 三度(さんど) / 何度(なんど)も(몇 번이나) 도 함께 외워 두자.</li>
+        <li>회화에서는 「行(い)った ことが あります」를 「行(い)った ことが <b>あるんです</b>」처럼 말해 설명하는 느낌을 더하기도 한다.</li>
+      </ul>
+    </div>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>① ~た ことが あります (경험)</b> — 동사의 <b>た형</b>(과거형) + 「ことが あります」.<br>
+        · 食(た)べる → 食(た)べ<b>た ことが あります</b> (먹어 본 적이 있습니다)<br>
+        · 見(み)る → 見(み)<b>た ことが あります</b> (본 적이 있습니다)<br>
+        · する → し<b>た ことが あります</b> (해 본 적이 있습니다)<br>
+        부정은 「~た ことが <b>ありません</b>」(~해 본 적이 없습니다).</li>
+
+        <li><b>② 行く의 た형은 예외 — 促音便(촉음편)의 특례</b><br>
+        1그룹 동사 중 <b>く</b>로 끝나는 것은 보통 「い」로 바뀐다(書(か)く → 書(か)<b>いた</b>). 그러나 <b>行(い)く만은 예외</b>로 <b>っ</b>가 되어 <b>行(い)った</b>가 된다.<br>
+        · 書(か)く → 書(か)<b>いた</b> &nbsp;/&nbsp; 聞(き)く → 聞(き)<b>いた</b> &nbsp;/&nbsp; <b>行(い)く → 行(い)った</b> ← 예외!<br>
+        (참고: 泳(およ)ぐ처럼 <b>ぐ</b>로 끝나면 탁음이 남아 泳(およ)<b>いだ</b>가 된다.)</li>
+
+        <li><b>③ へ와 に의 차이</b> — 둘 다 '~에/~로'로 해석되지만 결이 조금 다르다.<br>
+        · <b>へ</b> : 이동의 <b>방향</b>에 초점 (日本(にほん)<b>へ</b> 行(い)く — 일본 쪽으로 가다)<br>
+        · <b>に</b> : 이동의 <b>도착점</b>에 초점 (日本(にほん)<b>に</b> 行(い)く — 일본에 도착하다)<br>
+        이 문장에서는 둘 다 쓸 수 있으나, 조사 <b>へ</b>는 반드시 <b>「え」</b>로 발음한다는 점을 꼭 기억하자. (조사 <b>は</b>는 「わ」, 조사 <b>を</b>는 「お」로 읽는 것과 같은 규칙이다.)</li>
+
+        <li><b>④ あります와 います의 구별</b><br>
+        · <b>あります</b> : 사물·식물·추상적인 사실 (本(ほん)が あります / 時間(じかん)が あります)<br>
+        · <b>います</b> : 사람·동물처럼 <b>스스로 움직이는 것</b> (友(とも)だちが います / 猫(ねこ)が います)<br>
+        「こと(일, 경험)」는 사물에 해당하므로 반드시 <b>あります</b>를 쓴다. 「ことが います」는 틀린 표현이다.</li>
+
+        <li><b>⑤ 비슷하지만 다른 표현 — 「~た ことが ある」 vs 「~ました」</b><br>
+        · 去年(きょねん) 日本(にほん)へ 行(い)き<b>ました</b>。 → <b>언제</b> 갔는지가 분명한 <b>단순한 과거 사실</b>.<br>
+        · 日本(にほん)へ 行(い)っ<b>た ことが あります</b>。 → 시점과 무관한 <b>경험의 유무</b>.<br>
+        그래서 <b>「昨日(きのう) 行(い)った ことが あります」는 어색하다.</b> 어제처럼 구체적이고 가까운 시점이 정해져 있으면 경험 표현을 쓰지 않고 그냥 「昨日(きのう) 行(い)きました」라고 한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성일시: 2026-09-15 06:23 (Asia/Seoul) · 데일리 학습 퀴즈</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
