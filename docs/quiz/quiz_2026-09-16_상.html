@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-09-16</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 9월 16일 (수) · 국어 1문항 · 토익 5문항 · 수학 1문항 · 일본어 회화 1문장</div>
+  <div class="meta">생성 시각: 2026-09-16 06:15 (KST, Asia/Seoul)</div>
+</header>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (경기 순환과 경기 종합 지수)</p>
+
+  <div class="passage">
+    <p>한 나라의 경제 활동은 한자리에 머물러 있지 않고 확장과 수축을 되풀이한다. 생산과 소비, 투자와 고용이 함께 늘어나는 시기를 <b>확장 국면</b>, 반대로 함께 줄어드는 시기를 <b>수축 국면</b>이라 하며, 이 두 국면이 번갈아 나타나는 흐름을 <b>경기 순환</b>이라 한다. 확장이 끝나고 수축이 시작되는 전환점을 <b>정점</b>, 수축이 끝나고 확장이 시작되는 전환점을 <b>저점</b>이라 부른다. 정점에서 다음 정점까지, 또는 저점에서 다음 저점까지 걸리는 기간을 <b>주기</b>라 하고, 저점에서 정점까지의 높이를 <b>진폭</b>이라 한다.</p>
+
+    <p>주의할 점은 수축 국면이 곧바로 생산의 감소를 뜻하지는 않는다는 것이다. 경기를 판단할 때에는 경제 규모의 절대적인 크기가 아니라 <b>늘어나는 속도</b>를 함께 본다. 경제가 여전히 성장하고 있더라도 그 속도가 이전보다 뚜렷하게 느려지면 경기는 수축 국면에 들어선 것으로 판단할 수 있다. 성장률이 <b>0보다 작아지는 것</b>과 성장률이 <b>줄어드는 것</b>은 서로 다른 말이며, 경기 판단에서 흔히 혼동되는 대목이다.</p>
+
+    <p>그렇다면 경기를 무엇으로 재는가. 국내 총생산은 경제 전체의 크기를 가장 잘 보여 주지만 <b>분기마다</b> 집계되고 그마저도 한참 뒤에 발표되어, 지금 경기가 어느 국면에 있는지를 판단하기에는 늦다. 그래서 여러 나라는 매달 나오는 지표들을 묶어 만든 <b>경기 종합 지수</b>를 함께 쓴다. 이는 생산·소비·고용·금융 등 여러 분야의 개별 지표를 하나의 숫자로 합성한 것으로, 경기의 방향과 속도를 비교적 이른 시점에 가늠하게 해 준다.</p>
+
+    <p>경기 종합 지수는 개별 지표가 경기의 흐름보다 앞서는지 함께 가는지 뒤따르는지에 따라 셋으로 나뉜다. <b>선행 종합 지수</b>는 앞으로의 경기를 미리 알려 주는 지표들로 이루어지며, 건설 수주액, 재고 순환 지표, 코스피 지수, 장단기 금리 차 등이 여기에 들어간다. <b>동행 종합 지수</b>는 현재의 경기 상태를 보여 주는 지표들로, 광공업 생산 지수, 소매 판매액 지수, 비농림 어업 취업자 수 등이 포함된다. <b>후행 종합 지수</b>는 경기가 변한 뒤에야 따라 움직이는 지표들로, 상용 근로자 수나 소비재 수입액 등이 대표적이다. 특히 <b>고용</b>과 관련된 지표 가운데에서도 취업자 수는 동행 지표로, 상용 근로자 수는 후행 지표로 분류된다는 점은 눈여겨볼 만하다.</p>
+
+    <p>그런데 이 지수들을 그대로 쓰면 곤란한 문제가 생긴다. 지수에는 경기와 무관하게 해마다 되풀이되는 <b>계절적 요인</b>과, 시간이 흐르면서 꾸준히 커지는 <b>장기적 추세</b>가 섞여 있기 때문이다. 명절이 낀 달에 생산이 줄어드는 것은 경기가 나빠져서가 아니며, 해마다 조금씩 커지는 경제 규모 또한 경기의 좋고 나쁨과는 다른 문제이다. 그래서 통계 당국은 계절 요인을 제거한 뒤, 여기서 다시 장기 추세를 걷어 낸 <b>순환 변동치</b>를 만들어 사용한다. 순환 변동치는 추세를 100으로 놓고 그보다 위인지 아래인지를 보여 주므로, 100을 넘으면 경기가 추세보다 좋고 100에 못 미치면 추세보다 나쁘다고 읽는다.</p>
+
+    <p>선행 지수가 있으니 앞날을 정확히 내다볼 수 있으리라 기대하기 쉽지만 그렇지는 않다. 선행 지수가 몇 달 앞서 움직이는 것은 사실이나, 앞서는 <b>기간이 일정하지 않고</b> 실제 경기 전환으로 이어지지 않는 <b>헛신호</b>도 적지 않다. 게다가 발표된 수치는 뒤에 자료가 보완되면서 <b>수정</b>되기도 해, 발표 당시의 판단이 나중에 뒤집히는 일도 있다. 그래서 전문가들은 어느 한 지표의 한 달 치 움직임만으로 단정하지 않고, 여러 지표가 <b>같은 방향</b>으로 <b>여러 달</b> 이어지는지를 함께 본다.</p>
+
+    <p>지표에 담기지 않는 부분을 메우기 위해 <b>심리 지표</b>도 활용된다. 기업에 경기를 어떻게 느끼는지 물어 만든 기업 경기 실사 지수와 소비자에게 묻는 소비자 동향 지수가 그것으로, 둘 다 기준값 100을 두고 그보다 크면 긍정적으로 보는 응답이 많음을, 작으면 부정적으로 보는 응답이 많음을 뜻한다. 심리 지표는 자료를 모으는 데 시간이 덜 걸려 <b>빠르게</b> 확인할 수 있다는 장점이 있지만, 응답자의 주관이 담기고 뉴스나 분위기에 쉽게 흔들린다는 한계도 함께 지닌다.</p>
+
+    <p>결국 경기 판단은 하나의 숫자로 끝나지 않는다. 우리나라에서 경기의 정점과 저점을 공식적으로 정하는 일도 지수 하나를 기계적으로 적용해 이루어지지 않으며, 여러 지표와 전문가의 검토를 거쳐 <b>사후에</b> 결정된다. 경기 지표는 앞날을 알려 주는 예언이 아니라, 지금 어디쯤 서 있는지를 여러 각도에서 비추어 보게 하는 <b>거울</b>에 가깝다.</p>
+  </div>
+
+  <div class="q" id="q-kor">
+    <p class="q-title"><span class="num">국어 1</span>윗글의 내용과 일치하지 <b>않는</b> 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>경기 순환에서 확장이 끝나고 수축이 시작되는 전환점을 정점이라 하고, 저점에서 정점까지의 높이를 진폭이라 한다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>국내 총생산은 분기마다 집계되고 발표도 늦어, 현재의 경기 국면을 곧바로 판단하기에는 한계가 있다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>순환 변동치는 계절 요인만을 제거한 값으로, 장기적인 추세는 그대로 남겨 두고 계산한다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>선행 지수는 경기에 앞서 움직이지만 앞서는 기간이 일정하지 않고 헛신호가 나타나기도 한다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>심리 지표는 비교적 빠르게 확인할 수 있으나 응답자의 주관이 담긴다는 한계가 있다.</span></li>
+    </ul>
+    <div class="result" id="r-q-kor"></div>
+    <button class="reveal" data-target="q-kor">정답 보기</button>
+    <div class="exp" id="e-q-kor">
+      <p class="ans">정답 ③</p>
+      <ul>
+        <li><b>① 일치</b> — 1문단에서 "확장이 끝나고 수축이 시작되는 전환점을 <b>정점</b>", "저점에서 정점까지의 높이를 <b>진폭</b>"이라 하였다.</li>
+        <li><b>② 일치</b> — 3문단에서 국내 총생산은 "분기마다 집계되고 그마저도 한참 뒤에 발표되어" 현재 국면을 판단하기에는 늦다고 하였다.</li>
+        <li><b>③ 불일치 (정답)</b> — 5문단은 "계절 요인을 제거한 뒤, <b>여기서 다시 장기 추세를 걷어 낸</b> 순환 변동치를 만들어 사용한다"고 하였다. 즉 순환 변동치는 계절 요인과 장기 추세를 <b>모두</b> 제거한 값이다. 선택지는 제거 대상을 '계절 요인만'으로 <b>축소</b>하고 추세는 남겨 둔다고 뒤집었다. 순환 변동치를 <b>100을 기준으로</b> 읽는다는 설명 자체가 추세를 이미 걷어 냈음을 보여 준다.</li>
+        <li><b>④ 일치</b> — 6문단에서 선행 지수는 "앞서는 기간이 일정하지 않고 실제 경기 전환으로 이어지지 않는 헛신호도 적지 않다"고 하였다.</li>
+        <li><b>⑤ 일치</b> — 7문단에서 심리 지표는 "자료를 모으는 데 시간이 덜 걸려 빠르게 확인할 수 있다는 장점"이 있으나 "응답자의 주관이 담기고" 분위기에 흔들린다고 하였다.</li>
+        <li><b>[풀이 요령]</b> — 이 지문처럼 <b>절차를 순서대로 서술</b>하는 대목(“~한 뒤, 여기서 다시 ~한”)은 선택지에서 <b>단계를 하나 빼거나 순서를 바꾸는</b> 방식으로 변형되기 쉽다. '~만', '~뿐', '모두', '반드시' 같은 <b>한정 표현</b>이 붙은 선택지를 만나면 지문에서 그 단계가 정말 하나뿐인지 먼저 확인하자.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅱ. 토익 영어 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="q-e1">
+    <p class="q-title"><span class="num">영어 1</span></p>
+    <p class="stem">The board has approved the ________ of two additional distribution centers in the southern region.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>construct</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>constructed</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>construction</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>constructively</span></li>
+    </ul>
+    <div class="result" id="r-q-e1"></div>
+    <button class="reveal" data-target="q-e1">정답 보기</button>
+    <div class="exp" id="e-q-e1">
+      <p class="ans">정답 (C) construction</p>
+      <ul>
+        <li><b>해석</b> — 이사회는 남부 지역에 물류 센터 두 곳을 추가로 <b>건설</b>하는 것을 승인하였다.</li>
+        <li><b>풀이</b> — 빈칸은 정관사 <b>the</b>와 전치사 <b>of</b> 사이에 있다. 「the ___ of」는 <b>명사 자리</b>임을 알려 주는 가장 확실한 신호이므로 명사인 construction이 정답이다.</li>
+        <li><b>(A) construct</b> — 동사(건설하다). 이미 has approved라는 본동사가 있어 들어갈 수 없다.</li>
+        <li><b>(B) constructed</b> — 과거분사. the 바로 뒤에서 of의 목적어를 이끄는 명사 역할을 할 수 없다.</li>
+        <li><b>(D) constructively</b> — 부사. 관사 뒤에는 올 수 없다.</li>
+        <li><b>포인트</b> — 토익 Part 5에서 <b>품사 자리</b>는 앞뒤 두 단어만 봐도 결정된다. <b>관사/소유격 + ____ + 전치사</b> → 명사, <b>관사 + ____ + 명사</b> → 형용사, <b>____ + 형용사/부사/동사</b> → 부사. 해석하기 전에 자리부터 확인하는 습관이 시간을 줄여 준다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e2">
+    <p class="q-title"><span class="num">영어 2</span></p>
+    <p class="stem">By the time the external auditors arrive next Monday, the finance team ________ all of the supporting documents.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>will have compiled</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>compiled</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>has compiled</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>had compiled</span></li>
+    </ul>
+    <div class="result" id="r-q-e2"></div>
+    <button class="reveal" data-target="q-e2">정답 보기</button>
+    <div class="exp" id="e-q-e2">
+      <p class="ans">정답 (A) will have compiled</p>
+      <ul>
+        <li><b>해석</b> — 외부 감사관들이 다음 주 월요일에 도착할 무렵이면, 재무팀은 모든 증빙 서류를 <b>취합해 두었을 것이다</b>.</li>
+        <li><b>풀이</b> — <b>By the time</b>이 이끄는 절에 <b>next Monday</b>라는 미래 시점이 있다. '그 미래 시점까지 완료될 일'이므로 <b>미래완료(will have p.p.)</b>가 정답이다.</li>
+        <li><b>(B) compiled</b> — 단순 과거. 미래 시점과 어울리지 않는다.</li>
+        <li><b>(C) has compiled</b> — 현재완료. 과거부터 <b>현재</b>까지의 일이라 next Monday와 맞지 않는다.</li>
+        <li><b>(D) had compiled</b> — 과거완료. <b>과거</b>의 한 시점 이전을 가리키므로 미래 시점과 충돌한다.</li>
+        <li><b>포인트</b> — <b>by the time</b> 공식을 통째로 외우자.<br>· By the time + <b>현재시제</b> ~, 주절은 <b>will have p.p.</b> (미래완료)<br>· By the time + <b>과거시제</b> ~, 주절은 <b>had p.p.</b> (과거완료)<br>시간·조건 부사절에서는 미래의 일이라도 <b>현재시제</b>로 쓴다(arrive ○ / will arrive ✕)는 점도 함께 기억할 것.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e3">
+    <p class="q-title"><span class="num">영어 3</span></p>
+    <p class="stem">Thanks to the contractor's efficient scheduling, the lobby renovation was finished ________ ahead of the original deadline.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>very</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>well</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>too</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>enough</span></li>
+    </ul>
+    <div class="result" id="r-q-e3"></div>
+    <button class="reveal" data-target="q-e3">정답 보기</button>
+    <div class="exp" id="e-q-e3">
+      <p class="ans">정답 (B) well</p>
+      <ul>
+        <li><b>해석</b> — 시공사의 효율적인 일정 관리 덕분에 로비 보수 공사는 원래 기한보다 <b>훨씬</b> 앞당겨 끝났다.</li>
+        <li><b>풀이</b> — 여기서 <b>well</b>은 '잘'이 아니라 <b>'훨씬, 상당히'</b>라는 뜻의 <b>강조 부사</b>이다. <b>well ahead of ~</b>(~보다 훨씬 앞서), <b>well above/below</b>(훨씬 웃도는/밑도는), <b>well over/under</b>(훨씬 넘는/못 미치는)는 토익에 자주 나오는 덩어리 표현이다.</li>
+        <li><b>(A) very</b> — 형용사·부사의 <b>원급</b>만 꾸민다. ahead of 같은 전치사구 앞에는 쓰지 않는다.</li>
+        <li><b>(C) too</b> — '너무 ~해서 곤란하다'는 부정적 뉘앙스라 '덕분에 일찍 끝났다'는 긍정적 문맥과 어긋난다.</li>
+        <li><b>(D) enough</b> — 부사로 쓸 때는 <b>수식어 뒤</b>에 놓인다(early <b>enough</b> ○ / enough early ✕).</li>
+        <li><b>포인트</b> — 「빈칸 + 전치사구(ahead of, above, below, over, under, into)」 형태가 보이면 <b>very</b>를 먼저 지우고 <b>well</b>을 떠올리자. very는 원급 형용사·부사만 꾸민다는 원칙 하나로 여러 문제를 걸러 낼 수 있다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e4">
+    <p class="q-title"><span class="num">영어 4</span></p>
+    <p class="stem">Since her assistant was away on leave, Ms. Tanaka compiled the entire quarterly report ________.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>she</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>her</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>hers</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>herself</span></li>
+    </ul>
+    <div class="result" id="r-q-e4"></div>
+    <button class="reveal" data-target="q-e4">정답 보기</button>
+    <div class="exp" id="e-q-e4">
+      <p class="ans">정답 (D) herself</p>
+      <ul>
+        <li><b>해석</b> — 비서가 휴가 중이었기 때문에, 다나카 씨는 분기 보고서 전체를 <b>직접</b> 작성했다.</li>
+        <li><b>풀이</b> — 문장은 「주어 + 동사 + 목적어」가 이미 완전하다. 빈칸은 없어도 문장이 성립하는 <b>수식 자리</b>이므로, '직접, 스스로'를 뜻하는 <b>재귀대명사의 강조 용법</b>이 정답이다.</li>
+        <li><b>(A) she</b> — 주격. 주어 Ms. Tanaka가 이미 있어 들어갈 수 없다.</li>
+        <li><b>(B) her</b> — 목적격 또는 소유격. 목적어 the entire quarterly report가 이미 있고, 뒤에 꾸밀 명사도 없다.</li>
+        <li><b>(C) hers</b> — 소유대명사(= her report). 완전한 문장 뒤에 홀로 놓일 수 없다.</li>
+        <li><b>포인트</b> — 재귀대명사는 두 가지 쓰임을 갈라서 외우자.<br>· <b>재귀 용법</b> : 주어와 목적어가 같을 때, <b>생략 불가</b> (She introduced <b>herself</b>.)<br>· <b>강조 용법</b> : '직접'의 뜻으로 <b>생략 가능</b> (She wrote it <b>herself</b>.)<br>또한 <b>by oneself</b>(혼자서, 도움 없이), <b>in itself</b>(그 자체로)도 자주 출제된다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="q-e5">
+    <p class="q-title"><span class="num">영어 5</span></p>
+    <p class="stem">The sales figures ________ in the annual report were independently verified by an outside accounting firm.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>present</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>presenting</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>presented</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>presentation</span></li>
+    </ul>
+    <div class="result" id="r-q-e5"></div>
+    <button class="reveal" data-target="q-e5">정답 보기</button>
+    <div class="exp" id="e-q-e5">
+      <p class="ans">정답 (C) presented</p>
+      <ul>
+        <li><b>해석</b> — 연차 보고서에 <b>제시된</b> 매출 수치는 외부 회계 법인에 의해 독립적으로 검증되었다.</li>
+        <li><b>풀이</b> — 본동사는 뒤의 <b>were verified</b>이므로 빈칸은 앞의 명사 The sales figures를 꾸미는 <b>분사</b> 자리이다. 수치는 <b>제시되는</b> 대상이므로 수동의 <b>과거분사</b> presented가 정답이다. (= which <b>were presented</b> in the annual report)</li>
+        <li><b>(A) present</b> — 동사 원형. 이미 본동사가 있어 동사가 하나 더 올 수 없다.</li>
+        <li><b>(B) presenting</b> — 현재분사는 <b>능동</b>이라 '수치가 무언가를 제시한다'는 어색한 뜻이 된다.</li>
+        <li><b>(D) presentation</b> — 명사. 명사 두 개가 아무 연결어 없이 나란히 놓일 수 없다.</li>
+        <li><b>포인트</b> — 「명사 + ____ + 전치사구 + 본동사」 구조가 보이면 <b>분사의 태(態)</b>를 묻는 문제다. 꾸밈을 받는 명사가 <b>행위의 주체면 -ing</b>, <b>행위를 당하면 p.p.</b>로 고른다.<br>· the employee <b>attending</b> the seminar (직원이 참석하다 — 능동)<br>· the document <b>attached</b> to the e-mail (문서가 첨부되다 — 수동)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수(순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상</p>
+
+  <div class="q" id="q-math">
+    <p class="q-title"><span class="num">수학 1</span>다음 조건을 만족시키는 경우의 수는?</p>
+    <p class="stem">
+      서로 다른 <b>6개의 공</b>을 A, B, C 세 개의 상자에 남김없이 나누어 넣으려고 한다.<br>
+      이때 다음 두 조건을 모두 만족시키도록 넣는다.<br><br>
+      &nbsp;&nbsp;(가) <b>어느 상자에도 빈 상자가 없다.</b> (세 상자 모두 공이 한 개 이상 들어간다.)<br>
+      &nbsp;&nbsp;(나) 상자 <b>A</b>에 들어가는 공의 개수가 <b>짝수</b>이다.<br><br>
+      이때 가능한 경우의 수를 구하시오. (각 공은 서로 구별되고, 상자도 서로 구별된다.)
+    </p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>210</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>225</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>240</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>255</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>270</span></li>
+    </ul>
+    <div class="result" id="r-q-math"></div>
+    <button class="reveal" data-target="q-math">정답 보기</button>
+    <div class="exp" id="e-q-math">
+      <p class="ans">정답 ③ 240</p>
+      <ul>
+        <li><b>[1단계] 조건 (나)로 A에 들어갈 공의 개수부터 좁힌다</b><br>
+        A에 들어가는 공의 개수를 <i>a</i>라 하면 <i>a</i>는 0, 2, 4, 6 중 하나이다.<br>
+        · <i>a</i> = 0 → A가 빈 상자가 되어 조건 (가)에 어긋난다. <b>제외</b><br>
+        · <i>a</i> = 6 → 공이 모두 A에 들어가 B, C가 비게 되므로 조건 (가)에 어긋난다. <b>제외</b><br>
+        따라서 가능한 경우는 <b><i>a</i> = 2</b> 또는 <b><i>a</i> = 4</b> 뿐이다. <b>조건이 둘일 때는 더 강하게 제한하는 조건부터 적용</b>하는 것이 핵심이다.</li>
+
+        <li><b>[2단계] 남은 공을 B, C에 '빈 상자 없이' 넣는 경우의 수</b><br>
+        A에 넣을 공을 정하고 나면, 남은 공은 모두 B 또는 C에 들어가야 하고 <b>B와 C 모두 비어서는 안 된다</b>.<br>
+        남은 공이 <i>n</i>개일 때, 각 공이 B·C 중 하나를 고르는 방법은 2<sup><i>n</i></sup>가지이고, 여기서 <b>모두 B에 들어가는 1가지</b>와 <b>모두 C에 들어가는 1가지</b>를 빼야 한다.<br>
+        → <b>2<sup><i>n</i></sup> − 2</b> (가지)</li>
+
+        <li><b>[3단계] 경우를 나누어 계산</b><br>
+        <b>(i) <i>a</i> = 2일 때</b><br>
+        · A에 넣을 공 2개를 고른다 : <sub>6</sub>C<sub>2</sub> = <b>15</b>가지<br>
+        · 남은 4개를 B, C에 빈 상자 없이 : 2<sup>4</sup> − 2 = 16 − 2 = <b>14</b>가지<br>
+        · 15 × 14 = <b>210</b>가지<br><br>
+        <b>(ii) <i>a</i> = 4일 때</b><br>
+        · A에 넣을 공 4개를 고른다 : <sub>6</sub>C<sub>4</sub> = <sub>6</sub>C<sub>2</sub> = <b>15</b>가지<br>
+        · 남은 2개를 B, C에 빈 상자 없이 : 2<sup>2</sup> − 2 = 4 − 2 = <b>2</b>가지<br>
+        · 15 × 2 = <b>30</b>가지</li>
+
+        <li><b>[4단계] 합의 법칙</b><br>
+        두 경우는 동시에 일어날 수 없으므로 더한다.<br>
+        <b>210 + 30 = 240</b> &nbsp;→&nbsp; <b>정답 ③</b></li>
+
+        <li><b>[검산 — 전체에서 확인하기]</b><br>
+        조건 (나) 없이 (가)만 만족시키는 경우의 수는 포함배제로 구할 수 있다.<br>
+        3<sup>6</sup> − <sub>3</sub>C<sub>1</sub>·2<sup>6</sup> + <sub>3</sub>C<sub>2</sub>·1<sup>6</sup> = 729 − 192 + 3 = <b>540</b>가지<br>
+        이 중 A에 홀수 개(1개, 3개, 5개)가 들어가는 경우를 직접 세면<br>
+        · <i>a</i>=1 : <sub>6</sub>C<sub>1</sub>×(2<sup>5</sup>−2) = 6×30 = 180<br>
+        · <i>a</i>=3 : <sub>6</sub>C<sub>3</sub>×(2<sup>3</sup>−2) = 20×6 = 120<br>
+        · <i>a</i>=5 : <sub>6</sub>C<sub>5</sub>×(2<sup>1</sup>−2) = 6×0 = 0<br>
+        합이 300이고, <b>540 − 300 = 240</b>으로 앞의 답과 일치한다. ✔</li>
+
+        <li><b>[자주 하는 실수]</b><br>
+        ① <b><i>a</i> = 0을 포함하는 실수</b> — 0은 짝수이지만 조건 (가)가 빈 상자를 금지하므로 <b>제외</b>해야 한다. '짝수'라는 말에 0을 반사적으로 넣지 말 것.<br>
+        ② <b><i>a</i> = 6을 놓치는 실수</b> — 6도 짝수라 조건 (나)는 만족하지만, B·C가 모두 비어 조건 (가)에 걸린다.<br>
+        ③ <b>남은 공을 그냥 2<sup><i>n</i></sup>으로 세는 실수</b> — B, C 중 한쪽이 비는 2가지를 반드시 빼야 한다. <i>a</i>=4일 때 2<sup>2</sup>=4로 세면 15×4=60이 되어 답이 270(⑤)으로 어긋난다.<br>
+        ④ <b>공을 구별하지 않는 실수</b> — 공이 <b>서로 다르므로</b> 몇 개를 넣느냐가 아니라 <b>어떤 공을 넣느냐</b>까지 따져야 한다. 그래서 개수를 고르는 데 조합 <sub>6</sub>C<sub><i>a</i></sub>가 필요하다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec">
+  <h2 class="sec-title">Ⅳ. 일본어 회화 — 오늘의 한 문장</h2>
+  <p class="sec-desc">고등학교 1학년 2학기 수준 · 계획·의지를 말하는 표현</p>
+
+  <div class="jp-card">
+    <p class="jp-main">冬休みには 友だちと 北海道へ 行く つもりです。</p>
+    <p class="jp-read">ふゆやすみには ともだちと ほっかいどうへ いく つもりです。</p>
+    <p class="jp-rom">Fuyuyasumi ni wa tomodachi to Hokkaidō e iku tsumori desu.</p>
+    <p class="jp-ko">겨울 방학에는 친구와 홋카이도에 갈 생각입니다.</p>
+
+    <table class="words">
+      <tr><th>한자 / 표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>冬</td><td>ふゆ</td><td>겨울</td></tr>
+      <tr><td>休み</td><td>やすみ</td><td>휴일, 방학, 쉼</td></tr>
+      <tr><td>冬休み</td><td>ふゆやすみ</td><td>겨울 방학</td></tr>
+      <tr><td>に</td><td>に</td><td>~에 (때를 나타내는 조사)</td></tr>
+      <tr><td>は</td><td>わ</td><td>~은/는 (주제 조사, 「하」가 아니라 <b>「와」</b>로 읽음)</td></tr>
+      <tr><td>友だち</td><td>ともだち</td><td>친구</td></tr>
+      <tr><td>と</td><td>と</td><td>~와/과 (동반의 조사)</td></tr>
+      <tr><td>北海道</td><td>ほっかいどう</td><td>홋카이도 (일본 최북단의 지방)</td></tr>
+      <tr><td>へ</td><td>え</td><td>~에, ~로 (방향 조사, 「헤」가 아니라 <b>「에」</b>로 읽음)</td></tr>
+      <tr><td>行く</td><td>いく</td><td>가다</td></tr>
+      <tr><td>つもり</td><td>つもり</td><td>생각, 작정, 의도 (형식 명사)</td></tr>
+      <tr><td>です</td><td>です</td><td>~입니다</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문장 설명</h4>
+      <ul>
+        <li>방학 계획이나 주말 예정을 묻고 답하는 대화에서 바로 쓸 수 있는 문장이다. 「~つもりです」는 <b>말하는 사람이 마음속으로 정해 둔 계획·의지</b>를 나타내어 '~할 생각입니다, ~할 작정입니다'로 옮긴다.</li>
+        <li>질문할 때는 끝을 「~つもりですか」로 바꾼다.<br>
+        · 冬休(ふゆやす)みに 何(なに)を する <b>つもりですか</b>。(겨울 방학에 무엇을 할 생각입니까?)<br>
+        대답은 「アルバイトを する つもりです。」(아르바이트를 할 생각입니다)처럼 한다.</li>
+        <li><b>「冬休みには」</b>에서 「に」 뒤에 「は」가 한 번 더 붙은 것에 주목하자. 때를 나타내는 「に」에 주제 조사 「は」를 겹쳐 쓰면 <b>'겨울 방학에는 (적어도 그때만큼은)'</b>처럼 그 시점을 <b>다른 때와 견주어 드러내는</b> 느낌이 된다. 「は」를 빼고 「冬休みに 行く つもりです」라고만 해도 문장은 성립한다.</li>
+        <li>계절 방학 어휘를 함께 외워 두자.<br>
+        · 春休(はるやす)み(봄 방학) / 夏休(なつやす)み(여름 방학) / 冬休(ふゆやす)み(겨울 방학)<br>
+        「休(やす)み」는 앞말에 붙으면 <b>やすみ</b> 그대로 읽는다.</li>
+      </ul>
+    </div>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>① 동사 기본형 + つもりです (계획·의지)</b><br>
+        「つもり」 앞에는 반드시 동사의 <b>기본형(사전형)</b>이 온다. <b>ます형이 아니다.</b><br>
+        · 行(い)く → 行(い)く <b>つもりです</b> (○) &nbsp;/&nbsp; 行(い)き <b>つもりです</b> (✕)<br>
+        · 買(か)う → 買(か)う つもりです (살 생각입니다)<br>
+        · 勉強(べんきょう)する → 勉強(べんきょう)する つもりです (공부할 생각입니다)</li>
+
+        <li><b>② 부정형은 두 가지 — 뜻이 다르다</b><br>
+        · <b>~ない つもりです</b> : '~하지 <b>않을</b> 생각이다' → <b>하지 않겠다는 의지</b>가 있음.<br>
+        &nbsp;&nbsp;行(い)か<b>ない つもりです</b>。(가지 않을 생각입니다)<br>
+        · <b>~つもりは ありません</b> : '~할 생각은 <b>없다</b>' → 계획 자체가 <b>아예 없음</b>. 앞의 것보다 <b>단호한</b> 느낌.<br>
+        &nbsp;&nbsp;行(い)く <b>つもりは ありません</b>。(갈 생각은 없습니다)</li>
+
+        <li><b>③ 비슷하지만 다른 표현 — つもり / 予定(よてい) / ~たい</b><br>
+        · <b>~つもりです</b> : 마음속의 <b>의지·작정</b>. 아직 확정되지 않았을 수 있다.<br>
+        · <b>~予定(よてい)です</b> : 이미 <b>정해진 일정</b>. 표·예약처럼 객관적으로 잡힌 계획에 쓴다.<br>
+        &nbsp;&nbsp;三時(さんじ)に 出発(しゅっぱつ)する <b>予定(よてい)です</b>。(3시에 출발할 예정입니다)<br>
+        · <b>~たいです</b> : 단순한 <b>희망·바람</b>이며 실행 계획까지는 아니다.<br>
+        &nbsp;&nbsp;北海道(ほっかいどう)へ 行(い)き<b>たいです</b>。(홋카이도에 가고 싶습니다)<br>
+        → 「가고 싶다(たい) → 갈 생각이다(つもり) → 갈 예정이다(予定)」 순서로 <b>확정성이 높아진다</b>고 기억하면 쉽다.</li>
+
+        <li><b>④ 조사 と의 두 가지 쓰임</b><br>
+        · <b>동반</b> : 友(とも)だち<b>と</b> 行(い)く (친구<b>와</b> 가다) ← 이 문장의 쓰임<br>
+        · <b>나열</b> : パン<b>と</b> 牛乳(ぎゅうにゅう) (빵<b>과</b> 우유)<br>
+        혼자 하는 경우는 「一人(ひとり)で」(혼자서)를 쓴다. 이때는 と가 아니라 <b>で</b>임에 주의.</li>
+
+        <li><b>⑤ 조사 읽기 규칙 총정리</b><br>
+        조사로 쓰일 때에만 발음이 바뀌는 세 글자를 묶어 외워 두자.<br>
+        · <b>は</b> → 「わ」 (冬休(ふゆやす)みに<b>は</b> → 니<b>와</b>)<br>
+        · <b>へ</b> → 「え」 (北海道(ほっかいどう)<b>へ</b> → 도우<b>에</b>)<br>
+        · <b>を</b> → 「お」 (本(ほん)<b>を</b> 読(よ)む → 홍<b>오</b>)<br>
+        단어 속에 들어 있을 때는 원래 발음 그대로이다(花(はな)의 は는 「하」).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>생성일시: 2026-09-16 06:15 (Asia/Seoul) · 데일리 학습 퀴즈</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
