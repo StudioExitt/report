@@ -56,7 +56,7 @@
   ul.opts li.wrong{border-color:var(--no);background:var(--no-bg)}
   ul.opts li .mark{margin-left:auto;font-weight:800;font-size:.9rem}
   ul.opts li.correct .mark{color:var(--ok)} ul.opts li.wrong .mark{color:var(--no)}
-  ul.opts.locked li{cursor:default}
+  ul.opts.locked li{cursor:default;pointer-events:none}
 
   .btn{margin-top:6px;padding:9px 16px;border:none;border-radius:10px;background:#334155;color:#fff;
     font-weight:700;font-size:.88rem;cursor:pointer}
@@ -100,8 +100,8 @@
     <div class="q" data-answer="3">
       <div class="q-head"><span class="q-no">1</span><span class="q-type">빈칸 추론 · 선택 표현</span></div>
       <div class="q-text">다음 대화의 빈칸에 들어갈 말로 가장 알맞은 것은?</div>
-      <div class="stim jpline">ゆい : やたいが おおいですね。みんすさんは どれに しますか。
-みんす : わたしは ______ 。ゆいさんは?
+      <div class="stim jpline">ゆい : やたいが おおいですね。ミンスさんは どれに しますか。
+ミンス : わたしは ______ 。ゆいさんは?
 ゆい : わたしは やきそばに します。</div>
       <ul class="opts">
         <li><span class="num">①</span><span class="jpline">たこやきが します</span></li>
@@ -273,6 +273,7 @@
       });
       q.querySelector('ul.opts').classList.add('locked');
       var v = ans.querySelector('.verdict');
+      if(!picked && v){ v.remove(); v = null; }
       if(picked){
         if(!v){ v=document.createElement('div'); ans.insertBefore(v, ans.firstChild); }
         var ok = picked===correct;
@@ -285,13 +286,21 @@
     }
 
     opts.forEach(function(li,i){
-      li.addEventListener('click', function(){ reveal(i+1); });
+      li.addEventListener('click', function(){
+        if(q.dataset.done==='1') return;
+        q.dataset.done='1';
+        q.dataset.picked=String(i+1);
+        reveal(i+1);
+      });
     });
 
     btn.addEventListener('click', function(){
       if(btn.dataset.open==='1'){
         ans.classList.remove('show'); btn.textContent='정답 보기'; btn.dataset.open='0';
-      } else { reveal(0); }
+      } else {
+        if(q.dataset.done!=='1'){ q.dataset.done='1'; q.dataset.picked='0'; }
+        reveal(parseInt(q.dataset.picked||'0',10));
+      }
     });
   });
 
