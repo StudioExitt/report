@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 시험 2026-09-17 · 일본어 / 한국사</title>
+<style>
+  :root{
+    --bg:#f7f9fc; --card:#ffffff; --ink:#1f2933; --sub:#5b6b7c;
+    --line:#e3e9f0; --jp:#c2410c; --jp-bg:#fff6ed; --kh:#1d4ed8; --kh-bg:#eff4ff;
+    --ok:#15803d; --ok-bg:#effaf1; --no:#b91c1c; --no-bg:#fef2f2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Hiragino Kaku Gothic ProN",sans-serif;
+    line-height:1.65;-webkit-text-size-adjust:100%}
+  .wrap{max-width:840px;margin:0 auto;padding:20px 14px 60px}
+  header.top{text-align:center;padding:26px 16px;background:var(--card);border:1px solid var(--line);
+    border-radius:16px;margin-bottom:22px}
+  header.top h1{margin:0 0 8px;font-size:1.5rem;font-weight:800;letter-spacing:-.02em}
+  header.top .meta{color:var(--sub);font-size:.86rem}
+  .badge{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:999px;
+    background:#eef2f7;color:var(--sub);font-size:.78rem;font-weight:700}
+
+  section.sec{margin-bottom:34px}
+  .sec-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:14px 14px 0 0;
+    color:#fff;font-weight:800;font-size:1.12rem}
+  .sec-jp .sec-head{background:linear-gradient(135deg,#ea580c,#c2410c)}
+  .sec-kh .sec-head{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+  .sec-head .tag{margin-left:auto;font-size:.74rem;font-weight:700;background:rgba(255,255,255,.22);
+    padding:3px 10px;border-radius:999px}
+  .sec-body{background:var(--card);border:1px solid var(--line);border-top:none;
+    border-radius:0 0 14px 14px;padding:16px 14px 18px}
+
+  .q{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px;background:#fff}
+  .q:last-child{margin-bottom:0}
+  .q-head{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px}
+  .q-no{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    font-size:.82rem;font-weight:800;color:#fff}
+  .sec-jp .q-no{background:var(--jp)} .sec-kh .q-no{background:var(--kh)}
+  .q-type{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:#eef2f7;color:var(--sub)}
+  .q-text{font-weight:700;font-size:1rem;margin:6px 0 12px;white-space:pre-line}
+  .stim{border-left:4px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:10px 12px;
+    margin:0 0 12px;font-size:.95rem;white-space:pre-line}
+  .jpline{font-size:1.05rem;letter-spacing:.02em}
+  rt{font-size:.55em;color:var(--sub)}
+  .rd{font-size:.78em;color:var(--sub);margin-left:4px}
+
+  ul.opts{list-style:none;margin:0;padding:0}
+  ul.opts li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;
+    cursor:pointer;display:flex;gap:9px;align-items:flex-start;background:#fff;
+    transition:background .15s,border-color .15s;font-size:.96rem}
+  ul.opts li:hover{background:#f4f7fb}
+  ul.opts li .num{flex:none;font-weight:800;color:var(--sub)}
+  ul.opts li.correct{border-color:var(--ok);background:var(--ok-bg)}
+  ul.opts li.wrong{border-color:var(--no);background:var(--no-bg)}
+  ul.opts li .mark{margin-left:auto;font-weight:800;font-size:.9rem}
+  ul.opts li.correct .mark{color:var(--ok)} ul.opts li.wrong .mark{color:var(--no)}
+  ul.opts.locked li{cursor:default;pointer-events:none}
+
+  .btn{margin-top:6px;padding:9px 16px;border:none;border-radius:10px;background:#334155;color:#fff;
+    font-weight:700;font-size:.88rem;cursor:pointer}
+  .btn:hover{background:#1e293b}
+
+  .ans{display:none;margin-top:12px;border:1px solid var(--line);border-left:5px solid #94a3b8;
+    border-radius:10px;background:#f8fafc;padding:12px 13px}
+  .ans.show{display:block}
+  .verdict{font-weight:800;margin-bottom:8px;padding:7px 11px;border-radius:8px;display:inline-block;font-size:.9rem}
+  .verdict.ok{background:var(--ok-bg);color:var(--ok);border:1px solid #bbf7d0}
+  .verdict.no{background:var(--no-bg);color:var(--no);border:1px solid #fecaca}
+  .ans h4{margin:0 0 6px;font-size:.86rem;font-weight:800;color:var(--sub);letter-spacing:.04em}
+  .ans .key{font-weight:800;color:var(--ok);font-size:1rem;margin-bottom:8px}
+  .ans p{margin:0 0 10px;font-size:.93rem}
+  .ans ol.exp{margin:0;padding-left:20px;font-size:.9rem}
+  .ans ol.exp li{margin-bottom:5px}
+  .ans ol.exp li.k{color:var(--ok);font-weight:700}
+  footer{text-align:center;color:var(--sub);font-size:.78rem;padding-top:10px}
+  @media (max-width:480px){
+    .wrap{padding:14px 10px 46px}
+    header.top h1{font-size:1.25rem}
+    .sec-head{font-size:1rem;padding:12px 13px}
+    .q{padding:12px 11px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 시험 · 일본어 &amp; 한국사</h1>
+  <div class="meta">2026년 9월 17일 (목)</div>
+  <div class="badge">일본어 3문항 · 한국사 3문항 · 총 6문항</div>
+</header>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp">
+  <div class="sec-head">🇯🇵 일본어<span class="tag">6과 わあ、すごい! (선택·감탄·칭찬)</span></div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="3">
+      <div class="q-head"><span class="q-no">1</span><span class="q-type">빈칸 추론 · 의문사</span></div>
+      <div class="q-text">다음 대화의 빈칸 ㉠, ㉡에 들어갈 말이 바르게 짝지어진 것은?</div>
+      <div class="stim jpline">みんす : この うちわ、㉠ ですか。
+みせの ひと : 800えんです。
+みんす : じゃ、この あかい うちわに します。
+ゆい : わたしは しろいのと あおいの、㉡ に しようかな。</div>
+      <ul class="opts">
+        <li><span class="num">①</span><span class="jpline">㉠ どれ　㉡ いくら</span></li>
+        <li><span class="num">②</span><span class="jpline">㉠ いくら　㉡ どこ</span></li>
+        <li><span class="num">③</span><span class="jpline">㉠ いくら　㉡ どちら</span></li>
+        <li><span class="num">④</span><span class="jpline">㉠ どちら　㉡ どれ</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ③</div>
+        <p>㉠은 값을 묻는 자리이므로 「いくら」<span class="rd">이쿠라 / 얼마</span>가 들어갑니다. ㉡은 <b>흰 것과 파란 것 두 가지</b> 중에서 고르는 상황이므로 <b>둘 중 하나</b>를 고를 때 쓰는 「どちら」<span class="rd">도치라 / 어느 쪽</span>가 알맞습니다. 셋 이상 중에서 고를 때 쓰는 「どれ」<span class="rd">도레 / 어느 것</span>와 구별해야 합니다. 전체 해석은 「민수 : 이 부채, 얼마예요? / 가게 사람 : 800엔입니다. / 민수 : 그럼 이 빨간 부채로 할게요. / 유이 : 나는 흰 것과 파란 것, 어느 쪽으로 할까.」입니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>㉠에 「どれ」를 넣으면 값을 묻는 대답(800えんです)과 이어지지 않습니다.</li>
+          <li>「どこ」<span class="rd">도코 / 어디</span>는 장소를 묻는 말이라 물건을 고르는 자리에 쓸 수 없습니다.</li>
+          <li class="k">㉠은 가격을 묻는 「いくら」, ㉡은 <b>둘 중 선택</b>이므로 「どちら」입니다. → 정답</li>
+          <li>㉠ 「どちらですか」는 값이 아니라 어느 쪽인지를 묻는 말이고, ㉡의 「どれ」는 <b>셋 이상</b>일 때 씁니다.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-head"><span class="q-no">2</span><span class="q-type">선택형 · な형용사 서술</span></div>
+      <div class="q-text">다음 대화의 밑줄 친 부분에 들어갈 말로 가장 알맞은 것은?</div>
+      <div class="stim jpline">ゆい : この まつりは にぎやかですか。
+みんす : いいえ、あまり ______ 。でも、とても きれいですよ。</div>
+      <ul class="opts">
+        <li><span class="num">①</span><span class="jpline">にぎやかくないです</span></li>
+        <li><span class="num">②</span><span class="jpline">にぎやかじゃ ありません</span></li>
+        <li><span class="num">③</span><span class="jpline">にぎやかい ではないです</span></li>
+        <li><span class="num">④</span><span class="jpline">にぎやかな ありません</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ②</div>
+        <p>「にぎやかだ」<span class="rd">니기야카다 / 북적이다</span>는 <b>な형용사</b>입니다. な형용사의 정중한 부정은 어간에 <b>「じゃ ありません」</b>(= 「では ありません」)을 붙여 만듭니다. 앞의 「あまり」<span class="rd">아마리 / 그다지</span>는 반드시 <b>부정</b>과 짝을 이루어 '그다지 ~않다'가 됩니다. 전체 해석은 「유이 : 이 축제는 북적이나요? / 민수 : 아니요, 그다지 북적이지 않아요. 그래도 아주 예뻐요.」입니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>「~くないです」는 <b>い형용사</b>의 부정형입니다(たのしい → たのしくないです). な형용사에는 쓸 수 없습니다.</li>
+          <li class="k">な형용사의 정중한 부정형으로 알맞습니다. 격식을 갖추면 「にぎやかでは ありません」이 됩니다. → 정답</li>
+          <li>「にぎやかい」라는 형태 자체가 없습니다. な형용사를 い형용사처럼 만든 잘못된 말입니다.</li>
+          <li>「な」는 <b>명사를 꾸밀 때</b>만 쓰는 형태라 서술어로 쓸 수 없습니다.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="q" data-answer="4">
+      <div class="q-head"><span class="q-no">3</span><span class="q-type">틀린 것 찾기 · 대화 흐름</span></div>
+      <div class="q-text">다음 중 대화가 <u>자연스럽지 않은</u> 것은?</div>
+      <ul class="opts">
+        <li><span class="num">①</span><span class="jpline">A : にほんごが じょうずですね。　B : いいえ、まだまだです。</span></li>
+        <li><span class="num">②</span><span class="jpline">A : わあ、はなびが きれいですね。　B : ええ、ほんとうに きれいですね。</span></li>
+        <li><span class="num">③</span><span class="jpline">A : この ゆかた、どうですか。　B : とても かわいいですね。</span></li>
+        <li><span class="num">④</span><span class="jpline">A : うたが じょうずですね。　B : はい、わたしは うたが じょうずです。</span></li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ④</div>
+        <p>「じょうずだ」<span class="rd">조-즈다 / 잘하다</span>는 <b>남을 칭찬할 때만</b> 쓰는 말이라, 자신에게 쓰면 잘난 체하는 느낌을 줍니다. 또 일본어에서는 칭찬을 받으면 <b>겸손하게 받아넘기는</b> 것이 자연스럽습니다. 「いいえ、そんな こと ありません」<span class="rd">이-에, 손나 코토 아리마셍 / 아니요, 그렇지 않아요</span>, 「まだまだです」<span class="rd">마다마다데스 / 아직 멀었어요</span>, 「いえいえ」<span class="rd">이에이에 / 아니에요</span> 등으로 답합니다. 자신의 장기를 말할 때는 「とくいです」<span class="rd">토쿠이데스 / 자신 있습니다</span>를 씁니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>칭찬(じょうずですね)에 겸손(まだまだです)으로 답하는 가장 전형적인 흐름입니다.</li>
+          <li>「わあ」<span class="rd">와- / 와아</span>로 감탄하고 「~ですね」로 공감을 주고받는 자연스러운 대화입니다.</li>
+          <li>「どうですか」<span class="rd">도-데스카 / 어떠세요?</span>로 감상을 묻고 칭찬으로 답하는 자연스러운 흐름입니다.</li>
+          <li class="k">칭찬에 「はい」로 맞장구치며 자신에게 「じょうずです」를 쓴 점이 모두 어색합니다. 「いいえ、そんな こと ありません。でも、うたは とくいです。」처럼 답해야 합니다. → 정답(자연스럽지 않은 것)</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 한국사 ===================== -->
+<section class="sec sec-kh">
+  <div class="sec-head">📜 한국사<span class="tag">Ⅰ. 일제 식민 통치와 민족 운동</span></div>
+  <div class="sec-body">
+
+    <div class="q" data-answer="4">
+      <div class="q-head"><span class="q-no">1</span><span class="q-type">자료 분석 · 대한민국 임시 정부</span></div>
+      <div class="q-text">다음 회의가 열린 배경으로 옳지 <u>않은</u> 것은?</div>
+      <div class="stim">1923년 상하이에서 국내외 독립운동 단체의 대표 130여 명이 모여 독립운동의 새로운 방향을 논의하였다. 그러나 임시 정부를 고쳐 쓰자는 개조파와 새로 만들자는 창조파가 맞서면서 회의는 끝내 결렬되었다.</div>
+      <ul class="opts">
+        <li><span class="num">①</span>연통제와 교통국이 일제에 발각되어 임시 정부의 국내 연락망이 무너졌다.</li>
+        <li><span class="num">②</span>외교 활동에 힘을 쏟았으나 뚜렷한 성과를 거두지 못하였다.</li>
+        <li><span class="num">③</span>이승만이 국제 연맹에 위임 통치를 청원한 사실이 알려져 비판을 받았다.</li>
+        <li><span class="num">④</span>중국 국민당이 임시 정부를 적극적으로 지원하기 시작하면서 노선 갈등이 커졌다.</li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ④</div>
+        <p>자료는 <b>국민 대표 회의</b>(1923)입니다. 연통제·교통국 조직망의 붕괴, 외교 노선의 성과 부진, 이승만의 위임 통치 청원에 대한 신채호 등의 비판이 겹치면서 소집되었으나, <b>개조파와 창조파</b>의 대립으로 결렬되었습니다. 이후 이승만이 탄핵되고 <b>박은식</b>이 제2대 대통령에 올랐으며(1925), 곧 <b>국무령 중심의 집단 지도 체제</b>로 개헌하였습니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>연통제와 교통국이 발각되어 자금과 정보의 통로가 끊긴 것이 위기의 직접적 배경입니다.</li>
+          <li>파리 강화 회의와 구미 위원부를 통한 외교가 기대만큼의 성과를 내지 못했습니다.</li>
+          <li>신채호 등은 위임 통치 청원을 독립 정신에 어긋난다며 강하게 비판하였습니다.</li>
+          <li class="k">중국 국민당의 본격적인 임시 정부 지원은 <b>1932년 윤봉길 의거</b>를 계기로 시작되었으므로, 1923년 국민 대표 회의의 배경이 될 수 없습니다. → 정답(옳지 않은 것)</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="q" data-answer="2">
+      <div class="q-head"><span class="q-no">2</span><span class="q-type">틀린 것 찾기 · 민족 문화 수호 운동</span></div>
+      <div class="q-text">일제 강점기 한국사 연구에 대한 설명으로 옳지 <u>않은</u> 것은?</div>
+      <ul class="opts">
+        <li><span class="num">①</span>박은식은 국혼(國魂)을 강조하며 『한국통사』와 『한국독립운동지혈사』를 저술하였다.</li>
+        <li><span class="num">②</span>백남운은 『조선상고사』를 저술하여 우리 역사를 '아(我)와 비아(非我)의 투쟁'으로 설명하였다.</li>
+        <li><span class="num">③</span>정인보 등은 1930년대 중반 조선학 운동을 일으켜 『여유당전서』를 간행하였다.</li>
+        <li><span class="num">④</span>이병도 등은 진단 학회를 조직하고 『진단학보』를 발행하여 실증 사학을 내세웠다.</li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ②</div>
+        <p>『조선상고사』에서 역사를 <b>'아와 비아의 투쟁'</b>으로 규정한 인물은 <b>신채호</b>입니다. <b>백남운</b>은 유물 사관에 입각한 <b>『조선사회경제사』</b>를 써서, 우리 역사도 세계사의 보편적인 발전 단계를 거쳤음을 밝혀 식민 사관의 <b>정체성론</b>을 반박하였습니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li>박은식은 나라는 형(形)이고 역사는 혼(魂)이라 하며 민족정신을 강조하였습니다.</li>
+          <li class="k">『조선상고사』는 <b>신채호</b>의 저술이며, 백남운의 대표작은 <b>『조선사회경제사』</b>입니다. → 정답(옳지 않은 것)</li>
+          <li>조선학 운동은 정약용 서거 99주기를 계기로 실학을 재조명한 움직임입니다.</li>
+          <li>진단 학회(1934)는 문헌 고증을 통해 사실을 밝히는 실증 사학을 표방하였습니다.</li>
+        </ol>
+        <h4>참고 · 식민 사관과 이에 맞선 연구</h4>
+        <ol class="exp">
+          <li><b>타율성론</b> → 민족주의 사학(박은식·신채호)이 자주적 역사관으로 반박</li>
+          <li><b>정체성론</b> → 사회 경제 사학(백남운)이 보편적 발전 단계론으로 반박</li>
+          <li><b>당파성론</b> → 조선사 편수회의 『조선사』 편찬으로 뒷받침되던 논리</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="q" data-answer="1">
+      <div class="q-head"><span class="q-no">3</span><span class="q-type">자료 분석 · 학생 항일 운동</span></div>
+      <div class="q-text">다음 격문이 발표된 운동에 대한 설명으로 옳은 것은?</div>
+      <div class="stim">검거된 학생을 즉시 우리 손으로 탈환하자. 경찰의 교내 진입을 절대 반대한다. 조선인 본위의 교육 제도를 확립하라. 식민지 노예 교육 제도를 철폐하라.</div>
+      <ul class="opts">
+        <li><span class="num">①</span>나주역에서 일어난 한·일 학생 간의 충돌을 계기로 전국으로 확산되었다.</li>
+        <li><span class="num">②</span>순종의 인산일을 기해 학생들이 만세 시위를 벌였다.</li>
+        <li><span class="num">③</span>고종의 서거와 2·8 독립 선언이 직접적인 계기가 되었다.</li>
+        <li><span class="num">④</span>일제가 통치 방식을 이른바 '문화 통치'로 바꾸는 계기가 되었다.</li>
+      </ul>
+      <button class="btn">정답 보기</button>
+      <div class="ans">
+        <div class="key">정답 : ①</div>
+        <p>자료는 <b>광주 학생 항일 운동</b>(1929. 10.~11.)의 격문입니다. 나주역에서 일어난 한·일 학생 간 충돌과 이에 대한 일제 경찰의 편파적인 처리가 발단이 되어 광주에서 시작해 전국으로 번졌으며, <b>3·1 운동 이후 최대 규모의 항일 운동</b>으로 평가됩니다. <b>신간회</b>는 진상 조사단을 파견하고 민중 대회를 계획하였습니다.</p>
+        <h4>선택지 해설</h4>
+        <ol class="exp">
+          <li class="k">나주역 사건이 발단이 되어 학생들이 들고일어났고 전국으로 확산되었습니다. → 정답</li>
+          <li>순종의 인산일을 기해 일어난 것은 <b>6·10 만세 운동</b>(1926)입니다.</li>
+          <li>고종 서거와 2·8 독립 선언은 <b>3·1 운동</b>(1919)의 배경입니다.</li>
+          <li>일제가 '문화 통치'로 전환한 것은 <b>3·1 운동</b>의 결과입니다.</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer id="gen">생성일시 : 2026-09-17 06:26 (로컬 시간, Asia/Seoul)</footer>
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.q').forEach(function(q){
+    var correct = parseInt(q.dataset.answer,10);
+    var opts = q.querySelectorAll('ul.opts li');
+    var ans  = q.querySelector('.ans');
+    var btn  = q.querySelector('.btn');
+
+    function reveal(picked){
+      opts.forEach(function(li,i){
+        var isC = (i+1)===correct;
+        li.classList.remove('correct','wrong');
+        var old = li.querySelector('.mark'); if(old) old.remove();
+        if(isC){ li.classList.add('correct'); li.insertAdjacentHTML('beforeend','<span class="mark">✓ 정답</span>'); }
+        else if(picked && (i+1)===picked){ li.classList.add('wrong'); li.insertAdjacentHTML('beforeend','<span class="mark">✗ 오답</span>'); }
+      });
+      q.querySelector('ul.opts').classList.add('locked');
+      var v = ans.querySelector('.verdict');
+      if(!picked && v){ v.remove(); v = null; }
+      if(picked){
+        if(!v){ v=document.createElement('div'); ans.insertBefore(v, ans.firstChild); }
+        var ok = picked===correct;
+        v.className = 'verdict ' + (ok?'ok':'no');
+        v.textContent = ok ? '⭕ 정답입니다! ('+picked+'번)' : '❌ 오답입니다. 선택 '+picked+'번 / 정답 '+correct+'번';
+      }
+      ans.classList.add('show');
+      btn.textContent = '정답 · 해설 닫기';
+      btn.dataset.open = '1';
+    }
+
+    opts.forEach(function(li,i){
+      li.addEventListener('click', function(){
+        if(q.dataset.done==='1') return;
+        q.dataset.done='1';
+        q.dataset.picked=String(i+1);
+        reveal(i+1);
+      });
+    });
+
+    btn.addEventListener('click', function(){
+      if(btn.dataset.open==='1'){
+        ans.classList.remove('show'); btn.textContent='정답 보기'; btn.dataset.open='0';
+      } else {
+        if(q.dataset.done!=='1'){ q.dataset.done='1'; q.dataset.picked='0'; }
+        reveal(parseInt(q.dataset.picked||'0',10));
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
