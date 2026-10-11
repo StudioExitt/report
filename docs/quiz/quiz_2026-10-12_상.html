@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-12</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 12일 (월) · 국어 1문항 · 토익 5문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-12 06:07 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(금융·경기동향)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (수익률 곡선과 장단기 금리 역전)</p>
+
+  <div class="passage">
+    <p>돈을 빌려주는 기간이 길어질수록 빌려준 사람은 더 높은 이자를 요구하는 것이 일반적이다. 채권 시장에서 만기가 서로 다른 국채의 수익률을 가로축에 만기, 세로축에 수익률을 두고 이어 그린 선을 수익률 곡선이라 한다. 같은 발행 주체가 발행한 국채는 부도 위험이 사실상 같으므로, 수익률 곡선의 모양은 순수하게 '기간'이 금리에 미치는 영향을 보여 준다. 평상시의 수익률 곡선은 만기가 길수록 수익률이 높아지는 우상향의 모습을 띠는데, 이를 정상적인 수익률 곡선이라 부른다.</p>
+    <p>수익률 곡선이 왜 이런 모양을 갖는지에 대해서는 몇 가지 설명이 있다. 먼저 기대 이론은 장기 금리가 앞으로 이어질 단기 금리들에 대한 시장의 기대를 평균한 값이라고 본다. 예를 들어 1년 만기 채권을 두 번 연달아 사는 것과 2년 만기 채권을 한 번 사는 것은 투자자에게 같은 결과를 주어야 하므로, 내년의 단기 금리가 오를 것으로 기대되면 지금의 2년 금리는 1년 금리보다 높아진다. 이 이론에 따르면 수익률 곡선의 기울기는 미래 단기 금리의 방향에 대한 시장의 예상을 그대로 반영한다.</p>
+    <p>그러나 기대 이론만으로는 단기 금리가 앞으로 오르지도 내리지도 않을 것으로 예상될 때에도 수익률 곡선이 대체로 우상향한다는 사실을 설명하기 어렵다. 유동성 프리미엄 이론은 이 빈틈을 메운다. 만기가 긴 채권일수록 금리 변동에 따른 가격 변동 폭이 크고, 돈이 오래 묶여 급히 필요할 때 손실을 감수해야 할 위험도 크다. 투자자는 이러한 위험을 떠안는 대가로 추가적인 수익, 곧 기간 프리미엄을 요구하므로, 장기 금리는 미래 단기 금리 기대의 평균에 이 프리미엄을 더한 값이 된다.</p>
+    <p>한편 시장 분할 이론은 만기별 채권 시장이 서로 분리되어 있다고 본다. 보험사나 연기금처럼 장기 부채를 가진 기관은 장기 채권을, 은행처럼 단기 자금을 운용하는 기관은 단기 채권을 주로 사들이므로, 각 만기의 금리는 그 구간의 수요와 공급에 의해 따로 결정된다는 것이다. 이 이론은 만기 구간 사이에 투자자가 거의 이동하지 않는다는 강한 가정에 기대고 있어, 서로 다른 만기의 금리가 대체로 함께 움직이는 현상을 잘 설명하지 못한다는 한계가 있다.</p>
+    <p>경기 동향을 살피는 사람들이 특히 주목하는 것은 수익률 곡선이 뒤집히는 순간이다. 단기 금리가 장기 금리보다 높아져 곡선이 우하향하는 상태를 수익률 곡선의 역전이라 한다. 흔히 10년 만기 국채와 2년 만기 국채, 또는 10년물과 3개월물의 금리 차이를 지표로 삼는데, 이 차이가 마이너스로 돌아서면 장단기 금리가 역전되었다고 말한다. 과거 여러 나라에서 장단기 금리 역전이 나타난 뒤 대략 1년에서 2년 사이에 경기 침체가 찾아온 사례가 반복되면서, 금리 역전은 대표적인 경기 침체의 선행 신호로 여겨져 왔다.</p>
+    <p>금리 역전이 일어나는 경로는 대체로 다음과 같다. 경기가 과열되고 물가가 오르면 중앙은행은 기준 금리를 올리고, 기준 금리의 영향을 직접 받는 단기 금리가 빠르게 상승한다. 반면 장기 금리는 미래에 대한 기대를 반영하므로, 투자자들이 긴축의 결과로 경기가 둔화하고 결국 중앙은행이 금리를 내리게 될 것이라 예상하면 오히려 오르지 않거나 떨어진다. 또 경기 둔화를 우려한 투자자들이 안전 자산인 장기 국채를 사들이면 장기 채권 가격이 올라 그 수익률은 더 낮아진다. 이렇게 단기 금리는 현재의 통화 정책을, 장기 금리는 미래의 경기 전망을 반영하면서 두 금리가 엇갈리게 된다.</p>
+    <p>금리 역전은 그 자체로 경기를 위축시키는 통로가 되기도 한다. 은행은 주로 단기로 예금을 받아 장기로 대출을 해 주고, 그 금리 차이에서 이익을 얻는다. 장단기 금리가 역전되면 자금을 조달하는 비용이 대출로 얻는 수익에 비해 상대적으로 높아져 예대 마진이 줄어들고, 은행은 대출 심사를 깐깐하게 하거나 대출 규모를 줄이게 된다. 기업과 가계가 돈을 빌리기 어려워지면 투자와 소비가 줄어들어 경기 둔화가 현실화된다. 이처럼 금리 역전은 경기 침체를 예고하는 신호이면서 동시에 침체를 앞당기는 원인이 될 수 있다.</p>
+    <p>그렇다고 금리 역전이 언제나 침체로 이어지는 것은 아니다. 각국 중앙은행이 장기 국채를 대규모로 사들이는 양적 완화를 시행한 이후에는 장기 금리가 인위적으로 낮게 눌려 있어, 경기 전망과 무관하게 장단기 금리 차가 좁아지거나 역전될 수 있다는 지적이 있다. 또한 해외 투자자의 국채 수요나 기간 프리미엄 자체의 감소처럼 경기와 직접 관련이 없는 요인도 장기 금리를 끌어내린다. 실제로 금리가 역전된 뒤 예상보다 오랫동안 침체가 나타나지 않은 사례도 있었다. 따라서 장단기 금리 차는 하나의 지표로 단정하기보다 고용, 소비, 기업 실적 등 다른 경기 지표와 함께 종합적으로 해석해야 한다.</p>
+    <p>흥미로운 점은 금리 역전이 해소되는 시점이다. 역전이 풀리고 수익률 곡선이 다시 우상향으로 돌아서는 현상은 흔히 경기 회복의 신호로 받아들여질 것 같지만, 과거에는 역전이 해소된 직후에 오히려 경기 침체가 본격화된 경우가 많았다. 경기가 악화되면 중앙은행이 서둘러 기준 금리를 내리고, 그 결과 단기 금리가 장기 금리보다 빠르게 떨어지면서 곡선의 기울기가 다시 가팔라지기 때문이다. 수익률 곡선을 읽을 때에는 곡선의 모양뿐 아니라 그 모양이 바뀌게 된 원인이 단기 금리 쪽에 있는지 장기 금리 쪽에 있는지를 함께 따져 보아야 하는 이유가 여기에 있다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>기대 이론에 따르면, 앞으로 단기 금리가 오를 것으로 예상될 때 현재의 장기 금리는 단기 금리보다 높게 형성된다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>유동성 프리미엄 이론은 미래 단기 금리에 대한 기대가 변하지 않을 때에도 수익률 곡선이 우상향하는 이유를 설명할 수 있다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>장단기 금리 역전이 해소되어 수익률 곡선의 기울기가 다시 가팔라졌다면, 이는 경기 침체 위험이 사라졌음을 의미한다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>장단기 금리가 역전되면 은행의 예대 마진이 줄어 대출이 위축되므로, 금리 역전은 경기 둔화를 앞당기는 원인이 될 수 있다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>시장 분할 이론은 만기가 서로 다른 금리들이 대체로 함께 움직이는 현상을 설명하는 데 한계가 있다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ③</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단: "내년의 단기 금리가 오를 것으로 기대되면 지금의 2년 금리는 1년 금리보다 높아진다."</li>
+        <li><b>② 일치</b> — 3문단: 기대 이론은 단기 금리가 "오르지도 내리지도 않을 것으로 예상될 때에도" 곡선이 우상향하는 것을 설명하기 어렵고, 유동성 프리미엄 이론이 "이 빈틈을 메운다."</li>
+        <li><b>③ 불일치 (정답)</b> — 9문단: 역전 해소는 회복 신호로 "받아들여질 것 같지만, 과거에는 역전이 해소된 직후에 오히려 경기 침체가 본격화된 경우가 많았다." 경기 악화로 중앙은행이 기준 금리를 내려 <b>단기 금리가 빠르게 떨어진 결과</b>일 수 있으므로, 위험이 사라졌다고 단정할 수 없다.</li>
+        <li><b>④ 일치</b> — 7문단: 역전 시 "예대 마진이 줄어들고" 대출이 줄어 "침체를 앞당기는 원인이 될 수 있다."</li>
+        <li><b>⑤ 일치</b> — 4문단: 시장 분할 이론은 "서로 다른 만기의 금리가 대체로 함께 움직이는 현상을 잘 설명하지 못한다는 한계가 있다."</li>
+        <li><b>[풀이 요령]</b> — '~일 것 같지만, 오히려 ~'처럼 <b>통념을 뒤집는 반전 구조</b>는 선택지에서 통념 쪽으로 바꿔 출제되기 쉽다. 또 "곡선의 모양뿐 아니라 그 모양이 바뀌게 된 원인"이라는 마지막 문장은 같은 현상(기울기 가팔라짐)이라도 원인이 단기 금리 하락인지 장기 금리 상승인지에 따라 해석이 달라진다는 핵심 논지다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span>상관접속사의 수 일치</p>
+    <p class="stem">Neither the regional director nor the sales representatives ------- informed of the revised pricing policy before it took effect.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>was</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>has been</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>were</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>being</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (C) were</p>
+      <ul>
+        <li><b>해석</b> — 지역 책임자도, 영업 사원들도 개정된 가격 정책이 시행되기 전에 그에 대해 통보받지 못했다.</li>
+        <li><b>(A) was</b> — neither A nor B는 <b>B(가까운 쪽)</b>에 동사를 일치시킨다. B가 복수(representatives)이므로 단수 was는 틀리다.</li>
+        <li><b>(B) has been</b> — 역시 단수형이며, before it took effect(과거 시점)와도 시제가 맞지 않는다.</li>
+        <li><b>(C) were ✔</b> — 복수 주어 the sales representatives에 일치 + 과거 수동(were informed).</li>
+        <li><b>(D) being</b> — 분사는 문장의 본동사 자리에 올 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span>By the time + 현재시제 → 미래완료</p>
+    <p class="stem">By the time the new headquarters opens next spring, Halvorsen Logistics ------- from its current building for over twenty years.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>operates</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>has operated</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>had operated</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>will have operated</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (D) will have operated</p>
+      <ul>
+        <li><b>해석</b> — 내년 봄 새 본사가 문을 열 무렵이면, Halvorsen Logistics는 현재 건물에서 20년 넘게 운영해 온 셈이 될 것이다.</li>
+        <li><b>(A) operates</b> — 단순 현재는 '미래 시점까지의 지속'을 나타내지 못한다.</li>
+        <li><b>(B) has operated</b> — 현재완료는 '지금까지'의 기준점. 기준점이 next spring(미래)이므로 맞지 않는다.</li>
+        <li><b>(C) had operated</b> — 과거완료는 과거 기준점에 쓴다.</li>
+        <li><b>(D) will have operated ✔</b> — 시간 부사절(by the time)은 미래 대신 현재(opens)를 쓰고, 주절은 <b>미래완료</b>로 미래 시점까지의 경험·계속을 나타낸다. for over twenty years가 결정적 단서.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span>by + 재귀대명사</p>
+    <p class="stem">Although several colleagues offered to help, Mr. Okafor insisted on preparing the quarterly budget proposal by -------.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>he</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>his</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>him</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>himself</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (D) himself</p>
+      <ul>
+        <li><b>해석</b> — 여러 동료들이 돕겠다고 했지만, Okafor 씨는 분기 예산안을 혼자서 준비하겠다고 고집했다.</li>
+        <li><b>(A) he</b> — 주격은 전치사 by의 목적어가 될 수 없다.</li>
+        <li><b>(B) his</b> — 소유격은 뒤에 명사가 필요하다. (소유대명사로 보더라도 '그의 것에 의해'는 의미가 통하지 않는다.)</li>
+        <li><b>(C) him</b> — 목적격은 문법상 가능해 보이지만, 주어와 동일 인물을 가리킬 때는 재귀대명사를 써야 한다.</li>
+        <li><b>(D) himself ✔</b> — <b>by oneself = 혼자서(alone), 스스로</b>. 토익 빈출 관용 표현. 함께 알아 둘 것: on one's own(혼자 힘으로).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e4">
+    <p class="q-title"><span class="num">4</span>명사 뒤 분사 수식 (자동사 result)</p>
+    <p class="stem">The manufacturer's warranty does not cover any damage ------- from improper installation or unauthorized repairs.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>resulting</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>resulted</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>results</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>to be resulted</span></li>
+    </ul>
+    <div class="result" id="r-e4"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e4">
+      <p class="ans">정답 (A) resulting</p>
+      <ul>
+        <li><b>해석</b> — 제조사 보증은 부적절한 설치나 승인되지 않은 수리로 인해 발생한 어떠한 손상도 보상하지 않는다.</li>
+        <li><b>(A) resulting ✔</b> — 문장에 이미 본동사(does not cover)가 있으므로 빈칸은 damage를 뒤에서 꾸미는 분사 자리. result는 <b>자동사</b>(result from ~에서 비롯되다)이므로 수동의 과거분사가 아니라 <b>현재분사</b>를 쓴다.</li>
+        <li><b>(B) resulted</b> — 자동사는 수동태·수동 의미의 과거분사가 불가능하다. '발생한'이라는 한국어 해석에 끌려 고르기 쉬운 함정.</li>
+        <li><b>(C) results</b> — 동사가 두 개가 되어 문장이 성립하지 않는다(관계대명사 that이 있어야 함).</li>
+        <li><b>(D) to be resulted</b> — 자동사의 수동형은 존재하지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e5">
+    <p class="q-title"><span class="num">5</span>비교급 강조 부사</p>
+    <p class="stem">Thanks to the streamlined ordering system, this quarter's customer satisfaction scores are ------- higher than those recorded last year.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>very</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>considerably</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>more</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>most</span></li>
+    </ul>
+    <div class="result" id="r-e5"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e5">
+      <p class="ans">정답 (B) considerably</p>
+      <ul>
+        <li><b>해석</b> — 간소화된 주문 시스템 덕분에, 이번 분기 고객 만족도 점수는 작년에 기록된 점수보다 상당히 더 높다.</li>
+        <li><b>(A) very</b> — very는 원급을 수식하며 <b>비교급은 수식하지 못한다</b>. (×very higher)</li>
+        <li><b>(B) considerably ✔</b> — 비교급 강조 부사: <b>much, even, still, far, a lot, considerably, significantly, substantially</b> + 비교급.</li>
+        <li><b>(C) more</b> — higher가 이미 비교급이므로 이중 비교(×more higher)가 된다.</li>
+        <li><b>(D) most</b> — 최상급 표지로 비교급 higher와 함께 쓸 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 이웃하지 않는 배열 + 조건부 이웃 + 여사건</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>빈 의자가 있는 좌석 배치</p>
+    <p class="stem">일렬로 놓인 7개의 의자에 남학생 3명(그중 한 명은 <b>민준</b>)과 여학생 3명(그중 한 명은 <b>서연</b>)이 한 명씩 앉으려고 한다. (의자 하나는 비어 있다.) 다음 세 조건을 모두 만족시키도록 앉는 경우의 수는?<br>
+    (가) 어느 두 남학생도 서로 이웃하여 앉지 않는다.<br>
+    (나) 민준과 서연은 서로 이웃하여 앉는다.<br>
+    (다) 빈 의자는 양 끝에 있지 않다.<br>
+    <span class="pron">(단, 빈 의자를 사이에 둔 두 사람은 이웃한 것으로 보지 않는다.)</span></p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>360</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>396</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>432</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>480</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>576</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 432</p>
+      <ul>
+        <li><b>Step 1. 남학생 자리 정하기 (가)</b><br>
+          의자 1~7 중 서로 이웃하지 않는 3자리를 고르는 방법: 나머지 4자리 사이·양끝 5곳에서 3곳 → <sub>5</sub>C<sub>3</sub> = <b>10</b>가지<br>
+          {1,3,5} {1,3,6} {1,3,7} {1,4,6} {1,4,7} {1,5,7} {2,4,6} {2,4,7} {2,5,7} {3,5,7}</li>
+        <li><b>Step 2. 조건 (나)까지 — 핵심 아이디어</b><br>
+          남학생끼리는 이웃하지 않으므로 <b>민준 옆자리는 반드시 남학생이 아닌 자리</b>(여학생 또는 빈 의자)이다. 따라서 민준의 자리가 끝이면 서연이 앉을 수 있는 자리는 1곳, 가운데면 2곳.<br>
+          · 남학생 자리 집합 하나의 (민준 자리, 서연 자리) 쌍의 수 = 3×2 − (그 집합에 포함된 끝자리 수)<br>
+          · 10개 집합 전체에서 끝자리(1 또는 7)가 등장하는 횟수: 1을 포함하는 집합 6개 + 7을 포함하는 집합 6개 = 12<br>
+          · (민준, 서연) 자리 쌍의 총수 = 10×6 − 12 = <b>48</b><br>
+          · 나머지 남학생 2명: 2! = 2, 나머지 3자리에 여학생 2명과 빈 의자: 3! = 6<br>
+          ∴ (가)·(나) 만족 = 48 × 2 × 6 = <b>576</b></li>
+        <li><b>Step 3. 여사건 — 빈 의자가 끝에 있는 경우 빼기 (다)</b><br>
+          빈 의자가 1번에 있다고 하자. 그러면 2~7번 6자리에 6명이 앉고, 남학생 자리는 이웃하지 않는 3자리: {2,4,6} {2,4,7} {2,5,7} {3,5,7} (4가지)<br>
+          이때 1번은 빈 의자이므로 2번에 앉은 민준 옆에는 서연이 앉을 자리가 3번 하나뿐이다.<br>
+          · {2,4,6}: 1+2+2 = 5 · {2,4,7}: 1+2+1 = 4 · {2,5,7}: 1+2+1 = 4 · {3,5,7}: 2+2+1 = 5 → 합 <b>18</b><br>
+          · 나머지 남학생 2! × 나머지 여학생 2! = 4 → 18 × 4 = 72<br>
+          빈 의자가 7번인 경우도 대칭으로 72 → 합계 <b>144</b></li>
+        <li><b>Step 4. 결론</b> — 576 − 144 = <b>432</b></li>
+        <li><b>오답 함정</b> — ⑤ 576은 조건 (다)를 빠뜨린 값. Step 3에서 빈 의자 옆자리(2번)를 서연의 자리로 잘못 세어 1번 자리를 계산에 넣으면 끝자리 경우가 과다 계산되어 오답이 나온다. 또 Step 2에서 '민준이 끝자리면 이웃이 1곳'임을 무시하고 3×2×10 = 60쌍으로 세면 720이 되어 선택지에도 없다.</li>
+        <li><b>검산</b> — 7명(빈 의자 포함)의 7! = 5040가지 배치를 컴퓨터로 전부 확인하면 (가) 1440, (가)(나) 576, (가)(나)(다) 432로 일치한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 1·3·4과</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[1과 あいうえお] 박(모라) 수 세기</p>
+    <p class="stem">다음 중 박(拍) 수가 나머지 셋과 <u>다른</u> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>学校<rt>がっこう</rt></ruby> (がっこう)</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>先生<rt>せんせい</rt></ruby> (せんせい)</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">コーヒー</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">おかあさん</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ④ おかあさん (5박)</p>
+      <ul>
+        <li><b>① 学校(がっこう)</b> (각코-, 학교) — が・っ・こ・う = <b>4박</b>. 촉음 っ도 1박.</li>
+        <li><b>② 先生(せんせい)</b> (센세-, 선생님) — せ・ん・せ・い = <b>4박</b>. 발음 ん 1박, 장음 い 1박.</li>
+        <li><b>③ コーヒー</b> (코-히-, 커피) — コ・ー・ヒ・ー = <b>4박</b>. 가타카나 장음 「ー」도 1박.</li>
+        <li><b>④ おかあさん ✔</b> (오카-상, 어머니) — お・か・あ・さ・ん = <b>5박</b>.</li>
+        <li><b>[시험 포인트]</b> 촉음(っ)·발음(ん)·장음은 각각 1박. 「おばさん(아주머니, 4박)」↔「おばあさん(할머니, 5박)」, 「ここ(여기)」↔「こうこう(고등학교)」처럼 길이 하나로 뜻이 달라진다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[4과 いらっしゃい] 가족 호칭의 이중 체계</p>
+    <p class="stem">친구의 집에 놀러 가서, 친구 어머니께 <b>내 어머니</b>가 선생님이라고 말하려 한다. 빈칸에 알맞은 말은?</p>
+    <div class="jp-stem">わたしの (　　　) は <ruby>先生<rt>せんせい</rt></ruby>です。</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">おかあさん</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">はは</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">おばあさん</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">あね</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ② はは</p>
+      <ul>
+        <li><b>문장</b> — わたしの ははは 先生(せんせい)です。<br>
+          <span class="pron">와타시노 하하와 센세-데스</span> — 제 어머니는 선생님입니다.</li>
+        <li><b>① おかあさん</b> (오카-상) — <b>남의 어머니</b>를 높여 부르는 존경형. 남에게 자기 어머니를 말할 때는 쓰지 않는다(집 안에서 직접 부를 때는 사용).</li>
+        <li><b>② はは ✔</b> (하하) — 남에게 <b>자기 어머니</b>를 말할 때의 겸양형.</li>
+        <li><b>③ おばあさん</b> (오바-상) — 남의 할머니(자기 할머니는 そぼ). 뜻도 맞지 않는다.</li>
+        <li><b>④ あね</b> (아네) — 자기 누나·언니. 뜻이 맞지 않는다.</li>
+        <li><b>[호칭 정리]</b> ちち↔おとうさん / はは↔おかあさん / あに↔おにいさん / あね↔おねえさん / そふ↔おじいさん / そぼ↔おばあさん (왼쪽: 내 가족, 오른쪽: 남의 가족)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[3과 はじめまして] 자기소개 문형</p>
+    <p class="stem">자기소개 문장으로 <u>어색한</u> 것은?</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">はじめまして。パク・ナリさんです。</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">わたしの <ruby>趣味<rt>しゅみ</rt></ruby>は テニスと アニメです。</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">わたしも <ruby>高校生<rt>こうこうせい</rt></ruby>です。</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">わたしは <ruby>日本人<rt>にほんじん</rt></ruby>では ありません。</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ① はじめまして。パク・ナリさんです。</p>
+      <ul>
+        <li><b>① ✔ 어색함</b> (하지메마시테. 파쿠 나리상데스) — <b>자기 이름에는 「さん」을 붙이지 않는다.</b> 올바른 표현: はじめまして。パク・ナリです。(처음 뵙겠습니다. 박나리입니다.)</li>
+        <li><b>② 趣味(しゅみ)</b> (와타시노 슈미와 테니스토 아니메데스) — 제 취미는 테니스와 애니메이션입니다. 「の」(소유), 「と」(명사 나열) 모두 바르다. 조사 は는 [와].</li>
+        <li><b>③ 高校生(こうこうせい)</b> (와타시모 코-코-세-데스) — 저도 고등학생입니다. 「も」= ~도.</li>
+        <li><b>④ 日本人(にほんじん)</b> (와타시와 니혼징데와 아리마셍) — 저는 일본인이 아닙니다. 「〜では ありません」은 명사 부정(회화체 じゃ ないです).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 3과 はじめまして (자기소개 + 소속)</p>
+    <p class="jp-main">はじめまして。<ruby>韓国<rt>かんこく</rt></ruby>から <ruby>来<rt>き</rt></ruby>ました。<ruby>高校<rt>こうこう</rt></ruby><ruby>一年生<rt>いちねんせい</rt></ruby>の パク・ナリです。</p>
+    <p class="jp-read">읽기(후리가나) : はじめまして。韓国(かんこく)から 来(き)ました。高校(こうこう) 一年生(いちねんせい)の パク・ナリです。</p>
+    <p class="jp-rom">한글 발음 : 하지메마시테. 캉코쿠카라 키마시타. 코-코- 이치넨세-노 파쿠 나리데스</p>
+    <p class="jp-ko">처음 뵙겠습니다. 한국에서 왔습니다. 고등학교 1학년인 박나리입니다.</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>はじめまして</td><td>はじめまして (하지메마시테)</td><td>처음 뵙겠습니다</td></tr>
+      <tr><td>韓国</td><td>かんこく (캉코쿠)</td><td>한국</td></tr>
+      <tr><td>〜から</td><td>から (카라)</td><td>~에서, ~로부터 (출발점)</td></tr>
+      <tr><td>来ました</td><td>きました (키마시타)</td><td>왔습니다 (来る의 정중 과거)</td></tr>
+      <tr><td>高校</td><td>こうこう (코-코-)</td><td>고등학교</td></tr>
+      <tr><td>一年生</td><td>いちねんせい (이치넨세-)</td><td>1학년</td></tr>
+      <tr><td>パク・ナリ</td><td>パク・ナリ (파쿠 나리)</td><td>박나리 (외국인 이름은 가타카나)</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>〜から 来(き)ました</b> — '~에서 왔습니다'. 출신·출발점을 나타내는 「から」. 来る(くる)는 불규칙 동사로 ます형은 来(き)ます.</li>
+        <li><b>명사 + の + 명사</b> — 「高校一年生の パク・ナリ」 = '고등학교 1학년인 박나리'. 「の」는 소유뿐 아니라 <b>동격·소속</b>도 나타내며, 한국어보다 훨씬 자주 쓴다.</li>
+        <li><b>자기 이름에 さん ×</b> — 자기소개에서는 「パク・ナリです」. 이어서 「どうぞ よろしく おねがいします(잘 부탁드립니다)」로 마무리하면 완벽한 자기소개가 된다.</li>
+        <li><b>장음 주의</b> — こうこう(고등학교, 4박)와 ここ(여기, 2박), せい(生, 세-)의 장음을 길게 발음하자.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-12 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
