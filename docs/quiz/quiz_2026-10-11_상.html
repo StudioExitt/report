@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-11</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 11일 (일) · 국어 1문항 · 토익 5문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-11 12:49 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경영·금융)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (기업의 배당 정책과 자사주 매입)</p>
+
+  <div class="passage">
+    <p>기업이 벌어들인 이익은 크게 두 갈래로 쓰인다. 하나는 이익을 회사 안에 남겨 두었다가 새로운 투자에 쓰는 것이고, 다른 하나는 그 이익을 주주에게 돌려주는 것이다. 주주에게 이익을 돌려주는 대표적인 방식으로는 현금 배당과 자사주 매입이 있다. 현금 배당은 주주가 보유한 주식 수에 비례하여 현금을 나누어 주는 방식이고, 자사주 매입은 기업이 시장에서 자기 회사의 주식을 사들여 시장에 유통되는 주식 수를 줄이는 방식이다. 어느 방식이든 기업 밖으로 현금이 빠져나간다는 점은 같지만, 주주가 혜택을 얻는 경로는 서로 다르다.</p>
+    <p>배당 정책이 기업 가치에 영향을 주는가에 대해 모딜리아니와 밀러는 이른바 '배당 무관련 이론'을 제시하였다. 세금과 거래 비용이 없고, 모든 투자자가 같은 정보를 가지며, 기업의 투자 계획이 이미 정해져 있는 '완전 자본 시장'을 가정하면, 배당을 얼마나 하든 기업 가치는 변하지 않는다는 것이다. 기업 가치는 결국 기업이 가진 자산이 앞으로 만들어 낼 현금 흐름에 의해 결정되는데, 배당은 그 현금 흐름을 나누어 담는 그릇을 바꾸는 일에 불과하다는 것이다. 실제로 배당이 지급되면 그만큼 주가가 떨어지는 배당락이 일어나므로 주주의 전체 부는 변하지 않는다. 또 배당을 원하지 않는 주주는 받은 돈으로 주식을 다시 사면 되고, 배당을 원하는 주주는 보유 주식의 일부를 팔아 스스로 배당을 만들어 낼 수 있다. 이를 '자가 배당'이라 한다.</p>
+    <p>그러나 현실의 자본 시장은 이러한 가정과 거리가 멀다. 우선 세금이 존재한다. 배당 소득에 매기는 세율이 주식을 팔아 얻은 차익에 매기는 세율보다 높다면, 주주의 입장에서는 같은 금액이라도 배당보다 자사주 매입을 통해 이익을 돌려받는 편이 유리하다. 더구나 자사주 매입으로 주가가 오르더라도 주주는 주식을 실제로 팔기 전까지 세금 납부를 미룰 수 있다. 이처럼 세후 수익을 기준으로 보면, 배당을 늘리는 것이 오히려 기업 가치를 낮출 수 있다는 주장이 나온다.</p>
+    <p>정보 비대칭 역시 중요한 변수이다. 경영자는 회사의 미래 이익에 대해 외부 투자자보다 더 많은 정보를 가지고 있다. 따라서 배당을 늘리겠다는 결정은 경영자가 앞으로도 그만한 현금을 꾸준히 벌어들일 수 있다고 확신한다는 '신호'로 해석된다. 이를 신호 효과라 한다. 배당은 한번 올리면 다시 내리기 어려운 하방 경직성을 띠기 때문에, 배당 증가는 일시적인 이익보다는 지속 가능한 이익에 대한 자신감을 드러낸다. 같은 이유로 배당 삭감은 시장에 강한 부정적 신호를 보내 주가 급락을 부르곤 한다. 반면 자사주 매입은 일회성으로 이루어지는 경우가 많아 이익의 지속성에 대한 신호로서는 약하지만, 경영자가 현재 주가가 회사의 내재 가치보다 낮다고 판단하고 있다는 '저평가 신호'로 읽히기도 한다.</p>
+    <p>대리인 문제의 관점에서 배당 정책을 바라볼 수도 있다. 주주와 경영자의 이해관계가 언제나 일치하는 것은 아니다. 마땅히 투자할 곳이 없는 현금이 회사 안에 쌓이면 경영자는 수익성이 낮은 사업에 뛰어들어 회사의 몸집을 키우거나 불필요한 비용을 지출할 유인을 갖게 된다. 이를 '잉여 현금 흐름 가설'이라 한다. 이 관점에서 보면 배당과 자사주 매입은 경영자가 마음대로 쓸 수 있는 현금을 줄여 대리인 비용을 낮추는 장치가 된다. 정기적인 배당 약속은 경영자에게 일종의 규율로 작용하는 셈이다.</p>
+    <p>한편 자사주 매입이 주당순이익을 높인다는 점이 흔히 강조된다. 순이익이 같을 때 유통 주식 수가 줄어들면 주당순이익은 기계적으로 커진다. 그러나 이것이 곧 주주 가치의 증가를 뜻하지는 않는다. 주식을 사들이는 데 쓴 현금만큼 기업의 자산도 줄어들었기 때문이다. 만약 그 현금을 회사 안에 두고 투자했을 때 얻을 수 있었던 수익률이 주주들이 기대하는 수익률보다 높았다면, 자사주 매입은 오히려 주주 가치를 훼손할 수 있다. 또한 사들인 주식을 소각하지 않고 회사가 그대로 보유한다면, 그 주식은 나중에 다시 시장에 풀리거나 경영권 방어 수단으로 쓰일 수 있어 주주 환원 효과가 반감된다는 비판도 있다.</p>
+    <p>기업의 성장 단계도 배당 정책을 좌우한다. 수익성 높은 투자 기회가 많은 성장 기업은 이익을 유보하여 재투자하는 것이 주주에게 더 유리하므로 이익 중 배당으로 지급하는 비율인 배당 성향이 낮은 경향이 있다. 반대로 사업이 성숙하여 투자 기회가 줄어든 기업은 남는 현금을 주주에게 돌려주는 편이 합리적이다. 또한 투자자들은 자신의 선호에 맞는 배당 정책을 가진 기업에 모이는 경향이 있다. 꾸준한 현금 수입을 원하는 연금 생활자는 고배당 기업에, 높은 세율을 적용받는 고소득 투자자는 저배당 기업에 모이는 식이다. 이를 '고객 효과'라 한다. 고객 효과가 존재한다면 기업이 배당 정책을 자주 바꾸는 것은 기존 주주층을 흔들어 불필요한 거래 비용을 낳으므로 바람직하지 않다.</p>
+    <p>결국 배당 무관련 이론은 현실을 있는 그대로 설명하는 이론이라기보다, 배당 정책이 기업 가치에 영향을 준다면 그 원인은 세금, 정보 비대칭, 대리인 비용처럼 완전 자본 시장의 가정이 깨지는 지점에서 찾아야 한다는 점을 일깨워 준다는 데 의의가 있다. 배당 정책을 평가할 때에는 '얼마나 나누어 주는가'보다 '왜 그 방식으로 나누어 주는가'를 먼저 물어야 하는 이유가 여기에 있다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>완전 자본 시장에서는 배당을 원하는 주주가 보유 주식 일부를 매도하여 배당과 같은 효과를 스스로 만들 수 있다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>배당 소득 세율이 매매 차익 세율보다 높으면, 세후 수익을 기준으로 할 때 자사주 매입이 주주에게 더 유리할 수 있다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>배당의 하방 경직성 때문에, 배당 증가는 자사주 매입보다 이익의 지속성에 대한 경영자의 확신을 더 강하게 드러낸다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>자사주 매입으로 주당순이익이 높아졌다면, 매입에 쓴 현금의 내부 투자 수익률과 관계없이 주주 가치는 증가한 것이다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>고객 효과가 존재할 때 배당 정책을 자주 바꾸면 기존 주주층이 흔들려 불필요한 거래 비용이 생길 수 있다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ④</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단: "배당을 원하는 주주는 보유 주식의 일부를 팔아 스스로 배당을 만들어 낼 수 있다. 이를 '자가 배당'이라 한다."</li>
+        <li><b>② 일치</b> — 3문단: 배당 소득 세율이 차익 세율보다 높으면 "배당보다 자사주 매입을 통해 이익을 돌려받는 편이 유리하다."</li>
+        <li><b>③ 일치</b> — 4문단: 배당은 하방 경직성 때문에 "지속 가능한 이익에 대한 자신감"을 드러내는 반면, 자사주 매입은 "일회성"이라 "지속성에 대한 신호로서는 약하다."</li>
+        <li><b>④ 불일치 (정답)</b> — 6문단은 주당순이익 상승이 "곧 주주 가치의 증가를 뜻하지는 않는다"고 하고, 그 현금을 내부에 두었을 때의 수익률이 기대 수익률보다 높았다면 "자사주 매입은 오히려 주주 가치를 훼손할 수 있다"고 하였다. 선택지는 바로 그 조건(기회 수익률)을 <b>무시해도 된다</b>고 서술하여 지문과 정반대이다.</li>
+        <li><b>⑤ 일치</b> — 7문단: 고객 효과가 있으면 배당 정책을 자주 바꾸는 것은 "기존 주주층을 흔들어 불필요한 거래 비용을 낳으므로 바람직하지 않다."</li>
+        <li><b>[풀이 요령]</b> — '기계적으로 커진다', '곧 ~을 뜻하지는 않는다'처럼 <b>겉보기 효과와 실질 효과를 구분</b>하는 문장은 선택지에서 '관계없이', '반드시' 같은 단정 표현으로 뒤집혀 자주 출제된다. 조건부 서술("만약 ~라면")이 나오면 그 조건을 표시해 두자.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span>접속사 vs 전치사</p>
+    <p class="stem">The board approved the merger ------- several shareholders raised concerns about the valuation.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>despite</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>even though</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>because of</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>regardless</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (B) even though</p>
+      <ul>
+        <li><b>해석</b> — 몇몇 주주들이 가치 평가에 대해 우려를 제기했음에도 불구하고 이사회는 합병을 승인했다.</li>
+        <li><b>(A) despite</b> — 전치사이므로 뒤에 절(주어+동사)이 올 수 없다. (despite the concerns 형태여야 함)</li>
+        <li><b>(B) even though ✔</b> — 양보의 접속사로 뒤의 절(several shareholders raised ...)을 이끌고, '우려에도 승인'이라는 역접 의미도 맞다.</li>
+        <li><b>(C) because of</b> — 전치사구라 절을 받을 수 없고, 의미도 '우려 때문에 승인'으로 어색하다.</li>
+        <li><b>(D) regardless</b> — 부사이며, 절을 이으려면 regardless of whether ... 형태가 필요하다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span>요구·제안 동사 뒤 가정법 현재</p>
+    <p class="stem">Ms. Tanaka has requested that all expense reports ------- by the end of the quarter.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>submit</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>are submitted</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>be submitted</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>submitting</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (C) be submitted</p>
+      <ul>
+        <li><b>해석</b> — Tanaka 씨는 모든 경비 보고서가 분기 말까지 제출되어야 한다고 요청했다.</li>
+        <li><b>(A) submit</b> — 동사원형 형태는 맞지만, 보고서는 '제출되는' 대상이므로 능동태는 틀리다.</li>
+        <li><b>(B) are submitted</b> — 수동태이지만 request that 절에서는 (should) + 동사원형을 써야 하므로 직설법 are는 틀리다.</li>
+        <li><b>(C) be submitted ✔</b> — request / require / recommend / suggest + that + 주어 + <b>(should) 동사원형</b>. 수동이므로 be p.p.</li>
+        <li><b>(D) submitting</b> — that절의 동사 자리에 동명사/분사는 올 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span>Only + 부사구 도치</p>
+    <p class="stem">Only after the internal audit was completed ------- the discrepancies in the inventory records.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>the manager noticed</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>did the manager notice</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>the manager did notice</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>noticed the manager</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (B) did the manager notice</p>
+      <ul>
+        <li><b>해석</b> — 내부 감사가 끝나고 나서야 비로소 관리자는 재고 기록의 불일치를 알아차렸다.</li>
+        <li><b>(A) the manager noticed</b> — 'Only + 부사구/부사절'이 문두에 오면 주절은 반드시 도치되어야 한다.</li>
+        <li><b>(B) did the manager notice ✔</b> — 일반동사 과거이므로 <b>did + 주어 + 동사원형</b> 어순으로 도치한다.</li>
+        <li><b>(C) the manager did notice</b> — 강조의 did일 뿐 도치가 아니다.</li>
+        <li><b>(D) noticed the manager</b> — 일반동사는 주어와 직접 자리를 바꾸지 않으며, 의미도 '관리자를 알아차렸다'로 바뀐다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e4">
+    <p class="q-title"><span class="num">4</span>관계대명사 소유격</p>
+    <p class="stem">The conference room, ------- windows overlook the harbor, is available for booking on weekdays only.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>which</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>whose</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>that</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>where</span></li>
+    </ul>
+    <div class="result" id="r-e4"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e4">
+      <p class="ans">정답 (B) whose</p>
+      <ul>
+        <li><b>해석</b> — 창문이 항구를 내려다보는 그 회의실은 평일에만 예약할 수 있다.</li>
+        <li><b>(A) which</b> — 뒤에 windows overlook ...이라는 완전한 절이 오므로 주격·목적격 which는 들어갈 수 없다.</li>
+        <li><b>(B) whose ✔</b> — '회의실<b>의</b> 창문'이라는 소유 관계. whose + 명사 + 동사의 완전한 절을 이끈다. 사물 선행사에도 whose를 쓸 수 있다.</li>
+        <li><b>(C) that</b> — 콤마 뒤 계속적 용법에는 that을 쓸 수 없고, 소유격 기능도 없다.</li>
+        <li><b>(D) where</b> — 관계부사 뒤에도 완전한 절이 오지만, 'windows'가 회의실에 속한다는 소유 의미를 나타내지 못해 문맥상 부적절하다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e5">
+    <p class="q-title"><span class="num">5</span>목적격 보어 자리의 분사 형용사</p>
+    <p class="stem">Employees are reminded that confidential documents must not be left ------- on desks after business hours.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>unattended</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>unattending</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>attend</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>attentively</span></li>
+    </ul>
+    <div class="result" id="r-e5"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e5">
+      <p class="ans">정답 (A) unattended</p>
+      <ul>
+        <li><b>해석</b> — 직원들은 업무 시간 이후 기밀 문서를 책상 위에 방치해서는 안 된다는 점을 다시 안내받았다.</li>
+        <li><b>(A) unattended ✔</b> — leave + 목적어 + 형용사(보어) 구문의 수동태 be left + <b>보어</b>. 'unattended(지켜보는 사람 없이 방치된)'는 토익 빈출 어휘이다.</li>
+        <li><b>(B) unattending</b> — 표준 영어에서 쓰이지 않는 형태이다.</li>
+        <li><b>(C) attend</b> — 동사원형은 보어 자리에 올 수 없다.</li>
+        <li><b>(D) attentively</b> — 부사는 보어가 될 수 없고, '주의 깊게 방치되다'는 의미상으로도 어색하다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 같은 것이 있는 순열 + 포함배제</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>같은 숫자가 이웃하지 않는 나열</p>
+    <p class="stem">일곱 개의 숫자 <b>1, 1, 2, 2, 3, 3, 4</b>를 모두 한 번씩 사용하여 일렬로 나열하려고 한다. 다음 두 조건을 모두 만족시키도록 나열하는 경우의 수는?<br>
+    (가) 같은 숫자끼리는 서로 이웃하지 않는다.<br>
+    (나) 숫자 4는 양 끝에 오지 않는다.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>156</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>168</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>186</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>216</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>246</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 186</p>
+      <ul>
+        <li><b>Step 1. 전체 경우의 수</b> — 같은 것이 있는 순열: 7! / (2!·2!·2!) = 5040 / 8 = <b>630</b></li>
+        <li><b>Step 2. 조건 (가) — 포함배제</b><br>
+          A<sub>k</sub> = '숫자 k 두 개가 이웃하는 경우' (k = 1, 2, 3)라 하자.<br>
+          · |A<sub>1</sub>| : 1·1을 한 덩어리로 보면 6개(11, 2, 2, 3, 3, 4) 나열 → 6! / (2!·2!) = <b>180</b><br>
+          · |A<sub>1</sub>∩A<sub>2</sub>| : 5개(11, 22, 3, 3, 4) 나열 → 5! / 2! = <b>60</b><br>
+          · |A<sub>1</sub>∩A<sub>2</sub>∩A<sub>3</sub>| : 4개(11, 22, 33, 4) 나열 → 4! = <b>24</b><br>
+          ∴ (가)를 만족 = 630 − 3×180 + 3×60 − 24 = <b>246</b></li>
+        <li><b>Step 3. 4가 끝에 오는 경우 빼기</b><br>
+          4가 맨 앞에 오면, 나머지 6자리에 1, 1, 2, 2, 3, 3을 같은 숫자끼리 이웃하지 않게 나열하면 된다(4 옆에는 무엇이 와도 됨).<br>
+          · 전체 6! / 8 = 90, 한 쌍 이웃 5! / 4 = 30, 두 쌍 4! / 2 = 12, 세 쌍 3! = 6<br>
+          · 90 − 3×30 + 3×12 − 6 = <b>30</b><br>
+          4가 맨 뒤에 오는 경우도 대칭으로 30가지이고, 4는 한 개뿐이라 두 경우는 겹치지 않는다.</li>
+        <li><b>Step 4. 결론</b> — 246 − 30 − 30 = <b>186</b></li>
+        <li><b>오답 함정</b> — ⑤ 246은 조건 (나)를 빠뜨린 값, ④ 216은 4가 끝에 오는 경우를 한쪽만 뺀 값이다. 또 Step 2에서 교집합을 더하지 않고 630 − 540 = 90으로 끝내는 실수가 잦다. 포함배제는 <b>홀수 개 교집합은 빼고, 짝수 개 교집합은 더한다</b>.</li>
+        <li><b>검산</b> — 컴퓨터로 630가지를 전부 나열해 확인하면 (가) 만족 246, (가)·(나) 모두 만족 186으로 일치한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 6~8과</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[8과 よい おとしを] 동사 て형 만들기</p>
+    <p class="stem">다음 중 동사의 て형이 바르게 짝지어지지 <u>않은</u> 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>書<rt>か</rt></ruby>く → <ruby>書<rt>か</rt></ruby>いて</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>読<rt>よ</rt></ruby>む → <ruby>読<rt>よ</rt></ruby>んで</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>行<rt>い</rt></ruby>く → <ruby>行<rt>い</rt></ruby>いて</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp"><ruby>話<rt>はな</rt></ruby>す → <ruby>話<rt>はな</rt></ruby>して</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ③ 行(い)く → 行(い)って</p>
+      <ul>
+        <li><b>① 書(か)く → 書(か)いて</b> (카쿠 → 카이테, 쓰다) — 「く」로 끝나는 1류 동사는 「いて」. 바르다.</li>
+        <li><b>② 読(よ)む → 読(よ)んで</b> (요무 → 욘데, 읽다) — 「ぬ・ぶ・む」는 「んで」. 바르다.</li>
+        <li><b>③ 行(い)く → 行(い)って ✔</b> (이쿠 → 잇테, 가다) — 「く」로 끝나지만 <b>예외</b>로 「いて」가 아니라 「って」가 된다. 학습 정리에서 "시험에 자주 나온다"고 강조한 항목.</li>
+        <li><b>④ 話(はな)す → 話(はな)して</b> (하나스 → 하나시테, 이야기하다) — 「す」는 「して」. 바르다.</li>
+        <li><b>[て형 노래로 외우기]</b> う·つ·る → って / ぬ·ぶ·む → んで / く → いて / ぐ → いで / す → して / 예외 行く → 行って</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[7과 おおさかに 行きます] 조사 고르기</p>
+    <p class="stem">빈칸 ㉠, ㉡에 들어갈 조사로 알맞게 짝지어진 것은?</p>
+    <div class="jp-stem">わたしは <ruby>毎朝<rt>まいあさ</rt></ruby> バス( ㉠ ) <ruby>学校<rt>がっこう</rt></ruby>( ㉡ ) <ruby>行<rt>い</rt></ruby>きます。</div>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span>㉠ で　㉡ に</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>㉠ に　㉡ で</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>㉠ を　㉡ へ</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>㉠ で　㉡ を</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ① ㉠ で　㉡ に</p>
+      <ul>
+        <li><b>문장</b> — わたしは 毎朝(まいあさ) バスで 学校(がっこう)に 行(い)きます。<br>
+          <span class="pron">와타시와 마이아사 바스데 각코-니 이키마스</span> — 나는 매일 아침 버스로 학교에 갑니다.</li>
+        <li><b>① ✔</b> — ㉠ 수단·방법의 「で」(~로), ㉡ 도착점의 「に」(~에). 「へ」를 써도 되지만 선택지 중 짝이 맞는 것은 ①뿐이다.</li>
+        <li><b>②</b> — 「バスに 行く」는 '버스(라는 장소)에 간다'가 되어 수단을 나타내지 못하고, 「学校で 行く」도 어색하다.</li>
+        <li><b>③</b> — 「を」는 목적어 조사이므로 수단을 나타낼 수 없다.</li>
+        <li><b>④</b> — 「学校を 行く」는 목적지를 나타내지 못한다. (「を」는 '~을/를'이며 [오]로 읽는다)</li>
+        <li><b>[조사 정리]</b> に(도착점·시각) / へ(방향, [에]로 읽음) / で(수단·장소) / を(목적어) / から〜まで(~부터 ~까지)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[6과 わあ、すごい!] 칭찬에 대한 응답</p>
+    <p class="stem">일본인 친구가 다음과 같이 말했을 때, 일본의 언어 문화에 비추어 가장 자연스러운 응답은?</p>
+    <div class="jp-stem">A : ナリさんは <ruby>日本語<rt>にほんご</rt></ruby>が じょうずですね。</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">はい、わたしは <ruby>日本語<rt>にほんご</rt></ruby>が じょうずです。</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">いいえ、そんな こと ありません。</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">おじゃまします。</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">よい おとしを。</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ② いいえ、そんな こと ありません。</p>
+      <ul>
+        <li><b>제시문</b> — ナリさんは 日本語(にほんご)が じょうずですね。<br>
+          <span class="pron">나리상와 니홍고가 죠-즈데스네</span> — 나리 씨는 일본어를 잘하시네요.</li>
+        <li><b>① はい、わたしは 日本語(にほんご)が じょうずです。</b> (하이, 와타시와 니홍고가 죠-즈데스) — 칭찬을 그대로 받아들이는 응답이라 어색하고, 「じょうず」는 <b>자신에게 쓰지 않는다</b>(자신은 「とくいです」).</li>
+        <li><b>② いいえ、そんな こと ありません。✔</b> (이-에, 손나 코토 아리마셍 — 아니에요, 그렇지 않아요) — 칭찬을 겸손하게 부정하는 대표 표현. 「まだまだです(아직 멀었어요)」도 같은 기능.</li>
+        <li><b>③ おじゃまします。</b> (오쟈마시마스) — 남의 집에 들어갈 때 하는 인사(4과).</li>
+        <li><b>④ よい おとしを。</b> (요이 오토시오) — 연말 인사 '좋은 해 맞이하세요'(8과).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 5과 いただきます (말 걸기 + 존재·장소)</p>
+    <p class="jp-main">あのう、すみません。<ruby>駅<rt>えき</rt></ruby>の <ruby>近<rt>ちか</rt></ruby>くに コンビニは ありますか。</p>
+    <p class="jp-read">읽기(후리가나) : あのう、すみません。駅(えき)の 近(ちか)くに コンビニは ありますか。</p>
+    <p class="jp-rom">한글 발음 : 아노-, 스미마셍. 에키노 치카쿠니 콤비니와 아리마스카</p>
+    <p class="jp-ko">저기요, 실례합니다. 역 근처에 편의점이 있나요?</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>あのう</td><td>あのう (아노-)</td><td>저기… (말을 꺼낼 때)</td></tr>
+      <tr><td>すみません</td><td>すみません (스미마셍)</td><td>실례합니다 · 저기요</td></tr>
+      <tr><td>駅</td><td>えき (에키)</td><td>역</td></tr>
+      <tr><td>近く</td><td>ちかく (치카쿠)</td><td>근처</td></tr>
+      <tr><td>コンビニ</td><td>コンビニ (콤비니)</td><td>편의점 (가타카나 외래어)</td></tr>
+      <tr><td>あります</td><td>あります (아리마스)</td><td>있습니다 (사물)</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>あのう、すみません</b> — 낯선 사람에게 말을 걸 때의 쿠션 표현. 「すみません」은 사과·감사·말 걸기 세 가지로 쓰인다(2과).</li>
+        <li><b>〜の 近(ちか)くに</b> — '~의 근처에'. 위치 명사 うえ·した·なか·まえ·うしろ·となり·ちかく 앞에는 「の」, 뒤에는 장소의 「に」.</li>
+        <li><b>あります vs います</b> — 편의점은 사물(건물)이므로 「あります」. 사람·동물이면 「います」: 駅(えき)に 友(とも)だちが います。</li>
+        <li><b>바꿔 말하기</b> — コンビニ 대신 어휘 플러스(건물)의 びょういん(병원)·ぎんこう(은행)·こうえん(공원)을 넣어 연습해 보자.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-11 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
