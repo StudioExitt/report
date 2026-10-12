@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-13</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 13일 (화) · 국어 1문항 · 토익 3문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-13 06:18 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제·경기동향)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (피셔의 부채 디플레이션 이론)</p>
+
+  <div class="passage">
+    <p>물가가 지속적으로 떨어지는 디플레이션은 언뜻 소비자에게 반가운 일처럼 보인다. 같은 돈으로 더 많은 물건을 살 수 있으니 화폐의 구매력이 높아지기 때문이다. 그러나 1930년대 대공황을 겪은 경제학자 어빙 피셔는 물가 하락이 경제 전체를 깊은 침체로 끌고 들어갈 수 있다고 경고했다. 그가 주목한 것은 물가 그 자체가 아니라 물가와 부채가 서로 맞물리는 방식이었다. 피셔는 이를 '부채 디플레이션'이라 부르며, 과도한 부채와 물가 하락이 서로를 증폭시키는 악순환이 대공황의 핵심 원인이라고 보았다.</p>
+    <p>이 이론을 이해하려면 먼저 명목 가치와 실질 가치를 구분해야 한다. 대출 계약서에 적힌 원금과 이자는 화폐 단위로 고정된 명목 금액이다. 물가가 떨어지면 이 명목 금액은 그대로이지만, 그 돈이 가진 실제 구매력, 곧 실질 가치는 커진다. 채무자 입장에서는 갚아야 할 금액이 숫자로는 변하지 않았는데도, 그 돈을 마련하기 위해 팔아야 하는 상품이나 제공해야 하는 노동의 양은 늘어나는 셈이다. 반대로 물가가 오르는 인플레이션 시기에는 부채의 실질 가치가 줄어들어 채무자가 유리해지고 채권자가 불리해진다.</p>
+    <p>피셔가 그린 악순환은 다음과 같은 단계로 진행된다. 호황기에 낙관적인 전망 속에서 기업과 가계가 빚을 크게 늘린 상태에서 어떤 충격으로 경기가 꺾이면, 채무자들은 빚을 갚기 위해 보유한 자산과 재고를 서둘러 내다 판다. 많은 사람이 동시에 자산을 팔아 치우는 이 투매는 자산 가격과 상품 가격을 함께 떨어뜨린다. 또한 빚을 갚는 데 쓰인 돈은 은행 예금에서 빠져나가 사라지므로 시중의 통화량이 줄어들고, 이는 물가 하락을 더욱 부추긴다.</p>
+    <p>문제는 바로 이 지점에서 발생한다. 채무자들이 빚을 줄이려고 애쓰는 행동이 물가를 끌어내리고, 물가가 떨어지면 남은 부채의 실질 가치는 오히려 커진다. 피셔는 이를 두고 "채무자가 더 많이 갚을수록 더 많이 빚지게 된다"는 역설로 표현했다. 개별 채무자에게는 합리적인 부채 상환이, 모든 채무자가 동시에 같은 행동을 할 때에는 부채 부담을 키우는 결과를 낳는 것이다. 이처럼 개인에게 합리적인 선택이 경제 전체로는 바람직하지 않은 결과로 이어지는 현상을 구성의 오류라고 한다.</p>
+    <p>부채 디플레이션은 실질 금리를 통해서도 경제를 압박한다. 실질 금리는 대략 명목 금리에서 기대 물가 상승률을 뺀 값이다. 물가가 하락할 것으로 예상되면 기대 물가 상승률이 마이너스가 되므로, 명목 금리가 낮게 유지되더라도 실질 금리는 오히려 높아진다. 예를 들어 명목 금리가 1%이고 물가가 매년 2%씩 떨어질 것으로 예상된다면 실질 금리는 약 3%에 이른다. 높은 실질 금리는 돈을 빌려 투자하려는 기업의 의욕을 꺾고, 소비자에게는 물건을 나중에 더 싸게 사려는 동기를 부여하여 소비를 미루게 만든다.</p>
+    <p>이러한 과정은 기업의 재무 상태에도 직접적인 타격을 준다. 판매 가격이 떨어지면 기업의 매출과 이윤이 줄어드는데, 이자와 원금 상환액은 명목 금액으로 고정되어 있어 줄지 않는다. 이윤이 감소한 기업은 생산을 줄이고 고용을 축소하며, 끝내 파산하는 기업이 늘어난다. 파산이 늘면 은행은 대출을 회수하지 못해 부실이 쌓이고, 불안을 느낀 은행은 신규 대출을 꺼리게 된다. 담보로 잡힌 자산의 가격까지 하락한 상황에서 은행의 신용 공급 축소는 경기 침체를 한층 깊게 만든다.</p>
+    <p>피셔는 이 악순환을 끊기 위한 처방으로 물가 수준을 원래대로 되돌리는 '리플레이션'을 제시했다. 물가가 다시 오르면 부채의 실질 부담이 줄어들고, 채무자들이 자산을 투매할 압력도 약해진다. 이를 위해서는 중앙은행이 통화량을 늘려 물가 하락을 멈추게 해야 한다고 보았다. 반대로 경기 침체기에 정부와 중앙은행이 재정 건전성이나 통화 가치 안정을 이유로 긴축을 고집한다면, 부채 디플레이션의 악순환은 더욱 깊어질 수 있다.</p>
+    <p>그러나 리플레이션 정책에도 한계가 있다. 명목 금리는 일반적으로 0% 아래로 크게 내려가기 어렵기 때문에, 이미 금리가 0%에 가까운 상황에서는 중앙은행이 금리 인하만으로 실질 금리를 충분히 낮추기 어렵다. 이른바 제로 금리 하한의 제약이다. 이 때문에 현대의 중앙은행들은 국채나 다른 자산을 대규모로 사들여 시중에 돈을 공급하는 양적 완화, 물가 목표를 일정 기간 넘어서더라도 금리를 올리지 않겠다고 미리 약속하는 선제적 안내 등 비전통적 수단을 동원하기도 했다. 이러한 정책은 사람들의 기대 물가 상승률을 끌어올려 실질 금리를 낮추는 데 목적이 있다.</p>
+    <p>부채 디플레이션 이론이 오늘날에도 주목받는 이유는 부채의 규모가 경기 변동의 진폭을 결정한다는 통찰 때문이다. 같은 크기의 충격이라도 경제 주체들의 부채가 적다면 물가 하락은 일시적인 조정에 그칠 수 있지만, 부채가 과도하게 쌓여 있다면 그 충격은 연쇄적인 투매와 파산으로 번질 수 있다. 따라서 경기 동향을 판단할 때에는 물가와 성장률 같은 흐름 지표뿐 아니라, 가계와 기업이 짊어진 부채의 수준이라는 저량 지표도 함께 살펴야 한다. 피셔의 경고는 호황기의 과도한 차입이 불황기의 고통을 키운다는 점을 일깨워 준다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>물가가 하락하면 대출 계약서에 적힌 부채의 명목 금액은 변하지 않지만, 그 부채의 실질 가치는 커진다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>채무자들이 빚을 갚기 위해 한꺼번에 자산을 팔면, 자산 가격과 통화량이 함께 줄어 물가 하락이 심화될 수 있다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>물가 하락이 예상되는 상황에서는 명목 금리가 낮게 유지되더라도 실질 금리가 높아져 투자와 소비가 위축될 수 있다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>피셔는 부채 디플레이션을 막으려면 경기 침체기에도 통화 가치의 안정을 위해 통화량을 줄여야 한다고 보았다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>같은 크기의 경기 충격이라도 경제 주체들의 부채 수준에 따라 경기 침체의 깊이가 달라질 수 있다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ④</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단: 물가가 떨어지면 "명목 금액은 그대로이지만, 그 돈이 가진 실제 구매력, 곧 실질 가치는 커진다."</li>
+        <li><b>② 일치</b> — 3문단: 투매는 "자산 가격과 상품 가격을 함께 떨어뜨린다", 빚 상환으로 "시중의 통화량이 줄어들고, 이는 물가 하락을 더욱 부추긴다."</li>
+        <li><b>③ 일치</b> — 5문단: 기대 물가 상승률이 마이너스이면 "명목 금리가 낮게 유지되더라도 실질 금리는 오히려 높아진다." 이는 투자 의욕을 꺾고 소비를 미루게 만든다.</li>
+        <li><b>④ 불일치 (정답)</b> — 7문단: 피셔의 처방은 <b>리플레이션</b>, 곧 "중앙은행이 통화량을 <b>늘려</b> 물가 하락을 멈추게" 하는 것이다. 오히려 "통화 가치 안정을 이유로 긴축을 고집한다면" 악순환이 깊어진다고 보았다. 선택지는 처방과 정반대.</li>
+        <li><b>⑤ 일치</b> — 9문단: "같은 크기의 충격이라도 … 부채가 적다면 일시적인 조정에 그칠 수 있지만, 부채가 과도하게 쌓여 있다면 … 연쇄적인 투매와 파산으로 번질 수 있다."</li>
+        <li><b>[풀이 요령]</b> — 지문에 '처방'과 '처방을 거스르는 행동'이 함께 나오면, 선택지는 둘을 바꿔 출제되기 쉽다. "통화 가치 안정", "긴축"처럼 지문에서 <b>부정적으로 평가된 행동</b>을 필자(피셔)의 주장처럼 서술한 선택지를 경계하자. 또 "더 많이 갚을수록 더 많이 빚지게 된다"는 역설(구성의 오류)은 다음 시험에서 추론형 선택지로 나오기 좋은 핵심 논지다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span>if 생략 도치 가정법 과거완료</p>
+    <p class="stem">Had the replacement parts arrived on schedule, the maintenance crew ------- the inspection of the production line by last Friday.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>would complete</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>will have completed</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>would have completed</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>had completed</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (C) would have completed</p>
+      <ul>
+        <li><b>해석</b> — 교체 부품이 예정대로 도착했더라면, 정비팀은 지난 금요일까지 생산 라인 점검을 끝냈을 것이다.</li>
+        <li><b>(A) would complete</b> — 가정법 과거의 주절 형태. 과거 사실(last Friday)의 반대를 나타내지 못한다.</li>
+        <li><b>(B) will have completed</b> — 미래완료는 가정법 주절이 될 수 없다.</li>
+        <li><b>(C) would have completed ✔</b> — <b>Had + 주어 + p.p.</b> = If the parts had arrived (if 생략 후 도치). 가정법 과거완료의 주절은 <b>would/could/might + have + p.p.</b></li>
+        <li><b>(D) had completed</b> — if절에 쓰는 형태. 주절에는 조동사가 필요하다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span>접속사 vs 전치사 vs 접속부사</p>
+    <p class="stem">------- the merger was announced only last week, several long-term clients have already inquired about changes to their service contracts.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>Despite</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Even though</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Nevertheless</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>In spite</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (B) Even though</p>
+      <ul>
+        <li><b>해석</b> — 합병이 불과 지난주에 발표되었는데도, 여러 장기 고객들이 이미 서비스 계약 변경에 대해 문의해 왔다.</li>
+        <li><b>(A) Despite</b> — 전치사. 뒤에 <b>주어+동사(the merger was announced)</b>가 오는 절을 이끌 수 없다.</li>
+        <li><b>(B) Even though ✔</b> — 양보의 <b>부사절 접속사</b>. 절 + 콤마 + 주절 구조에 맞고 의미('~에도 불구하고')도 자연스럽다.</li>
+        <li><b>(C) Nevertheless</b> — 접속부사. 두 절을 연결하지 못하며 보통 앞 문장 뒤에 「. Nevertheless,」 형태로 쓴다.</li>
+        <li><b>(D) In spite</b> — in spite <b>of</b> + 명사(구)여야 하고, 이 역시 절을 이끌 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span>혼동 어휘 (com- 계열 형용사)</p>
+    <p class="stem">The upgraded inventory software is fully ------- with all of our existing point-of-sale terminals, so no additional hardware purchases will be necessary.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>compatible</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>comparable</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>competent</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>complimentary</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (A) compatible</p>
+      <ul>
+        <li><b>해석</b> — 업그레이드된 재고 관리 소프트웨어는 기존의 모든 판매 단말기와 완벽하게 호환되므로, 추가 하드웨어 구매는 필요 없을 것이다.</li>
+        <li><b>(A) compatible ✔</b> — <b>be compatible with</b> = ~와 호환되는. 뒤 절(추가 하드웨어 불필요)이 결정적 단서.</li>
+        <li><b>(B) comparable</b> — 비교할 만한, 비슷한(be comparable to/with). '성능이 비슷하다'는 뜻으로는 하드웨어 불필요의 근거가 되지 않는다.</li>
+        <li><b>(C) competent</b> — (사람이) 유능한. 사물인 소프트웨어와 어울리지 않는다.</li>
+        <li><b>(D) complimentary</b> — 무료의, 칭찬하는. complementary(보완하는)와도 헷갈리기 쉬운 토익 빈출 함정.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 이웃하지 않는 배열 + 양 끝 조건 + 이웃 조건 + 순서가 정해진 배열</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>네 조건을 동시에 만족하는 숫자 카드 배열</p>
+    <p class="stem">1부터 7까지의 자연수가 하나씩 적힌 카드 7장을 일렬로 나열하려고 한다. 다음 네 조건을 모두 만족시키도록 나열하는 경우의 수는?<br>
+    (가) 짝수가 적힌 카드끼리는 서로 이웃하지 않는다.<br>
+    (나) 양 끝에 놓인 두 카드에 적힌 수의 합은 홀수이다.<br>
+    (다) 4가 적힌 카드와 5가 적힌 카드는 서로 이웃한다.<br>
+    (라) 1, 3, 7이 적힌 카드는 왼쪽부터 이 순서대로 놓인다. <span class="pron">(서로 이웃할 필요는 없다.)</span></p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>48</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>54</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>60</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>72</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>90</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 60</p>
+      <ul>
+        <li><b>Step 1. 짝수 자리 정하기 (가)</b><br>
+          자리 1~7 중 서로 이웃하지 않는 3자리 → 홀수 4장 사이·양끝 5곳에서 3곳: <sub>5</sub>C<sub>3</sub> = <b>10</b>가지<br>
+          {1,3,5} {1,3,6} {1,3,7} {1,4,6} {1,4,7} {1,5,7} {2,4,6} {2,4,7} {2,5,7} {3,5,7}</li>
+        <li><b>Step 2. 양 끝 조건 (나)</b><br>
+          양 끝 합이 홀수 ⇔ 양 끝 중 <b>정확히 하나만</b> 짝수 자리.<br>
+          · 1번만 포함: {1,3,5} {1,3,6} {1,4,6} → 3가지<br>
+          · 7번만 포함: {2,4,7} {2,5,7} {3,5,7} → 3가지<br>
+          ({1,3,7} {1,4,7} {1,5,7}은 양 끝 모두 짝수, {2,4,6}은 양 끝 모두 홀수라 제외) → <b>6가지</b><br>
+          참고: 여기까지의 배열 수 = 6 × 3! × 4! = 864</li>
+        <li><b>Step 3. 4와 5가 이웃 (다) — 핵심 아이디어</b><br>
+          짝수 자리끼리는 이웃하지 않으므로 <b>4의 옆자리는 모두 홀수 자리</b>이다. 따라서 5는 4의 옆자리 중 아무 곳에나 놓을 수 있다.<br>
+          · 4가 끝자리에 있으면 옆자리 1곳, 가운데면 2곳<br>
+          · 각 집합에서 4가 놓일 자리별 옆자리 수의 합 = 2+2+2 − (끝자리 1개) = <b>5</b><br>
+          · 나머지 짝수 2장(2, 6): 2! = 2, 나머지 홀수 3장(1, 3, 7): 3! = 6<br>
+          ∴ (가)~(다) 만족 = 6 × 5 × 2 × 6 = <b>360</b></li>
+        <li><b>Step 4. 순서 조건 (라)</b><br>
+          1, 3, 7이 들어갈 세 자리가 정해지면 그 배치 3! = 6가지 중 '1 → 3 → 7' 순서는 1가지뿐이다. (1, 3, 7은 조건 (가)~(다)와 무관하므로 대칭성 성립)<br>
+          ∴ 360 ÷ 3! = 6 × 5 × 2 × 1 = <b>60</b></li>
+        <li><b>오답 함정</b> — ④ 72: Step 3에서 4가 끝자리일 때도 옆자리를 2곳으로 세면 6 × 6 × 2 × 1 = 72. 또 (라)를 빠뜨리면 360, (라)를 '1이 7보다 왼쪽' 정도로만 보고 ÷2 하면 180이 된다. (나)를 '양 끝이 모두 홀수'로 오해하면 짝수 자리 집합이 {2,4,6} 하나뿐이라 1 × 6 × 2 × 1 = 12가 나온다.</li>
+        <li><b>검산</b> — 7! = 5040가지 배열을 컴퓨터로 전수 조사: (가) 1440 → (가)(나) 864 → (가)(나)(다) 360 → (가)~(라) <b>60</b>으로 일치.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 5·7·8과</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[5과 いただきます] 존재 표현 あります・います</p>
+    <p class="stem">빈칸에 들어갈 말로 알맞은 것은?</p>
+    <div class="jp-stem">つくえの <ruby>上<rt>うえ</rt></ruby>に ねこが (　　　)。</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">あります</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">います</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>行<rt>い</rt></ruby>きます</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">です</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ② います</p>
+      <ul>
+        <li><b>문장</b> — つくえの 上(うえ)に ねこが います。<br>
+          <span class="pron">츠쿠에노 우에니 네코가 이마스</span> — 책상 위에 고양이가 있습니다.</li>
+        <li><b>① あります</b> (아리마스) — <b>사물·식물</b> 등 스스로 움직이지 않는 것의 존재. (예: つくえの 上に ほんが あります。)</li>
+        <li><b>② います ✔</b> (이마스) — <b>사람·동물</b>처럼 스스로 움직이는 것의 존재. ねこ(고양이)는 동물이므로 います.</li>
+        <li><b>③ 行(い)きます</b> (이키마스) — 갑니다. 「〜に 行きます」는 목적지를 나타내므로 '위에 간다'는 어색하다.</li>
+        <li><b>④ です</b> (데스) — 「AはBです」의 판단 표현. 「〜に 〜が」 존재 문형과 어울리지 않는다.</li>
+        <li><b>[위치어 정리]</b> 上(うえ) 위 / 下(した) 아래 / 中(なか) 안 / 前(まえ) 앞 / うしろ 뒤 / となり 옆(이웃) / ちかく 근처</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[7과 おおさかに 行きます] 조사 と・に</p>
+    <p class="stem">"내일 친구<b>와</b> 오사카<b>에</b> 갑니다."가 되도록 빈칸 A, B에 들어갈 조사를 바르게 짝지은 것은?</p>
+    <div class="jp-stem">あした ともだち ( A ) おおさか ( B ) <ruby>行<rt>い</rt></ruby>きます。</div>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">A: と　B: に</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">A: に　B: を</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">A: を　B: へ</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">A: が　B: で</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ① A: と　B: に</p>
+      <ul>
+        <li><b>문장</b> — あした ともだちと おおさかに 行(い)きます。<br>
+          <span class="pron">아시타 토모다치토 오-사카니 이키마스</span> — 내일 친구와 오사카에 갑니다.</li>
+        <li><b>① ✔</b> — 「と」(토) = 함께하는 상대 '~와/과', 「に」(니) = 이동의 목적지 '~에'. 「へ」(발음 [에])도 방향을 나타내므로 「おおさかへ 行きます」도 가능.</li>
+        <li><b>②</b> — 「ともだちに」는 '친구에게'(대상). 「おおさかを 行きます」는 '오사카를 (지나) 간다'로 의미가 달라진다.</li>
+        <li><b>③</b> — 「ともだちを」는 '친구를'(목적어)로, 함께 간다는 뜻이 되지 않는다.</li>
+        <li><b>④</b> — 「で」(데)는 동작이 일어나는 장소·수단. 「おおさかで 行きます」는 어색하다.</li>
+        <li><b>[7과 포인트]</b> 장소 + に/へ + 行(い)きます・来(き)ます・帰(かえ)ります — 이동 동사와 함께 목적지를 나타낸다. 교통수단은 「で」: バスで 行きます(버스로 갑니다).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[8과 よい おとしを] 연말연시 인사</p>
+    <p class="stem">12월 30일, 방학을 맞아 헤어지는 일본인 친구에게 '좋은 새해 맞이하세요'라고 인사하려고 한다. 가장 알맞은 표현은?</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">あけまして おめでとう ございます。</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">よい おとしを。</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">いただきます。</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">おじゃまします。</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ② よい おとしを。</p>
+      <ul>
+        <li><b>① あけまして おめでとう ございます</b> (아케마시테 오메데토- 고자이마스) — 새해 복 많이 받으세요. <b>새해가 밝은 뒤</b>(1월 1일 이후)에 하는 인사이므로 12월 30일에는 맞지 않는다.</li>
+        <li><b>② よい おとしを ✔</b> (요이 오토시오) — 좋은 새해 맞이하세요. 「よい お年(とし)を お迎(むか)えください」의 줄임말로, <b>연말에 헤어질 때</b> 하는 인사.</li>
+        <li><b>③ いただきます</b> (이타다키마스) — 잘 먹겠습니다. 식사 전 인사(5과).</li>
+        <li><b>④ おじゃまします</b> (오쟈마시마스) — 실례합니다. 남의 집에 들어갈 때 하는 인사(4과).</li>
+        <li><b>[짝 인사 정리]</b> いただきます ↔ ごちそうさまでした(잘 먹었습니다) / いってきます ↔ いってらっしゃい / ただいま ↔ おかえりなさい / よい おとしを(연말) → あけまして おめでとう ございます(새해)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 5과 いただきます (말 걸기 + 존재·장소)</p>
+    <p class="jp-main">すみません。この <ruby>近<rt>ちか</rt></ruby>くに コンビニは ありますか。</p>
+    <p class="jp-read">읽기(후리가나) : すみません。この 近(ちか)くに コンビニは ありますか。</p>
+    <p class="jp-rom">한글 발음 : 스미마셍. 코노 치카쿠니 콤비니와 아리마스카</p>
+    <p class="jp-ko">실례합니다. 이 근처에 편의점은 있습니까?</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>すみません</td><td>すみません (스미마셍)</td><td>실례합니다, 저기요 (말 걸기)</td></tr>
+      <tr><td>この</td><td>この (코노)</td><td>이 (+명사)</td></tr>
+      <tr><td>近く</td><td>ちかく (치카쿠)</td><td>근처</td></tr>
+      <tr><td>〜に</td><td>に (니)</td><td>~에 (존재 장소)</td></tr>
+      <tr><td>コンビニ</td><td>コンビニ (콤비니)</td><td>편의점 (convenience store)</td></tr>
+      <tr><td>〜は</td><td>は (와)</td><td>~은/는 (조사일 때 [와]로 읽음)</td></tr>
+      <tr><td>ありますか</td><td>ありますか (아리마스카)</td><td>있습니까? (사물의 존재 + 의문 か)</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>すみません의 두 가지 쓰임</b> — '죄송합니다'(사과)뿐 아니라 모르는 사람에게 <b>말을 걸 때</b> '저기요, 실례합니다'로도 쓴다.</li>
+        <li><b>장소 + に + 사물 + は/が + あります</b> — 편의점은 건물(사물)이므로 あります. 사람·동물이라면 います.</li>
+        <li><b>は vs が</b> — 「コンビニが ありますか」는 '편의점이 있나요?'(존재 자체를 물음), 「コンビニは ありますか」는 다른 것은 몰라도 '편의점은' 있는지 화제를 좁혀 묻는 느낌.</li>
+        <li><b>대답 예</b> — はい、あります。あそこに あります。(네, 있어요. 저기에 있어요.) / いいえ、ありません。(아니요, 없어요.)</li>
+        <li><b>발음 주의</b> — コンビニ의 ン은 뒤의 ビ(b) 앞에서 [m]으로 발음되어 [콤비니]가 된다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-13 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
