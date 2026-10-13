@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-14</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 14일 (수) · 국어 1문항 · 토익 3문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-14 06:09 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제·국제금융)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (환율 변동과 경상수지 — J커브 효과와 마셜-러너 조건)</p>
+
+  <div class="passage">
+    <p>한 나라의 통화 가치가 떨어지면 수출이 늘고 수입이 줄어 무역 수지가 좋아진다는 설명은 경제 기사에서 자주 볼 수 있다. 원화 가치가 하락하면, 곧 원·달러 환율이 오르면, 같은 가격의 한국산 제품이 달러로 표시할 때 더 싸지므로 해외 소비자의 구매가 늘어난다. 반대로 외국산 제품은 원화로 표시할 때 더 비싸지므로 국내 소비자의 수입품 구매는 줄어든다. 그러나 현실의 자료를 들여다보면 통화 가치가 떨어진 직후 오히려 무역 수지가 나빠지는 일이 드물지 않다. 경제학자들은 이 현상을 설명하기 위해 'J커브 효과'와 '마셜-러너 조건'이라는 두 개념을 사용한다.</p>
+    <p>먼저 무역 수지를 어떤 통화로 측정하는지를 분명히 해야 한다. 무역 수지는 수출액에서 수입액을 뺀 값이고, 수출액과 수입액은 각각 '가격 × 수량'으로 계산된다. 자국 통화로 측정할 때 통화 가치가 하락하면 수입품의 자국 통화 표시 가격은 곧바로 오른다. 따라서 수입 수량이 그대로라면 수입액은 늘어나게 된다. 한편 수출품의 자국 통화 표시 가격은 크게 변하지 않으므로, 수출액이 늘어나려면 결국 수출 수량이 늘어나야 한다. 즉 통화 가치 하락은 무역 수지에 '가격 효과'와 '수량 효과'라는 서로 반대 방향의 힘을 동시에 미친다.</p>
+    <p>가격 효과는 즉각적으로 나타난다. 환율이 오르는 순간 이미 계약된 수입 물량에 대해 더 많은 자국 통화를 지불해야 하기 때문이다. 반면 수량 효과는 시간이 걸린다. 무역 거래는 대개 수개월 전에 맺어진 계약에 따라 이루어지므로, 환율이 바뀌어도 당장은 거래 물량이 거의 변하지 않는다. 해외 구매자가 새로운 공급처를 찾고, 국내 기업이 수입 원자재를 국산으로 대체하며, 수출 기업이 생산 설비를 늘리는 데에도 상당한 기간이 필요하다. 소비자 역시 익숙한 상품을 바로 바꾸지 않는 습관을 지니고 있다.</p>
+    <p>이 때문에 통화 가치가 하락한 직후에는 가격 효과가 수량 효과를 압도하여 무역 수지가 일시적으로 악화된다. 시간이 흘러 수출 수량이 늘고 수입 수량이 줄어드는 수량 효과가 충분히 커지면 무역 수지는 비로소 개선되기 시작하고, 마침내 통화 가치 하락 이전보다 높은 수준에 이른다. 가로축을 시간, 세로축을 무역 수지로 하여 이 변화를 그리면 처음에 아래로 꺼졌다가 이후 크게 솟아오르는 모양이 알파벳 J와 닮았다고 해서 이를 J커브 효과라고 부른다.</p>
+    <p>그렇다면 시간이 충분히 흐르기만 하면 통화 가치 하락은 언제나 무역 수지를 개선하는가? 이에 대한 답을 주는 것이 마셜-러너 조건이다. 이 조건에 따르면, 처음에 무역 수지가 균형 상태에 있을 때 수출 수요의 가격 탄력성과 수입 수요의 가격 탄력성의 합이 1보다 커야 통화 가치 하락이 무역 수지를 개선할 수 있다. 가격 탄력성이란 가격이 1% 변할 때 수요량이 몇 % 변하는지를 나타내는 값이다. 탄력성이 크다는 것은 가격 변화에 수요량이 민감하게 반응한다는 뜻이다.</p>
+    <p>이 조건의 의미는 다음과 같이 이해할 수 있다. 통화 가치 하락으로 수입품 가격이 올랐는데 수입 수요가 거의 줄지 않고, 수출품이 해외에서 싸졌는데도 수출 수요가 거의 늘지 않는다면, 가격 효과만 남아 무역 수지는 오히려 나빠진다. 원유처럼 대체재를 찾기 어려운 필수 원자재를 대량으로 수입하는 나라나, 가격보다 품질과 브랜드로 경쟁하는 제품을 주로 수출하는 나라에서는 탄력성의 합이 작게 나타날 수 있다. 일반적으로 탄력성은 단기보다 장기에 더 크게 나타나는데, J커브 효과는 단기에는 마셜-러너 조건이 충족되지 않다가 장기에 충족되는 현상으로 해석할 수 있다.</p>
+    <p>한편 환율 변화가 수출입 가격에 얼마나 반영되는가도 중요한 변수이다. 이를 환율 전가라고 한다. 수출 기업은 통화 가치가 하락했을 때 해외 판매 가격을 내리는 대신 기존 가격을 유지하고 늘어난 자국 통화 표시 이윤을 챙기는 선택을 할 수도 있다. 이 경우 해외 시장에서 제품 가격이 떨어지지 않으므로 수출 수량은 별로 늘지 않는다. 또한 국제 무역의 상당 부분이 달러로 결제되는 현실에서는 수출 가격이 이미 달러로 고정되어 있어, 자국 통화 가치가 떨어져도 해외 구매자가 느끼는 가격 변화가 작을 수 있다. 환율 전가가 불완전할수록 통화 가치 하락의 수량 효과는 약해진다.</p>
+    <p>통화 가치 하락이 국내 경제에 미치는 영향은 무역 수지에만 그치지 않는다. 수입 원자재와 중간재의 가격이 오르면 이를 사용해 제품을 만드는 기업의 생산 비용이 늘어나고, 이는 국내 물가 상승으로 이어질 수 있다. 수출 제품 생산에 수입 부품이 많이 쓰이는 나라라면, 통화 가치 하락으로 수출 가격 경쟁력이 높아지는 효과의 일부가 부품 비용 상승으로 상쇄된다. 또한 외화 부채가 많은 기업이나 정부는 자국 통화로 환산한 부채 부담이 커지므로 재무 상태가 악화될 위험이 있다.</p>
+    <p>이러한 점들은 경기 동향을 해석할 때 환율 지표를 단선적으로 읽어서는 안 된다는 점을 일깨워 준다. 환율이 상승한 직후 발표된 무역 통계가 나쁘게 나왔다고 해서 곧바로 환율 상승의 효과가 없다고 판단하는 것은 성급하다. 반대로 통화 가치가 떨어졌으니 무역 수지가 당연히 좋아질 것이라고 기대하는 것도 마찬가지로 위험하다. 교역 상품의 탄력성, 환율 전가의 정도, 수입 중간재 의존도, 그리고 효과가 나타나기까지의 시차를 종합적으로 고려할 때 비로소 환율 변동이 경제에 미치는 영향을 정확하게 가늠할 수 있다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span>자국 통화 가치가 하락하면 자국 통화로 표시한 수입품 가격은 즉시 오르지만, 수출입 수량의 변화에는 시간이 걸린다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>J커브 효과에 따르면 통화 가치가 하락한 직후에는 수량 효과가 가격 효과보다 크게 나타나 무역 수지가 곧바로 개선된다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>마셜-러너 조건이 충족되지 않으면 통화 가치가 하락해도 무역 수지가 오히려 악화될 수 있다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>수출 기업이 통화 가치 하락 후에도 해외 판매 가격을 그대로 유지하면 수출 수량의 증가 폭은 작아질 수 있다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>수출품 생산에 수입 부품이 많이 쓰이는 나라에서는 통화 가치 하락에 따른 가격 경쟁력 향상 효과가 일부 상쇄될 수 있다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ②</p>
+      <ul>
+        <li><b>① 일치</b> — 2·3문단: 통화 가치가 하락하면 "수입품의 자국 통화 표시 가격은 곧바로 오른다", "가격 효과는 즉각적으로 나타난다. … 반면 수량 효과는 시간이 걸린다."</li>
+        <li><b>② 불일치 (정답)</b> — 4문단: 통화 가치 하락 직후에는 "<b>가격 효과가 수량 효과를 압도하여</b> 무역 수지가 일시적으로 <b>악화</b>된다." 개선은 시간이 흘러 수량 효과가 충분히 커진 뒤에야 나타난다. 선택지는 두 효과의 크기 관계와 결과를 모두 뒤집었다.</li>
+        <li><b>③ 일치</b> — 5·6문단: 탄력성의 합이 1보다 커야 무역 수지가 개선되며, 그렇지 않으면 "가격 효과만 남아 무역 수지는 오히려 나빠진다."</li>
+        <li><b>④ 일치</b> — 7문단: 수출 기업이 "기존 가격을 유지하고 … 이윤을 챙기는" 경우 "해외 시장에서 제품 가격이 떨어지지 않으므로 수출 수량은 별로 늘지 않는다."</li>
+        <li><b>⑤ 일치</b> — 8문단: "수출 가격 경쟁력이 높아지는 효과의 일부가 부품 비용 상승으로 상쇄된다."</li>
+        <li><b>[풀이 요령]</b> — '단기 vs 장기', '즉각 vs 시차'처럼 <b>시간 축으로 대비되는 개념</b>이 나오면 선택지는 순서를 바꿔 함정을 만든다. J커브의 모양(먼저 하락 → 나중에 상승)을 머릿속에 그려 두면 ②가 바로 걸러진다. 또한 6문단의 "J커브 = 단기엔 마셜-러너 조건 불충족, 장기엔 충족"이라는 연결은 추론형 문제로 나오기 좋은 핵심 문장이다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span>명사절 접속사 (주어 자리)</p>
+    <p class="stem">------- the board approves the revised marketing budget will depend largely on the sales figures from the third quarter.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>If</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>That</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Whether</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Unless</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (C) Whether</p>
+      <ul>
+        <li><b>해석</b> — 이사회가 수정된 마케팅 예산을 승인할지 여부는 주로 3분기 매출 수치에 달려 있을 것이다.</li>
+        <li><b>구조 분석</b> — [------- the board approves … budget]가 문장 전체의 <b>주어</b>이고, 동사는 <b>will depend</b>. 따라서 빈칸에는 명사절을 이끄는 접속사가 와야 한다.</li>
+        <li><b>(A) If</b> — '~인지'의 명사절로 쓰일 수 있지만 <b>주어 자리에는 쓸 수 없다</b>(목적어 자리에서만 가능). 토익 최빈출 함정.</li>
+        <li><b>(B) That</b> — 주어 명사절은 가능하지만 '~라는 것'(확정된 사실)이라 의미가 맞지 않는다. 승인 여부는 아직 불확실하고, depend on과 어울리는 것은 '~인지 아닌지'이다.</li>
+        <li><b>(C) Whether ✔</b> — '~인지 아닌지'. 주어·목적어·보어 자리 모두 가능하며, 미정 사항이 매출에 '달려 있다'는 의미와 맞는다.</li>
+        <li><b>(D) Unless</b> — 부사절 접속사(~하지 않는 한). 부사절은 주어가 될 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span>사역동사 have + 목적어 + 목적격 보어</p>
+    <p class="stem">Because the original files were damaged, Ms. Alvarez had the signed contracts ------- to the client's headquarters by express courier.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>deliver</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>delivering</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>to deliver</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>delivered</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (D) delivered</p>
+      <ul>
+        <li><b>해석</b> — 원본 파일이 손상되었기 때문에, Alvarez 씨는 서명된 계약서를 특급 택배로 고객사 본사에 배송되게 했다.</li>
+        <li><b>핵심</b> — 사역동사 <b>have + 목적어 + 보어</b>에서, 목적어와 보어의 관계가 <b>능동이면 동사원형, 수동이면 p.p.</b> 계약서(the signed contracts)는 스스로 배송하는 것이 아니라 '배송되는' 대상 → <b>delivered</b>. 뒤의 <b>by express courier</b>도 수동의 단서.</li>
+        <li><b>(A) deliver</b> — 목적어가 사람일 때(had the courier deliver the contracts) 쓰는 능동 형태.</li>
+        <li><b>(B) delivering</b> — have + 목적어 + -ing는 '~하는 상태로 두다'의 능동 진행 의미로, 사물 목적어와 맞지 않는다.</li>
+        <li><b>(C) to deliver</b> — have는 to부정사를 목적격 보어로 취하지 않는다. (get이라면 get + 사람 + to do)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span>관용 표현 remain in effect (품사·혼동 어휘)</p>
+    <p class="stem">The current discount on annual memberships will remain in ------- until the end of December, after which standard rates will apply.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>effect</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>affect</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>effective</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>effectively</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (A) effect</p>
+      <ul>
+        <li><b>해석</b> — 연간 회원권에 대한 현재 할인은 12월 말까지 유효하며, 그 이후에는 정상 요금이 적용될 것이다.</li>
+        <li><b>(A) effect ✔</b> — 전치사 in 뒤에는 <b>명사</b>. <b>remain/be in effect</b> = (법·규정·할인 등이) 유효하다, 시행 중이다. take effect(시행되다)와 함께 암기.</li>
+        <li><b>(B) affect</b> — '영향을 미치다'라는 <b>동사</b>. 전치사 뒤 명사 자리에 올 수 없다. effect와의 철자 혼동을 노린 함정.</li>
+        <li><b>(C) effective</b> — 형용사. 「remain effective until …」처럼 in 없이 쓰면 정답이 될 수 있지만, in 뒤에는 불가.</li>
+        <li><b>(D) effectively</b> — 부사. 전치사의 목적어가 될 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 배수 판정 + 조합(순서가 정해진 자리) + 자리 대소 조건</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>15의 배수인 다섯 자리 자연수 만들기</p>
+    <p class="stem">0, 1, 2, 3, 4, 5, 6이 하나씩 적힌 카드 7장 중에서 서로 다른 5장을 택해 일렬로 나열하여 다섯 자리 자연수를 만들려고 한다. 다음 세 조건을 모두 만족시키는 자연수의 개수는?<br>
+    (가) 15의 배수이다.<br>
+    (나) 천의 자리 수 &gt; 백의 자리 수 &gt; 십의 자리 수<br>
+    (다) 만의 자리 수는 일의 자리 수보다 크다.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span>20</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>23</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>26</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>32</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>37</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ② 23</p>
+      <ul>
+        <li><b>Step 1. 15의 배수 = 3의 배수 이면서 5의 배수</b><br>
+          · 5의 배수 → 일의 자리가 <b>0 또는 5</b><br>
+          · 3의 배수 → 각 자리 수의 합이 3의 배수</li>
+        <li><b>Step 2. 사용할 숫자 5개 고르기 — '빼는 2개'로 생각하기</b><br>
+          0~6의 합은 21(3의 배수)이므로, 사용하지 않는 두 수의 합이 3의 배수이면 된다.<br>
+          합 3: (0,3) (1,2) / 합 6: (0,6) (1,5) (2,4) / 합 9: (3,6) (4,5) → <b>7가지</b><br>
+          <table class="words">
+            <tr><th>빼는 두 수</th><th>사용하는 5개</th><th>0 포함</th><th>5 포함</th><th>6 포함</th></tr>
+            <tr><td>(0,3)</td><td>1,2,4,5,6</td><td>×</td><td>○</td><td>○</td></tr>
+            <tr><td>(1,2)</td><td>0,3,4,5,6</td><td>○</td><td>○</td><td>○</td></tr>
+            <tr><td>(0,6)</td><td>1,2,3,4,5</td><td>×</td><td>○</td><td>×</td></tr>
+            <tr><td>(1,5)</td><td>0,2,3,4,6</td><td>○</td><td>×</td><td>○</td></tr>
+            <tr><td>(2,4)</td><td>0,1,3,5,6</td><td>○</td><td>○</td><td>○</td></tr>
+            <tr><td>(3,6)</td><td>0,1,2,4,5</td><td>○</td><td>○</td><td>×</td></tr>
+            <tr><td>(4,5)</td><td>0,1,2,3,6</td><td>○</td><td>×</td><td>○</td></tr>
+          </table></li>
+        <li><b>Step 3. 조건 (나)의 처리 — 조합</b><br>
+          일의 자리와 만의 자리를 정하면 남은 3개의 수는 천·백·십의 자리에 <b>큰 수부터 내림차순으로 딱 1가지</b> 방법으로 놓인다. 즉 (나)는 '세 수를 고르기만 하면 되는' 조합 조건이다.</li>
+        <li><b>Step 4-① 일의 자리가 0인 경우</b><br>
+          0을 포함하는 집합: (1,2) (1,5) (2,4) (3,6) (4,5) → 5가지<br>
+          만의 자리: 남은 4개 중 아무거나 (모두 0보다 크므로 (다)와 '맨 앞 0 금지'가 자동 성립) → 4가지<br>
+          ∴ 5 × 4 = <b>20</b></li>
+        <li><b>Step 4-② 일의 자리가 5인 경우</b><br>
+          조건 (다)에 의해 만의 자리는 5보다 큰 수, 즉 <b>6</b>뿐이다. → 5와 6을 모두 포함하는 집합: (0,3) (1,2) (2,4) → 3가지<br>
+          만의 자리 6, 나머지 3개는 내림차순 1가지 → <b>3</b><br>
+          (예: 64215, 64305, 63105)</li>
+        <li><b>Step 5. 합계</b> — 20 + 3 = <b>23</b></li>
+        <li><b>오답 함정</b> — ⑤ 37: 조건 (다)를 빠뜨리면 일의 자리 5인 경우가 (0,3) 4 + (1,2) 3 + (0,6) 4 + (2,4) 3 + (3,6) 3 = 17이 되어 20 + 17 = 37. ① 20: 일의 자리 5인 경우를 놓친 경우.</li>
+        <li><b>검산</b> — 0~6에서 서로 다른 5개를 뽑은 순열 2520가지를 컴퓨터로 전수 조사: (가)(나) 만족 37개 → (가)(나)(다) 만족 <b>23</b>개로 일치.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 2·7과</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[2과 おはよう] 상황별 인사와 정중체</p>
+    <p class="stem">아침 8시, 교무실에 들어가 담임 선생님께 인사하려고 한다. 가장 알맞은 표현은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">おはよう。</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">こんばんは。</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">おはよう ございます。</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">ただいま。</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ③ おはよう ございます。</p>
+      <ul>
+        <li><b>① おはよう</b> (오하요-) — 아침 인사이지만 <b>보통체</b>. 친구·손아랫사람에게 쓰므로 선생님께는 실례.</li>
+        <li><b>② こんばんは</b> (곰방와) — <b>저녁·밤</b> 인사. 아침 8시에는 맞지 않는다. 「は」는 조사이므로 [와]로 읽는다.</li>
+        <li><b>③ おはよう ございます ✔</b> (오하요- 고자이마스) — 아침 인사의 <b>정중체</b>. 「ございます」가 붙으면 정중해진다.</li>
+        <li><b>④ ただいま</b> (타다이마) — '다녀왔습니다'. 외출했다가 <b>집에 돌아왔을 때</b> 하는 인사로, 대답은 おかえりなさい(오카에리나사이).</li>
+        <li><b>[시간대 인사]</b> 아침 おはよう(ございます) / 낮 こんにちは(곤니치와) / 밤 こんばんは(곰방와) / 헤어질 때 さようなら・じゃ、また</li>
+        <li><b>[문화]</b> 일본에서는 악수보다 おじぎ(절)가 기본. 가벼운 목례 약 15°, 보통 인사 30°, 정중한 사죄 45°.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[7과 おおさかに 行きます] 희망 표현 〜たい</p>
+    <p class="stem">"차가운 물을 마시고 싶어요."가 되도록 빈칸에 들어갈 말로 알맞은 것은?</p>
+    <div class="jp-stem">つめたい <ruby>水<rt>みず</rt></ruby>が (　　　　)。</div>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>飲<rt>の</rt></ruby>みたいです</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>飲<rt>の</rt></ruby>むたいです</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>飲<rt>の</rt></ruby>みますたい</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp"><ruby>飲<rt>の</rt></ruby>みたがっています</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ① 飲(の)みたいです</p>
+      <ul>
+        <li><b>문장</b> — つめたい 水(みず)が 飲(の)みたいです。<br>
+          <span class="pron">츠메타이 미즈가 노미타이데스</span> — 차가운 물을 마시고 싶어요.</li>
+        <li><b>① ✔</b> — 동사 <b>ます형의 어간 + たい</b>. 飲みます → 飲み + たい → 飲みたいです. 「〜たい」 앞의 목적어는 を 대신 <b>が</b>를 자주 쓴다.</li>
+        <li><b>②</b> — 사전형(飲む)에 たい를 바로 붙일 수 없다.</li>
+        <li><b>③</b> — 「ます」를 떼지 않고 붙인 잘못된 형태. ます를 빼고 たい를 붙여야 한다.</li>
+        <li><b>④</b> (노미타갓테이마스) — '(그 사람이) 마시고 싶어 한다'. <b>제3자의 희망</b>을 나타낼 때 쓰므로, 말하는 사람 자신의 희망에는 쓰지 않는다.</li>
+        <li><b>[활용]</b> 「〜たい」는 <b>い형용사처럼</b> 활용: 行きたいです(가고 싶어요) / 行きたくないです(가고 싶지 않아요) / 行きたかったです(가고 싶었어요)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[7과 おおさかに 行きます] 동사의 그룹 분류</p>
+    <p class="stem">다음 중 <b>2그룹(2류) 동사</b>인 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>帰<rt>かえ</rt></ruby>る</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>来<rt>く</rt></ruby>る</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>食<rt>た</rt></ruby>べる</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp"><ruby>乗<rt>の</rt></ruby>る</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ③ 食(た)べる</p>
+      <ul>
+        <li><b>① 帰(かえ)る</b> (카에루, 돌아가다) — 모양은 「える」로 끝나 2그룹처럼 보이지만 <b>예외 1그룹</b>. 帰ります(카에리마스)로 활용한다. 최빈출 함정!</li>
+        <li><b>② 来(く)る</b> (쿠루, 오다) — する와 함께 <b>3그룹(불규칙)</b>. 来ます(키마스)로 바뀐다.</li>
+        <li><b>③ 食(た)べる ✔</b> (타베루, 먹다) — 「る」 앞이 え단(べ)인 <b>2그룹</b>. る를 떼고 ます: 食べます(타베마스).</li>
+        <li><b>④ 乗(の)る</b> (노루, 타다) — 「る」 앞이 お단(の)이므로 <b>1그룹</b>. 乗ります(노리마스). 「バスに 乗ります」처럼 탈것 앞에는 조사 に.</li>
+        <li><b>[그룹 판별법]</b> 1그룹: う단으로 끝남(行く·飲む·乗る…) / 2그룹: 「い단·え단 + る」(見る·起きる·食べる·寝る) / 3그룹: する·来る / 예외 1그룹: 帰る·入(はい)る·知(し)る·走(はし)る 등</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 7과 おおさかに 行きます (수단 + 출발~도착 + 소요 시간)</p>
+    <p class="jp-main"><ruby>東京<rt>とうきょう</rt></ruby>から <ruby>大阪<rt>おおさか</rt></ruby>まで <ruby>新幹線<rt>しんかんせん</rt></ruby>で どのぐらい かかりますか。</p>
+    <p class="jp-read">읽기(후리가나) : 東京(とうきょう)から 大阪(おおさか)まで 新幹線(しんかんせん)で どのぐらい かかりますか。</p>
+    <p class="jp-rom">한글 발음 : 토-쿄-카라 오-사카마데 신칸센데 도노구라이 카카리마스카</p>
+    <p class="jp-ko">도쿄에서 오사카까지 신칸센으로 어느 정도 걸려요?</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>東京</td><td>とうきょう (토-쿄-)</td><td>도쿄</td></tr>
+      <tr><td>〜から</td><td>から (카라)</td><td>~에서, ~부터 (출발점)</td></tr>
+      <tr><td>大阪</td><td>おおさか (오-사카)</td><td>오사카</td></tr>
+      <tr><td>〜まで</td><td>まで (마데)</td><td>~까지 (도착점)</td></tr>
+      <tr><td>新幹線</td><td>しんかんせん (신칸센)</td><td>신칸센 (고속철도)</td></tr>
+      <tr><td>〜で</td><td>で (데)</td><td>~으로 (수단·방법)</td></tr>
+      <tr><td>どのぐらい</td><td>どのぐらい (도노구라이)</td><td>어느 정도, 얼마나</td></tr>
+      <tr><td>かかりますか</td><td>かかりますか (카카리마스카)</td><td>(시간·비용이) 걸립니까?</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>A から B まで</b> — 'A에서 B까지'. 장소뿐 아니라 시간에도 쓴다: 9時(くじ)から 5時(ごじ)まで (9시부터 5시까지).</li>
+        <li><b>교통수단 + で</b> — バスで(버스로), でんしゃで(전철로), ひこうきで(비행기로). 단, '걸어서'는 「あるいて」로 で를 쓰지 않는다.</li>
+        <li><b>かかる</b> — 시간·돈이 '걸리다, 들다'. 1그룹 동사이므로 かかります. 대답 예: 2時間(にじかん)半(はん)ぐらい かかります。(2시간 반 정도 걸려요.)</li>
+        <li><b>장음 주의</b> — とうきょう는 [토-쿄-], おおさか는 [오-사카]로 길게 발음한다. 짧게 읽으면 다른 말처럼 들릴 수 있다.</li>
+        <li><b>[문화]</b> 신칸센은 도쿄–신오사카를 약 2시간 30분에 연결한다. 전철 안에서는 통화를 삼가고 휴대폰은 マナーモード(매너 모드)로!</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-14 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
