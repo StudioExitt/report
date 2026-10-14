@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-15</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 15일 (목) · 국어 1문항 · 토익 3문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-15 06:29 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제·재정)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (리카도 동등성 정리와 재정 정책의 효과)</p>
+
+  <div class="passage">
+    <p>경기가 침체되면 정부는 소비를 살리기 위해 세금을 깎아 주는 정책을 검토하곤 한다. 가계의 손에 남는 소득이 늘면 소비가 늘고, 늘어난 소비가 기업의 생산과 고용을 자극해 경기가 회복된다는 것이 일반적인 기대이다. 그런데 정부가 지출을 그대로 둔 채 세금만 줄이면 그만큼 재원이 부족해지므로, 정부는 국채를 발행해 부족분을 메워야 한다. 이때 세금 대신 빚으로 재원을 마련하는 것이 과연 경제에 다른 효과를 낳는가를 두고 경제학에서는 오랫동안 논쟁이 이어져 왔다. 이 논쟁의 중심에 있는 것이 '리카도 동등성 정리'이다.</p>
+    <p>리카도 동등성 정리는 19세기 영국의 경제학자 리카도가 전쟁 비용 조달 방식을 논하며 처음 제기한 아이디어를, 20세기 후반 경제학자 배로가 정교한 이론으로 발전시킨 것이다. 이 정리의 핵심 주장은 정부 지출의 크기가 정해져 있다면, 그 재원을 세금으로 조달하든 국채로 조달하든 가계의 소비와 경제 전체에 미치는 효과가 같다는 것이다. 다시 말해 정부 지출이 그대로인 상태에서 시행한 감세는 소비를 늘리지 못한다.</p>
+    <p>그 논리는 정부의 예산 제약에서 출발한다. 정부가 오늘 국채를 발행해 세금을 깎아 주었다면, 언젠가는 그 국채의 원금과 이자를 갚아야 한다. 정부가 지출을 줄이지 않는 한 상환 재원은 결국 미래의 세금에서 나올 수밖에 없다. 따라서 오늘의 감세는 사라진 세금이 아니라 미래로 미뤄진 세금일 뿐이다. 국채 이자율로 할인해 현재 가치로 환산하면, 오늘 깎아 준 세금의 크기와 미래에 더 내야 할 세금의 크기는 정확히 같아진다.</p>
+    <p>이 정리는 가계가 미래를 내다보고 합리적으로 행동한다는 가정 위에 서 있다. 합리적인 가계는 소비를 결정할 때 이번 달 소득만이 아니라 평생에 걸쳐 얻을 소득 전체를 고려한다. 오늘 세금이 줄어 가처분 소득이 늘었지만 미래의 세금이 그만큼 늘어날 것을 안다면, 가계가 평생 쓸 수 있는 자원의 총량은 변하지 않았다. 그러므로 가계는 소비를 늘리지 않고 감세로 생긴 돈을 고스란히 저축하여, 훗날 늘어날 세금에 대비한다.</p>
+    <p>이 과정을 경제 전체의 관점에서 보면 흥미로운 결과가 나타난다. 정부는 국채를 발행하므로 정부 저축이 감세액만큼 줄어든다. 반면 가계는 감세액만큼 저축을 늘리므로 민간 저축은 같은 크기로 늘어난다. 두 변화가 서로 상쇄되어 국민 저축은 변하지 않고, 따라서 대출 시장의 자금 공급도 변하지 않으므로 이자율 역시 움직이지 않는다. 국채 발행이 이자율을 끌어올려 민간 투자를 위축시킨다는 '구축 효과'도 이 정리의 세계에서는 일어나지 않는다.</p>
+    <p>그러나 많은 경제학자들은 리카도 동등성 정리가 현실에서 그대로 성립하기 어렵다고 비판한다. 첫째, 국채의 상환 시점이 현재 세대의 생애를 넘어서는 경우이다. 오늘 발행한 국채를 다음 세대가 갚는다면, 현재 세대는 미래 세금을 자신이 부담하지 않을 것이므로 감세분의 일부를 소비에 쓸 유인이 생긴다. 이에 대해 배로는 부모가 자녀의 효용을 자신의 효용처럼 여긴다면, 자녀가 짊어질 세금을 덜어 주기 위해 유산을 늘릴 것이므로 동등성이 여전히 유지된다고 반박하였다.</p>
+    <p>둘째, 차입 제약의 문제가 있다. 리카도 동등성 정리는 가계가 원하는 만큼 자유롭게 돈을 빌리고 저축할 수 있다고 가정한다. 하지만 현실에는 미래 소득이 충분하더라도 담보나 신용이 부족해 지금 돈을 빌리지 못하는 가계가 적지 않다. 이런 가계는 현재 소득에 맞춰 소비를 할 수밖에 없으므로, 감세로 당장 쓸 수 있는 돈이 생기면 미래 세금과 상관없이 소비를 늘린다. 차입 제약에 놓인 가계의 비중이 클수록 감세의 소비 진작 효과는 커진다.</p>
+    <p>셋째, 가계가 근시안적일 가능성이다. 정부의 장기 재정 계획을 꼼꼼히 따지는 가계는 드물며, 많은 사람들은 당장 늘어난 소득을 영구적인 소득 증가로 착각하기 쉽다. 또한 현실의 세금은 정액이 아니라 소득에 비례해 부과되는 경우가 많아, 세율의 변화가 일하거나 저축하려는 의욕 자체를 바꾸어 놓기도 한다. 이처럼 정리의 가정이 하나라도 어긋나면 세금과 국채는 더 이상 동등하지 않게 된다.</p>
+    <p>그렇다고 리카도 동등성 정리가 쓸모없는 이론인 것은 아니다. 이 정리는 감세의 효과를 평가할 때 '정부 지출이 줄어드는가'와 '가계가 미래 세금을 어떻게 인식하는가'라는 두 질문을 반드시 던져야 함을 일깨운다. 실제로 국가 부채가 빠르게 늘어 미래 증세에 대한 우려가 커진 시기에는 감세에도 불구하고 가계 저축률이 오르는 현상이 관찰되기도 한다. 경기 동향을 분석하는 사람이라면 재정 정책의 발표 자체보다, 그 정책이 사람들의 미래 기대를 어떻게 바꾸는지에 주목해야 하는 이유가 여기에 있다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>리카도 동등성 정리에 따르면 정부 지출이 일정할 때 감세는 미래의 세금을 앞당겨 줄인 것이 아니라 미래로 미룬 것에 불과하다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>리카도 동등성 정리가 성립하면 국채를 발행한 감세로 정부 저축은 줄지만 민간 저축이 같은 크기로 늘어나 국민 저축은 변하지 않는다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>배로는 부모가 자녀의 효용을 중시한다면 국채 상환이 다음 세대로 넘어가더라도 동등성이 유지될 수 있다고 보았다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>차입 제약에 놓인 가계의 비중이 클수록 가계는 미래 세금에 대비해 감세분을 저축하므로 감세의 소비 진작 효과는 작아진다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>소득에 비례해 부과되는 세금의 세율이 바뀌면 근로나 저축 의욕이 달라져 세금과 국채의 동등성이 깨질 수 있다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ④</p>
+      <ul>
+        <li><b>① 일치</b> — 3문단: "오늘의 감세는 사라진 세금이 아니라 <b>미래로 미뤄진 세금</b>일 뿐이다."</li>
+        <li><b>② 일치</b> — 5문단: 정부 저축은 감세액만큼 줄고 민간 저축은 같은 크기로 늘어 "<b>국민 저축은 변하지 않고</b>", 이자율도 움직이지 않는다.</li>
+        <li><b>③ 일치</b> — 6문단: 배로는 부모가 자녀의 효용을 자신의 효용처럼 여기면 "유산을 늘릴 것이므로 동등성이 여전히 유지된다고 반박하였다."</li>
+        <li><b>④ 불일치 (정답)</b> — 7문단: 차입 제약에 놓인 가계는 "현재 소득에 맞춰 소비를 할 수밖에 없으므로" 감세로 돈이 생기면 "미래 세금과 상관없이 <b>소비를 늘린다</b>." 따라서 그 비중이 클수록 감세의 소비 진작 효과는 <b>커진다</b>. 선택지는 차입 제약 가계를 '합리적으로 저축하는 가계'로 바꿔치기하고 결론의 방향까지 뒤집었다.</li>
+        <li><b>⑤ 일치</b> — 8문단: 현실의 세금은 소득에 비례해 부과되어 "세율의 변화가 일하거나 저축하려는 의욕 자체를 바꾸어 놓기도" 하며, 가정이 어긋나면 "세금과 국채는 더 이상 동등하지 않게 된다."</li>
+        <li><b>[풀이 요령]</b> — 이론을 소개하고 <b>비판(반례)</b>을 나열하는 글에서는, 선택지가 '비판 근거'를 '이론의 결론'과 섞어 놓는 방식으로 함정을 만든다. 6~8문단의 세 가지 비판은 모두 "감세가 소비를 <b>늘릴 수 있다</b>"는 같은 방향을 가리킨다는 점을 잡아 두면 ④가 바로 걸러진다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">Not until the final safety inspection had been completed ------- the factory permitted to resume full operations.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>was</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>did</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>has</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>were</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (A) was</p>
+      <ul>
+        <li><b>해석</b> — 최종 안전 점검이 완료되고 나서야 비로소 공장은 전면 가동을 재개하도록 허가받았다.</li>
+        <li><b>핵심</b> — <b>Not until ~</b>이 문두에 오면 주절은 <b>도치</b>(조동사/be동사 + 주어)된다. 원래 문장은 The factory <b>was permitted</b> to resume … (수동태) → 도치: <b>was the factory permitted</b>.</li>
+        <li><b>(A) was ✔</b> — 수동태 be + p.p.(permitted)의 be동사가 주어 앞으로 나간 형태. 주어 the factory는 단수, 시제는 과거(had been completed와 호응).</li>
+        <li><b>(B) did</b> — did는 일반동사 도치에 쓰며 뒤에 <b>동사원형</b>이 와야 한다. did the factory permit이면 능동 '허가했다'가 되어 의미도 맞지 않고, permitted(p.p.)와는 결합 불가.</li>
+        <li><b>(C) has</b> — has the factory permitted는 현재완료 능동으로 '공장이 허가했다'가 되어 의미 오류. 또 과거완료 had been completed 이후의 일이므로 시제도 어색하다.</li>
+        <li><b>(D) were</b> — 주어 the factory는 단수이므로 수 일치 오류.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">------- the unexpected delay in the shipment of components, the product launch proceeded exactly as scheduled.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>Although</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Despite</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Nevertheless</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Even so</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (B) Despite</p>
+      <ul>
+        <li><b>해석</b> — 부품 배송이 예기치 않게 지연되었음에도 불구하고, 제품 출시는 정확히 예정대로 진행되었다.</li>
+        <li><b>구조 분석</b> — 빈칸 뒤 [the unexpected delay in the shipment of components]는 동사가 없는 <b>명사구</b>. 따라서 명사(구)를 목적어로 받는 <b>전치사</b>가 필요하다.</li>
+        <li><b>(A) Although</b> — 의미는 같지만 <b>접속사</b>이므로 뒤에 '주어 + 동사'의 절이 와야 한다. (Although the shipment <i>was</i> delayed, …)</li>
+        <li><b>(B) Despite ✔</b> — '~에도 불구하고'의 전치사. 뒤에 명사구가 오며, in spite of와 같은 뜻. (despite <i>of</i>는 틀린 표현!)</li>
+        <li><b>(C) Nevertheless</b> — 접속<b>부사</b>(그럼에도 불구하고). 앞 문장을 받아 쓰며, 명사구를 이끌 수 없다.</li>
+        <li><b>(D) Even so</b> — '그렇다 하더라도'의 부사구. Nevertheless와 마찬가지로 명사구를 목적어로 취하지 못한다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">Applicants for the senior designer position must submit a portfolio that is ------- of the work they have completed within the past three years.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>representative</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>represented</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>representation</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>representing</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (A) representative</p>
+      <ul>
+        <li><b>해석</b> — 선임 디자이너 직에 지원하는 사람은 지난 3년 이내에 완성한 작업을 대표하는 포트폴리오를 제출해야 한다.</li>
+        <li><b>(A) representative ✔</b> — be동사 is 뒤 <b>보어 자리의 형용사</b>. <b>be representative of</b> = ~을 대표하다, ~을 잘 보여 주다. 명사로는 '직원, 대리인(sales representative)'이라는 뜻도 있어 품사 혼동을 노린 문제.</li>
+        <li><b>(B) represented</b> — 수동 '대표되는'. is represented of 형태는 불가하며, 포트폴리오가 작업을 '대표하는' 능동 의미와도 맞지 않는다.</li>
+        <li><b>(C) representation</b> — 명사 '표현, 대표'. a portfolio = representation은 의미상 '포트폴리오가 대표 행위이다'가 되어 어색하고, 관사도 없다(a representation of라면 가능).</li>
+        <li><b>(D) representing</b> — is representing이면 진행형 능동 동사가 되어 뒤에 <b>목적어가 바로</b> 와야 한다(representing the work). 전치사 of와 결합할 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 좌석 배치 + 순서가 정해진 배열 + 여사건(이웃 제외)</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>2행 3열 좌석 배치</p>
+    <p class="stem">그림과 같이 2행 3열로 배열된 6개의 좌석에 A, B, C, D, E, F 6명이 한 명씩 앉으려고 한다. 다음 세 조건을 모두 만족시키도록 앉는 경우의 수는?<br>
+    <span style="display:inline-block;margin:8px 0;font-family:monospace;line-height:1.5;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;">1행 : [ 1열 ][ 2열 ][ 3열 ]<br>2행 : [ 1열 ][ 2열 ][ 3열 ]</span><br>
+    (가) A와 B는 서로 이웃하지 않는다. (같은 행에서 좌우로 붙어 있거나, 같은 열에서 앞뒤로 붙어 있으면 이웃한 것으로 본다.)<br>
+    (나) C는 1행에 앉는다.<br>
+    (다) D가 앉는 좌석의 열 번호는 E가 앉는 좌석의 열 번호보다 작다.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>64</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>72</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>80</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>112</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>144</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 80</p>
+      <ul>
+        <li><b>전략</b> — (가)는 '이웃하지 않는다'이므로 <b>여사건</b>으로 처리한다.<br>
+          (구하는 수) = [(나)(다)를 만족하는 전체] − [(나)(다)를 만족하면서 A, B가 이웃하는 경우]</li>
+        <li><b>Step 1. (나)(다)만 만족하는 경우</b><br>
+          C의 자리: 1행의 3곳. 어느 경우든 남은 5개 좌석의 열 분포는 (1개, 2개, 2개)이다.<br>
+          · D, E가 앉을 두 좌석은 <b>서로 다른 열</b>이어야 하고, 두 좌석을 고르면 열 번호가 작은 쪽이 D로 <b>자동 결정</b>(순서가 정해진 배열).<br>
+          · 서로 다른 열의 두 좌석 = ₅C₂ − (같은 열 쌍 2개) = 10 − 2 = <b>8</b><br>
+          · 남은 3석에 A, B, F: 3! = 6<br>
+          ∴ 3 × 8 × 6 = <b>144</b></li>
+        <li><b>Step 2. A, B가 이웃하는 경우 (C의 위치별)</b><br>
+          A, B가 차지하는 이웃 좌석 쌍을 정하고(A·B 순서 ×2), 남은 3석에 D, E, F를 앉힌다.<br>
+          남은 3석이 <b>모두 다른 열</b>이면 (D, E)의 열 순서 조건을 만족하는 배치가 ₃C₂ = <b>3</b>가지, 그중 두 석이 <b>같은 열</b>이면 <b>2</b>가지이다.
+          <table class="words">
+            <tr><th>C의 위치</th><th>남은 좌석 중 이웃 쌍</th><th>D,E,F 배치 합</th><th>×2 (A,B 순서)</th></tr>
+            <tr><td>1행 1열 (모서리)</td><td>5쌍 → 3+2+2+2+3</td><td>12</td><td>24</td></tr>
+            <tr><td>1행 2열 (가운데)</td><td>4쌍 → 2+2+2+2</td><td>8</td><td>16</td></tr>
+            <tr><td>1행 3열 (모서리)</td><td>5쌍 → 3+2+2+2+3</td><td>12</td><td>24</td></tr>
+          </table>
+          예) C가 1행 1열, A·B가 1행 2·3열 → 남은 2행 1·2·3열은 모두 다른 열이므로 3가지.<br>
+          ∴ 이웃하는 경우 = 24 + 16 + 24 = <b>64</b></li>
+        <li><b>Step 3.</b> 144 − 64 = <b>80</b></li>
+        <li><b>오답 함정</b> — ⑤ 144: 조건 (가)를 빠뜨림. ④ 112: A·B의 자리 바꿈(×2)을 빼먹어 144 − 32. ① 64: 여사건 값 자체를 답으로 고른 경우.</li>
+        <li><b>검산</b> — 6! = 720가지 배치를 컴퓨터로 전수 조사하여 세 조건을 모두 만족하는 경우가 <b>80</b>가지임을 확인함.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 4·5·6·8과</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[4과 いらっしゃい] 가족 소개</p>
+    <p class="stem">친구 집에 놀러 온 친구에게 자기 어머니를 소개하려고 한다. 빈칸에 들어갈 말로 가장 알맞은 것은?</p>
+    <div class="jp-stem">こちらは わたしの (　　　　)です。</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">おかあさん</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">はは</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">ははさん</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">おばあさん</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ② はは</p>
+      <ul>
+        <li><b>문장</b> — こちらは わたしの ははです。<br><span class="pron">코치라와 와타시노 하하데스</span> — 이쪽은 저희 어머니예요.</li>
+        <li><b>① おかあさん</b> (오카-상) — <b>남의</b> 어머니를 높여 부르거나, 집 안에서 자기 어머니를 직접 부를 때 쓴다. 남에게 자기 어머니를 소개할 때는 쓰지 않는다.</li>
+        <li><b>② はは ✔</b> (하하) — 남에게 <b>자기</b> 어머니를 말할 때 쓰는 낮춤(겸양) 표현.</li>
+        <li><b>③ ははさん</b> — 존재하지 않는 형태. 낮춤말 はは에 높임 접미사 さん을 붙일 수 없다.</li>
+        <li><b>④ おばあさん</b> (오바-상) — '할머니'(남의 할머니). 자기 할머니는 そぼ(소보).</li>
+        <li><b>[가족 호칭 이중 체계]</b> 자기 가족 ↔ 남의 가족: ちち↔おとうさん / はは↔おかあさん / あに↔おにいさん / あね↔おねえさん / そふ↔おじいさん / そぼ↔おばあさん</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[5과 いただきます] 시각 읽기</p>
+    <p class="stem">"아르바이트는 <b>4시 9분</b>까지예요."를 일본어로 바르게 읽은 것은?</p>
+    <div class="jp-stem">バイトは 4<ruby>時<rt>じ</rt></ruby>9<ruby>分<rt>ふん</rt></ruby>までです。</div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">よんじ きゅうふん</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">よじ きゅうぷん</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">よじ きゅうふん</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">しじ くふん</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ③ よじ きゅうふん</p>
+      <ul>
+        <li><b>문장</b> — バイトは 4時(よじ)9分(きゅうふん)までです。<br><span class="pron">바이토와 요지 큐-훔 마데데스</span> — 아르바이트는 4시 9분까지예요.</li>
+        <li><b>① よんじ</b> — 4시는 <b>よじ</b>. よんじ(×)는 대표적인 오답.</li>
+        <li><b>② きゅうぷん</b> — 9분은 <b>ふん</b>으로 읽는다. ぷん이 되는 것은 1·3·4·6·8·10분.</li>
+        <li><b>③ よじ きゅうふん ✔</b></li>
+        <li><b>④ しじ くふん</b> — 4시를 し로, 9분을 く로 읽지 않는다. (참고: 9시는 くじ로 읽는다!)</li>
+        <li><b>[시각 읽기 정리]</b> 4時 よじ / 7時 しちじ / 9時 くじ · 분: いっぷん·さんぷん·よんぷん·ろっぷん·はっぷん·じゅっぷん(ぷん) ↔ にふん·ごふん·ななふん·きゅうふん(ふん)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[6과 わあ、すごい!] 칭찬에 대한 응답</p>
+    <p class="stem">다음 대화의 빈칸에 들어갈 B의 대답으로 일본 문화에 가장 알맞은 것은?</p>
+    <div class="jp-stem">A：<ruby>日本語<rt>にほんご</rt></ruby>が じょうずですね。<br>B：(　　　　　　　　)</div>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">はい、わたしは じょうずです。</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">これに します。</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">ごちそうさまでした。</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">いいえ、まだまだです。</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ④ いいえ、まだまだです。</p>
+      <ul>
+        <li><b>대화</b> — A: 日本語(にほんご)が じょうずですね。<span class="pron">(니홍고가 죠-즈데스네)</span> 일본어를 잘하시네요.</li>
+        <li><b>① はい、わたしは じょうずです</b> — じょうず는 <b>남을 칭찬할 때</b> 쓰는 말로, 자신에게 쓰면 자랑처럼 들린다. 자기 능력은 とくいです(자신 있어요)로 표현.</li>
+        <li><b>② これに します</b> (코레니 시마스) — '이걸로 할게요'. 물건을 <b>선택</b>할 때 쓰는 표현.</li>
+        <li><b>③ ごちそうさまでした</b> (고치소-사마데시타) — '잘 먹었습니다'. 식사 후 인사(5과).</li>
+        <li><b>④ いいえ、まだまだです ✔</b> (이-에, 마다마다데스) — '아니에요, 아직 멀었어요'. 칭찬을 받으면 <b>겸손하게 부정</b>하는 것이 일본의 관례. いいえ、そんな こと ありません(그렇지 않아요)도 정답 표현.</li>
+        <li><b>[조사 주의]</b> 「~를 잘하다/못하다」는 を가 아니라 <b>が</b>: うたが じょうずです / りょうりが へたです.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 8과 よい おとしを (경험 표현 〜た ことが ある)</p>
+    <p class="jp-main"><ruby>初詣<rt>はつもうで</rt></ruby>に <ruby>行<rt>い</rt></ruby>った ことが ありますか。</p>
+    <p class="jp-read">읽기(후리가나) : 初詣(はつもうで)に 行(い)った ことが ありますか。</p>
+    <p class="jp-rom">한글 발음 : 하츠모-데니 잇타 코토가 아리마스카</p>
+    <p class="jp-ko">하쓰모데(새해 첫 참배)에 가 본 적이 있어요?</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>初詣</td><td>はつもうで (하츠모-데)</td><td>새해 첫 신사·절 참배</td></tr>
+      <tr><td>〜に</td><td>に (니)</td><td>~에 (목적지)</td></tr>
+      <tr><td>行った</td><td>いった (잇타)</td><td>갔다 (行く의 た형)</td></tr>
+      <tr><td>こと</td><td>こと (코토)</td><td>것, 일</td></tr>
+      <tr><td>〜が ありますか</td><td>が ありますか (가 아리마스카)</td><td>~이 있습니까?</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>동사 た형 + ことが ある</b> — '~한 적이 있다'(경험). 대답: はい、あります。/ いいえ、ありません。 반말로는 「はつもうで 行った こと ある?」처럼 조사를 생략하기도 한다.</li>
+        <li><b>行く의 예외</b> — く로 끝나는 1그룹 동사는 書く→書いて·書いた처럼 い음편이 되지만, <b>行く만은 行って·行った</b>(×行いた).</li>
+        <li><b>た형 만들기</b> — て형과 같은 규칙에서 て→た, で→だ: 読む→読んだ / 話す→話した / 食べる→食べた / する→した / 来る→来(き)た.</li>
+        <li><b>[문화]</b> 설(おしょうがつ)에는 신사·절에 はつもうで를 가서 운세 おみくじ를 뽑고, 소원을 적은 えま를 건다. 12월 31일 おおみそか에는 としこしそば를 먹는다.</li>
+        <li><b>[시점 구분]</b> よい おとしを(좋은 해 맞이하세요)는 <b>연말</b>, あけまして おめでとう ございます(새해 복 많이 받으세요)는 <b>새해가 밝은 뒤</b>에 쓴다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-15 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
