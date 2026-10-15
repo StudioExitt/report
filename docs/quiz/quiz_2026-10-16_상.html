@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-16</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 16일 (금) · 국어 1문항 · 토익 3문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-16 06:03 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제·통화정책)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (테일러 준칙과 중앙은행의 기준금리 결정)</p>
+
+  <div class="passage">
+    <p>중앙은행이 기준금리를 올리거나 내릴 때마다 시장은 크게 출렁인다. 금리 결정은 대출 이자, 주택 가격, 환율, 기업의 투자 계획에 이르기까지 경제 전반에 영향을 미치기 때문이다. 그렇다면 중앙은행은 무엇을 근거로 금리를 정하는가? 이 물음에 대해 한쪽에서는 중앙은행이 그때그때 경제 상황을 종합적으로 판단해 재량껏 금리를 정해야 한다고 보았고, 다른 쪽에서는 미리 정해진 규칙에 따라 금리를 정해야 한다고 주장하였다. 후자의 대표적인 예가 1993년 경제학자 테일러가 제시한 '테일러 준칙'이다.</p>
+    <p>테일러 준칙은 적정한 기준금리를 몇 개의 경제 변수로 계산하는 간단한 식이다. 출발점은 '중립 금리'이다. 중립 금리란 경기를 부양하지도 억제하지도 않는 금리 수준으로, 물가 상승률이 목표치에 있고 경제가 잠재 수준에서 성장할 때의 금리를 말한다. 테일러 준칙은 이 중립 금리에 현재의 물가 상승률을 더한 뒤, 두 가지 '격차'를 반영해 금리를 조정한다. 하나는 실제 물가 상승률과 목표 물가 상승률의 차이인 '인플레이션 갭'이고, 다른 하나는 실제 국내총생산(GDP)이 잠재 GDP에서 벗어난 정도인 '산출량 갭'이다.</p>
+    <p>잠재 GDP란 한 나라가 노동과 자본을 무리 없이 활용해 물가를 자극하지 않고 생산할 수 있는 최대 수준을 뜻한다. 실제 GDP가 잠재 GDP를 웃돌면 산출량 갭이 양(+)이 되는데, 이는 경기가 과열되어 머지않아 물가가 오를 위험이 있음을 의미한다. 반대로 실제 GDP가 잠재 GDP에 못 미치면 산출량 갭이 음(−)이 되며, 이는 설비와 인력이 놀고 있는 경기 침체 상태를 나타낸다. 테일러가 처음 제시한 식에서는 두 갭에 각각 0.5의 가중치를 주었다. 즉 물가 상승률이 목표보다 1%포인트 높으면 금리를 0.5%포인트 더 올리고, 산출량 갭이 1%포인트 커져도 금리를 0.5%포인트 더 올린다.</p>
+    <p>이 식에서 눈여겨볼 점은 물가 상승률이 높아질 때 명목 금리가 그보다 더 크게 올라야 한다는 것이다. 물가 상승률이 1%포인트 오르면 식의 '현재 물가 상승률' 항목에서 1%포인트, '인플레이션 갭' 항목에서 0.5%포인트가 더해져 명목 금리는 모두 1.5%포인트 오른다. 이렇게 명목 금리를 물가 상승률보다 크게 올려야 물가 상승분을 뺀 실질 금리가 실제로 상승하여 소비와 투자가 억제되고 물가가 안정된다. 이를 '테일러 원칙'이라 부른다. 만약 물가가 1%포인트 오를 때 명목 금리를 1%포인트 미만으로 올린다면 실질 금리는 오히려 떨어지고, 이는 경기를 더 부추겨 물가를 끌어올리는 결과를 낳는다.</p>
+    <p>테일러 준칙의 가장 큰 장점은 예측 가능성이다. 중앙은행이 일정한 규칙에 따라 움직인다는 믿음이 있으면, 가계와 기업은 앞으로의 금리 경로를 짐작해 소비와 투자 계획을 세울 수 있다. 또한 정치적 압력이나 단기 성과에 대한 유혹에 휘둘려 금리를 지나치게 낮게 유지하는 일을 막아 주는 역할도 한다. 실제로 테일러가 이 준칙을 처음 발표했을 때, 그가 계산한 금리는 1987년부터 1992년까지 미국 중앙은행이 실제로 정한 금리의 움직임을 상당히 잘 설명하였다. 이후 많은 나라의 중앙은행은 실제 금리 결정과 별개로 테일러 준칙에 따른 금리를 계산해 참고 지표로 활용하고 있다.</p>
+    <p>그러나 테일러 준칙을 기계적으로 적용하기에는 한계가 뚜렷하다. 먼저 중립 금리와 잠재 GDP는 직접 관측할 수 없는 값이라는 점이다. 이 두 값은 통계 모형을 통해 추정할 수밖에 없는데, 추정 방법에 따라 결과가 크게 달라지며 시간이 지나 자료가 수정되면서 사후에 바뀌기도 한다. 중립 금리를 1%포인트만 다르게 추정해도 준칙이 제시하는 금리는 그만큼 달라지므로, 같은 준칙을 쓰더라도 누가 계산하느냐에 따라 '적정 금리'가 다르게 나올 수 있다.</p>
+    <p>다음으로 준칙이 경제의 모든 사정을 담지 못한다는 문제가 있다. 테일러 준칙은 물가와 산출량이라는 두 변수만을 고려하므로, 금융 시장의 불안이나 자산 가격의 급등, 환율의 급변처럼 경제에 큰 충격을 주는 요인들을 반영하지 못한다. 예컨대 금융 위기가 닥쳐 신용 경색이 일어난 상황에서는 준칙이 제시하는 금리보다 훨씬 과감하게 금리를 내려야 할 수도 있다. 또 경기가 극도로 위축되면 준칙이 계산한 적정 금리가 0% 아래로 내려가기도 하는데, 명목 금리를 0% 아래로 크게 낮추기는 현실적으로 어렵기 때문에 중앙은행은 준칙이 요구하는 만큼 금리를 내릴 수 없게 된다.</p>
+    <p>이러한 이유로 오늘날 대부분의 중앙은행은 테일러 준칙을 엄격한 규칙으로 따르기보다는, 금리 결정의 출발점이자 점검 도구로 활용한다. 실제 금리가 준칙이 제시하는 금리보다 지나치게 낮게 유지되면 통화 정책이 너무 완화적이라는 신호로 해석하고, 반대의 경우에는 지나치게 긴축적이라는 신호로 받아들이는 식이다. 일부 경제학자들은 2000년대 중반 미국의 기준금리가 준칙이 제시한 수준보다 상당 기간 낮게 유지되었고, 이것이 주택 가격 거품을 키운 원인 중 하나였다고 지적하기도 하였다.</p>
+    <p>결국 규칙과 재량을 둘러싼 논쟁은 어느 한쪽의 완전한 승리로 끝나지 않았다. 규칙은 신뢰와 예측 가능성을 주지만 예외적인 충격에 유연하게 대응하기 어렵고, 재량은 유연하지만 자의적 판단과 시장의 불확실성을 키울 위험이 있다. 테일러 준칙의 진정한 의의는 정답을 알려 주는 공식이라는 데 있다기보다, 중앙은행이 금리를 결정할 때 반드시 따져 보아야 할 물가와 경기라는 두 기준을 명확히 제시하고, 그 결정이 기준에서 얼마나 벗어나 있는지를 설명하도록 요구한다는 데 있다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>테일러 준칙에서 실제 GDP가 잠재 GDP를 웃돌면 산출량 갭이 양(+)이 되어 준칙이 제시하는 금리는 높아진다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>중립 금리의 추정치가 달라지면 같은 테일러 준칙을 적용하더라도 계산되는 적정 금리가 달라질 수 있다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>테일러 원칙에 따르면 물가 상승률이 1%포인트 오를 때 명목 금리를 1%포인트만큼 올려야 실질 금리가 변하지 않아 물가가 안정된다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>테일러 준칙은 물가와 산출량만을 고려하므로 신용 경색과 같은 금융 시장의 충격을 반영하지 못한다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>오늘날 대부분의 중앙은행은 테일러 준칙에 따른 금리를 통화 정책이 완화적인지 긴축적인지 점검하는 도구로 활용한다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ③</p>
+      <ul>
+        <li><b>① 일치</b> — 3문단: 실제 GDP가 잠재 GDP를 웃돌면 "산출량 갭이 양(+)"이 되고, "산출량 갭이 1%포인트 커져도 금리를 0.5%포인트 더 올린다."</li>
+        <li><b>② 일치</b> — 6문단: "중립 금리를 1%포인트만 다르게 추정해도 준칙이 제시하는 금리는 그만큼 달라지므로 … '적정 금리'가 다르게 나올 수 있다."</li>
+        <li><b>③ 불일치 (정답)</b> — 4문단: 테일러 원칙은 명목 금리를 물가 상승률<b>보다 크게</b>(1%p 오르면 1.5%p) 올려 <b>실질 금리가 실제로 상승</b>하도록 해야 물가가 안정된다는 것이다. 1%p만 올리면 실질 금리는 '변하지 않을' 뿐 소비·투자를 억제하지 못한다. 선택지는 '더 크게 → 같은 만큼', '실질 금리 상승 → 불변'으로 두 군데를 비틀었다.</li>
+        <li><b>④ 일치</b> — 7문단: 준칙은 "물가와 산출량이라는 두 변수만을 고려하므로" 금융 시장의 불안 등을 반영하지 못하며, 금융 위기·신용 경색 시에는 더 과감한 인하가 필요할 수 있다.</li>
+        <li><b>⑤ 일치</b> — 8문단: 대부분의 중앙은행은 준칙을 "출발점이자 점검 도구"로 활용하며, 실제 금리가 준칙보다 낮으면 '너무 완화적', 반대면 '지나치게 긴축적'이라는 신호로 해석한다.</li>
+        <li><b>[풀이 요령]</b> — 수치가 나오는 문단(3·4문단)은 선택지에서 <b>숫자·비교 표현(보다 크게/같은 만큼/미만)</b>을 바꿔 함정을 만들기 좋은 곳이다. 명목 금리 − 물가 상승률 = 실질 금리라는 관계를 직접 계산해 보면 ③의 오류가 바로 드러난다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">The board of directors has not yet determined ------- of the two expansion proposals will receive additional funding next quarter.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>which</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>what</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>whose</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>whichever</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (A) which</p>
+      <ul>
+        <li><b>해석</b> — 이사회는 두 가지 확장 제안 중 어느 것이 다음 분기에 추가 자금을 받을지 아직 결정하지 않았다.</li>
+        <li><b>구조 분석</b> — 빈칸 ~ next quarter는 determined의 <b>목적어 역할을 하는 명사절</b>(간접의문문). 절 안에서 빈칸은 <b>주어</b> 자리이고, 뒤에 <b>of the two ~</b>가 이어져 '정해진 범위 중 어느 것'을 묻는다.</li>
+        <li><b>(A) which ✔</b> — 의문대명사 which는 <b>한정된 선택지</b> 중 '어느 것'을 뜻하며 <b>which of the two</b> 형태로 자주 쓴다.</li>
+        <li><b>(B) what</b> — what도 명사절을 이끌 수 있지만 범위가 정해지지 않은 '무엇'을 뜻하며, <b>what of the two</b>는 쓰지 않는다.</li>
+        <li><b>(C) whose</b> — 소유격이므로 뒤에 <b>명사</b>가 바로 와야 한다(whose proposal). of the two와 결합할 수 없다.</li>
+        <li><b>(D) whichever</b> — '어느 것이든'의 복합관계대명사. "어느 것이 받을지 결정하지 않았다"는 <b>의문</b>의 의미와 맞지 않는다. (Whichever proposal wins will be funded. 처럼 '~하는 것은 무엇이든'에 쓴다.)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">It is essential that every employee ------- the updated data security guidelines before being granted access to the new customer database.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>review</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>reviews</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>reviewed</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>will review</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (A) review</p>
+      <ul>
+        <li><b>해석</b> — 새 고객 데이터베이스에 대한 접근 권한을 받기 전에 모든 직원이 개정된 데이터 보안 지침을 검토하는 것이 필수적이다.</li>
+        <li><b>핵심</b> — <b>It is essential / necessary / imperative / vital that + 주어 + (should) 동사원형</b>. 당위·필요를 나타내는 형용사 뒤 that절에서는 should가 생략되어 <b>주어의 인칭·수와 관계없이 동사원형</b>이 온다.</li>
+        <li><b>(A) review ✔</b> — (should) review에서 should 생략.</li>
+        <li><b>(B) reviews</b> — every employee가 단수라서 가장 끌리는 함정. 그러나 당위의 that절에서는 3인칭 단수 -s를 붙이지 않는다.</li>
+        <li><b>(C) reviewed</b> — 과거 시제. 아직 일어나지 않은 '해야 할 일'을 나타내는 문맥과 맞지 않는다.</li>
+        <li><b>(D) will review</b> — 미래 조동사 will은 당위의 should 자리를 대신할 수 없다.</li>
+        <li><b>[같은 구조]</b> 요구·제안·주장 동사(<b>request, require, recommend, suggest, insist, ask</b>) + that + 주어 + 동사원형 — The manager requested that the report <b>be</b> submitted by Friday.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">Thanks to the mild weather and an experienced crew, the renovation of the east wing is expected to be completed ------- ahead of schedule.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>very</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>well</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>so</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>much more</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (B) well</p>
+      <ul>
+        <li><b>해석</b> — 온화한 날씨와 숙련된 작업팀 덕분에 동관 보수 공사는 예정보다 훨씬 앞당겨 완료될 것으로 예상된다.</li>
+        <li><b>핵심</b> — <b>ahead of schedule / before the deadline / in advance / over budget</b> 같은 <b>전치사구</b>를 강조할 때는 부사 <b>well</b>을 쓴다. well ahead of = '~보다 훨씬 앞서'.</li>
+        <li><b>(A) very</b> — very는 형용사·부사의 원급을 꾸민다(very early). 전치사구 ahead of schedule을 직접 수식하지 않는다.</li>
+        <li><b>(B) well ✔</b> — well ahead of schedule, well before the meeting, well in advance 모두 토익 빈출 표현.</li>
+        <li><b>(C) so</b> — so는 형용사·부사를 꾸며 so ~ that 구문을 만든다. 뒤에 that절도 없고 전치사구를 꾸밀 수도 없다.</li>
+        <li><b>(D) much more</b> — 비교급 강조 표현이지만 ahead of schedule은 비교급이 아니므로 more가 들어갈 자리가 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 이웃하지 않는 선택(조합) + 일대일대응 변환 + 홀짝 조건</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>연속하지 않는 네 수의 합</p>
+    <p class="stem">1부터 10까지의 자연수가 하나씩 적힌 카드 10장이 있다. 이 중에서 4장의 카드를 동시에 택할 때, 다음 두 조건을 모두 만족시키는 경우의 수는?<br>
+    (가) 택한 카드에 적힌 수 중 어느 두 수도 연속하지 않는다. (예: 3과 4를 함께 택할 수 없다.)<br>
+    (나) 택한 카드에 적힌 네 수의 합은 짝수이다.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>15</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>16</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>18</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>19</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>20</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ④ 19</p>
+      <ul>
+        <li><b>전략</b> — '연속하지 않는다'는 조건을 <b>간격을 줄이는 변환</b>으로 없앤 뒤, 변환 후의 수에서 홀짝 조건을 센다.</li>
+        <li><b>Step 1. 일대일대응</b><br>
+          택한 수를 a₁ &lt; a₂ &lt; a₃ &lt; a₄ 라 하자. (가)에 의해 a₂ − a₁ ≥ 2, a₃ − a₂ ≥ 2, a₄ − a₃ ≥ 2 이다.<br>
+          b₁ = a₁, b₂ = a₂ − 1, b₃ = a₃ − 2, b₄ = a₄ − 3 으로 두면 1 ≤ b₁ &lt; b₂ &lt; b₃ &lt; b₄ ≤ 7 이 되고, 이 대응은 일대일대응이다.<br>
+          → (가)만 만족하는 경우 = {1, 2, …, 7}에서 4개를 고르는 경우 = ₇C₄ = <b>35</b></li>
+        <li><b>Step 2. 합의 홀짝 옮기기</b><br>
+          a₁ + a₂ + a₃ + a₄ = (b₁ + b₂ + b₃ + b₄) + (0 + 1 + 2 + 3) = (b의 합) + <b>6</b><br>
+          6은 짝수이므로 <b>a의 합이 짝수 ⇔ b의 합이 짝수</b>.</li>
+        <li><b>Step 3. {1, …, 7}에서 합이 짝수인 4개 고르기</b><br>
+          홀수 {1, 3, 5, 7} 4개, 짝수 {2, 4, 6} 3개. 합이 짝수 ⇔ 택한 홀수의 개수가 짝수(0, 2, 4개).
+          <table class="words">
+            <tr><th>홀수 개수</th><th>짝수 개수</th><th>경우의 수</th></tr>
+            <tr><td>0</td><td>4</td><td>₃C₄ = 0 (짝수가 3개뿐)</td></tr>
+            <tr><td>2</td><td>2</td><td>₄C₂ × ₃C₂ = 6 × 3 = 18</td></tr>
+            <tr><td>4</td><td>0</td><td>₄C₄ = 1</td></tr>
+          </table>
+          ∴ 0 + 18 + 1 = <b>19</b></li>
+        <li><b>확인</b> — b = {1, 3, 5, 7} ↔ a = {1, 4, 7, 10} (합 22, 짝수 ✔).</li>
+        <li><b>오답 함정</b> — ③ 18: 홀수 4개인 경우를 빠뜨림. ② 16: 합이 <b>홀수</b>인 경우(35 − 19)를 셈. ⑤ 20: 홀수 0개(짝수 4개)인 경우를 ₃C₄ = 0이 아니라 1로 잘못 처리. (참고: 변환 없이 원래 수에서 직접 세면 홀수 4개 5가지 + 짝수 4개 5가지 + 홀2·짝2 9가지 = 19로 결과는 같지만, 홀2·짝2를 세는 과정이 훨씬 복잡하다.)</li>
+        <li><b>검산</b> — ₁₀C₄ = 210가지를 컴퓨터로 전수 조사하여 두 조건을 모두 만족하는 경우가 <b>19</b>가지임을 확인함.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 1·6·8과</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[1과 あいうえお] 탁음·촉음·장음 표기</p>
+    <p class="stem">'학교'를 뜻하는 일본어를 히라가나로 바르게 쓴 것은?</p>
+    <div class="jp-stem"><ruby>学校<rt>？</rt></ruby> (학교)</div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">かっこう</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">がこう</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">がっこう</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">がっこ</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ③ がっこう</p>
+      <ul>
+        <li><b>단어</b> — <ruby>学校<rt>がっこう</rt></ruby> <span class="pron">각코-</span> — 학교. 4박(が・っ・こ・う)으로 읽는다.</li>
+        <li><b>① かっこう</b> (각코-) — 첫 글자가 <b>청음</b> か. かっこう는 '모습, 겉모양(格好)' 또는 '뻐꾸기'라는 다른 단어가 된다. 탁점(゛) 하나로 뜻이 바뀌는 대표 예.</li>
+        <li><b>② がこう</b> — <b>촉음</b> っ가 빠졌다. っ는 한 박의 길이를 가지므로 빠지면 박 수(3박)와 발음이 달라진다.</li>
+        <li><b>③ がっこう ✔</b> — 탁음 が + 촉음 っ + こ + 장음 う.</li>
+        <li><b>④ がっこ</b> — 장음 う가 빠졌다. お단 뒤의 う는 앞 모음을 길게 늘이는 <b>장음</b>(こう → 코-)이다.</li>
+        <li><b>[정리]</b> 촉음 っ: きって(우표)·きっぷ(표) / 장음: おかあさん·おにいさん·せんせい(센세-)·とうきょう(토-쿄-) / 탁음 구분: かき(감) ↔ かぎ(열쇠)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[6과 わあ、すごい!] い형용사의 부정</p>
+    <p class="stem">다음 대화의 빈칸에 들어갈 말로 가장 알맞은 것은?</p>
+    <div class="jp-stem">A：この ラーメン、<ruby>辛<rt>から</rt></ruby>いですか。<br>B：いいえ、(　　　　　　　)。</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">からいじゃ ないです</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">からくないです</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">からでは ありません</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">からいくないです</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ② からくないです</p>
+      <ul>
+        <li><b>대화</b> — A: この ラーメン、<ruby>辛<rt>から</rt></ruby>いですか。<span class="pron">(코노 라-멘, 카라이데스카)</span> 이 라면, 매워요?<br>
+          B: いいえ、<ruby>辛<rt>から</rt></ruby>くないです。<span class="pron">(이-에, 카라쿠나이데스)</span> 아니요, 맵지 않아요.</li>
+        <li><b>① からいじゃ ないです</b> — じゃ ないです는 <b>명사·な형용사</b>의 부정(がくせいじゃ ないです / しずかじゃ ないです). い형용사에는 쓰지 않는다.</li>
+        <li><b>② からくないです ✔</b> — <b>い형용사 부정 = 어미 い → く + ないです</b>. からい → からくないです (= からく ありません).</li>
+        <li><b>③ からでは ありません</b> — い를 떼고 では ありません을 붙인 형태로, な형용사 활용과 혼동한 오답.</li>
+        <li><b>④ からいくないです</b> — い를 く로 <b>바꿔야</b> 하는데 い를 남긴 채 く를 덧붙였다.</li>
+        <li><b>[예외 주의]</b> いい(좋다)의 부정은 <b>よくないです</b>(×いくないです). 또 きれい·ゆうめい는 い로 끝나지만 <b>な형용사</b>라서 きれいじゃ ないです가 맞다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[8과 よい おとしを] 과거 표현과 조사 に</p>
+    <p class="stem">"어제 친구를 만났어요."를 일본어로 가장 바르게 옮긴 것은?</p>
+    <div class="jp-stem">きのう (　　　　　　　　　)。</div>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>友<rt>とも</rt></ruby>だちを <ruby>会<rt>あ</rt></ruby>いました</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>友<rt>とも</rt></ruby>だちに <ruby>会<rt>あ</rt></ruby>います</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>友<rt>とも</rt></ruby>だちが <ruby>会<rt>あ</rt></ruby>いませんでした</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp"><ruby>友<rt>とも</rt></ruby>だちに <ruby>会<rt>あ</rt></ruby>いました</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ④ 友だちに 会いました</p>
+      <ul>
+        <li><b>문장</b> — きのう <ruby>友<rt>とも</rt></ruby>だちに <ruby>会<rt>あ</rt></ruby>いました。<span class="pron">(키노- 토모다치니 아이마시타)</span> 어제 친구를 만났어요.</li>
+        <li><b>① 友だちを 会いました</b> — 우리말 '~를 만나다'에 끌린 오답. 会う는 만나는 대상에 <b>に</b>를 쓴다.</li>
+        <li><b>② 友だちに 会います</b> — 조사는 맞지만 ます(현재·미래)형. きのう(어제)와 시제가 맞지 않는다.</li>
+        <li><b>③ 友だちが 会いませんでした</b> — '친구가 만나지 않았어요'라는 과거 부정으로 뜻이 다르다.</li>
+        <li><b>④ 友だちに 会いました ✔</b> — <b>〜ました</b>는 ます의 과거형(~했습니다).</li>
+        <li><b>[정중체 시제 정리]</b> 会います(만나요) / 会いません(안 만나요) / 会いました(만났어요) / 会いませんでした(안 만났어요)</li>
+        <li><b>[に를 쓰는 동사]</b> 〜に 会う(~를 만나다) / 〜に 乗(の)る(~를 타다) / 〜に なる(~이 되다) — 한국어와 조사가 달라 시험에 자주 나온다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 6과 わあ、すごい! (い형용사 + 감탄 표현)</p>
+    <p class="jp-main">この <ruby>料理<rt>りょうり</rt></ruby>、とても おいしいですね。<ruby>誰<rt>だれ</rt></ruby>が <ruby>作<rt>つく</rt></ruby>りましたか。</p>
+    <p class="jp-read">읽기(후리가나) : この 料理(りょうり)、とても おいしいですね。誰(だれ)が 作(つく)りましたか。</p>
+    <p class="jp-rom">한글 발음 : 코노 료-리, 토테모 오이시-데스네. 다레가 츠쿠리마시타카</p>
+    <p class="jp-ko">이 요리, 정말 맛있네요. 누가 만들었어요?</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>この</td><td>この (코노)</td><td>이 (연체사)</td></tr>
+      <tr><td>料理</td><td>りょうり (료-리)</td><td>요리</td></tr>
+      <tr><td>とても</td><td>とても (토테모)</td><td>매우, 정말</td></tr>
+      <tr><td>おいしい</td><td>おいしい (오이시-)</td><td>맛있다 (い형용사)</td></tr>
+      <tr><td>〜ですね</td><td>ですね (데스네)</td><td>~네요 (공감·감탄)</td></tr>
+      <tr><td>誰が</td><td>だれが (다레가)</td><td>누가</td></tr>
+      <tr><td>作りました</td><td>つくりました (츠쿠리마시타)</td><td>만들었습니다 (作る의 과거 정중형)</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>い형용사 + です</b> — 기본형에 です만 붙이면 정중형: おいしい → おいしいです. 부정은 おいしくないです, 과거는 <b>おいしかったです</b>(×おいしいでした).</li>
+        <li><b>〜ですね</b> — 상대도 알고 있는 사실에 공감하거나 감탄할 때. 〜ですよ는 상대가 모르는 정보를 알려 줄 때.</li>
+        <li><b>誰が</b> — 의문사가 주어일 때는 は가 아니라 <b>が</b>를 쓴다(×誰は). 대답도 が: 「母が 作りました。」</li>
+        <li><b>[6과 감탄 표현]</b> わあ、すごい!(와, 대단해!) / かわいい!(귀여워!) / かっこいい!(멋있어!) — 칭찬을 받으면 「いいえ、まだまだです」로 겸손하게 답한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<footer>데일리 학습 퀴즈 · 2026-10-16 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
