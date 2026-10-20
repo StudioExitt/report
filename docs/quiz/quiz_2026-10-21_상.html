@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-21</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 21일 (수) · 국어 1문항 · 토익 3문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-21 05:55 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경제·물가와 고용)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (필립스 곡선과 기대 인플레이션, 자연 실업률 가설)</p>
+
+  <div class="passage">
+    <p>물가 안정과 완전 고용은 거시 경제 정책의 두 가지 핵심 목표이다. 그런데 이 두 목표는 서로 충돌하는 것처럼 보일 때가 많다. 경기를 부양하여 일자리를 늘리려 하면 물가가 오르고, 물가를 잡으려 하면 실업이 늘어나는 현상이 자주 관찰되기 때문이다. 이 관계를 처음으로 통계적으로 보여 준 사람이 경제학자 필립스이다.</p>
+    <p>1958년 필립스는 약 100년에 걸친 영국의 자료를 분석하여, 실업률이 낮은 해에는 명목 임금 상승률이 높고 실업률이 높은 해에는 명목 임금 상승률이 낮다는 사실을 발견하였다. 일손이 부족하면 기업들이 노동자를 구하기 위해 임금을 올리고, 일손이 남아돌면 임금 인상 압력이 약해진다는 것이다. 이후 경제학자들은 임금 상승이 곧 제품 가격 상승으로 이어진다는 점에 착안하여, 임금 상승률 대신 물가 상승률과 실업률 사이의 관계로 이를 바꾸어 표현하였다. 가로축에 실업률, 세로축에 물가 상승률을 놓으면 오른쪽 아래로 내려가는 곡선이 그려지는데, 이를 '필립스 곡선'이라 한다.</p>
+    <p>필립스 곡선은 정책 당국에 일종의 '메뉴'를 제시하는 것으로 받아들여졌다. 정부와 중앙은행이 어느 정도의 물가 상승을 감수하면 그만큼 실업률을 낮출 수 있고, 반대로 실업을 어느 정도 감수하면 물가를 안정시킬 수 있다는 것이다. 1960년대 많은 나라의 정책 당국은 이 관계를 바탕으로, 약간 높은 물가 상승률을 받아들이는 대신 낮은 실업률을 유지하려는 정책을 폈다.</p>
+    <p>그러나 프리드먼과 펠프스는 이러한 생각에 근본적인 의문을 제기하였다. 이들은 노동자와 기업이 관심을 두는 것은 명목 임금이 아니라 물가를 고려한 실질 임금이며, 사람들은 앞으로의 물가 상승률을 예상하여 행동한다는 점에 주목하였다. 이렇게 사람들이 예상하는 물가 상승률을 '기대 인플레이션'이라 한다. 노동자들은 임금 협상에서 기대 인플레이션만큼 명목 임금을 올려 달라고 요구하고, 기업들도 이를 고려하여 가격을 정한다.</p>
+    <p>이들에 따르면 경제에는 노동 시장의 구조에 의해 결정되는 '자연 실업률'이 존재한다. 자연 실업률은 일자리를 옮기는 과정에서 생기는 실업이나, 노동자가 가진 기술과 기업이 원하는 기술이 맞지 않아 생기는 실업처럼 경기가 정상적인 상태에서도 존재하는 실업의 수준을 말한다. 정부가 확장적인 통화 정책으로 실업률을 자연 실업률보다 낮추려 한다고 하자. 처음에는 물가가 예상보다 많이 올라 실질 임금이 떨어지므로, 기업은 고용을 늘리고 실업률은 일시적으로 하락한다. 노동자들이 아직 물가 상승을 충분히 알아채지 못했기 때문이다.</p>
+    <p>하지만 시간이 지나면 노동자들은 물가가 올랐다는 사실을 깨닫고 기대 인플레이션을 높여 그만큼 명목 임금 인상을 요구한다. 실질 임금이 원래 수준으로 돌아오면 기업은 늘렸던 고용을 다시 줄이고, 실업률은 자연 실업률로 되돌아간다. 결국 남는 것은 높아진 물가 상승률뿐이다. 실업률을 계속 자연 실업률 아래로 유지하려면 정책 당국은 사람들의 예상을 계속 앞지르도록 물가 상승률을 점점 더 높여야 한다. 즉 기대 인플레이션이 높아질 때마다 단기 필립스 곡선 자체가 위쪽으로 이동하며, 장기적으로 필립스 곡선은 자연 실업률 수준에서 수직이 된다. 장기에는 물가와 실업 사이에 선택할 수 있는 메뉴가 존재하지 않는다는 것이다.</p>
+    <p>1970년대의 경험은 이들의 주장을 뒷받침하는 것처럼 보였다. 석유 파동으로 원자재 가격이 급등하자 많은 나라에서 물가가 크게 오르는 동시에 경기가 침체하여 실업률도 높아졌다. 이처럼 경기 침체와 물가 상승이 함께 나타나는 현상을 '스태그플레이션'이라 한다. 물가 상승률과 실업률이 함께 높아지는 현상은 하나의 안정된 필립스 곡선으로는 설명할 수 없었다. 높아진 기대 인플레이션과 생산 비용의 상승이 단기 필립스 곡선을 위쪽으로 이동시켰다고 보아야 했던 것이다.</p>
+    <p>이러한 논의는 물가 안정 정책에 중요한 시사점을 준다. 일단 사람들의 기대 인플레이션이 높아지면, 이를 낮추기 위해서는 상당 기간 높은 실업을 감수해야 한다. 1980년대 초 미국 중앙은행은 금리를 대폭 올려 두 자릿수의 물가 상승률을 잡았지만, 그 과정에서 실업률이 10%에 육박하는 대가를 치렀다. 반대로 중앙은행이 물가 안정 의지를 신뢰할 수 있게 보여 주어 사람들의 기대를 안정시킨다면, 물가를 낮추는 데 드는 비용은 줄어들 수 있다. 오늘날 많은 중앙은행이 물가 상승률 목표치를 미리 공개적으로 발표하고 이를 지키려고 노력하는 것도 기대 인플레이션을 안정시키기 위해서이다.</p>
+    <p>최근에는 실업률이 크게 변해도 물가 상승률이 별로 변하지 않는, 즉 필립스 곡선이 평평해졌다는 관찰도 제기되고 있다. 기대 인플레이션이 목표치 부근에 단단히 고정된 결과라는 해석과, 세계화로 인해 국내 노동 시장의 상황이 물가에 미치는 영향이 약해졌다는 해석이 함께 논의된다. 물가와 실업의 관계는 고정된 법칙이라기보다 사람들의 기대와 경제 구조에 따라 달라지는 관계인 셈이다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>필립스가 처음 발견한 것은 실업률과 물가 상승률이 아니라 실업률과 명목 임금 상승률 사이의 관계였다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>프리드먼과 펠프스에 따르면 확장적 통화 정책이 실업률을 일시적으로 낮출 수 있는 것은 노동자들이 물가 상승을 충분히 알아채지 못하기 때문이다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>스태그플레이션은 하나의 안정된 필립스 곡선으로는 설명하기 어려운 현상이었다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>프리드먼과 펠프스에 따르면 정책 당국이 일정한 물가 상승률을 꾸준히 감수한다면 장기적으로도 실업률을 자연 실업률보다 낮게 유지할 수 있다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>중앙은행이 물가 상승률 목표치를 공개적으로 발표하는 것은 사람들의 기대 인플레이션을 안정시키려는 목적을 지닌다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ④</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단: 필립스는 "실업률이 낮은 해에는 <b>명목 임금 상승률</b>이 높고…"를 발견했고, 이후 경제학자들이 "임금 상승률 대신 물가 상승률과 실업률 사이의 관계로 이를 바꾸어 표현하였다."</li>
+        <li><b>② 일치</b> — 5문단: 실업률이 일시적으로 하락하는 것은 "노동자들이 아직 물가 상승을 충분히 알아채지 못했기 때문이다."</li>
+        <li><b>③ 일치</b> — 7문단: "물가 상승률과 실업률이 함께 높아지는 현상은 하나의 안정된 필립스 곡선으로는 설명할 수 없었다."</li>
+        <li><b>④ 불일치 (정답)</b> — 6문단: 일정한 물가 상승률이 계속되면 사람들이 이를 예상하게 되어 실업률은 자연 실업률로 되돌아간다. 실업률을 계속 낮게 유지하려면 "물가 상승률을 <b>점점 더 높여야</b>" 하며, 장기 필립스 곡선은 자연 실업률에서 <b>수직</b>이 되어 "장기에는 … 선택할 수 있는 메뉴가 존재하지 않는다." '일정한' 물가 상승률로 가능하다는 것은 1960년대 정책 당국의 생각(3문단)이다.</li>
+        <li><b>⑤ 일치</b> — 8문단: 물가 상승률 목표치를 미리 공개적으로 발표하는 것은 "기대 인플레이션을 안정시키기 위해서이다."</li>
+        <li><b>[풀이 요령]</b> — 이 글은 <b>통념(3문단) vs 비판(4~6문단)</b> 구조이다. 선택지가 비판자의 이름을 내세우면서 내용은 통념의 주장을 담는 '주체 바꾸기'가 대표 함정. '일정한' vs '점점 더 높은', '단기' vs '장기' 같은 수식어를 반드시 대조하자.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">At next Monday's meeting, the finance committee will discuss ------- the remaining budget should be reallocated among the three regional offices.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>how</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>what</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>which</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>about</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (A) how</p>
+      <ul>
+        <li><b>해석</b> — 다음 주 월요일 회의에서 재무 위원회는 남은 예산을 세 지역 사무소에 어떻게 재배분할지 논의할 것이다.</li>
+        <li><b>구조 분석</b> — discuss는 타동사이므로 빈칸 ~ offices 전체가 discuss의 <b>목적어인 명사절</b>이다. 절 내부: the remaining budget(주어) + should be reallocated(수동태 동사) + among ~(부사구) → 빠진 성분이 없는 <b>완전한 절</b>.</li>
+        <li><b>(A) how ✔</b> — 의문부사. 완전한 절을 이끌어 '어떻게 ~하는지'라는 명사절을 만든다.</li>
+        <li><b>(B) what</b> — 의문·관계대명사이므로 뒤에 주어나 목적어가 <b>빠진 불완전한 절</b>이 와야 한다(what should be reallocated). 여기선 주어 the remaining budget이 이미 있다.</li>
+        <li><b>(C) which</b> — 역시 대명사로 쓰이면 불완전한 절이 필요하고, 한정사로 쓰이면 뒤에 명사가 바로 와야 한다(which office should receive ~).</li>
+        <li><b>(D) about</b> — discuss는 타동사로 전치사 없이 목적어를 취한다(×discuss about). 또한 전치사 뒤에 주어+동사의 절이 바로 올 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">Had the replacement parts arrived on schedule, the maintenance team ------- the repairs to the assembly line by last Friday.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>completed</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>will complete</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>would complete</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>would have completed</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (D) would have completed</p>
+      <ul>
+        <li><b>해석</b> — 교체 부품이 예정대로 도착했더라면, 정비팀은 지난 금요일까지 조립 라인 수리를 마쳤을 것이다.</li>
+        <li><b>핵심</b> — <b>Had + 주어 + p.p.</b>는 If가 생략되어 도치된 <b>가정법 과거완료</b>(= If the replacement parts had arrived). 주절은 <b>would/could/might + have + p.p.</b> 시간 단서 by last Friday도 과거 사실의 반대를 가리킨다.</li>
+        <li><b>(A) completed</b> — 직설법 과거. 실제로 완료했다는 뜻이 되어 가정법 조건절과 맞지 않는다.</li>
+        <li><b>(B) will complete</b> — 미래 시제는 가정법과 결합하지 않으며 last Friday와도 충돌.</li>
+        <li><b>(C) would complete</b> — 가정법 과거(현재 사실 반대)의 주절 형태. 조건절의 Had ~ arrived와 시제가 맞지 않는다.</li>
+        <li><b>(D) would have completed ✔</b> — 과거 사실의 반대를 가정하는 가정법 과거완료의 주절.</li>
+        <li><b>[도치 정리]</b> If I were → <b>Were</b> I / If it had been → <b>Had</b> it been / If you should need → <b>Should</b> you need (Should you have any questions, please contact us.)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">According to the internal test results, the updated inventory software processes orders ------- faster than the version it replaced.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>very</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>considerably</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>more</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>such</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (B) considerably</p>
+      <ul>
+        <li><b>해석</b> — 내부 테스트 결과에 따르면, 업데이트된 재고 관리 소프트웨어는 이전 버전보다 주문을 상당히 더 빠르게 처리한다.</li>
+        <li><b>핵심</b> — 빈칸 뒤 <b>faster than</b>은 비교급. 비교급을 앞에서 강조하는 부사가 필요하다: <b>much, far, even, still, a lot, considerably, significantly, substantially</b>.</li>
+        <li><b>(A) very</b> — 원급만 강조한다(very fast). ×very faster.</li>
+        <li><b>(B) considerably ✔</b> — '상당히'. 비교급 강조 부사로 토익에서 자주 출제된다.</li>
+        <li><b>(C) more</b> — faster가 이미 비교급이므로 more를 붙이면 이중 비교(×more faster).</li>
+        <li><b>(D) such</b> — such는 (a/an) + 형용사 + 명사 앞에 쓰며(such a fast system), 비교급을 꾸미지 못한다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 이웃하지 않는 자리 선택 + 자리 고정 + 순서가 정해진 배열 + 여사건(이웃)</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>네 가지 조건을 만족시키는 일곱 자리 자연수</p>
+    <p class="stem">1, 2, 3, 4, 5, 6, 7의 일곱 개의 숫자를 모두 한 번씩 사용하여 일곱 자리의 자연수를 만들 때, 다음 조건을 모두 만족시키는 자연수의 개수는?<br>
+    (가) 짝수가 적힌 숫자끼리는 서로 이웃하지 않는다.<br>
+    (나) 일의 자리의 숫자는 짝수이다.<br>
+    (다) 1은 3보다 앞자리(더 높은 자리)에 온다.<br>
+    (라) 5와 7은 서로 이웃하지 않는다.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span>288</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>324</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>360</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>432</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>648</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ② 324</p>
+      <ul>
+        <li><b>전략</b> — 자리를 맨 앞부터 1번, …, 일의 자리를 7번이라 하자. 먼저 <b>짝수(2, 4, 6)가 들어갈 자리 3곳</b>을 정하고, 남은 4자리에 홀수(1, 3, 5, 7)를 배치한다. (라)의 조건은 <b>홀수 자리 4곳 중 서로 이웃한 자리 쌍의 개수</b>에 따라 달라지므로 이를 기준으로 나눈다.</li>
+        <li><b>Step 1. 짝수 자리 정하기</b> — (나)에서 7번은 짝수 자리. (가)에서 6번은 짝수 자리가 될 수 없으므로 나머지 두 곳은 1~5번 중 서로 이웃하지 않는 두 곳: ₄C₂ = <b>6가지</b>.
+          <table class="words">
+            <tr><th>짝수 자리</th><th>홀수 자리</th><th>이웃한 홀수 자리 쌍 a</th></tr>
+            <tr><td>{1, 3, 7}</td><td>2, 4, 5, 6</td><td>(4,5), (5,6) → 2</td></tr>
+            <tr><td>{1, 4, 7}</td><td>2, 3, 5, 6</td><td>(2,3), (5,6) → 2</td></tr>
+            <tr><td>{1, 5, 7}</td><td>2, 3, 4, 6</td><td>(2,3), (3,4) → 2</td></tr>
+            <tr><td>{2, 4, 7}</td><td>1, 3, 5, 6</td><td>(5,6) → 1</td></tr>
+            <tr><td>{2, 5, 7}</td><td>1, 3, 4, 6</td><td>(3,4) → 1</td></tr>
+            <tr><td>{3, 5, 7}</td><td>1, 2, 4, 6</td><td>(1,2) → 1</td></tr>
+          </table></li>
+        <li><b>Step 2. 홀수 배치 (a에 따라)</b><br>
+          홀수 4개의 배치 4! = 24가지 중 5와 7이 이웃하는 경우: 이웃한 자리 쌍 a개 × (5, 7의 순서 2) × (1, 3의 배치 2) = 4a가지 → 이웃하지 않는 경우 24 − 4a.<br>
+          이 중 (다) 1이 3보다 앞인 것은 1과 3을 맞바꾸는 대칭에 의해 정확히 절반: <b>12 − 2a</b>.<br>
+          a = 2 → 8가지, a = 1 → 10가지</li>
+        <li><b>Step 3. 합산</b> — 홀수 배치: 3 × 8 + 3 × 10 = 54. 짝수 2, 4, 6을 짝수 자리에 배치하는 3! = 6을 곱하면<br>
+          ∴ 54 × 6 = <b>324</b></li>
+        <li><b>오답 함정</b> — ④ 432: 조건 (라)를 빠뜨림(6 × 12 × 6). ⑤ 648: (다)의 '절반'을 빠뜨림(108 × 6). ① 288: 6가지 모두 a = 2로 셈(6 × 8 × 6). ③ 360: 모두 a = 1로 셈(6 × 10 × 6). 경우마다 이웃 쌍의 수가 다르다는 것이 이 문제의 핵심이다.</li>
+        <li><b>검산</b> — 7! = 5040개의 배열을 컴퓨터로 전수 조사하여 네 조건을 모두 만족하는 것이 <b>324</b>개(조건 (라) 제외 시 432개)임을 확인함.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 4·6·7과 (+ 오늘의 문장 5과)</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[4과 いらっしゃい] 방문할 때의 인사</p>
+    <p class="stem">친구 집을 방문한 상황이다. 빈칸에 들어갈 B의 말로 가장 알맞은 것은?</p>
+    <div class="jp-stem">A：いらっしゃい。どうぞ、あがって ください。<br>B：(　　　　　　　　)。</div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">いってらっしゃい</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">おかえりなさい</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">おじゃまします</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">おやすみなさい</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ③ おじゃまします</p>
+      <ul>
+        <li><b>대화</b> — A: いらっしゃい。どうぞ、あがって ください。<span class="pron">(이랏샤이. 도-조, 아갓테 쿠다사이)</span> 어서 와. 자, 들어와.<br>
+          B: おじゃまします。<span class="pron">(오쟈마시마스)</span> 실례하겠습니다.</li>
+        <li><b>① いってらっしゃい</b> — 집을 나서는 사람에게 '다녀오세요'. 「いってきます」에 대한 응답.</li>
+        <li><b>② おかえりなさい</b> — 집에 돌아온 사람에게 '어서 와요'. 「ただいま」에 대한 응답.</li>
+        <li><b>③ おじゃまします ✔</b> — 남의 집에 들어갈 때 '실례하겠습니다'(직역: 방해하겠습니다). 나올 때는 「おじゃましました」(실례했습니다).</li>
+        <li><b>④ おやすみなさい</b> — 잠자리에 들 때 '안녕히 주무세요'.</li>
+        <li><b>[문화 포인트]</b> あがって ください는 '올라오세요'라는 뜻으로, 현관(げんかん)에서 신발을 벗고 한 단 높은 실내로 올라오는 일본 가옥 구조에서 나온 표현이다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[6과 わあ、すごい!] い형용사의 과거형</p>
+    <p class="stem">"어제는 정말 추웠습니다."가 되도록 빈칸에 알맞은 것은?</p>
+    <div class="jp-stem">きのうは とても (　　　　　　　　)。</div>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>寒<rt>さむ</rt></ruby>かったです</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>寒<rt>さむ</rt></ruby>いでした</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>寒<rt>さむ</rt></ruby>でした</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp"><ruby>寒<rt>さむ</rt></ruby>いかったです</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ① 寒かったです</p>
+      <ul>
+        <li><b>문장</b> — きのうは とても <ruby>寒<rt>さむ</rt></ruby>かったです。<span class="pron">(키노-와 토테모 사무캇타데스)</span> 어제는 정말 추웠습니다.</li>
+        <li><b>① 寒かったです ✔</b> — い형용사 과거: 어미 <b>い → かった</b> + です. さむい → さむかった → さむかったです.</li>
+        <li><b>② 寒いでした</b> — 학습자가 가장 많이 하는 실수. 「でした」는 <b>명사·な형용사</b>의 과거(がくせいでした, しずかでした)에 쓰며, い형용사에는 붙이지 않는다.</li>
+        <li><b>③ 寒でした</b> — 어간에 でした를 붙인 형태로, な형용사의 활용을 잘못 적용했다.</li>
+        <li><b>④ 寒いかったです</b> — い를 かった로 <b>바꿔야</b> 하는데 い를 남겨 둔 채 덧붙였다.</li>
+        <li><b>[활용표]</b> さむい(춥다) → さむくない(춥지 않다) → さむかった(추웠다) → さむくなかった(춥지 않았다). <b>예외</b>: いい → <b>よかった</b>(좋았다), よくない.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[7과 おおさかに 行きます] 시간의 범위 から〜まで</p>
+    <p class="stem">"수업은 9시부터 3시까지입니다."가 되도록 빈칸에 알맞은 조사를 순서대로 고른 것은?</p>
+    <div class="jp-stem"><ruby>授業<rt>じゅぎょう</rt></ruby>は 9<ruby>時<rt>じ</rt></ruby>( A ) 3<ruby>時<rt>じ</rt></ruby>( B ) です。</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">A：まで　B：から</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">A：から　B：まで</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">A：に　B：まで</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">A：から　B：に</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ② A：から　B：まで</p>
+      <ul>
+        <li><b>문장</b> — <ruby>授業<rt>じゅぎょう</rt></ruby>は 9<ruby>時<rt>じ</rt></ruby>から 3<ruby>時<rt>じ</rt></ruby>までです。<span class="pron">(쥬교-와 쿠지카라 산지마데데스)</span> 수업은 9시부터 3시까지입니다.</li>
+        <li><b>① まで / から</b> — 순서가 거꾸로. '9시까지 3시부터'가 되어 버린다.</li>
+        <li><b>② から / まで ✔</b> — から = ~부터(시작점), まで = ~까지(끝점). 시간·장소 모두에 쓴다(ソウルから おおさかまで).</li>
+        <li><b>③ に / まで</b> — に는 '9시<b>에</b>'처럼 한 시점을 가리킨다. 범위의 시작점은 から.</li>
+        <li><b>④ から / に</b> — 3時に는 '3시에'로 끝점(~까지)의 의미가 없다.</li>
+        <li><b>[숫자 읽기 주의]</b> 9<ruby>時<rt>じ</rt></ruby> = <b>く</b>じ(×きゅうじ), 4<ruby>時<rt>じ</rt></ruby> = <b>よ</b>じ(×よんじ), 7<ruby>時<rt>じ</rt></ruby> = しちじ. 시각 표현은 「<ruby>何時<rt>なんじ</rt></ruby>ですか」로 묻는다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 5과 いただきます (음식과 주문)</p>
+    <p class="jp-main">この ラーメンは とても おいしいですね。すみません、<ruby>水<rt>みず</rt></ruby>を ください。</p>
+    <p class="jp-read">읽기(후리가나) : この ラーメンは とても おいしいですね。すみません、水(みず)を ください。</p>
+    <p class="jp-rom">한글 발음 : 코노 라-멘와 토테모 오이시-데스네. 스미마셍, 미즈오 쿠다사이</p>
+    <p class="jp-ko">이 라면은 정말 맛있네요. 저기요, 물 좀 주세요.</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>ラーメン</td><td>ラーメン (라-멘)</td><td>라멘 (가타카나, 장음 ー)</td></tr>
+      <tr><td>とても</td><td>とても (토테모)</td><td>매우, 정말</td></tr>
+      <tr><td>おいしい</td><td>おいしい (오이시-)</td><td>맛있다 (い형용사)</td></tr>
+      <tr><td>〜ね</td><td>ね (네)</td><td>~네요 (공감·확인의 종조사)</td></tr>
+      <tr><td>すみません</td><td>すみません (스미마셍)</td><td>저기요 / 죄송합니다</td></tr>
+      <tr><td>水</td><td>みず (미즈)</td><td>물</td></tr>
+      <tr><td>〜を ください</td><td>をください (오 쿠다사이)</td><td>~을/를 주세요</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>명사 + を ください</b> — 물건을 달라고 할 때. 동작을 부탁할 때는 동사 て형 + ください(8과)와 구별하자: <ruby>水<rt>みず</rt></ruby>を ください(물 주세요) / <ruby>待<rt>ま</rt></ruby>って ください(기다려 주세요).</li>
+        <li><b>すみません의 두 얼굴</b> — 가게에서 점원을 부를 때 '저기요', 실수했을 때 '죄송합니다'. 고맙다는 뜻으로도 쓴다.</li>
+        <li><b>〜ですね</b> — 상대도 알고 있는 것에 공감을 구할 때. 「おいしいですね」 → 대답 「ええ、ほんとうに。」(네, 정말로요.)</li>
+        <li><b>[식사 인사]</b> 먹기 전 「いただきます」, 먹은 후 「ごちそうさまでした」.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-21 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
