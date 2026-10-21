@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-22</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 22일 (목) · 국어 1문항 · 토익 3문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-22 06:00 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(금융·경기동향)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (수익률 곡선과 장단기 금리차 역전)</p>
+
+  <div class="passage">
+    <p>정부나 기업이 돈을 빌리면서 발행하는 증서를 채권이라 한다. 채권에는 원금을 돌려받는 날인 만기가 정해져 있는데, 만기가 3개월인 것부터 10년, 30년인 것까지 다양하다. 같은 발행자가 발행한 채권이라도 만기에 따라 투자자가 얻는 수익률, 즉 금리는 서로 다르다. 가로축에 만기를, 세로축에 그 만기에 해당하는 채권의 금리를 놓고 점들을 이은 선을 '수익률 곡선'이라 한다. 수익률 곡선의 모양은 시장 참여자들이 앞으로의 경제를 어떻게 보고 있는지를 압축적으로 보여 준다는 점에서 경기 동향을 판단하는 주요 지표로 쓰인다.</p>
+    <p>일반적으로 수익률 곡선은 오른쪽 위로 올라가는 모양을 띤다. 만기가 긴 채권일수록 금리가 높다는 뜻이다. 투자자 입장에서 돈을 오랫동안 묶어 두는 것은 그 기간 동안 다른 기회를 포기하는 것이며, 그 사이 물가나 금리가 어떻게 변할지 알 수 없다는 위험을 떠안는 일이기도 하다. 따라서 투자자는 만기가 긴 채권에 대해 이러한 부담에 대한 보상을 추가로 요구하는데, 이를 '기간 프리미엄'이라 한다.</p>
+    <p>한편 '기대 가설'은 장기 금리가 앞으로의 단기 금리에 대한 시장의 예상에 따라 결정된다고 본다. 예를 들어 투자자는 2년 만기 채권을 한 번 사는 것과 1년 만기 채권을 사고 1년 뒤 다시 1년 만기 채권을 사는 것을 비교할 수 있다. 두 방법의 기대 수익이 다르다면 투자자들은 유리한 쪽으로 몰릴 것이고, 그 결과 두 방법의 수익은 같아지는 방향으로 조정된다. 이렇게 보면 장기 금리는 현재부터 만기까지 예상되는 단기 금리들의 평균에 가까워진다. 장기 금리가 단기 금리보다 높다는 것은 시장이 앞으로 단기 금리가 오를 것이라 예상한다는 뜻이고, 반대로 장기 금리가 단기 금리보다 낮다는 것은 앞으로 단기 금리가 내려갈 것이라 예상한다는 뜻이다. 현실의 장기 금리는 이 평균에 기간 프리미엄이 더해진 수준으로 이해된다.</p>
+    <p>만기에 따라 금리를 움직이는 힘도 다르다. 단기 금리는 중앙은행의 기준 금리와 밀접하게 연동된다. 중앙은행이 기준 금리를 올리면 은행들이 서로 짧게 돈을 빌려주는 금리가 곧바로 오르고, 만기가 짧은 채권의 금리도 함께 오른다. 반면 장기 금리는 중앙은행이 직접 정하기 어렵고, 앞으로의 경제 성장률과 물가에 대한 시장의 전망이 크게 반영된다.</p>
+    <p>그런데 때때로 단기 금리가 장기 금리보다 높아지는 현상이 나타나는데, 이를 '장단기 금리차 역전'이라 한다. 역전은 주로 중앙은행이 물가를 잡기 위해 기준 금리를 빠르게 올릴 때 발생한다. 기준 금리 인상으로 단기 금리는 크게 오르지만, 시장은 이러한 긴축이 머지않아 경기를 둔화시키고 결국 중앙은행이 금리를 다시 내리게 될 것이라 예상한다. 그러면 기대 가설에 따라 장기 금리는 단기 금리만큼 오르지 않거나 오히려 내려가고, 수익률 곡선은 오른쪽 아래로 기울게 된다.</p>
+    <p>장단기 금리차 역전이 주목받는 이유는 역전 이후 경기 침체가 찾아온 사례가 많았기 때문이다. 다만 역전이 나타난 시점과 실제 침체가 시작된 시점 사이에는 대체로 수개월에서 2년 정도의 시차가 있었고, 그 간격도 일정하지 않았다. 역전이 단순히 침체를 예고하는 데 그치지 않고 침체를 앞당기는 경로도 있다. 은행은 주로 예금처럼 만기가 짧은 자금을 조달하여 만기가 긴 대출을 해 주고, 그 금리 차이에서 수익을 얻는다. 단기 금리가 장기 금리보다 높아지면 이 차이가 줄거나 사라져 은행의 수익성이 나빠지고, 은행은 대출을 줄이게 된다. 기업과 가계가 자금을 구하기 어려워지면 투자와 소비가 위축되어, 경기 둔화에 대한 시장의 예상이 스스로 현실이 되는 결과가 나타날 수 있다.</p>
+    <p>그러나 장단기 금리차 역전을 언제나 침체의 신호로 해석해서는 안 된다는 반론도 있다. 앞서 보았듯이 장기 금리에는 기간 프리미엄이 포함되어 있다. 중앙은행이 경기를 부양하기 위해 장기 채권을 대량으로 사들이거나, 불안한 국제 정세 속에서 안전한 장기 국채를 찾는 수요가 크게 늘어나면 기간 프리미엄이 낮아진다. 이 경우 경기 전망이 나빠지지 않았는데도 장기 금리가 낮아져 금리차가 줄거나 역전될 수 있다. 실제로 역전이 나타났지만 예상만큼 침체가 오지 않은 사례도 있어, 오늘날에는 금리차의 변화가 기대의 변화에서 비롯되었는지 기간 프리미엄의 변화에서 비롯되었는지를 나누어 살펴야 한다는 주장이 힘을 얻고 있다.</p>
+    <p>금리의 변화는 이미 발행된 채권의 가격에도 영향을 미친다. 채권은 미리 정해진 이자를 지급하므로, 시장 금리가 오르면 더 높은 이자를 주는 새 채권에 비해 기존 채권의 매력이 떨어져 그 가격이 내려간다. 반대로 시장 금리가 내리면 기존 채권의 가격은 오른다. 이때 만기가 긴 채권일수록 낮은 이자를 받아야 하는 기간이 길기 때문에 같은 폭의 금리 변화에도 가격이 더 크게 움직인다. 그래서 경기 침체와 금리 인하가 예상되는 시기에는 장기 채권에 대한 수요가 늘어나고, 이것이 다시 장기 금리를 끌어내리는 요인이 된다.</p>
+    <p>결국 수익률 곡선은 중앙은행의 정책, 시장의 경기 전망, 위험에 대한 투자자들의 태도가 한데 얽혀 만들어진 결과물이다. 곡선의 기울기 하나만으로 경기를 단정하기보다, 그 기울기를 만든 원인이 무엇인지를 함께 따져 볼 때 수익률 곡선은 더 유용한 경기 지표가 될 수 있다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span>투자자가 만기가 긴 채권에 추가 보상을 요구하는 데에는 그 기간 동안의 물가나 금리 변화를 알 수 없다는 점도 작용한다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>기대 가설에 따르면 장기 금리가 단기 금리보다 낮다는 것은 시장이 앞으로 단기 금리가 오를 것이라고 예상한다는 의미이다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>장단기 금리차가 역전되면 짧게 조달한 자금으로 길게 대출해 주는 은행의 수익성이 악화되어 대출 공급이 줄어들 수 있다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>안전한 장기 국채에 대한 수요가 크게 늘어나면 경기 전망이 나빠지지 않아도 장단기 금리차가 역전될 수 있다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>시장 금리가 같은 폭으로 오르면 만기가 긴 채권이 만기가 짧은 채권보다 가격 하락 폭이 더 크다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ②</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단: 돈을 오래 묶어 두면 "물가나 금리가 어떻게 변할지 알 수 없다는 위험을 떠안는" 일이므로 투자자는 "이러한 부담에 대한 보상을 추가로 요구"한다(기간 프리미엄).</li>
+        <li><b>② 불일치 (정답)</b> — 3문단: "장기 금리가 단기 금리보다 낮다는 것은 앞으로 단기 금리가 <b>내려갈</b> 것이라 예상한다는 뜻이다." 장기 금리 ≈ 미래 단기 금리들의 평균이므로, 평균(장기)이 현재 값(단기)보다 낮으면 앞으로의 단기 금리는 낮아질 것으로 예상되는 것이다. 선택지는 '장기 금리가 더 높은 경우'의 해석을 뒤바꿔 놓았다.</li>
+        <li><b>③ 일치</b> — 6문단: 은행은 "만기가 짧은 자금을 조달하여 만기가 긴 대출"을 하는데, 역전되면 "은행의 수익성이 나빠지고, 은행은 대출을 줄이게 된다."</li>
+        <li><b>④ 일치</b> — 7문단: "안전한 장기 국채를 찾는 수요가 크게 늘어나면 기간 프리미엄이 낮아진다. 이 경우 경기 전망이 나빠지지 않았는데도 … 금리차가 줄거나 역전될 수 있다."</li>
+        <li><b>⑤ 일치</b> — 8문단: 시장 금리가 오르면 기존 채권 가격이 내려가며, "만기가 긴 채권일수록 … 같은 폭의 금리 변화에도 가격이 더 크게 움직인다."</li>
+        <li><b>[풀이 요령]</b> — 경제 지문의 단골 함정은 <b>방향 뒤집기</b>다. '높다/낮다', '오른다/내린다'가 짝을 이루는 문장(3문단의 대칭 문장)이 나오면, 선택지가 어느 쪽 조건에 어느 쪽 결론을 붙였는지 반드시 지문과 1:1로 대조하자. 근거 문장이 대칭 구조일수록 출제자가 짝을 엇갈리게 만들기 쉽다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">------- the proposed merger will receive regulatory approval before the end of the fiscal year remains unclear to most analysts.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>If</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>That</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Whether</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>What</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (C) Whether</p>
+      <ul>
+        <li><b>해석</b> — 제안된 합병이 회계 연도 말 이전에 규제 당국의 승인을 받을지는 대부분의 분석가들에게 여전히 불분명하다.</li>
+        <li><b>구조 분석</b> — 본동사는 <b>remains</b>. 빈칸 ~ fiscal year 전체가 문장의 <b>주어인 명사절</b>이다. 절 내부: the proposed merger(주어) + will receive(동사) + regulatory approval(목적어) → <b>완전한 절</b>.</li>
+        <li><b>(A) If</b> — '~인지'의 if는 동사의 목적어 자리에서만 쓰며, <b>주어 자리</b>나 전치사 뒤에는 쓸 수 없다(×If he comes is unclear).</li>
+        <li><b>(B) That</b> — that절도 주어가 될 수 있지만 '~라는 것'으로 사실을 단정한다. 내용상 '불분명하다(remains unclear)'와 어울리려면 '~인지 아닌지'라는 불확실성을 담은 whether가 필요하다.</li>
+        <li><b>(C) Whether ✔</b> — 완전한 절을 이끌어 '~인지 (아닌지)'라는 명사절을 만들고, 주어 자리에 올 수 있다.</li>
+        <li><b>(D) What</b> — 대명사이므로 뒤에 주어나 목적어가 빠진 <b>불완전한 절</b>이 와야 한다. 여기서는 receive의 목적어가 이미 있다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">Please review the ------- documents carefully and return the signed copies to the human resources office by Thursday.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>attach</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>attached</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>attaching</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>attachment</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (B) attached</p>
+      <ul>
+        <li><b>해석</b> — 첨부된 서류를 꼼꼼히 검토하신 후 서명한 사본을 목요일까지 인사부로 보내 주십시오.</li>
+        <li><b>핵심</b> — 관사 the와 명사 documents 사이는 <b>명사를 수식하는 형용사 자리</b>. 분사가 오는데, 서류는 '첨부하는' 주체가 아니라 '<b>첨부되는</b>' 대상이므로 수동의 <b>과거분사</b>.</li>
+        <li><b>(A) attach</b> — 동사원형은 명사를 수식할 수 없다.</li>
+        <li><b>(B) attached ✔</b> — '첨부된'. the attached file / the enclosed brochure 등 토익 단골 표현.</li>
+        <li><b>(C) attaching</b> — 현재분사는 능동(첨부하는)의 의미라 서류와 의미 관계가 맞지 않는다.</li>
+        <li><b>(D) attachment</b> — 명사. attachment documents라는 복합명사는 쓰지 않으며, '첨부 파일'은 the attachment 하나로 쓴다.</li>
+        <li><b>[분사 판단법]</b> 수식받는 명사가 행위를 <b>하면 -ing</b>, <b>당하면 -ed</b>: the remaining budget(남아 있는), the revised schedule(수정된), an exciting offer(흥미를 주는) / excited customers(흥미를 느끼는).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">------- the heavy rain throughout the afternoon, the outdoor product launch drew more than two thousand visitors.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>Although</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>However</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Because of</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Despite</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (D) Despite</p>
+      <ul>
+        <li><b>해석</b> — 오후 내내 내린 폭우에도 불구하고, 야외 제품 출시 행사에는 2천 명이 넘는 방문객이 몰렸다.</li>
+        <li><b>1단계: 품사</b> — 빈칸 뒤 the heavy rain throughout the afternoon은 동사가 없는 <b>명사구</b> → <b>전치사</b>가 필요하다. (A) 접속사, (B) 접속부사는 탈락.</li>
+        <li><b>2단계: 의미</b> — '폭우'와 '많은 방문객'은 <b>양보(대조)</b> 관계 → 남은 전치사 중 Despite.</li>
+        <li><b>(A) Although</b> — 접속사이므로 뒤에 주어+동사가 와야 한다(Although it rained heavily ~).</li>
+        <li><b>(B) However</b> — 접속부사. 명사구를 이끌 수 없고 두 절을 연결하지도 못한다.</li>
+        <li><b>(C) Because of</b> — 전치사이지만 '~때문에'(원인)로 문맥과 반대.</li>
+        <li><b>(D) Despite ✔</b> — '~에도 불구하고' = in spite of = notwithstanding. ×despite of 주의.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 정다각형 꼭짓점 선택(조합) + 간격 분할 + 포함배제</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>정십이각형의 꼭짓점으로 만드는 사각형</p>
+    <p class="stem">원 O에 내접하는 정십이각형의 12개의 꼭짓점 중에서 4개를 택하여 이 4개의 점을 꼭짓점으로 하는 사각형을 만들 때, 다음 조건을 모두 만족시키는 사각형의 개수는?<br>
+    (가) 사각형의 어느 변도 정십이각형의 변이 아니다.<br>
+    (나) 원의 중심 O는 사각형의 내부에 있다. (변 위에 있는 경우는 제외)<br>
+    (다) 사각형의 두 대각선은 모두 원 O의 지름이 아니다.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>39</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>45</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>48</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>60</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>93</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 48</p>
+      <ul>
+        <li><b>전략: 간격으로 바꾸기</b> — 택한 4개의 꼭짓점을 시계 방향으로 따라갈 때, 이웃한 두 꼭짓점 사이의 '칸 수'(정십이각형의 변 몇 개만큼 떨어져 있는지)를 a, b, c, d라 하면 <b>a + b + c + d = 12</b>.<br>
+          (가) ⇔ 모든 간격 ≥ 2 &nbsp;/&nbsp; (나) ⇔ 모든 간격 ≤ 5 (간격이 6이면 그 변이 지름이 되어 O가 변 위에, 6보다 크면 O가 사각형 밖에 놓인다) &nbsp;/&nbsp; (다) ⇔ a + b ≠ 6 이고 b + c ≠ 6 (마주 보는 두 꼭짓점이 정반대 위치가 아님)</li>
+        <li><b>순서쌍 → 사각형 개수 변환</b> — (시작 꼭짓점, 간격 순서쌍 (a, b, c, d))의 쌍은 12 × (순서쌍 수)개이고, 사각형 하나는 시작 꼭짓점을 4가지로 고를 수 있으므로 정확히 4번씩 세어진다. ∴ <b>사각형 수 = 12 × (순서쌍 수) ÷ 4 = 3 × (순서쌍 수)</b></li>
+        <li><b>Step 1. (가) + (나)</b> — a = a′+2 등으로 놓으면 a′+b′+c′+d′ = 4, 각 a′ ≤ 3.<br>
+          음이 아닌 정수해 전체는 1, 1, 1, 1과 칸막이 3개를 나열하는 경우 ₇C₃ = 35. 이 중 어떤 하나가 4인 경우(나머지 0) 4가지를 빼면 <b>31</b>개.<br>
+          → 사각형 3 × 31 = <b>93</b>개</li>
+        <li><b>Step 2. 대각선이 지름인 경우 (포함배제)</b> — 간격이 2, 3, 4 중 하나이면서<br>
+          · A: a + b = 6 → (a, b) ∈ {(2,4), (3,3), (4,2)}, (c, d)도 같은 3가지 → 9개<br>
+          · B: b + c = 6 → 마찬가지로 9개<br>
+          · A ∩ B: a = c, b = d, a + b = 6 → (2,4,2,4), (3,3,3,3), (4,2,4,2) → 3개 (직사각형)<br>
+          |A ∪ B| = 9 + 9 − 3 = 15 → 사각형 3 × 15 = <b>45</b>개</li>
+        <li><b>Step 3. 결론</b> — 93 − 45 = <b>48</b></li>
+        <li><b>오답 함정</b> — ⑤ 93: 조건 (다) 누락. ② 45: 빼야 할 것(지름 대각선)을 답으로 고름. ④ 60: (나)를 빠뜨리고 (가)만 만족하는 105개(3 × 35)에서 45를 뺌. ① 39: 포함배제에서 직사각형을 다시 더하지 않아 3 × 18 = 54를 뺌(93 − 54).</li>
+        <li><b>검산</b> — ₁₂C₄ = 495개의 사각형을 컴퓨터로 전수 조사하여 (가) 105개, (가)+(나) 93개, 그중 지름 대각선 포함 45개, 최종 <b>48</b>개임을 확인함.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 2·3·8과 (+ 오늘의 문장 7과)</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[2과 おはよう] 헤어질 때의 인사</p>
+    <p class="stem">방과 후 교문 앞에서 친구와 헤어지는 상황이다. 빈칸에 들어갈 B의 말로 가장 알맞은 것은?</p>
+    <div class="jp-stem">A：じゃ、また あした。<br>B：うん、(　　　　　　　　)。</div>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">おはよう</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">はじめまして</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">いただきます</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">また あした</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ④ また あした</p>
+      <ul>
+        <li><b>대화</b> — A: じゃ、また あした。<span class="pron">(쟈, 마타 아시타)</span> 그럼, 내일 또 봐.<br>
+          B: うん、また あした。<span class="pron">(응, 마타 아시타)</span> 응, 내일 봐.</li>
+        <li><b>① おはよう</b> — 아침 인사 '안녕'. 친구 사이의 반말이며, 정중하게는 おはようございます.</li>
+        <li><b>② はじめまして</b> — 처음 만났을 때 '처음 뵙겠습니다'(3과).</li>
+        <li><b>③ いただきます</b> — 식사 전 '잘 먹겠습니다'(5과).</li>
+        <li><b>④ また あした ✔</b> — '내일 또 (만나자)'. また = 또, あした = 내일. 헤어질 때 같은 말로 응답하는 경우가 많다.</li>
+        <li><b>[헤어질 때 인사 정리]</b> さようなら(안녕히 가세요/계세요, 다소 격식) / じゃ、また(그럼 또 봐) / バイバイ(바이바이) / 직장에서 먼저 퇴근할 때 おさきに しつれいします(먼저 실례하겠습니다).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[3과 はじめまして] 소속을 나타내는 조사</p>
+    <p class="stem">"저는 서울고등학교 학생입니다."가 되도록 빈칸에 알맞은 조사는?</p>
+    <div class="jp-stem">わたしは ソウル<ruby>高校<rt>こうこう</rt></ruby>(　　) <ruby>学生<rt>がくせい</rt></ruby>です。</div>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">の</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">が</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">を</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">に</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ① の</p>
+      <ul>
+        <li><b>문장</b> — わたしは ソウル<ruby>高校<rt>こうこう</rt></ruby>の <ruby>学生<rt>がくせい</rt></ruby>です。<span class="pron">(와타시와 소우루 코-코-노 각세-데스)</span> 저는 서울고등학교 학생입니다.</li>
+        <li><b>① の ✔</b> — 명사와 명사를 잇는 '~의'. 한국어에서는 '서울고등학교 학생'처럼 '의'를 생략하지만, 일본어에서는 <b>명사+명사 사이에 の를 반드시</b> 넣는다.</li>
+        <li><b>② が</b> — 주격 조사 '~이/가'. 명사 수식에 쓰지 않는다.</li>
+        <li><b>③ を</b> — 목적격 조사 '~을/를'.</li>
+        <li><b>④ に</b> — 장소·시간·도착점 '~에'. 「ソウル高校に 行きます」(서울고에 갑니다)처럼 동사와 함께 쓴다.</li>
+        <li><b>[の의 쓰임]</b> 소속: <ruby>日本語<rt>にほんご</rt></ruby>の せんせい(일본어 선생님) / 소유: わたしの ほん(내 책) / 소유 대명사: これは わたしの です(이것은 제 것입니다).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[8과 よい おとしを] 동사 정중체의 과거 부정</p>
+    <p class="stem">"어제는 텔레비전을 보지 않았습니다."가 되도록 빈칸에 알맞은 것은?</p>
+    <div class="jp-stem">きのうは テレビを (　　　　　　　　)。</div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>見<rt>み</rt></ruby>ないでした</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>見<rt>み</rt></ruby>ませんだった</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>見<rt>み</rt></ruby>ませんでした</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp"><ruby>見<rt>み</rt></ruby>ました</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ③ 見ませんでした</p>
+      <ul>
+        <li><b>문장</b> — きのうは テレビを <ruby>見<rt>み</rt></ruby>ませんでした。<span class="pron">(키노-와 테레비오 미마센데시타)</span> 어제는 텔레비전을 보지 않았습니다.</li>
+        <li><b>① 見ないでした</b> — 반말 부정 見ない에 でした를 붙인 잘못된 형태. 정중한 과거 부정은 ます형을 바탕으로 만든다.</li>
+        <li><b>② 見ませんだった</b> — だった는 반말 과거(명사·な형용사). ません 뒤에는 <b>でした</b>가 붙는다.</li>
+        <li><b>③ 見ませんでした ✔</b> — ます형 활용: 見ます(봅니다) → 見ません(보지 않습니다) → 見ました(봤습니다) → <b>見ませんでした</b>(보지 않았습니다).</li>
+        <li><b>④ 見ました</b> — 과거 긍정 '봤습니다'. 뜻이 반대.</li>
+        <li><b>[ます형 4단 활용]</b> 行きます / 行きません / 行きました / 行きませんでした. 질문 「きのう テレビを 見ましたか」 → 대답 「いいえ、見ませんでした。」</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 7과 おおさかに 行きます (희망 + 동반 + 방향)</p>
+    <p class="jp-main"><ruby>夏休<rt>なつやす</rt></ruby>みに <ruby>友<rt>とも</rt></ruby>だちと <ruby>京都<rt>きょうと</rt></ruby>へ <ruby>行<rt>い</rt></ruby>きたいです。</p>
+    <p class="jp-read">읽기(후리가나) : 夏休(なつやす)みに 友(とも)だちと 京都(きょうと)へ 行(い)きたいです。</p>
+    <p class="jp-rom">한글 발음 : 나츠야스미니 토모다치토 쿄-토에 이키타이데스</p>
+    <p class="jp-ko">여름 방학에 친구와 교토에 가고 싶습니다.</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>夏休み</td><td>なつやすみ (나츠야스미)</td><td>여름 방학 (夏 여름 + 休み 휴일)</td></tr>
+      <tr><td>〜に</td><td>に (니)</td><td>~에 (시간)</td></tr>
+      <tr><td>友だち</td><td>ともだち (토모다치)</td><td>친구</td></tr>
+      <tr><td>〜と</td><td>と (토)</td><td>~와/과 (함께하는 상대)</td></tr>
+      <tr><td>京都</td><td>きょうと (쿄-토)</td><td>교토 (지명, 요음 きょ + 장음)</td></tr>
+      <tr><td>〜へ</td><td>へ (에)</td><td>~(으)로 (방향, 조사일 때 'e'로 읽음)</td></tr>
+      <tr><td>行きたいです</td><td>いきたいです (이키타이데스)</td><td>가고 싶습니다</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>동사 ます형 + たい</b> — '~하고 싶다'. 行きます → 行き + たい → 行きたい. 정중하게는 たいです. 부정은 行きたくないです(い형용사처럼 활용).</li>
+        <li><b>조사 へ와 に</b> — 둘 다 '~에/로'로 이동의 목적지에 쓴다. へ는 '방향', に는 '도착점'에 초점. 조사 へ는 [헤]가 아니라 <b>[에]</b>로 읽는다.</li>
+        <li><b>조사 と</b> — '~와 함께'. 혼자일 때는 ひとりで(혼자서).</li>
+        <li><b>[응용]</b> 「どこへ 行きたいですか。」(어디에 가고 싶어요?) → 「<ruby>北海道<rt>ほっかいどう</rt></ruby>へ 行きたいです。」(홋카이도에 가고 싶어요.)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-22 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
