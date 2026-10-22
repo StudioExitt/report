@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-23</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 23일 (금) · 국어 1문항 · 토익 3문항 · 수학 1문항 · 일본어 3문항 + 오늘의 문장</div>
+  <div class="meta">생성 시각: 2026-10-23 06:16 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-kor" class="t-kor">Ⅰ 국어</a>
+  <a href="#s-eng" class="t-eng">Ⅱ 토익</a>
+  <a href="#s-math" class="t-math">Ⅲ 수학</a>
+  <a href="#s-jp" class="t-jp">Ⅳ 일본어</a>
+</nav>
+
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅰ. 국어 — 독서(경영·플랫폼 경제)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (양면 시장과 네트워크 효과)</p>
+
+  <div class="passage">
+    <p>전통적인 기업은 원재료를 사들여 상품을 만들고 이를 소비자에게 판매하여 이윤을 얻는다. 이처럼 가치가 공급자에서 소비자로 한 방향으로 흐르는 사업 구조를 '파이프라인'에 빗대기도 한다. 이와 달리 서로 다른 두 이용자 집단을 연결하고 그들 사이의 거래나 교류를 중개함으로써 가치를 만들어 내는 사업자를 '플랫폼'이라 한다. 음식 배달 앱은 음식점과 주문자를, 신용 카드사는 가맹점과 카드 회원을, 게임기 제조사는 게임 개발사와 이용자를 연결한다. 이처럼 플랫폼이 두 집단을 동시에 상대하는 시장을 '양면 시장'이라 한다.</p>
+    <p>양면 시장의 핵심은 '교차 네트워크 효과'이다. 이는 한쪽 집단의 참여자가 많아질수록 다른 쪽 집단의 참여자가 얻는 효용이 커지는 현상을 말한다. 배달 앱에 입점한 음식점이 많을수록 주문자는 더 다양한 메뉴를 고를 수 있어 앱을 더 자주 쓰게 되고, 주문자가 많을수록 음식점은 더 많은 손님을 만날 수 있어 입점을 원하게 된다. 같은 집단 안에서 참여자가 늘수록 그 집단 구성원의 효용이 커지는 '직접 네트워크 효과'도 있다. 메신저의 이용자는 같은 메신저를 쓰는 친구가 많을수록 편익이 커진다. 다만 같은 집단 내 참여자의 증가가 언제나 이로운 것은 아니다. 입점 음식점이 지나치게 늘면 음식점끼리 손님을 두고 경쟁해야 하므로, 음식점 입장에서는 같은 집단의 증가가 오히려 부담이 될 수 있다.</p>
+    <p>교차 네트워크 효과 때문에 플랫폼은 사업 초기에 독특한 어려움을 겪는다. 음식점은 주문자가 많아야 입점하려 하고, 주문자는 음식점이 많아야 앱을 쓰려 하기 때문이다. 어느 쪽도 먼저 움직이려 하지 않는 이 상황을 흔히 '닭이 먼저냐 달걀이 먼저냐의 문제'라 부른다. 이를 풀기 위해 플랫폼은 한쪽 집단을 먼저 끌어들이는 데 막대한 비용을 쓰곤 한다. 가입 쿠폰을 뿌리거나, 초기 입점 업체의 수수료를 면제하거나, 플랫폼이 직접 일부 상품을 공급하여 다른 쪽 집단이 들어올 이유를 만드는 것이다.</p>
+    <p>양면 시장에서 가격을 정하는 방식도 일반 시장과 다르다. 일반적인 기업은 생산 비용에 일정한 이윤을 더하여 가격을 정하지만, 플랫폼은 두 집단 각각에 매기는 가격의 '구조'를 함께 고려한다. 이때 상대 집단을 끌어들이는 힘이 큰 집단, 그리고 가격에 민감하여 조금만 비싸져도 쉽게 이탈하는 집단에는 낮은 가격을 매기고, 그 손실을 반대편 집단에게서 거두는 수입으로 메우는 경우가 많다. 신용 카드사가 카드 회원에게는 연회비를 낮게 받거나 포인트 혜택을 주는 대신 가맹점에서 수수료를 받는 것이 그 예이다. 이 경우 회원 쪽 가격만 따로 떼어 보면 비용보다 낮아 손해처럼 보이지만, 회원이 늘어야 가맹점이 카드를 받으려 하므로 플랫폼 전체로는 합리적인 선택이 된다. 따라서 양면 시장에서는 한쪽 가격이 비용보다 낮다는 사실만으로 이를 곧바로 경쟁자를 몰아내기 위한 부당한 가격 인하라고 단정하기 어렵다.</p>
+    <p>교차 네트워크 효과는 시장의 집중을 낳기 쉽다. 이용자가 많은 플랫폼은 그 자체로 더 큰 효용을 제공하므로 새로운 이용자를 더 많이 끌어들이고, 이것이 다시 반대편 집단을 불러 모으는 선순환이 일어난다. 그 결과 소수의 플랫폼이 시장의 대부분을 차지하는 '승자 독식' 현상이 나타나기도 한다. 이렇게 이용자가 한 플랫폼에 쌓이면 이용자는 다른 플랫폼으로 옮겨 가기 어려워진다. 그동안 쌓은 구매 후기나 평점, 친구 목록 등을 새 플랫폼으로 가져갈 수 없고, 새 플랫폼에는 아직 거래 상대가 적기 때문이다. 이처럼 다른 서비스로 옮기는 데 드는 비용을 '전환 비용'이라 하며, 전환 비용이 클수록 기존 플랫폼의 지위는 더 단단해진다.</p>
+    <p>그러나 승자 독식이 필연적인 것은 아니다. 이용자가 여러 플랫폼을 동시에 이용하는 '멀티호밍'이 쉽다면 집중의 정도는 약해진다. 음식점이 여러 배달 앱에 동시에 입점하고 주문자도 앱 여러 개를 설치해 두고 그때그때 혜택이 큰 쪽을 고른다면, 어느 한 플랫폼이 시장을 독차지하기 어렵다. 또한 이용자들이 서로 다른 취향을 가지고 있어 특정 분야에 특화된 플랫폼을 선호한다면, 여러 플랫폼이 각자의 영역에서 공존할 수 있다. 반대로 하나의 플랫폼만 쓰는 것이 자연스러운 경우, 예컨대 게임기처럼 기기를 여러 대 갖추는 데 비용이 많이 드는 경우에는 집중이 강하게 나타난다.</p>
+    <p>시장을 장악한 플랫폼은 그 지위를 이용해 이익을 늘리려는 유인을 갖게 된다. 입점 업체가 다른 플랫폼으로 옮기기 어렵다는 점을 이용해 수수료를 올리거나, 자신이 직접 판매하는 상품을 검색 결과의 윗자리에 노출하는 식으로 입점 업체와 경쟁하는 것이 그 예이다. 이 때문에 각국의 경쟁 당국은 플랫폼에 대한 규제를 강화하는 추세이다. 그러나 규제의 방식을 정하는 일은 간단하지 않다. 앞서 보았듯이 한쪽 가격만 보고 판단하면 플랫폼의 정상적인 가격 구조를 문제 삼게 될 수 있고, 이용자에게 무료로 제공되는 서비스가 많아 가격만으로는 소비자가 입은 손해를 측정하기도 어렵다.</p>
+    <p>이에 따라 최근에는 가격 대신 다른 요소에 주목해야 한다는 주장이 제기된다. 서비스의 질이 떨어지거나, 이용자의 개인 정보가 과도하게 수집되거나, 새로운 경쟁자가 시장에 들어올 기회가 막히는 것 역시 소비자의 손해로 보아야 한다는 것이다. 또 이용자가 자신의 거래 기록이나 평점을 다른 플랫폼으로 옮길 수 있도록 하는 '데이터 이동권'을 보장하면 전환 비용이 낮아져 경쟁이 촉진될 수 있다는 의견도 있다. 플랫폼이 연결을 통해 만들어 내는 편익을 살리면서도 그 힘이 남용되지 않도록 하는 균형점을 찾는 것이 오늘날 플랫폼 경제가 안고 있는 과제이다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>배달 앱에 입점한 음식점이 늘어나는 것은 주문자에게는 이로울 수 있지만, 이미 입점한 음식점에게는 부담이 될 수 있다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>플랫폼이 초기 입점 업체의 수수료를 면제하는 것은 한쪽 집단을 먼저 끌어들여 다른 쪽 집단의 참여를 유도하려는 전략이다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>양면 시장에서 플랫폼은 가격 변화에 둔감하여 쉽게 이탈하지 않는 집단에게 낮은 가격을 매기고, 그 손실을 반대편 집단에게서 메우는 경우가 많다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>이용자가 여러 플랫폼을 동시에 이용하기 쉬울수록 소수의 플랫폼이 시장을 독차지하기는 어려워진다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>데이터 이동권을 보장하자는 주장은 이용자의 전환 비용을 낮추어 플랫폼 간 경쟁을 촉진할 수 있다는 판단에 근거한다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ③</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단: 음식점이 많을수록 주문자는 다양한 메뉴를 고를 수 있어 이롭지만(교차 네트워크 효과), "입점 음식점이 지나치게 늘면 음식점끼리 손님을 두고 경쟁해야 하므로 … 같은 집단의 증가가 오히려 부담이 될 수 있다."</li>
+        <li><b>② 일치</b> — 3문단: 닭과 달걀 문제를 풀기 위해 "초기 입점 업체의 수수료를 면제하거나 … 다른 쪽 집단이 들어올 이유를 만드는 것이다."</li>
+        <li><b>③ 불일치 (정답)</b> — 4문단: 낮은 가격을 매기는 대상은 "가격에 <b>민감하여</b> 조금만 비싸져도 쉽게 <b>이탈하는</b> 집단"이다. 선택지는 이를 '가격에 둔감하여 쉽게 이탈하지 않는 집단'으로 뒤집었다. 가격에 둔감한 집단은 오히려 비용을 부담하는 쪽(예: 가맹점)이 되기 쉽다.</li>
+        <li><b>④ 일치</b> — 6문단: "멀티호밍이 쉽다면 집중의 정도는 약해진다", "어느 한 플랫폼이 시장을 독차지하기 어렵다."</li>
+        <li><b>⑤ 일치</b> — 8문단: 데이터 이동권을 보장하면 "전환 비용이 낮아져 경쟁이 촉진될 수 있다는 의견"이 있다. 5문단에서 전환 비용의 원인으로 '구매 후기나 평점 등을 가져갈 수 없음'을 든 것과 연결된다.</li>
+        <li><b>[풀이 요령]</b> — '어느 쪽에 낮은 가격을 매기는가'처럼 <b>대상을 고르는 기준</b>이 나오면, 기준이 되는 형용사(민감/둔감, 크다/작다)를 반드시 체크하자. 출제자는 기준을 반의어로 바꾸고 나머지 문장(손실을 반대편에서 메운다)은 그대로 두어 그럴듯하게 만든다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅱ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">------- interested in volunteering at the annual charity run should register on the company intranet no later than May 3.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>Whoever</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Those</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Anyone who</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>They</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (B) Those</p>
+      <ul>
+        <li><b>해석</b> — 연례 자선 달리기 대회에서 자원봉사하는 데 관심이 있는 사람들은 늦어도 5월 3일까지 사내 인트라넷에 등록해야 한다.</li>
+        <li><b>구조 분석</b> — 본동사는 <b>should register</b>. 빈칸 + interested in ~ run이 주어다. interested 앞에 <b>who are가 생략</b>된 형태(Those (who are) interested ~)로, 형용사구가 뒤에서 수식할 수 있는 대명사가 필요하다.</li>
+        <li><b>(A) Whoever</b> — 복합관계대명사로 뒤에 <b>동사</b>가 있는 절이 와야 한다(Whoever is interested ~). 형용사구만 올 수는 없다.</li>
+        <li><b>(B) Those ✔</b> — those = '~하는 사람들'. <b>those + 형용사구/분사구/관계절</b>은 토익 최빈출 구조: those interested in ~, those attending ~, those who wish to ~.</li>
+        <li><b>(C) Anyone who</b> — who 뒤에 동사가 와야 한다(Anyone who is interested ~). 빈칸 뒤에 바로 interested가 오면 관계절의 동사가 없다.</li>
+        <li><b>(D) They</b> — 인칭대명사는 뒤에서 수식어구의 꾸밈을 받지 못한다(×They interested in ~).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">------- the quarterly audit two weeks ahead of schedule, the finance team was able to focus on preparing next year's budget.</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">(A)</span><span>Completing</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Completed</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>To be completed</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Having completed</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (D) Having completed</p>
+      <ul>
+        <li><b>해석</b> — 분기 감사를 예정보다 2주 일찍 끝냈기 때문에, 재무팀은 내년도 예산 준비에 집중할 수 있었다.</li>
+        <li><b>1단계: 능동/수동</b> — 쉼표 앞은 분사구문, 의미상 주어는 주절의 <b>the finance team</b>. 재무팀이 감사를 '<b>끝낸</b>' 것(능동)이고, 빈칸 뒤에 목적어 the quarterly audit가 있다 → 능동형. (B) Completed, (C) To be completed 탈락.</li>
+        <li><b>2단계: 시제</b> — 감사를 끝낸 일이 예산 준비에 집중할 수 있었던 것(was able to)보다 <b>먼저</b> 일어났다 → <b>완료 분사구문 Having p.p.</b></li>
+        <li><b>(A) Completing</b> — 능동이지만 주절과 '동시'에 일어난 일을 나타내므로, '먼저 끝낸 덕분에'라는 시간의 선후 관계를 드러내지 못한다.</li>
+        <li><b>(B) Completed</b> — 과거분사는 수동 의미(완료된)이며, 뒤에 목적어를 취할 수 없다.</li>
+        <li><b>(C) To be completed</b> — '완료될 예정인'이라는 수동·미래의 의미로 문맥과 맞지 않는다.</li>
+        <li><b>(D) Having completed ✔</b> — = Because the team had completed the quarterly audit ~. <b>목적어가 있으면 능동, 주절보다 앞선 일이면 having p.p.</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">The new shuttle service will run every fifteen minutes during peak hours, ------- passengers will no longer have to wait in the cold for long periods.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>so</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>therefore</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>because of</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>in order to</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (A) so</p>
+      <ul>
+        <li><b>해석</b> — 새 셔틀 서비스는 출퇴근 시간대에 15분마다 운행할 것이므로, 승객들은 더 이상 추위 속에서 오래 기다리지 않아도 될 것이다.</li>
+        <li><b>1단계: 구조</b> — 빈칸 앞(The new shuttle service will run ~)과 뒤(passengers will no longer have to ~)가 모두 <b>완전한 절</b> → 두 절을 잇는 <b>접속사</b>가 필요하다.</li>
+        <li><b>2단계: 의미</b> — 앞 절(자주 운행)이 원인, 뒤 절(기다리지 않음)이 결과 → '그래서'의 <b>등위접속사 so</b>.</li>
+        <li><b>(A) so ✔</b> — 쉼표 + so + 절: 결과. (참고: so that은 '~하도록'의 목적.)</li>
+        <li><b>(B) therefore</b> — 의미는 맞지만 <b>접속부사</b>라 두 절을 쉼표만으로 연결할 수 없다. 세미콜론이 필요하다(~ hours; therefore, passengers ~).</li>
+        <li><b>(C) because of</b> — 전치사이므로 뒤에 명사(구)가 와야 하며, 의미도 원인과 결과가 반대다.</li>
+        <li><b>(D) in order to</b> — 뒤에 동사원형이 와야 한다. 주어(passengers)가 있는 절은 올 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅲ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 간격 조건의 변수 치환 + 나머지 분류 조합</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>간격 조건과 3의 배수 조건을 동시에 만족하는 네 수</p>
+    <p class="stem">1부터 12까지의 자연수 중에서 서로 다른 네 수를 택하여 작은 수부터 차례로 a, b, c, d (a &lt; b &lt; c &lt; d)라 할 때, 다음 조건을 모두 만족시키는 순서쌍 (a, b, c, d)의 개수는?<br>
+    (가) b − a ≥ 2, d − c ≥ 2<br>
+    (나) c − b ≥ 3<br>
+    (다) a + b + c + d는 3의 배수이다.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>18</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>22</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>24</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>42</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>70</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 24</p>
+      <ul>
+        <li><b>Step 1. 간격 조건을 없애는 치환</b> — a′ = a, b′ = b − 1, c′ = c − 3, d′ = d − 4 로 놓으면<br>
+          b − a ≥ 2 ⇔ b′ &gt; a′, &nbsp; c − b ≥ 3 ⇔ c′ &gt; b′, &nbsp; d − c ≥ 2 ⇔ d′ &gt; c′ 이고, 1 ≤ a′ &lt; b′ &lt; c′ &lt; d′ ≤ 12 − 4 = 8.<br>
+          즉 (가), (나)를 만족하는 (a, b, c, d)는 <b>{1, 2, …, 8}에서 서로 다른 4개를 고르는 방법</b>과 일대일대응 → 전체 ₈C₄ = <b>70</b>개.</li>
+        <li><b>Step 2. 합 조건 옮기기 (핵심 함정)</b> — a + b + c + d = (a′ + b′ + c′ + d′) + (0 + 1 + 3 + 4) = S′ + 8.<br>
+          a+b+c+d ≡ 0 (mod 3) ⇔ S′ + 8 ≡ 0 ⇔ S′ ≡ −8 ≡ <b>1 (mod 3)</b>. 치환한 수들의 합은 '3의 배수'가 아니라 <b>3으로 나눈 나머지가 1</b>이어야 한다.</li>
+        <li><b>Step 3. 1~8을 나머지로 분류</b> — 나머지 0: {3, 6} (2개), 나머지 1: {1, 4, 7} (3개), 나머지 2: {2, 5, 8} (3개).<br>
+          나머지 0, 1, 2인 수를 각각 p, q, r개 고른다고 하면 p + q + r = 4, 합의 나머지는 q + 2r (mod 3) ≡ 1이어야 한다.</li>
+        <li><b>Step 4. 경우 나누기</b><br>
+          · (p, q, r) = (2, 0, 2): q + 2r = 4 ≡ 1 ✔ → ₂C₂ × ₃C₂ = 1 × 3 = <b>3</b><br>
+          · (p, q, r) = (1, 2, 1): q + 2r = 4 ≡ 1 ✔ → ₂C₁ × ₃C₂ × ₃C₁ = 2 × 3 × 3 = <b>18</b><br>
+          · (p, q, r) = (0, 1, 3): q + 2r = 7 ≡ 1 ✔ → ₃C₁ × ₃C₃ = 3 × 1 = <b>3</b><br>
+          · 나머지 조합 (2,2,0), (2,1,1), (1,3,0), (1,1,2), (1,0,3), (0,3,1), (0,2,2)는 나머지가 0 또는 2라 제외.<br>
+          ∴ 3 + 18 + 3 = <b>24</b></li>
+        <li><b>오답 함정</b> — ② 22: 치환 후에도 'S′가 3의 배수'라고 착각한 경우(S′ ≡ 0인 경우의 수: 9 + 2 + 2 + 9 = 22). ⑤ 70: 조건 (다)를 빠뜨림. ④ 42: 치환을 b − 1, c − 2, d − 3으로 잘못 하여 (나)를 c − b ≥ 2로 처리한 뒤 S′ ≡ 0만 셈. ① 18: (1, 2, 1)의 경우만 셈.</li>
+        <li><b>검산</b> — 1~12에서 고를 수 있는 ₁₂C₄ = 495개의 네 수를 컴퓨터로 전수 조사하여 (가)·(나)를 만족하는 70개 중 (다)까지 만족하는 것이 <b>24</b>개임을 확인함. (참고: S′의 나머지가 0, 1, 2인 경우가 각각 22, 24, 24개로 합이 70.)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅳ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어(천재교과서·박민영) 자습서·평가문제집 학습 정리 기반 · 5·6·7과 (+ 오늘의 문장 6과)</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[5과 いただきます] 숫자 읽기의 소리 변화</p>
+    <p class="stem">가게에서 가격을 물었더니 점원이 "300엔입니다."라고 답했다. 밑줄 친 가격을 바르게 읽은 것은?</p>
+    <div class="jp-stem">A：これは いくらですか。<br>B：<u>300<ruby>円<rt>えん</rt></ruby></u>です。</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">さんひゃくえん</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">さんびゃくえん</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">さんぴゃくえん</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">さんじゅうえん</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ② さんびゃくえん</p>
+      <ul>
+        <li><b>대화</b> — A: これは いくらですか。<span class="pron">(코레와 이쿠라데스카)</span> 이것은 얼마예요?<br>
+          B: <ruby>三百円<rt>さんびゃくえん</rt></ruby>です。<span class="pron">(산뱌쿠엔데스)</span> 300엔입니다.</li>
+        <li><b>① さんひゃくえん</b> — ひゃく(100)는 앞 숫자에 따라 소리가 바뀐다. さん(3) 뒤에서는 탁음 <b>びゃく</b>가 된다.</li>
+        <li><b>② さんびゃくえん ✔</b> — 300 = さんびゃく. ん 뒤에서 ひゃく → びゃく로 탁음화.</li>
+        <li><b>③ さんぴゃくえん</b> — 반탁음 ぴゃく는 <b>600 ろっぴゃく, 800 はっぴゃく</b>에서 나타난다(촉음 っ 뒤).</li>
+        <li><b>④ さんじゅうえん</b> — 30엔(じゅう = 10).</li>
+        <li><b>[100 단위 정리]</b> 100 ひゃく / 200 にひゃく / <b>300 さんびゃく</b> / 400 よんひゃく / 500 ごひゃく / <b>600 ろっぴゃく</b> / 700 ななひゃく / <b>800 はっぴゃく</b> / 900 きゅうひゃく. 1000 せん, <b>3000 さんぜん</b>, 8000 はっせん도 함께 기억하자.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[6과 わあ、すごい!] な형용사의 정중한 부정</p>
+    <p class="stem">"이 공원은 조용하지 않습니다."가 되도록 빈칸에 알맞은 것은?</p>
+    <div class="jp-stem">この <ruby>公園<rt>こうえん</rt></ruby>は (　　　　　　　　)。</div>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">しずかくないです</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">しずかないです</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">しずかでした</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">しずかじゃ ないです</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ④ しずかじゃ ないです</p>
+      <ul>
+        <li><b>문장</b> — この <ruby>公園<rt>こうえん</rt></ruby>は しずかじゃ ないです。<span class="pron">(코노 코-엔와 시즈카쟈 나이데스)</span> 이 공원은 조용하지 않습니다.</li>
+        <li><b>① しずかくないです</b> — 〜くない는 <b>い형용사</b>의 부정(たかい → たかくない). しずか는 な형용사이므로 쓸 수 없다.</li>
+        <li><b>② しずかないです</b> — 어간에 ない를 바로 붙이는 형태는 없다.</li>
+        <li><b>③ しずかでした</b> — '조용했습니다'(과거 긍정). 뜻이 다르다.</li>
+        <li><b>④ しずかじゃ ないです ✔</b> — な형용사 부정: <b>어간 + じゃ ないです</b> (= ではありません, じゃありません).</li>
+        <li><b>[い형용사 vs な형용사]</b> おおきい → おおきく ないです(크지 않습니다) / きれい → きれいじゃ ないです(예쁘지 않습니다). <b>きれい·ゆうめい</b>는 い로 끝나지만 な형용사이니 주의! 예외 <b>いい → よく ないです</b>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[7과 おおさかに 行きます] 권유하기와 응답</p>
+    <p class="stem">친구에게 함께 영화를 보러 가자고 권유하는 대화이다. 빈칸에 들어갈 말로 가장 알맞은 것은?</p>
+    <div class="jp-stem">A：あした、いっしょに <ruby>映画<rt>えいが</rt></ruby>を <ruby>見<rt>み</rt></ruby>に (　　　　　　　　)。<br>B：いいですね。<ruby>行<rt>い</rt></ruby>きましょう。</div>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>行<rt>い</rt></ruby>きませんか</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>行<rt>い</rt></ruby>きませんでした</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>行<rt>い</rt></ruby>きたいです</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp"><ruby>行<rt>い</rt></ruby>きました</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ① 行きませんか</p>
+      <ul>
+        <li><b>대화</b> — A: あした、いっしょに <ruby>映画<rt>えいが</rt></ruby>を <ruby>見<rt>み</rt></ruby>に <ruby>行<rt>い</rt></ruby>きませんか。<span class="pron">(아시타, 잇쇼니 에-가오 미니 이키마셍카)</span> 내일 같이 영화 보러 가지 않을래요?<br>
+          B: いいですね。<ruby>行<rt>い</rt></ruby>きましょう。<span class="pron">(이-데스네. 이키마쇼-)</span> 좋네요. 갑시다.</li>
+        <li><b>① 行きませんか ✔</b> — <b>〜ませんか</b> = '~하지 않을래요?' 상대의 의향을 묻는 정중한 권유. 응답 〜ましょう(~합시다)와 짝을 이룬다.</li>
+        <li><b>② 行きませんでした</b> — '가지 않았습니다'(과거 부정). あした(내일)와 시제가 맞지 않는다.</li>
+        <li><b>③ 行きたいです</b> — '가고 싶습니다'(자신의 희망). 권유가 아니므로 B의 '갑시다'와 자연스럽게 이어지지 않는다.</li>
+        <li><b>④ 行きました</b> — '갔습니다'(과거). あした와 맞지 않는다.</li>
+        <li><b>[목적의 に]</b> <b>동사 ます형 + に + 行く/来る</b> = '~하러 가다/오다'. 見ます → 見に 行きます(보러 갑니다), かいます → かいに 行きます(사러 갑니다). 거절할 때는 「すみません、あしたは ちょっと…。」(죄송해요, 내일은 좀…)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 6과 わあ、すごい! (い형용사 て형 연결)</p>
+    <p class="jp-main">この <ruby>店<rt>みせ</rt></ruby>の ラーメンは <ruby>安<rt>やす</rt></ruby>くて おいしいです。</p>
+    <p class="jp-read">읽기(후리가나) : この 店(みせ)の ラーメンは 安(やす)くて おいしいです。</p>
+    <p class="jp-rom">한글 발음 : 코노 미세노 라-멘와 야스쿠테 오이시-데스</p>
+    <p class="jp-ko">이 가게의 라면은 싸고 맛있습니다.</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>この</td><td>この (코노)</td><td>이 (명사 앞에 쓰는 지시어)</td></tr>
+      <tr><td>店</td><td>みせ (미세)</td><td>가게</td></tr>
+      <tr><td>〜の</td><td>の (노)</td><td>~의</td></tr>
+      <tr><td>ラーメン</td><td>らーめん (라-멘)</td><td>라면 (가타카나 외래어, ー는 장음)</td></tr>
+      <tr><td>安くて</td><td>やすくて (야스쿠테)</td><td>싸고 (安い의 て형)</td></tr>
+      <tr><td>おいしいです</td><td>おいしいです (오이시-데스)</td><td>맛있습니다</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>い형용사 て형 (〜くて)</b> — 끝의 い를 떼고 <b>くて</b>: 安い → 安くて(싸고), 大きい → 大きくて(크고). 예외 いい → <b>よくて</b>.</li>
+        <li><b>な형용사 연결 (〜で)</b> — 어간 + <b>で</b>: きれい → きれいで(깨끗하고), しずか → しずかで(조용하고). 「この 公園は しずかで きれいです。」</li>
+        <li><b>こ・そ・あ・ど</b> — この(이) / その(그) / あの(저) / どの(어느) + 명사. 단독으로는 これ・それ・あれ・どれ.</li>
+        <li><b>[응용]</b> 「この かばんは かるくて べんりです。」(이 가방은 가볍고 편리합니다.) / 감탄: 「わあ、おいしい!」(와, 맛있다!)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-23 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
