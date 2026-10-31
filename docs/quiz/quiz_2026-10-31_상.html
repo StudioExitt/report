@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-10-31</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  .sec-hist{--accent:#c2410c;--accent-soft:#fff1e8;border-top:6px solid #c2410c;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  .t-hist{color:#c2410c;border-color:#c2410c;}
+  .src{background:#fffaf5;border:1px solid #f3d9c6;border-left:5px solid #c2410c;border-radius:10px;padding:12px 14px;margin:0 0 12px;font-size:.93rem;}
+  .src .cap{display:block;font-weight:800;color:#c2410c;font-size:.85rem;margin-bottom:4px;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 10월 31일 (토) · 토익 3문항 · 일본어 3문항 + 오늘의 문장 · 한국사 3문항 · 수학 1문항 · 국어 1문항</div>
+  <div class="meta">생성 시각: 2026-10-31 11:46 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-eng" class="t-eng">Ⅰ 토익</a>
+  <a href="#s-jp" class="t-jp">Ⅱ 일본어</a>
+  <a href="#s-hist" class="t-hist">Ⅲ 한국사</a>
+  <a href="#s-math" class="t-math">Ⅳ 수학</a>
+  <a href="#s-kor" class="t-kor">Ⅴ 국어</a>
+</nav>
+
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅰ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">------- the board will approve the proposed merger depends largely on the findings of the independent financial review.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>Whether</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>If</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>What</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>That</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (A) Whether</p>
+      <ul>
+        <li><b>해석</b> — 이사회가 제안된 합병을 승인할지는 독립적인 재무 검토 결과에 크게 달려 있다.</li>
+        <li><b>구조 분석</b> — 본동사는 <b>depends</b>. 빈칸 ~ merger가 주어 역할을 하는 <b>명사절</b>이고, 빈칸 뒤 절(the board will approve the proposed merger)은 주어·동사·목적어가 모두 갖춰진 <b>완전한 절</b>이다.</li>
+        <li><b>(A) Whether ✔</b> — '~인지 아닌지'. 완전한 절을 이끌며 <b>주어 자리</b>에 올 수 있다. '아직 결정되지 않은 일'이 '~에 달려 있다(depends on)'는 의미와 자연스럽게 어울린다.</li>
+        <li><b>(B) If</b> — '~인지'의 뜻일 때 if는 주로 동사의 목적어 자리에만 쓰이고 <b>문장 맨 앞 주어 자리에는 쓸 수 없다</b>. 토익 최빈출 함정.</li>
+        <li><b>(C) What</b> — 관계대명사/의문사 what 뒤에는 주어나 목적어가 빠진 <b>불완전한 절</b>이 와야 한다. 빈칸 뒤 절은 목적어(the proposed merger)까지 갖춘 완전한 절이다.</li>
+        <li><b>(D) That</b> — 문법적으로 완전한 절을 이끌 수는 있으나, that절은 '~라는 사실'(확정된 내용)을 뜻한다. '승인한다는 사실이 검토 결과에 달려 있다'는 논리적으로 어색하다. 불확실한 내용 + depend on / be uncertain / be unclear는 whether와 짝을 이룬다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">------- any of the ordered items arrive damaged, customers are advised to contact our support team within 48 hours of delivery.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>Were</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Unless</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Should</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Had</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (C) Should</p>
+      <ul>
+        <li><b>해석</b> — 주문한 물품 중 하나라도 파손된 상태로 도착한다면, 고객께서는 배송 후 48시간 이내에 고객 지원팀에 연락하시기 바랍니다.</li>
+        <li><b>핵심</b> — 빈칸 뒤에 주어(any of the ordered items) + <b>동사원형(arrive)</b>이 이어진다. 접속사 없이 쉼표 뒤에 주절이 오므로 <b>if가 생략된 도치 조건절</b>이다: If any of the items <b>should</b> arrive damaged → <b>Should</b> any of the items arrive damaged.</li>
+        <li><b>(A) Were</b> — If ~ were의 도치(Were + 주어 + to부정사/보어). 뒤에 동사원형 arrive가 바로 올 수 없다. (Were any items <i>to arrive</i> ~ 라면 가능)</li>
+        <li><b>(B) Unless</b> — '~하지 않는다면'. 접속사이므로 뒤 절의 동사가 수에 맞게 활용되어야 하며(arrives/arrive 가능), 의미상 '파손되지 <u>않으면</u> 연락하라'가 되어 문맥과 반대다.</li>
+        <li><b>(C) Should ✔</b> — <b>Should + 주어 + 동사원형</b> = 혹시라도 ~한다면. 안내문·공지문의 단골 표현: Should you have any questions, ~.</li>
+        <li><b>(D) Had</b> — 가정법 과거완료의 도치(Had + 주어 + p.p.). 뒤에 과거분사가 와야 하고, 주절(are advised)의 현재 시제와도 맞지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">The marketing director has requested that the revised product brochure ------- to all regional offices before the end of the week.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>is sent</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>be sent</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>will send</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>sending</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (B) be sent</p>
+      <ul>
+        <li><b>해석</b> — 마케팅 이사는 수정된 제품 안내 책자를 이번 주말 전까지 모든 지역 사무소에 발송해 달라고 요청했다.</li>
+        <li><b>1단계: 요구·제안 동사</b> — request, require, ask, recommend, suggest, insist 등 <b>요구·제안</b>의 동사 뒤 that절에는 <b>(should) + 동사원형</b>을 쓴다. 주절이 과거(has requested)여도 that절은 동사원형.</li>
+        <li><b>2단계: 능동/수동</b> — 주어 the brochure는 '발송되는' 대상이고 빈칸 뒤에 목적어가 없다 → 수동 <b>be sent</b>.</li>
+        <li><b>(A) is sent</b> — 직설법 현재. 요구 동사 뒤 that절에서는 동사원형을 써야 한다. (가장 그럴듯한 오답)</li>
+        <li><b>(B) be sent ✔</b> — (should) be sent. 동사원형 + 수동태.</li>
+        <li><b>(C) will send</b> — 동사원형이 아니며, 능동태라 뒤에 목적어가 필요하다.</li>
+        <li><b>(D) sending</b> — that절의 주어 뒤에는 정동사가 필요하다. 분사/동명사만으로는 절을 이룰 수 없다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅱ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어 자습서·평가문제집 학습 정리 기반 · 4·7·8과 (+ 오늘의 문장 8과)</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[4과 いらっしゃい] 가족 호칭의 이중 체계</p>
+    <p class="stem">친구 집에 놀러 간 내가 친구에게 사진 속 우리 어머니를 소개하는 상황이다. 빈칸에 들어갈 말로 가장 알맞은 것은?</p>
+    <div class="jp-stem">これは わたしの (　　　　　　)です。<ruby>料理<rt>りょうり</rt></ruby>が じょうずですよ。</div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">おかあさん</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">おかあさま</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">はは</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">あね</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ③ はは</p>
+      <ul>
+        <li><b>문장</b> — これは わたしの <ruby>母<rt>はは</rt></ruby>です。<ruby>料理<rt>りょうり</rt></ruby>が じょうずですよ。<span class="pron">(코레와 와타시노 하하데스. 료-리가 죠-즈데스요)</span> 이 사람은 우리 어머니예요. 요리를 잘해요.</li>
+        <li><b>① おかあさん</b> — <b>남의 어머니</b>를 높여 부르는 말. 남에게 자기 어머니를 말할 때는 쓰지 않는다. (단, 집 안에서 자기 어머니를 직접 부를 때는 おかあさん)</li>
+        <li><b>② おかあさま</b> — おかあさん보다 더 높인 존경 표현. 역시 남의 어머니에게 쓴다.</li>
+        <li><b>③ はは ✔</b> — 남에게 <b>자기 가족</b>을 말할 때는 낮춘 말(겸양형)을 쓴다: <b>はは(어머니)</b>.</li>
+        <li><b>④ あね</b> — 자기 '언니/누나'를 남에게 말할 때 쓰는 말. 뜻이 다르다.</li>
+        <li><b>[가족 호칭 정리] 자기 가족 ↔ 남의 가족</b> — ちち ↔ おとうさん / はは ↔ おかあさん / あに ↔ おにいさん / あね ↔ おねえさん / おとうと ↔ おとうとさん / いもうと ↔ いもうとさん / そふ ↔ おじいさん / そぼ ↔ おばあさん</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[8과 よい おとしを] 동사 て형 만들기</p>
+    <p class="stem">"이 책을 읽어 주세요."가 되도록 빈칸에 알맞은 것은?</p>
+    <div class="jp-stem">この <ruby>本<rt>ほん</rt></ruby>を (　　　　　　) ください。</div>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span class="jp"><ruby>読<rt>よ</rt></ruby>って</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp"><ruby>読<rt>よ</rt></ruby>いて</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp"><ruby>読<rt>よ</rt></ruby>みて</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp"><ruby>読<rt>よ</rt></ruby>んで</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ④ 読んで</p>
+      <ul>
+        <li><b>문장</b> — この <ruby>本<rt>ほん</rt></ruby>を <ruby>読<rt>よ</rt></ruby>んで ください。<span class="pron">(코노 혼오 욘데 쿠다사이)</span> 이 책을 읽어 주세요.</li>
+        <li><b>① 読って</b> — <b>う・つ・る</b>로 끝나는 1류 동사의 て형(会う → 会って, 待つ → 待って, 作る → 作って). 読む는 む로 끝난다.</li>
+        <li><b>② 読いて</b> — <b>く</b>로 끝나는 1류 동사의 て형(書く → 書いて).</li>
+        <li><b>③ 読みて</b> — ます형(読みます)의 어간에 て를 붙이는 것은 <b>2류 동사</b>(たべます → たべて) 방식이다. 1류 동사에는 쓸 수 없다.</li>
+        <li><b>④ 読んで ✔</b> — <b>ぬ・ぶ・む</b> → <b>んで</b>: 読む → 読んで, 遊ぶ → 遊んで, 飲む → 飲んで.</li>
+        <li><b>[て형 정리]</b> う·つ·る → って / ぬ·ぶ·む → んで / く → いて / ぐ → いで / す → して / 2류: る → て / 3류: する → して, 来る → <ruby>来<rt>き</rt></ruby>て. <b>예외: 行く → 行って</b>(×行いて). 친구에게는 ください 없이 「読んで!」(읽어 줘!)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[7과 おおさかに 行きます] 조사 で(수단)와 に(목적지)</p>
+    <p class="stem">대화의 빈칸 ㉠, ㉡에 들어갈 조사가 바르게 짝지어진 것은?</p>
+    <div class="jp-stem">A：あした、どうやって おおさか ( ㉠ ) <ruby>行<rt>い</rt></ruby>きますか。<br>B：しんかんせん ( ㉡ ) <ruby>行<rt>い</rt></ruby>きます。</div>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">㉠ に　 ㉡ で</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">㉠ で　 ㉡ に</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">㉠ を　 ㉡ で</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">㉠ に　 ㉡ を</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ① ㉠ に ㉡ で</p>
+      <ul>
+        <li><b>대화</b> — A: あした、どうやって おおさかに <ruby>行<rt>い</rt></ruby>きますか。<span class="pron">(아시타, 도-얏테 오-사카니 이키마스카)</span> 내일 어떻게 오사카에 가요?<br>
+          B: しんかんせんで <ruby>行<rt>い</rt></ruby>きます。<span class="pron">(신칸센데 이키마스)</span> 신칸센으로 가요.</li>
+        <li><b>① ㉠ に ㉡ で ✔</b> — <b>장소 + に(へ) 行きます</b> = ~에 갑니다(도착점·방향), <b>교통수단 + で 行きます</b> = ~으로 갑니다(수단·방법).</li>
+        <li><b>② ㉠ で ㉡ に</b> — 'おおさかで'는 '오사카에서'(동작이 일어나는 장소), 'しんかんせんに'는 '신칸센에(타다)'의 뜻이 되어 둘 다 어색하다.</li>
+        <li><b>③ ㉠ を ㉡ で</b> — を는 목적어 또는 '~을 지나다(통과)'에 쓰인다. 목적지에는 쓰지 않는다.</li>
+        <li><b>④ ㉠ に ㉡ を</b> — 교통수단에 を를 쓰면 '신칸센을 갑니다'가 되어 틀린다.</li>
+        <li><b>[조사 정리]</b> に(도착점·시각) / へ(방향, [에]로 읽음) / で(수단·장소) / を(목적어, [오]로 읽음) / から〜まで(출발~도착). 걸어서 갈 때는 「あるいて 行きます」(×あるくで). 소요 시간 묻기: 「どのぐらい かかりますか。」</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 8과 よい おとしを (경험 표현 〜た ことが ある)</p>
+    <p class="jp-main"><ruby>日本<rt>にほん</rt></ruby>で はつもうでに <ruby>行<rt>い</rt></ruby>った ことが あります。</p>
+    <p class="jp-read">읽기(후리가나) : 日本(にほん)で はつもうでに 行(い)った ことが あります。</p>
+    <p class="jp-rom">한글 발음 : 니혼데 하츠모-데니 잇타 코토가 아리마스</p>
+    <p class="jp-ko">일본에서 하쓰모데(신년 첫 참배)에 가 본 적이 있습니다.</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>日本</td><td>にほん (니혼)</td><td>일본</td></tr>
+      <tr><td>〜で</td><td>で (데)</td><td>~에서 (동작이 일어나는 장소)</td></tr>
+      <tr><td>はつもうで</td><td>はつもうで (하츠모-데)</td><td>새해 첫 신사·절 참배</td></tr>
+      <tr><td>〜に 行った</td><td>に いった (니 잇타)</td><td>~에 갔다 (行く의 た형, ×行いた)</td></tr>
+      <tr><td>ことが あります</td><td>ことが あります (코토가 아리마스)</td><td>~한 적이 있습니다</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>동사 た형 + ことが ある</b> — '~한 적이 있다'(경험). た형은 て형의 て/で를 た/だ로 바꾸면 된다: 行って → <b>行った</b>, 読んで → <b>読んだ</b>, 食べて → <b>食べた</b>.</li>
+        <li><b>반말 질문</b> — 「はつもうで 行った こと ある?」(하쓰모데 가 본 적 있어?) — 조사 が와 に를 생략하고 끝을 올려 말한다.</li>
+        <li><b>부정</b> — 「まだ 行った ことが ありません。」(아직 가 본 적이 없습니다.)</li>
+        <li><b>[문화]</b> はつもうで에서는 おみくじ(운세 뽑기)를 뽑고 えま(소원 패)를 건다. 섣달그믐 おおみそか에는 としこしそば를 먹고, 새해 인사는 「あけまして おめでとうございます。」</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 한국사 ===================== -->
+<section class="sec sec-hist" id="s-hist">
+  <h2 class="sec-title">Ⅲ. 한국사 — 교과서 기반 3문항</h2>
+  <p class="sec-desc">고등학교 한국사2 (미래엔) · Ⅰ 일제 식민 통치 · Ⅱ 대한민국 정부 수립과 6·25 전쟁 · Ⅳ 남북 관계</p>
+
+  <div class="q" id="h1">
+    <p class="q-title"><span class="num">1</span>1920년대 일제의 경제 정책</p>
+    <p class="stem">다음 자료에 나타난 정책에 대한 설명으로 옳은 것은?</p>
+    <div class="src"><span class="cap">자료</span>제1차 세계 대전을 계기로 일본은 공업화가 급속히 진전되면서 도시 인구가 크게 늘고 쌀값이 폭등하였다. 이에 일제는 한국에서 토지 개간과 품종 개량, 비료 사용, 수리 시설 확충 등을 통해 쌀 생산을 늘리고자 하였다.</div>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>쌀 생산량이 목표를 초과 달성하여 한국의 식량 사정이 크게 나아졌다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>비료 대금과 수리 조합비 등 증산 비용을 조선 총독부가 부담하였다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>회사 설립을 허가제로 하여 한국인의 기업 활동을 억제하였다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>많은 자작농이 소작농으로 몰락하거나 국외로 이주하는 결과를 낳았다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>전쟁 물자 조달을 위해 미곡 공출과 식량 배급제를 함께 실시하였다.</span></li>
+    </ul>
+    <div class="result" id="r-h1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h1">
+      <p class="ans">정답 ④ — 산미 증식 계획(1920~1934)</p>
+      <ul>
+        <li><b>자료 분석</b> — 일본의 쌀 부족을 한국에서 보충하기 위해 토지 개간·품종 개량·수리 시설 확충으로 쌀을 증산하려 한 정책 → <b>산미 증식 계획</b>.</li>
+        <li><b>① 틀림</b> — 쌀 생산량은 늘었지만 <b>목표에 미치지 못하였다</b>. 그런데도 일본으로의 쌀 반출은 예정대로 진행되어 한국의 식량 사정은 오히려 <b>악화</b>되었다.</li>
+        <li><b>② 틀림</b> — 비료 대금, 수리 조합비 등 증산 비용은 <b>농민에게 전가</b>되었다.</li>
+        <li><b>③ 틀림</b> — 회사 설립 허가제는 1910년대 <b>회사령</b>(1910)의 내용이다. 회사령은 일본 자본의 진출을 위해 1920년에 신고제로 바뀌었다.</li>
+        <li><b>④ 옳음 ✔</b> — 높은 소작료에 증산 비용까지 떠안은 농민은 생활이 어려워져 많은 자작농이 <b>소작농이나 화전민·토막민</b>으로 전락하고, <b>만주·연해주·일본</b> 등지로 이주하기도 하였다.</li>
+        <li><b>⑤ 틀림</b> — 미곡 공출과 식량 배급제는 1930년대 후반 이후 <b>전시 동원 체제(민족 말살 통치기)</b>의 정책이다. 이때 중단되었던 산미 증식 계획이 재개되기도 하였다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="h2">
+    <p class="q-title"><span class="num">2</span>이승만 정부의 개헌</p>
+    <p class="stem">다음 개헌안이 통과된 과정에 대한 설명으로 옳은 것은?</p>
+    <div class="src"><span class="cap">개헌안(일부)</span>제55조 1항 대통령과 부통령의 임기는 4년으로 한다. 단 재선에 의하여 1차 중임할 수 있다. …<br>부칙 이 헌법 공포 당시의 대통령에 대하여는 제55조 1항 단서의 제한을 적용하지 아니한다.</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span>임시 수도 부산에 계엄령이 선포된 가운데 기립 투표로 통과되었다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>국회 표결에서 정족수에 1명이 모자라 부결되었으나, 이틀 뒤 통과된 것으로 번복되었다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>통일 주체 국민 회의에서 대통령을 선출하도록 하는 근거가 되었다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>6·25 전쟁 발발 직전 국회 의원 선거에서 여당이 압승한 직후 추진되었다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>국회를 민의원과 참의원의 양원제로 구성하는 내용이 핵심이었다.</span></li>
+    </ul>
+    <div class="result" id="r-h2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h2">
+      <p class="ans">정답 ② — 사사오입 개헌(1954)</p>
+      <ul>
+        <li><b>자료 분석</b> — '공포 당시의 대통령'(이승만)에 한해 <b>중임 제한을 적용하지 않는다</b>는 부칙 → 장기 집권을 위한 <b>사사오입 개헌</b>(1954).</li>
+        <li><b>① 틀림</b> — 부산 일대 계엄령, 비판적 국회 의원 구속, 경찰·군인의 국회 포위 속 기립 투표는 1952년 <b>발췌 개헌</b>(대통령 직선제)의 과정이다.</li>
+        <li><b>② 옳음 ✔</b> — 국회 표결에서 <b>정족수 1명이 모자라 부결</b>되었으나, 이틀 후 국회의장이 <b>사사오입(반올림)의 논리</b>를 적용해 통과를 선포하였다.</li>
+        <li><b>③ 틀림</b> — 통일 주체 국민 회의의 대통령 선출은 1972년 박정희 정부의 <b>유신 헌법</b> 내용이다.</li>
+        <li><b>④ 틀림</b> — 6·25 전쟁 직전 제2대 국회 의원 선거에서는 이승만 정부에 <b>비판적인 후보가 대거 당선</b>되었다. 이 때문에 국회 간선으로는 재선이 어려워진 이승만이 직선제 개헌(발췌 개헌)을 추진하였다.</li>
+        <li><b>⑤ 틀림</b> — 양원제(민의원·참의원) 조항은 발췌 개헌안(제31조)에 담긴 내용이다.</li>
+        <li><b>[흐름 정리]</b> 발췌 개헌(1952, 직선제·전쟁 중) → 사사오입 개헌(1954, 초대 대통령 중임 제한 철폐) → 3·15 부정 선거(1960) → 4·19 혁명</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="h3">
+    <p class="q-title"><span class="num">3</span>남북 관계의 변화</p>
+    <p class="stem">다음 합의가 채택된 정부 시기의 사실로 옳은 것은?</p>
+    <div class="src"><span class="cap">합의문(일부)</span>제1조 남과 북은 서로 상대방의 체제를 인정하고 존중한다.<br>제9조 남과 북은 상대방에 대하여 무력을 사용하지 않으며 상대방을 무력으로 침략하지 아니한다.<br><span class="pron">※ 남북 고위급 회담을 통해 채택된, 남북한 정부 간 최초의 공식 합의</span></div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>자주·평화·민족적 대단결의 통일 3대 원칙에 처음으로 합의하였다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>북한의 수해 물자 지원을 계기로 남북 이산가족 고향 방문이 처음 이루어졌다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>남북한이 유엔에 동시 가입하였다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>정주영이 소 떼를 이끌고 판문점을 통해 북한을 방문하였다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>추진하던 남북 정상 회담이 김일성의 사망으로 무산되었다.</span></li>
+    </ul>
+    <div class="result" id="r-h3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h3">
+      <p class="ans">정답 ③ — 남북 기본 합의서(1991, 노태우 정부)</p>
+      <ul>
+        <li><b>자료 분석</b> — 상호 <b>체제 인정</b>과 <b>불가침</b>, 남북 고위급 회담, 정부 간 최초의 공식 합의 → <b>남북 기본 합의서</b>(1991). 냉전 해체 속 노태우 정부의 적극적 대북 정책의 결과다.</li>
+        <li><b>① 틀림</b> — 통일 3대 원칙 합의는 <b>7·4 남북 공동 성명</b>(1972, 박정희 정부). 이후 남북은 각각 유신 헌법과 사회주의 헌법을 제정해 독재를 강화하였다.</li>
+        <li><b>② 틀림</b> — 남한의 수해 때 북한이 원조 물자를 보낸 것을 계기로 한 이산가족 고향 방문·예술 공연단 교환 방문은 <b>전두환 정부</b>(1985) 시기이다.</li>
+        <li><b>③ 옳음 ✔</b> — 노태우 정부 시기 남북한은 <b>유엔에 동시 가입</b>하고 <b>남북 기본 합의서</b>를 채택하였다(1991).</li>
+        <li><b>④ 틀림</b> — 정주영의 소 떼 방북(1998)과 금강산 관광 시작은 <b>김대중 정부</b>의 대북 화해 협력 정책(햇볕 정책) 시기이다.</li>
+        <li><b>⑤ 틀림</b> — 북핵 의혹 속에 추진된 남북 정상 회담이 김일성 사망(1994)으로 무산된 것은 <b>김영삼 정부</b> 시기이다.</li>
+        <li><b>[흐름 정리]</b> 7·4 남북 공동 성명(1972, 박정희) → 이산가족 고향 방문(1985, 전두환) → 유엔 동시 가입·남북 기본 합의서(1991, 노태우) → 정상 회담 무산(1994, 김영삼) → 6·15 남북 공동 선언(2000, 김대중)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅳ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 같은 것이 있는 순열 + 포함배제 + 묶음 처리</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>같은 숫자가 이웃하지 않는 배열과 4의 위치 조건</p>
+    <p class="stem">7개의 숫자 1, 1, 2, 2, 3, 3, 4를 모두 일렬로 나열할 때, 다음 조건을 모두 만족시키는 경우의 수는?<br>
+    (가) 같은 숫자끼리는 서로 이웃하지 않는다.<br>
+    (나) 4는 양 끝에 오지 않는다.<br>
+    (다) 4의 바로 왼쪽에 있는 숫자와 바로 오른쪽에 있는 숫자는 서로 다르다.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span>96</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>150</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>180</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>186</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>210</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ② 150</p>
+      <ul>
+        <li><b>Step 1. 조건 (가)만 만족하는 경우 — 포함배제</b><br>
+          전체: 7!/(2!·2!·2!) = <b>630</b><br>
+          특정 한 쌍(예: 1, 1)이 이웃: 11을 한 덩어리로 보면 6개(11, 2, 2, 3, 3, 4) → 6!/(2!·2!) = 180, 쌍 선택 3가지 → 540<br>
+          특정 두 쌍이 이웃: 5개 → 5!/2! = 60, 선택 3가지 → 180<br>
+          세 쌍 모두 이웃: 4개 → 4! = 24<br>
+          ∴ 630 − 540 + 180 − 24 = <b>246</b></li>
+        <li><b>Step 2. 조건 (나) — 4가 양 끝에 오는 경우 빼기</b><br>
+          4를 맨 앞(또는 맨 뒤)에 고정하면 나머지 6칸에 1, 1, 2, 2, 3, 3을 같은 숫자끼리 이웃하지 않게 놓아야 한다.<br>
+          포함배제: 6!/(2!)³ − 3·5!/(2!)² + 3·4!/2! − 3! = 90 − 90 + 36 − 6 = <b>30</b><br>
+          양 끝 2가지 → 60. ∴ (가)·(나) 만족: 246 − 60 = <b>186</b></li>
+        <li><b>Step 3. 조건 (다) — 4의 양옆이 같은 경우 빼기</b><br>
+          4의 양옆이 같은 숫자 x인 경우 <b>'x 4 x'</b>를 한 덩어리 B로 본다(x 선택 3가지). 이때 4는 덩어리 가운데에 있으므로 (나)는 자동으로 만족된다.<br>
+          예: x = 1이면 B, 2, 2, 3, 3 다섯 개를 2끼리, 3끼리 이웃하지 않게 나열 (B 안의 1끼리는 이미 4로 떨어져 있음)<br>
+          5!/(2!·2!) − 2·4!/2! + 3! = 30 − 24 + 6 = <b>12</b><br>
+          ∴ 3 × 12 = <b>36</b></li>
+        <li><b>Step 4. 결론</b> — 186 − 36 = <b>150</b></li>
+        <li><b>오답 함정</b> — ④ 186: 조건 (다)를 빠뜨림. ⑤ 210: 조건 (나)를 빠뜨리고 246 − 36으로 계산. ③ 180: 4가 끝에 오는 경우를 한쪽 끝(30)만 빼서 246 − 30 − 36. ① 96: Step 3에서 덩어리 B와 2, 2, 3, 3의 배열을 이웃 조건 없이 5!/(2!·2!) = 30으로 세어 186 − 3×30.</li>
+        <li><b>검산</b> — 7!/(2!)³ = 630가지 서로 다른 배열을 컴퓨터로 전수 조사: (가) 만족 246개 → (가)·(나) 만족 186개 → (가)·(나)·(다) 만족 <b>150</b>개, 4의 양옆이 같은 경우 36개임을 확인함.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅴ. 국어 — 독서(금융·경기 동향)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (수익률 곡선과 장단기 금리차)</p>
+
+  <div class="passage">
+    <p>채권은 정부나 기업이 돈을 빌리면서 정해진 기간 뒤에 원금을 돌려주고 그동안 약속한 이자를 지급하겠다고 약속하는 증서이다. 원금을 돌려받기로 한 날을 만기라 하며, 채권은 만기 전이라도 시장에서 사고팔 수 있다. 채권을 만기까지 보유할 때 투자자가 얻게 되는 연평균 수익률을 그 채권의 금리, 곧 수익률이라 한다. 채권이 지급하는 이자는 발행할 때 정해져 있으므로, 시장에서 채권 가격이 오르면 같은 이자를 받기 위해 더 많은 돈을 내야 하는 셈이 되어 수익률은 낮아진다. 반대로 채권 가격이 내리면 수익률은 높아진다. 즉 채권의 가격과 수익률은 반대 방향으로 움직인다.</p>
+    <p>신용도가 같은 채권이라도 만기에 따라 수익률은 다르다. 가로축에 만기를, 세로축에 수익률을 놓고 만기별 수익률을 이은 선을 '수익률 곡선'이라 한다. 평상시의 수익률 곡선은 만기가 길수록 수익률이 높아지는 우상향의 모습을 보인다. 투자자 입장에서 만기가 긴 채권에 돈을 넣는다는 것은 그만큼 오랫동안 자금을 묶어 두어야 한다는 뜻이다. 또 기간이 길수록 그사이에 물가나 금리가 어떻게 변할지 알기 어려워 채권 가격이 크게 출렁일 위험도 커진다. 따라서 투자자는 장기 채권에 대해 이러한 불편과 불확실성을 감수하는 대가를 추가로 요구하는데, 이를 '기간 프리미엄'이라 한다.</p>
+    <p>장기 금리가 어떻게 결정되는지를 설명하는 대표적인 이론으로 '기대 이론'이 있다. 예를 들어 투자자가 2년 동안 돈을 굴리려 할 때, 2년 만기 채권을 한 번에 사는 방법과 1년 만기 채권을 산 뒤 만기가 되면 다시 1년 만기 채권을 사는 방법이 있다. 두 방법의 기대 수익이 다르다면 투자자들은 유리한 쪽으로 몰릴 것이고, 그 과정에서 채권 가격이 조정되어 결국 두 방법의 기대 수익은 비슷해진다. 따라서 장기 금리는 현재의 단기 금리와 앞으로 예상되는 단기 금리들의 평균에 가깝게 정해진다. 여기에 앞서 말한 기간 프리미엄이 더해진 것이 실제 장기 금리라고 볼 수 있다.</p>
+    <p>이 관점에서 보면 단기 금리와 장기 금리는 서로 다른 힘의 영향을 받는다. 중앙은행이 정하는 기준 금리는 금융 기관들이 하루나 며칠 단위로 돈을 빌리고 빌려주는 금리에 곧바로 반영되므로, 단기 금리는 통화 정책에 의해 크게 좌우된다. 반면 장기 금리는 앞으로의 경기와 물가, 그리고 그에 따른 미래의 통화 정책에 대한 시장 참여자들의 기대를 반영한다. 그래서 장기 금리에서 단기 금리를 뺀 '장단기 금리차'는 현재의 통화 정책과 미래 경기에 대한 시장의 전망을 함께 담고 있는 지표로 여겨진다.</p>
+    <p>그런데 때때로 단기 금리가 장기 금리보다 높아지는 '수익률 곡선 역전'이 나타난다. 물가 상승을 억제하기 위해 중앙은행이 기준 금리를 빠르게 올리면 단기 금리가 크게 상승한다. 이때 시장이 높은 금리로 인해 머지않아 경기가 둔화하고, 그러면 중앙은행이 다시 금리를 내릴 것이라고 예상하면, 미래의 단기 금리에 대한 기대가 낮아지면서 장기 금리는 오히려 떨어질 수 있다. 기대 이론에 따르면 미래 단기 금리의 예상 평균이 현재 단기 금리보다 충분히 낮을 경우, 기간 프리미엄을 더하더라도 장기 금리가 단기 금리를 밑돌게 되는 것이다. 이 때문에 수익률 곡선 역전은 시장이 경기 침체를 예상하고 있다는 신호로 해석되어 왔고, 실제로 과거 여러 차례의 경기 침체에 앞서 역전이 관찰되기도 하였다.</p>
+    <p>수익률 곡선 역전은 단순히 경기에 대한 예상을 보여 주는 데 그치지 않고 경기에 직접 영향을 미치기도 한다. 은행은 주로 예금처럼 만기가 짧은 자금을 받아 이를 만기가 긴 대출로 운용하며, 그 금리 차이에서 수익을 얻는다. 장단기 금리차가 줄어들거나 역전되면 은행이 자금을 조달하는 비용은 높아지는데 대출로 얻는 수익은 그만큼 늘지 않아 수익성이 나빠진다. 그러면 은행은 대출 심사를 깐깐하게 하거나 대출 규모를 줄이게 되고, 자금을 구하기 어려워진 기업과 가계는 투자와 소비를 줄인다. 이렇게 보면 역전은 경기 침체를 예고할 뿐 아니라, 침체를 앞당기거나 심화하는 경로가 되기도 한다.</p>
+    <p>그러나 수익률 곡선 역전을 경기 침체의 확실한 예고로 받아들이는 데에는 신중해야 한다는 지적도 있다. 우선 장기 금리에는 미래 단기 금리에 대한 기대뿐 아니라 기간 프리미엄도 포함되어 있는데, 이 기간 프리미엄이 시기에 따라 크게 달라질 수 있다. 예컨대 중앙은행이 경기를 부양하기 위해 장기 국채를 대규모로 사들이면 장기 채권의 가격이 올라 기간 프리미엄이 줄어들고 장기 금리가 낮아진다. 또 세계 경제가 불안할 때 안전한 자산을 찾는 투자자들이 장기 국채로 몰려도 같은 현상이 나타난다. 이런 경우에는 시장이 경기 침체를 예상하지 않더라도 장기 금리가 낮아져 역전이 나타날 수 있다. 게다가 역전이 나타난 뒤 실제 침체가 시작되기까지의 기간도 짧게는 몇 달에서 길게는 2년 이상으로 일정하지 않아, 역전만으로 침체가 언제 올지를 가늠하기는 어렵다.</p>
+    <p>결국 수익률 곡선은 수많은 시장 참여자의 판단이 모여 만들어진 미래에 대한 집단적 전망이라는 점에서 중요한 정보를 담고 있지만, 그 모양이 무엇 때문에 바뀌었는지를 함께 따져 보아야 올바르게 읽을 수 있다. 같은 역전이라도 미래 금리 인하에 대한 기대가 커져서 생긴 것인지, 기간 프리미엄이 줄어들어서 생긴 것인지에 따라 그 의미는 달라진다. 따라서 경기 동향을 판단할 때에는 장단기 금리차와 함께 고용, 기업 실적, 신용 시장의 상황 등 여러 지표를 종합적으로 살펴보는 태도가 필요하다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>기간 프리미엄이 일정할 때, 앞으로 단기 금리가 크게 낮아질 것으로 예상되면 장기 금리가 현재의 단기 금리보다 낮아질 수 있다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>투자자가 장기 채권에 대해 기간 프리미엄을 요구하는 것은 자금을 오래 묶어 두는 불편과 그동안의 가격 변동 위험을 감수하기 때문이다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>짧은 만기의 자금으로 긴 만기의 대출을 하는 은행은 장단기 금리차가 축소되면 수익성이 악화되어 대출을 줄일 수 있다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>중앙은행이 장기 국채를 대규모로 사들이면 기간 프리미엄이 커져 장기 금리가 오르므로, 수익률 곡선의 역전이 나타나기 어려워진다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>수익률 곡선이 역전된 뒤 경기 침체가 시작되기까지의 기간이 일정하지 않아, 역전만으로 침체의 시점을 예측하기는 어렵다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ④</p>
+      <ul>
+        <li><b>① 일치</b> — 5문단: "미래 단기 금리의 예상 평균이 현재 단기 금리보다 충분히 낮을 경우, 기간 프리미엄을 더하더라도 장기 금리가 단기 금리를 밑돌게 되는 것이다." 3문단의 기대 이론(장기 금리 ≈ 미래 단기 금리 예상 평균 + 기간 프리미엄)을 적용한 결과다.</li>
+        <li><b>② 일치</b> — 2문단: 장기 채권은 "오랫동안 자금을 묶어 두어야" 하고 "채권 가격이 크게 출렁일 위험도 커진다. 따라서 투자자는 … 불편과 불확실성을 감수하는 대가를 추가로 요구하는데, 이를 '기간 프리미엄'이라 한다."</li>
+        <li><b>③ 일치</b> — 6문단: 은행은 "만기가 짧은 자금을 받아 이를 만기가 긴 대출로 운용"하므로 금리차가 줄면 "수익성이 나빠진다. 그러면 은행은 … 대출 규모를 줄이게 되고".</li>
+        <li><b>④ 불일치 (정답)</b> — 7문단: 중앙은행이 장기 국채를 사들이면 "장기 채권의 가격이 올라 기간 프리미엄이 <b>줄어들고</b> 장기 금리가 <b>낮아진다</b>." 그 결과 침체를 예상하지 않아도 "역전이 나타날 수 있다." 선택지는 방향(커짐/오름)과 결론(역전이 어려워짐)을 모두 뒤집었다. 1문단의 '채권 가격↑ ⇒ 수익률↓' 원리와도 맞지 않는다.</li>
+        <li><b>⑤ 일치</b> — 7문단: "역전이 나타난 뒤 실제 침체가 시작되기까지의 기간도 … 일정하지 않아, 역전만으로 침체가 언제 올지를 가늠하기는 어렵다."</li>
+        <li><b>[풀이 요령]</b> — 경제 지문에서는 <b>'A가 오르면 B는 내린다'</b> 같은 인과의 방향이 가장 자주 바뀌어 출제된다. 1문단처럼 앞에서 제시한 기본 원리(가격과 수익률의 역관계)를 뒤 문단의 사례에 적용해 보면 선택지의 방향 오류를 빠르게 잡아낼 수 있다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-10-31 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
