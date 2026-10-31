@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-11-01</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  .sec-hist{--accent:#c2410c;--accent-soft:#fff1e8;border-top:6px solid #c2410c;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  .t-hist{color:#c2410c;border-color:#c2410c;}
+  .src{background:#fffaf5;border:1px solid #f3d9c6;border-left:5px solid #c2410c;border-radius:10px;padding:12px 14px;margin:0 0 12px;font-size:.93rem;}
+  .src .cap{display:block;font-weight:800;color:#c2410c;font-size:.85rem;margin-bottom:4px;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 11월 1일 (일) · 토익 3문항 · 일본어 3문항 + 오늘의 문장 · 한국사 3문항 · 수학 1문항 · 국어 1문항</div>
+  <div class="meta">생성 시각: 2026-11-01 08:39 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-eng" class="t-eng">Ⅰ 토익</a>
+  <a href="#s-jp" class="t-jp">Ⅱ 일본어</a>
+  <a href="#s-hist" class="t-hist">Ⅲ 한국사</a>
+  <a href="#s-math" class="t-math">Ⅳ 수학</a>
+  <a href="#s-kor" class="t-kor">Ⅴ 국어</a>
+</nav>
+
+
+<!-- ===================== 영어 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅰ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">------- submits the winning design for the new company logo will receive a $500 gift certificate and be recognized at the annual staff meeting.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>Whoever</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Whomever</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Anyone</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Those</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (A) Whoever</p>
+      <ul>
+        <li><b>해석</b> — 새 회사 로고의 우승 디자인을 제출하는 사람은 누구든 500달러 상품권을 받고 연례 직원 회의에서 표창을 받게 됩니다.</li>
+        <li><b>구조 분석</b> — 본동사는 <b>will receive</b>, <b>be recognized</b>. 빈칸 ~ logo가 주어 역할을 하는 명사절이며, 빈칸 뒤 절(submits the winning design)에는 <b>주어가 빠져 있다</b>. → 주어 역할을 겸하는 복합관계대명사 주격이 필요하다.</li>
+        <li><b>(A) Whoever ✔</b> — = Anyone who. 명사절을 이끌고 그 절 안에서 <b>주어</b> 역할을 한다.</li>
+        <li><b>(B) Whomever</b> — 목적격. 절 안에서 목적어가 빠진 경우에 쓴다(Give the award to whomever the judges select). 여기서는 submits의 주어가 필요하다.</li>
+        <li><b>(C) Anyone</b> — 대명사일 뿐 접속 기능이 없다. Anyone <u>who</u> submits ~처럼 관계대명사가 있어야 한다. 그대로 쓰면 동사가 submits와 will receive 두 개가 되어 문장이 성립하지 않는다.</li>
+        <li><b>(D) Those</b> — 복수 대명사로 접속 기능이 없고, 단수 동사 submits와 수도 맞지 않는다. (Those who submit ~ 이면 가능)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">The number of applicants for the summer internship program ------- risen sharply since the company began offering remote positions last year.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>have</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>has</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>are</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>having</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (B) has</p>
+      <ul>
+        <li><b>해석</b> — 회사가 작년에 원격 근무직을 제공하기 시작한 이후로 여름 인턴십 프로그램 지원자 수가 급격히 증가했다.</li>
+        <li><b>핵심 1: 수 일치</b> — <b>The number of + 복수 명사</b> = '~의 수' → 주어의 핵심은 단수 명사 number이므로 <b>단수 동사</b>. 반면 <b>A number of + 복수 명사</b> = '많은 ~' → 복수 동사.</li>
+        <li><b>핵심 2: 시제</b> — since + 과거 시점(began ~ last year)이 있으므로 <b>현재완료</b>(has + p.p.). 빈칸 뒤 risen은 rise의 과거분사.</li>
+        <li><b>(A) have</b> — 바로 앞의 applicants/program에 끌려 고르기 쉬운 함정. 주어 핵심은 number(단수).</li>
+        <li><b>(B) has ✔</b> — 단수 주어 + 현재완료 has risen.</li>
+        <li><b>(C) are</b> — be + risen은 불가능하다. rise는 자동사라 수동태를 만들 수 없고, 수도 맞지 않는다.</li>
+        <li><b>(D) having</b> — 분사는 정동사 자리에 올 수 없다. 문장에 본동사가 없어진다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">Employees who have worked at the firm for at least six consecutive months are ------- for the tuition reimbursement program.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>eligible</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>capable</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>responsible</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>available</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (A) eligible</p>
+      <ul>
+        <li><b>해석</b> — 회사에서 최소 6개월 연속 근무한 직원은 학비 환급 프로그램을 받을 자격이 있다.</li>
+        <li><b>(A) eligible ✔</b> — <b>be eligible for + 명사 / be eligible to + 동사원형</b> = ~할 자격이 있다. 근무 기간이라는 '자격 요건'과 '혜택 프로그램'을 연결하는 토익 최빈출 어휘.</li>
+        <li><b>(B) capable</b> — '능력이 있는'. 전치사 <b>of</b>와 결합한다(be capable of handling ~). for와 쓰지 않으며, 자격 요건의 의미도 아니다.</li>
+        <li><b>(C) responsible</b> — be responsible for는 문법적으로 가능하지만 '~을 책임지다'는 뜻이 되어 "직원이 학비 환급 프로그램을 책임진다"는 어색한 문장이 된다.</li>
+        <li><b>(D) available</b> — '이용할 수 있는, 시간이 있는'. 사람 주어에 쓰면 '(~할) 시간이 있다'는 뜻이 되어 근무 기간 조건과 어울리지 않는다. (The program is available to employees ~ 처럼 프로그램이 주어일 때 적절)</li>
+        <li><b>[동의 표현]</b> be entitled to (~을 받을 권리가 있다), qualify for (~의 자격을 얻다)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅱ. 일본어 — 평가문제 3문항</h2>
+  <p class="sec-desc">고등학교 일본어 자습서·평가문제집 학습 정리 기반 · 1·5·6과 (+ 오늘의 문장 7과)</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[1과 あいうえお] 촉음 っ의 표기</p>
+    <p class="stem">'우표'를 뜻하는 일본어를 바르게 표기한 것은?</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">きつて</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">きって</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">きいて</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">きて</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ② きって</p>
+      <ul>
+        <li><b>단어</b> — <ruby>切手<rt>きって</rt></ruby> <span class="pron">(킷테)</span> 우표. 3박(き・っ・て)으로, っ도 한 박의 길이로 발음한다.</li>
+        <li><b>① きつて</b> — つ를 크게 쓰면 촉음이 아니라 [츠] 소리가 된다(키츠테). 촉음은 반드시 <b>작은 っ</b>로 쓴다.</li>
+        <li><b>② きって ✔</b> — 작은 っ는 뒤 자음(て의 [t])을 미리 막아 주는 소리로, 우리말 받침 'ㅅ'처럼 들린다.</li>
+        <li><b>③ きいて</b> — <ruby>聞<rt>き</rt></ruby>いて <span class="pron">(키이테)</span> '듣고, 물어보고'. 장음처럼 들리는 다른 단어.</li>
+        <li><b>④ きて</b> — <ruby>来<rt>き</rt></ruby>て <span class="pron">(키테)</span> '와서, 와 줘'. 2박으로 박 수가 다르다.</li>
+        <li><b>[짝으로 외우기]</b> おと(소리) ↔ おっと(남편) / かこ(과거) ↔ かっこ(괄호) / きて(와) ↔ きって(우표) — 촉음 하나로 뜻이 완전히 달라진다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[5과 いただきます] 식사 인사</p>
+    <p class="stem">친구 집에서 저녁을 다 먹고 수저를 내려놓으며 하는 말로 가장 알맞은 것은?</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">いただきます。</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">ごちそうさまでした。</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">おやすみなさい。</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">いってきます。</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ② ごちそうさまでした。</p>
+      <ul>
+        <li><b>① いただきます</b> <span class="pron">(이타다키마스)</span> — 식사를 <b>시작하기 전</b>에 하는 인사. '잘 먹겠습니다'.</li>
+        <li><b>② ごちそうさまでした ✔</b> <span class="pron">(고치소-사마데시타)</span> — 식사를 <b>마친 뒤</b>의 인사. '잘 먹었습니다'. 대접해 준 사람에게도 쓴다. 친구끼리는 「ごちそうさま」로 줄여 말한다.</li>
+        <li><b>③ おやすみなさい</b> <span class="pron">(오야스미나사이)</span> — 자기 전 인사. '안녕히 주무세요'.</li>
+        <li><b>④ いってきます</b> <span class="pron">(잇테키마스)</span> — 집을 나설 때 하는 인사. '다녀오겠습니다'. 대답은 「いってらっしゃい」.</li>
+        <li><b>[식탁 표현]</b> どうぞ <ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がって ください。(어서 드세요) / おいしいです。(맛있어요) / おかわりは いかがですか。(더 드실래요?) — 사양할 때는 「もう けっこうです。」</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[6과 わあ、すごい!] 지시어 こ・そ・あ・ど</p>
+    <p class="stem">A가 <b>B의 손에 들린</b> 가방을 가리키며 묻는 상황이다. 빈칸에 들어갈 말로 가장 알맞은 것은?</p>
+    <div class="jp-stem">A：(　　　　)、かわいいですね。どこで <ruby>買<rt>か</rt></ruby>いましたか。<br>B：これですか。デパートで <ruby>買<rt>か</rt></ruby>いました。</div>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">これ</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">それ</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">あれ</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">どれ</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ② それ</p>
+      <ul>
+        <li><b>대화</b> — A: それ、かわいいですね。どこで <ruby>買<rt>か</rt></ruby>いましたか。<span class="pron">(소레, 카와이-데스네. 도코데 카이마시타카)</span> 그거 귀엽네요. 어디서 샀어요?<br>B: これですか。デパートで <ruby>買<rt>か</rt></ruby>いました。<span class="pron">(코레데스카. 데파-토데 카이마시타)</span> 이거요? 백화점에서 샀어요.</li>
+        <li><b>① これ</b> — <b>말하는 사람(A)</b> 가까이 있는 것. 가방은 B의 손에 있으므로 A 입장에서는 これ가 아니다. (B는 자기 가까이 있으니 これ로 받았다)</li>
+        <li><b>② それ ✔</b> — <b>듣는 사람(B)</b> 가까이 있는 것. 그래서 대답하는 B는 これ로 바꾸어 말한다. 「それ ⇄ これ」가 짝을 이루는 것이 핵심 단서.</li>
+        <li><b>③ あれ</b> — 두 사람 모두에게서 <b>멀리</b> 떨어져 있는 것.</li>
+        <li><b>④ どれ</b> — '어느 것'. 의문사이므로 「かわいいですね」(귀엽네요)라는 감탄과 어울리지 않는다.</li>
+        <li><b>[こそあど 정리]</b> 사물: これ・それ・あれ・どれ / 명사 수식: この・その・あの・どの (+명사) / 장소: ここ・そこ・あそこ・どこ</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 오늘의 문장 -->
+  <div class="jp-card">
+    <p class="jp-label">오늘의 일본어 문장 · 7과 おおさかに 行きます (목적 표현 〜に 行く)</p>
+    <p class="jp-main"><ruby>週末<rt>しゅうまつ</rt></ruby>、<ruby>友<rt>とも</rt></ruby>だちと <ruby>映画<rt>えいが</rt></ruby>を <ruby>見<rt>み</rt></ruby>に <ruby>行<rt>い</rt></ruby>きます。</p>
+    <p class="jp-read">읽기(후리가나) : 週末(しゅうまつ)、友(とも)だちと 映画(えいが)を 見(み)に 行(い)きます。</p>
+    <p class="jp-rom">한글 발음 : 슈-마츠, 토모다치토 에-가오 미니 이키마스</p>
+    <p class="jp-ko">주말에 친구와 영화를 보러 갑니다.</p>
+
+    <table class="words">
+      <tr><th>표기</th><th>읽는 법</th><th>뜻</th></tr>
+      <tr><td>週末</td><td>しゅうまつ (슈-마츠)</td><td>주말</td></tr>
+      <tr><td>友だち</td><td>ともだち (토모다치)</td><td>친구</td></tr>
+      <tr><td>〜と</td><td>と (토)</td><td>~와/과 (함께하는 상대)</td></tr>
+      <tr><td>映画</td><td>えいが (에-가)</td><td>영화</td></tr>
+      <tr><td>見に</td><td>みに (미니)</td><td>보러 (見ます의 ます형 어간 + に)</td></tr>
+      <tr><td>行きます</td><td>いきます (이키마스)</td><td>갑니다</td></tr>
+    </table>
+
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>동사 ます형 어간 + に 行く</b> — '~하러 가다'(목적). <ruby>見<rt>み</rt></ruby>ます → <b>見に</b> 行きます, <ruby>買<rt>か</rt></ruby>います → <b>買いに</b> 行きます, <ruby>食<rt>た</rt></ruby>べます → <b>食べに</b> 行きます.</li>
+        <li><b>명사 + に 行く</b> — 동작성 명사는 그대로 붙인다: <ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>に 行きます(쇼핑하러 갑니다), りょこうに 行きます(여행 갑니다).</li>
+        <li><b>반말</b> — 「週末、映画 見に 行く?」(주말에 영화 보러 갈래?) — 끝을 올리면 권유가 된다. 정중한 권유는 「いっしょに 行きませんか。」</li>
+        <li><b>주의</b> — 「映画<b>を</b>」의 を는 [오]로 읽는다. ×映画に見る</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 한국사 ===================== -->
+<section class="sec sec-hist" id="s-hist">
+  <h2 class="sec-title">Ⅲ. 한국사 — 교과서 기반 3문항</h2>
+  <p class="sec-desc">고등학교 한국사2 (미래엔) · Ⅰ 민족 운동의 전개 · Ⅲ 민주화 운동 · Ⅲ 경제 성장과 외환 위기</p>
+
+  <div class="q" id="h1">
+    <p class="q-title"><span class="num">1</span>대한민국 임시 정부의 초기 활동</p>
+    <p class="stem">다음 자료의 (가)에 대한 설명으로 옳은 것은?</p>
+    <div class="src"><span class="cap">자료</span>3·1 운동 이후 여러 지역에 세워진 임시 정부가 통합되어 상하이에서 (가)이/가 출범하였다. (가)은/는 국내와 연락하기 위해 비밀 행정 조직인 연통제와 통신 기관인 교통국을 조직하였고, 독립 공채를 발행하거나 의연금을 모아 독립운동 자금을 마련하였다.</div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>민족 유일당 운동의 결과로 결성되어 광주 학생 항일 운동에 진상 조사단을 파견하였다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>김원봉이 조직하였으며, 신채호가 작성한 「조선 혁명 선언」을 활동 지침으로 삼았다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>외교 활동을 위해 미국에 구미 위원부를 두고, 파리 강화 회의에 독립 청원서를 제출하였다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>『우리말 큰사전』 편찬을 준비하다가 일제가 조작한 사건으로 회원들이 투옥되었다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>양세봉의 지휘 아래 중국 의용군과 연합하여 영릉가·흥경성 전투에서 승리하였다.</span></li>
+    </ul>
+    <div class="result" id="r-h1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h1">
+      <p class="ans">정답 ③ — 대한민국 임시 정부(1919)</p>
+      <ul>
+        <li><b>자료 분석</b> — 3·1 운동 이후 임시 정부들의 통합, 상하이, <b>연통제·교통국</b>, <b>독립 공채</b> → <b>대한민국 임시 정부</b>.</li>
+        <li><b>① 틀림</b> — <b>신간회</b>(1927). 민족주의 세력과 사회주의 세력이 연대한 민족 협동 전선으로, 광주 학생 항일 운동(1929) 때 진상 조사단을 파견하고 민중 대회를 계획하였다.</li>
+        <li><b>② 틀림</b> — <b>의열단</b>(1919, 만주 지린). 김원봉이 조직하였고 「조선 혁명 선언」(1923)을 지침으로 일제 요인 암살·식민 기관 파괴 활동을 벌였다.</li>
+        <li><b>③ 옳음 ✔</b> — 임시 정부는 김규식을 파리 강화 회의에 파견해 독립 청원서를 제출하고, 미국 워싱턴에 <b>구미 위원부</b>를 설치하여 외교 활동을 펼쳤다. 그 밖에 『독립신문』 간행, 사료 편찬소에서 『한·일 관계 사료집』 간행 등의 활동도 하였다.</li>
+        <li><b>④ 틀림</b> — <b>조선어 학회</b>. 『우리말 큰사전』 편찬을 준비하던 중 1942년 <b>조선어 학회 사건</b>으로 회원들이 투옥되었다.</li>
+        <li><b>⑤ 틀림</b> — <b>조선 혁명군</b>(1930년대 초 남만주). 양세봉이 이끌었고 중국 의용군과 한중 연합 작전을 펼쳤다. (북만주의 한국 독립군은 지청천 — 쌍성보·대전자령 전투)</li>
+        <li><b>[흐름 정리]</b> 연통제·교통국이 일제에 발각되며 국내와의 연결이 끊기자, 1923년 <b>국민 대표 회의</b>에서 창조파·개조파가 대립하였다. 이후 침체한 임시 정부는 김구의 <b>한인 애국단</b>(1931)으로 활로를 찾았다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="h2">
+    <p class="q-title"><span class="num">2</span>6월 민주 항쟁</p>
+    <p class="stem">다음 선언문이 발표된 민주화 운동의 결과로 옳은 것은?</p>
+    <div class="src"><span class="cap">선언문(일부)</span>오늘 우리는 전 세계 이목이 주시하는 가운데 40년 독재 정치를 청산하고 희망찬 민주 국가를 건설하기 위한 거보를 국민과 함께 내딛는다. … 국민 합의를 배신한 4·13 호헌 조치는 무효임을 선언한다. … 박종철 군을 고문 살인하고 은폐 조작한 정권을 규탄한다.<br><span class="pron">※ 구호 : "호헌 철폐, 독재 타도"</span></div>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>대통령이 하야하고 허정 과도 정부가 구성되었다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>내각 책임제와 양원제 국회를 골자로 한 헌법이 마련되었다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>계엄군의 무력 진압에 맞서 시민들이 시민군을 조직하였다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>여당 대표가 시국 수습 방안을 발표하고, 5년 단임의 대통령 직선제로 헌법이 개정되었다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>부산과 마산에서 시위가 일어나고, 이를 계기로 유신 체제가 무너졌다.</span></li>
+    </ul>
+    <div class="result" id="r-h2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h2">
+      <p class="ans">정답 ④ — 6월 민주 항쟁(1987)</p>
+      <ul>
+        <li><b>자료 분석</b> — <b>4·13 호헌 조치</b>(전두환 정부의 개헌 논의 금지), <b>박종철 고문치사</b>, "호헌 철폐, 독재 타도" → 1987년 <b>6월 민주 항쟁</b>(6·10 국민 대회 선언문).</li>
+        <li><b>① 틀림</b> — 4·19 혁명(1960)의 결과. 이승만이 하야하고 허정 과도 정부가 들어섰다.</li>
+        <li><b>② 틀림</b> — 역시 4·19 혁명 이후의 개헌(1960). 내각 책임제·양원제 헌법에 따라 장면 내각이 출범하였다.</li>
+        <li><b>③ 틀림</b> — <b>5·18 민주화 운동</b>(1980). 신군부의 비상계엄 확대와 계엄군의 무력 진압에 맞서 광주 시민들이 시민군을 조직하였다.</li>
+        <li><b>④ 옳음 ✔</b> — 전국적 시위에 굴복한 정부·여당은 민정당 대표 노태우의 <b>6·29 민주화 선언</b>으로 직선제 개헌 요구를 수용하였고, 여야 합의로 <b>5년 단임의 대통령 직선제</b> 헌법(현행 헌법)이 마련되었다.</li>
+        <li><b>⑤ 틀림</b> — <b>부·마 민주 항쟁</b>(1979). 이후 10·26 사태로 유신 체제가 붕괴하였다.</li>
+        <li><b>[흐름 정리]</b> 4·19 혁명(1960) → 부·마 항쟁, 10·26(1979) → 5·18(1980) → 6월 민주 항쟁(1987) → 직선제로 노태우 당선, 여소야대 국회 → 5공 청문회</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="h3">
+    <p class="q-title"><span class="num">3</span>외환 위기와 극복 과정</p>
+    <p class="stem">다음 상황을 극복하기 위해 추진된 노력으로 옳은 것은?</p>
+    <div class="src"><span class="cap">자료</span>1997년 말 동남아시아에서 시작된 금융 위기가 확산되면서 외국 자본이 빠르게 빠져나갔다. 기업들의 무리한 차입 경영과 금융 기관의 부실이 드러나 대기업이 잇따라 부도를 맞았고, 외환 보유액이 바닥나자 정부는 국제 통화 기금(IMF)에 긴급 자금 지원을 요청하였다.</div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>저유가·저금리·저달러의 '3저 호황'을 바탕으로 수출을 늘렸다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>모든 금융 거래를 실제 명의로 하도록 하는 금융 실명제를 처음 시행하였다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>노사정 위원회를 구성하고, 국민들은 금 모으기 운동을 전개하였다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>제1차 경제 개발 5개년 계획을 세워 노동 집약적 경공업을 육성하였다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>중화학 공업 육성 정책을 발표하고 포항 제철소와 창원 공업 단지를 건설하였다.</span></li>
+    </ul>
+    <div class="result" id="r-h3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h3">
+      <p class="ans">정답 ③ — 외환 위기(1997)의 극복</p>
+      <ul>
+        <li><b>자료 분석</b> — 1997년 말, 아시아 금융 위기, 대기업 연쇄 부도, IMF 긴급 자금 지원 요청 → <b>외환 위기</b>(김영삼 정부 말기). 극복은 주로 <b>김대중 정부</b>가 맡았다.</li>
+        <li><b>① 틀림</b> — 3저 호황은 1980년대 중반(1986~1988, 전두환 정부 후반)의 일이다.</li>
+        <li><b>② 틀림</b> — 금융 실명제는 1993년 <b>김영삼 정부</b>가 긴급 명령으로 처음 시행하였다. 외환 위기 <u>이전</u>의 개혁 정책이다.</li>
+        <li><b>③ 옳음 ✔</b> — 김대중 정부는 <b>노사정 위원회</b>를 구성해 노동 시장 유연화 등 고통 분담을 이끌어 내고, 기업 구조 조정·금융 개혁·공기업 민영화를 추진하였다. 국민들은 <b>금 모으기 운동</b>에 참여하였고, 2001년 IMF 지원 자금을 조기 상환하였다.</li>
+        <li><b>④ 틀림</b> — 제1차 경제 개발 5개년 계획(1962~)은 <b>박정희 정부</b> 시기로, 경공업 중심 수출 주도형 성장을 추진하였다.</li>
+        <li><b>⑤ 틀림</b> — 중화학 공업 육성(1970년대)은 <b>박정희 정부</b> 시기의 정책이다.</li>
+        <li><b>[명암]</b> 위기는 극복했지만 대량 실업, 비정규직 증가, 소득 양극화 같은 문제가 심화되었다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅳ. 수학 — 경우의 수 (순열과 조합)</h2>
+  <p class="sec-desc">고등학교 1학년 과정 · 난이도 최상 · 원순열 + 교대 배치 + 대칭을 이용한 경우 나누기</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>네 조건을 만족하는 원형 배열</p>
+    <p class="stem">1부터 8까지의 자연수가 하나씩 적힌 카드 8장을 원형으로 일정한 간격을 두고 배열하려고 한다. 다음 조건을 모두 만족시키는 경우의 수는? (단, 회전하여 일치하는 것은 같은 것으로 본다.)<br>
+    (가) 이웃한 두 카드에 적힌 수의 합은 항상 홀수이다.<br>
+    (나) 1이 적힌 카드와 2가 적힌 카드는 이웃하지 않는다.<br>
+    (다) 7이 적힌 카드와 8이 적힌 카드는 이웃한다.<br>
+    (라) 3이 적힌 카드와 4가 적힌 카드는 이웃하지 않는다.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>8</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>12</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>16</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>24</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>32</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 16</p>
+      <ul>
+        <li><b>Step 1. 조건 (가) — 홀짝 교대 배치</b><br>
+          합이 홀수 ⇔ 이웃한 두 수의 홀짝이 다르다 ⇒ 홀수(1, 3, 5, 7)와 짝수(2, 4, 6, 8)가 번갈아 놓인다.<br>
+          회전을 없애기 위해 <b>1을 자리 0에 고정</b>하고 시계 방향으로 자리 번호 0~7을 붙이면, 홀수 자리 {0, 2, 4, 6}, 짝수 자리 {1, 3, 5, 7}.<br>
+          (참고: 조건 (가)만이면 3!×4! = 144가지)</li>
+        <li><b>Step 2. 조건 (나)</b> — 1(자리 0)의 이웃은 자리 1, 7 → 2는 <b>자리 3 또는 5</b>.<br>
+          자리 0을 지나는 축에 대한 <b>대칭(1↔7, 2↔6, 3↔5)</b>은 네 조건을 모두 보존하므로, 2가 자리 3인 경우를 세어 <b>2배</b> 하면 된다.<br>
+          이제 남은 짝수 4, 6, 8 → 자리 {1, 5, 7}, 홀수 3, 5, 7 → 자리 {2, 4, 6}.<br>
+          이웃 관계: 자리 2 ~ {1, 3}, 자리 4 ~ {3, 5}, 자리 6 ~ {5, 7}</li>
+        <li><b>Step 3. 7의 위치로 경우 나누기 (조건 (다)·(라))</b><br>
+          ⅰ) <b>7이 자리 2</b>: 이웃 {1, 3} 중 3은 2가 차지 → 8은 자리 1. 4, 6은 자리 5, 7.<br>
+          　· 3이 자리 4(이웃 3, 5): 4는 자리 5 불가 → 4는 7 : <b>1</b>가지<br>
+          　· 3이 자리 6(이웃 5, 7): 4가 갈 곳 없음 : 0가지 → 소계 <b>1</b><br>
+          ⅱ) <b>7이 자리 4</b>: 이웃 {3, 5} → 8은 자리 5. 4, 6은 자리 1, 7.<br>
+          　· 3이 자리 2(이웃 1, 3): 4는 자리 7 : 1가지<br>
+          　· 3이 자리 6(이웃 5, 7): 4는 자리 1 : 1가지 → 소계 <b>2</b><br>
+          ⅲ) <b>7이 자리 6</b>: 이웃 {5, 7} → 8은 자리 5 또는 7.<br>
+          　· 8이 자리 5 (4, 6 → 자리 1, 7): 3이 자리 2면 4는 7 (1가지), 3이 자리 4면 이웃 {3, 5}에 4가 올 수 없으므로 자유 (2가지) → 3<br>
+          　· 8이 자리 7 (4, 6 → 자리 1, 5): 3이 자리 2면 4는 5 (1가지), 3이 자리 4면 4는 1 (1가지) → 2<br>
+          　→ 소계 <b>5</b><br>
+          2가 자리 3일 때 합계: 1 + 2 + 5 = <b>8</b></li>
+        <li><b>Step 4. 결론</b> — 대칭으로 2배: 8 × 2 = <b>16</b></li>
+        <li><b>오답 함정</b> — ① 8: 2가 자리 5인 대칭 경우를 빠뜨림. ⑤ 32: 조건 (라)를 빠뜨림(가·나·다만 만족하면 32). ④ 24: 원순열을 고려하지 않고 '1의 이웃 2칸 중 2를 피하는 경우'를 잘못 세는 등 경우 누락·중복.</li>
+        <li><b>검산</b> — 1을 고정한 7! = 5040가지 원형 배열을 컴퓨터로 전수 조사: (가) 144개 → (가)(나) 72개 → (가)(나)(다) 32개 → (가)(나)(다)(라) <b>16</b>개임을 확인함.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅴ. 국어 — 독서(경기 동향)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오. (경기 종합 지수와 경기 순환의 판단)</p>
+
+  <div class="passage">
+    <p>경제는 일정한 속도로 성장하지 않는다. 생산과 소비, 투자, 고용이 활발하게 늘어나는 시기가 있는가 하면, 이들이 함께 위축되는 시기도 있다. 이처럼 경제 활동이 확장과 수축을 되풀이하는 현상을 경기 순환이라 한다. 경기가 바닥에서 벗어나 정점에 이르기까지를 확장 국면, 정점에서 다시 바닥에 이르기까지를 수축 국면이라 하며, 바닥에서 다음 바닥까지를 하나의 순환 주기로 본다. 정부와 중앙은행은 경기가 어느 국면에 있는지를 판단해 재정 정책과 통화 정책을 결정하고, 기업은 생산 계획과 투자 시기를 정한다. 따라서 경기의 현재 상태를 정확히 파악하고 앞으로의 흐름을 예측하는 일은 매우 중요하다.</p>
+    <p>그러나 경기는 눈에 보이는 하나의 수치로 존재하지 않는다. 국내 총생산(GDP)은 경제 전체의 활동을 가장 포괄적으로 보여 주는 지표이지만 분기 단위로 집계되고, 발표되기까지 시간이 걸리며, 발표 이후에도 여러 차례 수정된다. 개별 지표만으로 판단하는 것도 위험하다. 예컨대 어느 달 산업 생산이 크게 늘었더라도 그것이 일시적인 수출 계약 때문인지, 경기 전반의 회복 때문인지는 그 지표만으로 알기 어렵다. 이러한 한계를 보완하기 위해 고안된 것이 경기와 밀접하게 관련된 여러 지표를 하나로 묶어 경기의 움직임을 종합적으로 나타내는 '경기 종합 지수'이다.</p>
+    <p>경기 종합 지수는 구성 지표가 경기에 비해 어느 시점에 움직이는지에 따라 선행 지수, 동행 지수, 후행 지수로 나뉜다. 선행 지수는 실제 경기보다 앞서 움직이는 지표들로 구성된다. 기업이 앞으로의 수요를 예상해 기계를 주문하거나 건설을 수주하는 일, 재고를 조정하는 일, 주가의 변동, 장단기 금리차 등이 여기에 속한다. 이들은 생산이나 고용이 실제로 변하기 전에 먼저 움직이는 경향이 있어 몇 달 뒤의 경기를 예측하는 데 쓰인다. 동행 지수는 광공업 생산, 서비스업 생산, 소매 판매, 비농림어업 취업자 수처럼 현재의 경기와 거의 같은 시점에 움직이는 지표로 구성되어 지금의 경기 상태를 보여 준다. 후행 지수는 재고, 소비자 물가의 변화, 회사채 금리처럼 경기 변동이 나타난 뒤에 뒤따라 움직이는 지표들로 이루어져, 앞선 경기 판단이 옳았는지를 사후에 확인하는 데 활용된다.</p>
+    <p>그런데 동행 지수를 그대로 보면 경기의 흐름을 읽기가 쉽지 않다. 경제는 장기적으로 성장하므로 동행 지수 역시 대체로 꾸준히 상승하는 경향을 띠기 때문이다. 경기가 둔화하더라도 성장 속도가 느려질 뿐 지수 자체는 오르는 경우가 많아, 지수의 상승만으로는 경기가 좋아지고 있는지 판단하기 어렵다. 그래서 동행 지수에서 장기적인 성장 추세를 제거한 값인 '동행 지수 순환 변동치'를 따로 산출한다. 순환 변동치는 장기 추세를 기준선으로 하여 경기가 그보다 위에 있는지 아래에 있는지를 보여 주므로, 그 값이 상승하면 경기가 추세보다 빠르게 확장되고 있음을, 하락하면 추세보다 느려지거나 위축되고 있음을 의미한다. 선행 지수에 대해서도 같은 방식으로 '선행 지수 순환 변동치'를 구하며, 이 두 순환 변동치가 경기 판단의 핵심 지표로 활용된다.</p>
+    <p>순환 변동치를 활용할 때에도 주의할 점이 있다. 한두 달의 등락만으로 경기 국면이 바뀌었다고 판단해서는 안 된다는 것이다. 개별 지표에는 기상 이변이나 파업, 명절과 같은 일시적인 요인에 따른 변동이 섞여 있어, 순환 변동치도 짧은 기간 동안에는 오르내림을 반복할 수 있다. 이 때문에 경기 분석에서는 흔히 선행 지수 순환 변동치가 여러 달 연속으로 같은 방향으로 움직이는지를 살펴본다. 연속으로 상승하는 흐름이 이어질 때 비로소 경기가 회복될 가능성이 높다고 보는 것이다. 또한 선행 지수가 경기 전환점을 얼마나 앞서는지, 곧 선행 기간도 매번 일정하지 않다. 어떤 순환에서는 수개월 앞서 신호를 보내지만, 다른 순환에서는 신호가 늦거나 경기가 실제로 전환되지 않았는데도 잘못된 신호를 보내기도 한다.</p>
+    <p>경기의 정점과 바닥이 언제였는지를 공식적으로 확정하는 일은 이보다 훨씬 늦게 이루어진다. 우리나라에서는 통계청이 동행 지수 순환 변동치를 중심으로 여러 지표의 움직임과 전문가 의견을 종합해 경기의 전환점, 곧 '기준 순환일'을 설정한다. 경기 전환점은 관련 지표들이 충분히 쌓여야 판단할 수 있으므로, 기준 순환일은 보통 전환점이 지나고 상당한 시간이 흐른 뒤에야 확정된다. 즉 지금이 경기의 정점인지 아닌지는 그 순간에는 알기 어렵고, 시간이 지난 뒤에야 '그때가 정점이었다'고 판정되는 것이다.</p>
+    <p>이처럼 경기를 읽는 일은 과거의 자료를 바탕으로 현재를 추정하고 미래를 예측하는 불완전한 작업이다. 그래서 경기 종합 지수 외에 기업이나 소비자가 느끼는 경기를 조사한 기업 경기 실사 지수(BSI)나 소비자 심리 지수(CSI) 같은 심리 지표도 함께 참고된다. 심리 지표는 경제 주체들의 기대가 실제 지출과 투자 결정에 영향을 미친다는 점에서 의미가 있으며, 설문 조사로 빠르게 집계할 수 있다는 장점이 있다. 다만 응답자의 주관적 판단이 반영되어 실제 경제 활동과 어긋나기도 하므로 실물 지표와 비교하며 해석해야 한다. 결국 경기 판단은 어느 하나의 지표에 의존하기보다, 성격이 서로 다른 지표들이 같은 방향을 가리키는지를 확인하는 종합적 판단이라 할 수 있다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>GDP는 경제 활동을 포괄적으로 보여 주지만, 집계 주기와 발표 시차, 사후 수정 때문에 경기를 신속하게 판단하는 데에는 한계가 있다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>기계 주문이나 건설 수주와 같은 지표는 생산과 고용이 실제로 변하기 전에 먼저 움직이는 경향이 있어 선행 지수의 구성 지표로 쓰인다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>동행 지수가 전월보다 상승하였다면, 동행 지수 순환 변동치도 상승하여 경기가 장기 추세보다 빠르게 확장되고 있다고 판단할 수 있다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>경기의 정점과 바닥을 나타내는 기준 순환일은 전환점이 지난 뒤 상당한 시간이 흐르고 나서야 확정된다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>소비자 심리 지수는 빠르게 집계할 수 있다는 장점이 있지만, 실제 경제 활동과 어긋날 수 있어 실물 지표와 비교하며 해석해야 한다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ③</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단: GDP는 "가장 포괄적으로 보여 주는 지표이지만 분기 단위로 집계되고, 발표되기까지 시간이 걸리며, 발표 이후에도 여러 차례 수정된다."</li>
+        <li><b>② 일치</b> — 3문단: 기계 주문·건설 수주 등은 "생산이나 고용이 실제로 변하기 전에 먼저 움직이는 경향이 있어 몇 달 뒤의 경기를 예측하는 데 쓰인다."</li>
+        <li><b>③ 불일치 (정답)</b> — 4문단: 경제는 장기적으로 성장하므로 동행 지수는 "대체로 꾸준히 상승"하며, "경기가 둔화하더라도 … 지수 자체는 오르는 경우가 많아, 지수의 상승만으로는 경기가 좋아지고 있는지 판단하기 어렵다." 동행 지수가 올라도 그 상승 폭이 장기 추세에 못 미치면 순환 변동치는 <b>하락</b>할 수 있다. 원지수(동행 지수)와 추세를 제거한 값(순환 변동치)을 동일시한 오류다. 또 5문단에 따르면 한 달의 변화만으로 경기 국면을 판단해서도 안 된다.</li>
+        <li><b>④ 일치</b> — 6문단: "기준 순환일은 보통 전환점이 지나고 상당한 시간이 흐른 뒤에야 확정된다."</li>
+        <li><b>⑤ 일치</b> — 7문단: 심리 지표는 "설문 조사로 빠르게 집계할 수 있다는 장점이 있다. 다만 … 실제 경제 활동과 어긋나기도 하므로 실물 지표와 비교하며 해석해야 한다."</li>
+        <li><b>[풀이 요령]</b> — 경제 지문에서는 <b>개념 A와 이를 가공한 개념 B</b>(원지수 ↔ 순환 변동치, 명목 ↔ 실질, 수준 ↔ 증가율)를 슬쩍 바꿔 치는 선택지가 자주 나온다. 선택지의 주어가 어떤 개념인지 지문의 정의와 정확히 대조하자.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-11-01 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
