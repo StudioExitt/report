@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-11-03</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  .sec-hist{--accent:#c2410c;--accent-soft:#fff1e8;border-top:6px solid #c2410c;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  .t-hist{color:#c2410c;border-color:#c2410c;}
+  .src{background:#fffaf5;border:1px solid #f3d9c6;border-left:5px solid #c2410c;border-radius:10px;padding:12px 14px;margin:0 0 12px;font-size:.93rem;}
+  .src .cap{display:block;font-weight:800;color:#c2410c;font-size:.85rem;margin-bottom:4px;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 11월 3일 (화) · 토익 3문항 · 일본어 3문항 + 오늘의 문장 · 한국사 3문항 · 수학 1문항 · 국어 1문항</div>
+  <div class="meta">생성 시각: 2026-11-03 06:02 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-eng" class="t-eng">Ⅰ 토익</a>
+  <a href="#s-jp" class="t-jp">Ⅱ 일본어</a>
+  <a href="#s-hist" class="t-hist">Ⅲ 한국사</a>
+  <a href="#s-math" class="t-math">Ⅳ 수학</a>
+  <a href="#s-kor" class="t-kor">Ⅴ 국어</a>
+</nav>
+
+<!-- ===================== 토익 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅰ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">The organizing committee has not yet decided ------- to extend the submission deadline for the regional design competition.</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">(A)</span><span>whether</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>if</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>that</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>what</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (A) whether</p>
+      <ul>
+        <li><b>해석</b> — 조직 위원회는 지역 디자인 공모전의 제출 마감일을 연장할지 말지 아직 결정하지 않았다.</li>
+        <li><b>구조 분석</b> — decided의 목적어 자리에 <b>[의문사/접속사 + to부정사]</b>가 왔다. '~할지 말지'를 뜻하면서 바로 뒤에 to부정사를 받을 수 있는 접속사는 whether뿐이다.</li>
+        <li><b>(A) whether ✔</b> — whether to + 동사원형 = '~할지 (말지)'. decide/consider/determine whether to ~ 는 토익 빈출 결합.</li>
+        <li><b>(B) if</b> — 의미는 비슷하지만 if는 <b>to부정사와 결합할 수 없다</b>(×if to extend). 또 전치사 뒤, 주어 자리에도 쓰지 못한다.</li>
+        <li><b>(C) that</b> — that은 to부정사를 이끌 수 없고, 완전한 절(that it will extend ~)만 이끈다.</li>
+        <li><b>(D) what</b> — what to do처럼 to부정사 안에 <b>목적어가 비어 있어야</b> 한다. extend the deadline은 목적어가 이미 있어 불완전 구조가 아니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">Ms. Alvarez delivered ------- a compelling presentation at the investor forum that several firms requested follow-up meetings the same afternoon.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>so</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>such</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>too</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>very</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (B) such</p>
+      <ul>
+        <li><b>해석</b> — Alvarez 씨가 투자자 포럼에서 매우 설득력 있는 발표를 해서 여러 회사가 그날 오후 후속 미팅을 요청했다.</li>
+        <li><b>핵심</b> — 뒤의 <b>that절(결과)</b>과 짝을 이루는 구문. 빈칸 바로 뒤가 <b>a + 형용사 + 명사</b> 어순이다.</li>
+        <li><b>(A) so</b> — so ~ that도 결과 구문이지만 so는 <b>so + 형용사 + a + 명사</b>(so compelling a presentation) 어순을 취한다. 'so a compelling'은 비문.</li>
+        <li><b>(B) such ✔</b> — <b>such + a + 형용사 + 명사 + that</b> = '너무 ~한 …라서 ~하다'.</li>
+        <li><b>(C) too</b> — too는 too ~ to 구문과 짝이며 that 결과절을 받지 않는다. 어순도 too compelling a presentation이어야 한다.</li>
+        <li><b>(D) very</b> — 관사 앞에 올 수 없고(×very a ~), 결과의 that절을 이끌지 못한다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">The earlier participants complete the online registration, ------- the discount they will receive on the conference fee.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>greater</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>the greater</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>the greatest</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>greatly</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (B) the greater</p>
+      <ul>
+        <li><b>해석</b> — 참가자들이 온라인 등록을 더 일찍 마칠수록, 회의 참가비에 대해 받는 할인 폭은 더 커진다.</li>
+        <li><b>핵심</b> — 앞절이 <b>The + 비교급(The earlier)</b>으로 시작하므로 뒤 절도 <b>the + 비교급</b>으로 맞춰야 한다. '~할수록 더 …하다'. 뒤 절은 the greater (is) the discount처럼 be동사가 생략된 도치 형태.</li>
+        <li><b>(A) greater</b> — 비교급이지만 정관사 the가 빠져 병렬 구조가 깨진다.</li>
+        <li><b>(B) the greater ✔</b> — The 비교급 ~, the 비교급 ~ 구문 완성.</li>
+        <li><b>(C) the greatest</b> — 최상급은 이 구문에 쓸 수 없다.</li>
+        <li><b>(D) greatly</b> — 부사는 명사 the discount를 보어로 서술할 수 없고, 비교 구문도 성립하지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅱ. 일본어</h2>
+  <p class="sec-desc">고등학교 일본어 교과서 범위 · 한자 위에는 히라가나 읽기를 표시했습니다.</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[2과 おはよう] 장음의 표기</p>
+    <p class="stem">다음 중 장음(길게 발음하는 소리)의 표기가 <b>잘못된</b> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">おとうさん <span class="pron">(아버지)</span></span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">せんせい <span class="pron">(선생님)</span></span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">おねえさん <span class="pron">(누나·언니)</span></span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">おうきい <span class="pron">(크다)</span></span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ④ おうきい → 바른 표기는 おおきい</p>
+      <ul>
+        <li><b>① おとうさん ✔(바름)</b> — <ruby>お父<rt>おとう</rt></ruby>さん <span class="pron">(오토-상)</span>. お단 뒤의 장음은 보통 <b>う</b>로 적는다. 예: こうこう(고등학교), ありがとう.</li>
+        <li><b>② せんせい ✔(바름)</b> — <ruby>先生<rt>せんせい</rt></ruby> <span class="pron">(센세-)</span>. え단 뒤의 장음은 보통 <b>い</b>로 적는다. 예: えいが(영화), とけい(시계).</li>
+        <li><b>③ おねえさん ✔(바름)</b> — <ruby>お姉<rt>おねえ</rt></ruby>さん <span class="pron">(오네-상)</span>. え단+え로 적는 예외적 장음(ええ, おねえさん).</li>
+        <li><b>④ おうきい ✘</b> — <ruby>大<rt>おお</rt></ruby>きい <span class="pron">(오-키이)</span>는 お단 장음이지만 <b>お</b>로 적는 대표적 예외. 같은 예외: おおい(많다), とおい(멀다), こおり(얼음), とお(열).</li>
+        <li><b>[장음이 뜻을 바꾸는 짝]</b> おばさん(아주머니) ↔ おばあさん(할머니) / おじさん(아저씨) ↔ おじいさん(할아버지) / ここ(여기) ↔ こうこう(고교)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[4과 いらっしゃい] 존재 표현 あります・います</p>
+    <div class="jp-stem">
+      へやに いぬが （ A ）。<br>
+      テーブルの うえに ケーキが （ B ）。
+    </div>
+    <p class="stem">빈칸 A, B에 들어갈 말을 바르게 짝지은 것은?</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">A: います　B: あります</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">A: あります　B: います</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">A: います　B: います</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">A: あります　B: あります</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ① A: います　B: あります</p>
+      <ul>
+        <li><b>해석</b> — <ruby>部屋<rt>へや</rt></ruby>に <ruby>犬<rt>いぬ</rt></ruby>が います。(방에 개가 있습니다.) / テーブルの <ruby>上<rt>うえ</rt></ruby>に ケーキが あります。(테이블 위에 케이크가 있습니다.)</li>
+        <li><b>います</b> <span class="pron">(이마스)</span> — 사람·동물처럼 <b>스스로 움직이는 것</b>의 존재. 예: <ruby>弟<rt>おとうと</rt></ruby>が います。</li>
+        <li><b>あります</b> <span class="pron">(아리마스)</span> — 사물·식물·장소처럼 <b>스스로 움직이지 않는 것</b>의 존재. 예: <ruby>本<rt>ほん</rt></ruby>が あります。<ruby>木<rt>き</rt></ruby>が あります。</li>
+        <li><b>② ③ ④</b> — 개(생물)에 あります를 쓰거나 케이크(사물)에 います를 쓰면 틀린다.</li>
+        <li><b>[부정·질문]</b> いません / ありません · <ruby>何<rt>なに</rt></ruby>が ありますか / <ruby>誰<rt>だれ</rt></ruby>が いますか · 위치어: うえ(위) した(아래) なか(안) そと(밖) まえ(앞) うしろ(뒤) よこ(옆)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[8과 よい おとしを] 연말·새해 인사</p>
+    <p class="stem">1월 2일, 겨울 방학 중 동네에서 일본인 친구를 오랜만에 만났을 때 하는 인사로 가장 알맞은 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">よい おとしを。</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">おたんじょうび おめでとう。</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">あけまして おめでとう。ことしも よろしく。</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">いってらっしゃい。</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ③ あけまして おめでとう。ことしも よろしく。</p>
+      <ul>
+        <li><b>① よい おとしを</b> <span class="pron">(요이 오토시오)</span> — <ruby>良<rt>よ</rt></ruby>い お<ruby>年<rt>とし</rt></ruby>を。 <b>연말(새해 전)</b>에 헤어질 때 하는 인사. '좋은 새해 맞이하세요'. 1월 2일에는 맞지 않다.</li>
+        <li><b>② おたんじょうび おめでとう</b> <span class="pron">(오탄조-비 오메데토-)</span> — お<ruby>誕生日<rt>たんじょうび</rt></ruby> おめでとう。 '생일 축하해'.</li>
+        <li><b>③ ✔</b> <span class="pron">(아케마시테 오메데토-. 코토시모 요로시쿠)</span> — <ruby>明<rt>あ</rt></ruby>けまして おめでとう。<ruby>今年<rt>ことし</rt></ruby>も よろしく。 <b>새해가 된 뒤</b> 처음 만났을 때의 인사. 윗사람에게는 「あけまして おめでとう ございます。ことしも よろしく おねがいします。」</li>
+        <li><b>④ いってらっしゃい</b> <span class="pron">(잇테랏샤이)</span> — 집을 나서는 사람에게 '다녀오세요'.</li>
+        <li><b>[일본의 설 문화]</b> おしょうがつ(정월) · ねんがじょう(연하장, 1월 1일 도착) · おせちりょうり(설 요리) · おとしだま(세뱃돈) · はつもうで(새해 첫 신사 참배)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="jp-card">
+    <p class="jp-label">📘 오늘의 문장</p>
+    <p class="jp-main"><ruby>冬休<rt>ふゆやす</rt></ruby>みに <ruby>家族<rt>かぞく</rt></ruby>と <ruby>京都<rt>きょうと</rt></ruby>へ <ruby>行<rt>い</rt></ruby>って、<ruby>古<rt>ふる</rt></ruby>い お<ruby>寺<rt>てら</rt></ruby>を <ruby>見<rt>み</rt></ruby>ました。</p>
+    <p class="jp-read">ふゆやすみに かぞくと きょうとへ いって、ふるい おてらを みました。</p>
+    <p class="jp-rom">후유야스미니 카조쿠토 쿄-토에 잇테, 후루이 오테라오 미마시타.</p>
+    <p class="jp-ko">겨울 방학에 가족과 교토에 가서 오래된 절을 봤습니다.</p>
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>〜に</b> — 시간(冬休みに: 겨울 방학에). <b>〜と</b> — 함께하는 대상(家族と: 가족과). <b>〜へ</b> — 방향(京都へ: 교토로, 발음은 [에]).</li>
+        <li><b>行って</b> — 行く의 て형은 예외적으로 <b>行って</b>(×行いて). て형으로 두 동작을 순서대로 잇는다: '가서 ~했다'.</li>
+        <li><b>見ました</b> — 見る의 정중한 과거형. 부정 과거는 見ませんでした.</li>
+      </ul>
+    </div>
+    <table class="words">
+      <tr><th>단어</th><th>읽기</th><th>뜻</th></tr>
+      <tr><td>冬休み</td><td>ふゆやすみ</td><td>겨울 방학</td></tr>
+      <tr><td>家族</td><td>かぞく</td><td>가족</td></tr>
+      <tr><td>京都</td><td>きょうと</td><td>교토</td></tr>
+      <tr><td>古い</td><td>ふるい</td><td>오래되다, 낡다</td></tr>
+      <tr><td>お寺</td><td>おてら</td><td>절</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== 한국사 ===================== -->
+<section class="sec sec-hist" id="s-hist">
+  <h2 class="sec-title">Ⅲ. 한국사</h2>
+  <p class="sec-desc">고등 한국사2 (미래엔) 범위 · 사료를 읽고 물음에 답하시오.</p>
+
+  <div class="q" id="h1">
+    <p class="q-title"><span class="num">1</span>민족 유일당 운동</p>
+    <div class="src"><span class="cap">[자료] (가) 단체의 강령</span>
+      1. 우리는 정치적·경제적 각성을 촉진한다.<br>
+      2. 우리는 단결을 공고히 한다.<br>
+      3. 우리는 기회주의를 일체 부인한다.</div>
+    <p class="stem">(가) 단체에 대한 설명으로 옳은 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>일제의 지배를 인정하는 범위에서 자치권을 얻자는 자치 운동을 주도하였다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>대한민국 임시 정부의 연락 기관으로 조직되어 연통제를 운영하였다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>광주 학생 항일 운동이 일어나자 진상 조사단을 파견하였다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>평양에서 조선 물산 장려회를 조직하여 토산품 애용을 처음 제창하였다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>코민테른의 노선 변화와 관계없이 광복 때까지 합법 단체로 활동하였다.</span></li>
+    </ul>
+    <div class="result" id="r-h1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h1">
+      <p class="ans">정답 ③ — (가)는 신간회(1927)</p>
+      <ul>
+        <li><b>자료 분석</b> — '기회주의 일체 부인'은 일제와 타협해 자치를 꾀하던 세력(자치론자)을 배격한다는 뜻. 비타협적 민족주의 세력과 사회주의 세력이 <b>정우회 선언</b>(1926)을 계기로 손잡고 1927년 창립한 <b>신간회</b>의 강령이다. 회장 이상재, 부회장 홍명희.</li>
+        <li><b>① ✘</b> — 자치 운동은 이광수·최린 등 <b>타협적 민족주의</b> 세력의 주장. 신간회는 바로 이 세력을 '기회주의'로 규정해 반대했다.</li>
+        <li><b>② ✘</b> — 연통제·교통국은 1919년 수립된 <b>대한민국 임시 정부</b>의 비밀 연락망. 신간회는 국내 합법 단체였다.</li>
+        <li><b>③ ✔</b> — 1929년 광주 학생 항일 운동이 일어나자 진상 조사단을 파견하고, 이를 알리는 민중 대회를 계획했다(일제 탄압으로 간부 다수 체포).</li>
+        <li><b>④ ✘</b> — 조선 물산 장려회는 1920년 조만식 등이 평양에서 조직한 것으로 신간회 창립보다 앞선다.</li>
+        <li><b>⑤ ✘</b> — 코민테른이 민족주의 세력과의 협력 노선을 버리고, 지도부가 온건화되자 사회주의 세력이 해소를 주장해 <b>1931년 해소</b>되었다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="h2">
+    <p class="q-title"><span class="num">2</span>광복 직후 통일 정부 수립 노력</p>
+    <div class="src"><span class="cap">[자료] (가) 운동에서 발표한 원칙 (일부)</span>
+      ○ 모스크바 3국 외상 회의의 결정에 의하여 남북을 통한 좌우 합작으로 민주주의 임시 정부를 수립할 것<br>
+      ○ 토지 개혁에 있어 몰수, 유조건 몰수, 체감 매상하여 농민에게 무상으로 분여하며 …<br>
+      ○ 친일파 민족 반역자를 처리할 조례를 입법 기구에서 제정하여 실시하게 할 것</div>
+    <p class="stem">(가) 운동에 대한 설명으로 옳은 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>이승만의 정읍 발언에 호응하여 남한만의 단독 정부 수립을 추진하였다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>모스크바 3국 외상 회의가 열리기 전에 신탁 통치 반대를 내걸고 시작되었다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>한국 민주당과 조선 공산당이 적극 참여하여 좌우 세력의 지지를 모두 얻었다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>제1차 미·소 공동 위원회가 결렬된 뒤 여운형과 김규식을 중심으로 전개되었다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>유엔 소총회의 결정에 반발한 김구와 김규식이 평양을 방문하면서 시작되었다.</span></li>
+    </ul>
+    <div class="result" id="r-h2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h2">
+      <p class="ans">정답 ④ — (가)는 좌우 합작 운동(1946~1947)</p>
+      <ul>
+        <li><b>자료 분석</b> — '좌우 합작으로 임시 정부 수립', '유조건 몰수·체감 매상 후 무상 분여(토지 개혁 절충안)', '친일파 처리 조례'는 1946년 10월 좌우 합작 위원회의 <b>좌우 합작 7원칙</b>이다.</li>
+        <li><b>① ✘</b> — 이승만의 정읍 발언(1946.6)은 남한 단독 정부 수립을 주장한 것으로, 분단을 우려한 중도 세력이 좌우 합작 운동을 시작한 <b>배경</b>이 되었다. 호응한 것이 아니다.</li>
+        <li><b>② ✘</b> — 모스크바 3국 외상 회의(1945.12) 이후 신탁 통치 문제로 좌우가 대립했고, 7원칙도 그 결정을 따르겠다고 밝히고 있다.</li>
+        <li><b>③ ✘</b> — 한국 민주당은 토지 개혁안(유상 몰수 주장)에, 조선 공산당은 '무상 몰수·무상 분배'를 고집하며 7원칙에 반대했다. 좌우 양쪽 주요 세력의 외면이 실패 원인이었다.</li>
+        <li><b>④ ✔</b> — 1946년 5월 제1차 미·소 공동 위원회가 결렬되자, 중도 세력인 <b>여운형(중도 좌파)·김규식(중도 우파)</b>이 미군정의 지원 아래 좌우 합작 위원회를 구성했다. 이후 미군정 정책 변화와 여운형 암살(1947.7)로 좌절되었다.</li>
+        <li><b>⑤ ✘</b> — 남북 협상(1948.4)에 대한 설명이다. 유엔 소총회가 '가능한 지역에서의 총선거'를 결의하자 김구·김규식이 북측에 남북 지도자 회담을 제안해 평양을 방문했다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="h3">
+    <p class="q-title"><span class="num">3</span>유신 체제</p>
+    <div class="src"><span class="cap">[자료] 어느 헌법의 조항 (일부)</span>
+      제39조 ① 대통령은 통일 주체 국민 회의에서 토론 없이 무기명 투표로 선거한다.<br>
+      제53조 ① 대통령은 … 국정 전반에 걸쳐 필요한 긴급 조치를 할 수 있다.<br>
+      제59조 ① 대통령은 국회를 해산할 수 있다.</div>
+    <p class="stem">이 헌법이 시행되던 시기의 사실로 옳은 것은?</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span>대통령의 3회 연임을 허용하는 개헌에 반대하는 3선 개헌 반대 운동이 일어났다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>장준하 등을 중심으로 개헌 청원 100만인 서명 운동이 전개되었다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>대통령 직선제 개헌 요구를 수용한 6·29 민주화 선언이 발표되었다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>3·15 부정 선거에 항의하는 시위가 전국으로 확산되었다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>대통령 임기를 7년 단임으로 하고 선거인단이 대통령을 선출하였다.</span></li>
+    </ul>
+    <div class="result" id="r-h3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h3">
+      <p class="ans">정답 ② — 자료는 유신 헌법(1972, 제7차 개헌)</p>
+      <ul>
+        <li><b>자료 분석</b> — 통일 주체 국민 회의의 간선, 긴급 조치권, 국회 해산권은 1972년 10월 유신으로 제정된 <b>유신 헌법</b>의 특징. 대통령 임기 6년·중임 제한 철폐, 국회의원 1/3 대통령 추천(유신 정우회)도 함께 기억할 것.</li>
+        <li><b>① ✘</b> — 3선 개헌(1969, 제6차 개헌)은 유신 이전의 일이다.</li>
+        <li><b>② ✔</b> — 1973년 장준하·백기완 등이 유신 헌법 개정을 요구하는 <b>개헌 청원 100만인 서명 운동</b>을 벌이자, 정부는 1974년 긴급 조치 제1호로 이를 금지했다. 이후 3·1 민주 구국 선언(1976), 부마 민주 항쟁(1979)으로 이어졌다.</li>
+        <li><b>③ ✘</b> — 6·29 민주화 선언은 1987년 6월 민주 항쟁의 결과로, 제5공화국 시기의 일이다.</li>
+        <li><b>④ ✘</b> — 3·15 부정 선거(1960)와 4·19 혁명은 이승만 정부 시기다.</li>
+        <li><b>⑤ ✘</b> — 7년 단임·대통령 선거인단 간선은 1980년 <b>제8차 개헌</b>(제5공화국 헌법)의 내용이다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅳ. 수학 — 경우의 수 (최상)</h2>
+  <p class="sec-desc">고1 순열과 조합 · 조건을 빠짐없이 따져 보시오.</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>공 나누어 넣기와 세 조건</p>
+    <p class="stem">1부터 6까지의 자연수가 하나씩 적힌 공 6개를 세 상자 A, B, C에 남김없이 나누어 넣으려고 한다. 다음 조건을 모두 만족시키도록 넣는 경우의 수는? (단, 상자에 넣는 순서는 고려하지 않는다.)</p>
+    <div class="passage" style="margin-bottom:12px">
+      (가) 각 상자에는 적어도 1개, 많아야 3개의 공을 넣는다.<br>
+      (나) 상자 A에 넣은 공의 개수는 상자 B에 넣은 공의 개수보다 많다.<br>
+      (다) 1이 적힌 공과 2가 적힌 공은 서로 다른 상자에 넣는다.
+    </div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>120</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>126</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>132</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>144</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>150</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 132</p>
+      <ul>
+        <li><b>STEP 1. 공의 개수 분배</b> — A, B, C의 공의 개수를 (a, b, c)라 하면 a+b+c=6, 1≤a, b, c≤3. 가능한 분배는 {3, 2, 1}의 배열 6가지와 (2, 2, 2) 1가지. (3, 3, 0) 등은 조건 (가)에 어긋난다.</li>
+        <li><b>STEP 2. 조건 (나) a&gt;b 적용</b> — (2, 2, 2)는 a=b라 제외. {3, 2, 1}의 배열 중 a&gt;b인 것은 <b>(3, 2, 1), (3, 1, 2), (2, 1, 3)</b>의 3가지.</li>
+        <li><b>STEP 3. 하나의 분배당 전체 경우</b> — 크기가 3, 2, 1인 세 상자에 서로 다른 공 6개를 넣는 방법: <sub>6</sub>C<sub>3</sub> × <sub>3</sub>C<sub>2</sub> × <sub>1</sub>C<sub>1</sub> = 20 × 3 × 1 = <b>60</b>.</li>
+        <li><b>STEP 4. 여사건 — 1, 2가 같은 상자</b><br>
+          · 둘이 3개짜리 상자에: 나머지 한 자리를 4개 중 고름 <sub>4</sub>C<sub>1</sub>=4, 남은 3개를 2개·1개 상자로 <sub>3</sub>C<sub>2</sub>=3 → 12<br>
+          · 둘이 2개짜리 상자에: 남은 4개를 3개·1개 상자로 <sub>4</sub>C<sub>3</sub>=4 → 4<br>
+          · 1개짜리 상자에는 둘이 함께 들어갈 수 없음 → 0<br>
+          합계 16가지 → 조건 (다)를 만족하는 경우 60 − 16 = <b>44</b>.</li>
+        <li><b>STEP 5. 결론</b> — 분배 3가지 각각 44가지이므로 3 × 44 = <b>132</b>.</li>
+        <li><b>함정 체크</b> — 조건 (나)를 놓쳐 (2, 2, 2)까지 포함하면 6×44 + (90−18) = 336이 된다. 선택지 ④ 144는 여사건에서 '1, 2가 2개짜리 상자'인 경우(4가지)를 빼먹은 값 3×(60−12), ⑤ 150은 '1개짜리 상자'에 둘이 들어갈 수 없다는 점을 놓치고 식을 잘못 세운 전형적 오답.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅴ. 국어 — 독서(경제·경영·금융)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오.</p>
+
+  <div class="passage">
+    <p>기업을 사들이려는 쪽이 인수 대금의 대부분을 자기 돈이 아닌 빌린 돈으로 마련하는 거래를 차입 매수(LBO, Leveraged Buy-Out)라 한다. 일반적인 인수에서는 인수자가 보유한 현금이나 자기 회사의 주식으로 대금을 치르지만, 차입 매수에서는 인수 대금의 60~80%가량을 금융 기관의 대출이나 채권 발행으로 조달하는 경우가 흔하다. 이 방식은 주로 사모 펀드처럼 적은 자기자본으로 큰 기업을 인수해 가치를 높인 뒤 되팔아 수익을 얻으려는 투자자가 활용한다.</p>
+    <p>차입 매수의 전형적인 구조는 다음과 같다. 인수자는 먼저 인수만을 목적으로 하는 특수 목적 회사(SPC)를 세우고, 여기에 자기자본을 출자한다. 이 특수 목적 회사가 금융 기관에서 돈을 빌려 대상 기업의 주식을 사들인다. 이때 대출의 상환 재원은 인수자의 다른 재산이 아니라 대상 기업이 장차 벌어들일 현금 흐름과 그 기업의 자산이다. 인수가 끝나면 특수 목적 회사와 대상 기업을 합병하는 경우가 많은데, 그러면 인수를 위해 빌린 부채가 고스란히 대상 기업의 부채가 된다. 결국 기업을 사기 위해 빌린 돈을 그 기업 스스로 갚아 나가는 셈이다.</p>
+    <p>인수자가 이런 구조를 택하는 가장 큰 이유는 지렛대 효과, 곧 레버리지 효과 때문이다. 기업 가치가 1,000억 원인 회사를 자기자본 300억 원과 차입금 700억 원으로 인수했다고 하자. 몇 년 뒤 기업 가치가 1,300억 원으로 올랐고 그동안 기업이 번 돈으로 차입금 200억 원을 갚아 부채가 500억 원 남았다면, 매각 시 인수자에게 돌아오는 몫은 800억 원이다. 투자한 300억 원이 약 2.7배로 불어난 것이다. 같은 회사를 전액 자기자본으로 샀다면 1,000억 원이 1,300억 원이 되어 1.3배에 그친다. 기업 가치는 30% 올랐을 뿐이지만, 빌린 돈의 비중이 클수록 자기자본 수익률은 훨씬 크게 확대된다.</p>
+    <p>세금 측면의 이점도 있다. 대부분의 나라에서 차입금 이자는 비용으로 인정되어 과세 대상 이익에서 빠진다. 반면 주주에게 지급하는 배당은 이미 세금을 낸 이익에서 나간다. 따라서 같은 기업이라도 부채 비중이 높아지면 법인세 부담이 줄어들고, 그만큼 투자자에게 돌아갈 수 있는 현금이 늘어난다. 이를 이자의 절세 효과라 부른다.</p>
+    <p>일부 경제학자들은 차입 매수가 기업 경영을 효율화하는 장치가 된다고 본다. 젠센은 사업 기회에 비해 현금이 넘치는 기업의 경영자는 그 돈을 수익성이 낮은 확장이나 과시적 지출에 쓰려는 유혹을 받는다고 지적했다. 이처럼 투자처를 찾지 못한 채 남는 현금을 잉여 현금 흐름이라 한다. 그런데 기업이 많은 부채를 지면 매년 정해진 이자와 원금을 갚아야 하므로 경영자가 함부로 쓸 수 있는 현금이 사라진다. 부채가 일종의 규율로 작동하여 비용 절감과 비핵심 자산 매각을 압박한다는 것이다. 또한 차입 매수 이후에는 인수자가 경영진에게 지분을 나누어 주는 경우가 많아, 경영자와 주주의 이해관계가 일치하는 효과도 기대된다.</p>
+    <p>그러나 레버리지는 양날의 칼이다. 앞의 예에서 기업 가치가 오히려 800억 원으로 떨어지고 부채 700억 원이 그대로 남았다면 인수자의 몫은 100억 원으로 줄어, 기업 가치는 20% 하락했는데 자기자본은 3분의 2가량 사라진다. 전액 자기자본으로 인수했다면 손실은 20%에 머물렀을 것이다. 부채 비중이 높을수록 이익뿐 아니라 손실도 증폭되는 것이다.</p>
+    <p>더 큰 문제는 이자 부담이 기업 자체를 위협할 수 있다는 점이다. 차입 매수 대출은 변동 금리인 경우가 많아 금리가 오르면 이자 비용이 급격히 커진다. 경기가 나빠져 매출이 줄어드는 시기에 이자 부담까지 늘면, 기업은 연구 개발이나 설비 투자를 줄이고 인력을 감축해 현금을 마련하려 한다. 이는 단기적으로 상환 능력을 지켜 주지만 장기적인 경쟁력을 깎아 먹을 수 있다. 끝내 이자를 감당하지 못하면 기업은 부도에 이르고, 그 피해는 인수자뿐 아니라 근로자와 거래처, 기존 채권자에게까지 번진다. 특히 인수 전부터 그 기업에 돈을 빌려준 채권자는 새로 생긴 막대한 부채 때문에 자신의 채권이 회수되지 못할 위험이 커지는데도, 거래 과정에서 의견을 낼 기회가 거의 없다.</p>
+    <p>이 때문에 차입 매수는 법적 논란에서도 자유롭지 않다. 우리나라 법원은 인수자가 대상 기업의 자산을 아무런 대가 없이 인수 대금 대출의 담보로 제공하게 한 이른바 담보 제공형 차입 매수에 대해, 대상 기업에 손해를 끼칠 위험을 초래했다는 이유로 배임죄를 인정한 바 있다. 반면 인수 후 정상적인 절차를 거쳐 합병한 경우에는, 합병의 목적과 경영상의 필요성, 합병 비율의 적정성 등을 종합적으로 따져 배임을 인정하지 않은 사례도 있다. 같은 차입 매수라도 그 구조와 절차에 따라 법적 평가가 달라지는 셈이다.</p>
+    <p>결국 차입 매수의 성패는 대상 기업이 빌린 돈의 원리금을 안정적으로 갚을 만큼 꾸준한 현금 흐름을 창출할 수 있는지에 달려 있다. 그래서 인수자들은 대체로 경기 변동에 덜 민감하고 설비 투자 부담이 적으며 현금 창출력이 꾸준한 성숙 산업의 기업을 선호한다. 저금리가 오래 이어진 시기에 차입 매수가 크게 늘었다가 금리가 오르는 국면에서 부실 사례가 잇따르는 현상이 반복되는 것도, 이 거래가 본질적으로 빌린 돈의 값, 즉 금리에 얼마나 민감한지를 보여 준다.</p>
+  </div>
+
+  <div class="q" id="k1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">윗글의 내용과 일치하지 <b>않는</b> 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>차입 매수에서 인수 대금 대출의 상환 재원은 주로 대상 기업의 현금 흐름과 자산이다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>차입금 이자는 과세 대상 이익에서 빠지므로, 부채 비중이 높아지면 법인세 부담이 줄어들 수 있다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>차입 비중이 높을수록 기업 가치가 하락할 때 자기자본의 손실률은 기업 가치의 하락률보다 작아진다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>젠센의 견해에 따르면 높은 부채는 경영자가 잉여 현금을 비효율적으로 쓰는 것을 억제할 수 있다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>우리나라 법원은 차입 매수의 구조와 절차에 따라 배임죄 인정 여부를 달리 판단하였다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ③</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단 "대출의 상환 재원은 인수자의 다른 재산이 아니라 대상 기업이 장차 벌어들일 현금 흐름과 그 기업의 자산이다."</li>
+        <li><b>② 일치</b> — 4문단 "차입금 이자는 비용으로 인정되어 과세 대상 이익에서 빠진다… 부채 비중이 높아지면 법인세 부담이 줄어들고"</li>
+        <li><b>③ 불일치 ✔</b> — 6문단의 예에서 기업 가치는 20% 하락했지만 자기자본은 300억 원 → 100억 원으로 약 67% 감소했다. "부채 비중이 높을수록 이익뿐 아니라 <b>손실도 증폭</b>된다"고 했으므로, 자기자본 손실률은 기업 가치 하락률보다 <b>커진다</b>. 레버리지가 상승기에만 작동한다고 착각하게 만드는 함정 선지.</li>
+        <li><b>④ 일치</b> — 5문단. 젠센은 잉여 현금 흐름이 많은 경영자가 비효율적 지출 유혹을 받는데, 부채의 원리금 상환 의무가 '규율'로 작동해 이를 억제한다고 보았다.</li>
+        <li><b>⑤ 일치</b> — 8문단. 담보 제공형은 배임죄를 인정했지만, 정상 절차를 거친 합병형은 목적·필요성·합병 비율 등을 따져 배임을 인정하지 않은 사례도 있다 → "구조와 절차에 따라 법적 평가가 달라진다."</li>
+        <li><b>[배경지식] 레버리지 배수</b> — 부채 액수가 고정이면 기업 가치의 변동액이 고스란히 자기자본의 변동액이 된다. 자기자본이 기업 가치의 30%라면 자기자본 변화율 ≈ 기업 가치 변화율 × 1/0.3(약 3.3배). −20% × 3.3 ≈ −67%로 6문단의 수치와 맞아떨어진다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-11-03 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
