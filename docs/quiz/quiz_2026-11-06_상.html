@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데일리 학습 퀴즈 2026-11-06</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f7f9fc; --card:#ffffff; --line:#e3e8f0; --txt:#1f2937;
+    --muted:#5b6472; --accent:#2563eb; --accent-soft:#eaf1ff;
+    --ok:#0f9d58; --ok-bg:#e8f7ee; --no:#d93025; --no-bg:#fdecea;
+    --box:#f4f7fb; --gold:#b45309;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    line-height:1.75;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px;}
+  header.top{background:linear-gradient(135deg,#2563eb,#5b8def);color:#fff;border-radius:16px;
+    padding:26px 22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(37,99,235,.18);}
+  header.top h1{margin:0 0 6px;font-size:1.6rem;font-weight:800;letter-spacing:-.5px;}
+  header.top .meta{font-size:.9rem;opacity:.92;}
+  .badge{display:inline-block;background:rgba(255,255,255,.22);border-radius:999px;
+    padding:2px 10px;font-size:.8rem;font-weight:700;margin-left:6px;}
+  section.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;margin-bottom:26px;box-shadow:0 2px 8px rgba(15,23,42,.04);}
+  h2.sec-title{margin:0 0 4px;font-size:1.25rem;font-weight:800;color:var(--accent);
+    border-left:6px solid var(--accent);padding-left:10px;letter-spacing:-.3px;}
+  .sec-desc{margin:0 0 18px 16px;font-size:.86rem;color:var(--muted);}
+  .passage{background:var(--box);border:1px solid var(--line);border-radius:12px;
+    padding:18px 16px;font-size:.96rem;text-align:justify;}
+  .passage p{margin:0 0 14px;}
+  .passage p:last-child{margin-bottom:0;}
+  .q{border-top:1px dashed var(--line);margin-top:20px;padding-top:18px;}
+  .q:first-of-type{border-top:none;margin-top:0;padding-top:0;}
+  .q-title{font-weight:700;margin:0 0 10px;font-size:1rem;}
+  .q-title .num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;
+    padding:1px 9px;margin-right:8px;font-size:.85rem;font-weight:800;}
+  .stem{margin:0 0 12px;font-size:.98rem;}
+  ul.choices{list-style:none;margin:0;padding:0;}
+  ul.choices li{border:1px solid var(--line);background:#fff;border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:.95rem;
+    transition:background .15s,border-color .15s;display:flex;gap:9px;align-items:flex-start;}
+  ul.choices li:hover{background:var(--accent-soft);border-color:#b9cffb;}
+  ul.choices li .mk{font-weight:800;color:var(--accent);flex:0 0 auto;}
+  ul.choices li.correct{background:var(--ok-bg);border-color:var(--ok);}
+  ul.choices li.correct .mk{color:var(--ok);}
+  ul.choices li.wrong{background:var(--no-bg);border-color:var(--no);}
+  ul.choices li.wrong .mk{color:var(--no);}
+  ul.choices li.locked{cursor:default;}
+  .result{display:none;margin:12px 0 0;font-weight:800;font-size:.95rem;padding:9px 12px;border-radius:10px;}
+  .result.show{display:block;}
+  .result.o{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok);}
+  .result.x{background:var(--no-bg);color:var(--no);border:1px solid var(--no);}
+  button.reveal{margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;
+    padding:9px 16px;font-size:.9rem;font-weight:700;cursor:pointer;}
+  button.reveal:hover{background:#1d4ed8;}
+  .exp{display:none;margin-top:12px;background:var(--box);border:1px solid var(--line);
+    border-left:5px solid var(--gold);border-radius:10px;padding:14px 14px;font-size:.92rem;}
+  .exp.show{display:block;}
+  .exp .ans{font-weight:800;color:var(--gold);margin:0 0 8px;font-size:.98rem;}
+  .exp ul{margin:0;padding-left:18px;}
+  .exp li{margin-bottom:6px;}
+  .exp li:last-child{margin-bottom:0;}
+  .jp-card{background:var(--box);border:1px solid var(--line);border-radius:12px;padding:18px 16px;}
+  .jp-main{font-size:1.35rem;font-weight:800;line-height:1.9;margin:0 0 6px;color:#111827;}
+  .jp-read{font-size:1rem;color:var(--accent);font-weight:700;margin:0 0 4px;}
+  .jp-rom{font-size:.9rem;color:var(--muted);margin:0 0 12px;}
+  .jp-ko{font-size:1.05rem;font-weight:700;margin:0 0 14px;padding:10px 12px;
+    background:#fff;border:1px solid var(--line);border-radius:10px;}
+  .jp-box{background:#fff;border:1px solid var(--line);border-left:5px solid var(--gold);
+    border-radius:10px;padding:13px 14px;margin-top:10px;font-size:.92rem;}
+  .jp-box h4{margin:0 0 8px;font-size:.95rem;font-weight:800;color:var(--gold);}
+  .jp-box ul{margin:0;padding-left:18px;}
+  .jp-box li{margin-bottom:6px;}
+  table.words{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem;background:#fff;}
+  table.words th,table.words td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+  table.words th{background:var(--accent-soft);font-weight:700;}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;}
+  /* 섹션별 색상 구분 */
+  .sec-kor{--accent:#2563eb;--accent-soft:#eaf1ff;border-top:6px solid #2563eb;}
+  .sec-eng{--accent:#0f766e;--accent-soft:#e6f6f4;border-top:6px solid #0f766e;}
+  .sec-math{--accent:#7c3aed;--accent-soft:#f1ebff;border-top:6px solid #7c3aed;}
+  .sec-jp{--accent:#db2777;--accent-soft:#fdeaf3;border-top:6px solid #db2777;}
+  .sec-hist{--accent:#c2410c;--accent-soft:#fff1e8;border-top:6px solid #c2410c;}
+  button.reveal{background:var(--accent);} button.reveal:hover{filter:brightness(.92);background:var(--accent);}
+  nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;}
+  nav.toc a{flex:1 1 auto;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;
+    padding:8px 10px;border-radius:999px;background:#fff;border:2px solid;}
+  .t-kor{color:#2563eb;border-color:#2563eb;} .t-eng{color:#0f766e;border-color:#0f766e;}
+  .t-math{color:#7c3aed;border-color:#7c3aed;} .t-jp{color:#db2777;border-color:#db2777;}
+  .t-hist{color:#c2410c;border-color:#c2410c;}
+  .src{background:#fffaf5;border:1px solid #f3d9c6;border-left:5px solid #c2410c;border-radius:10px;padding:12px 14px;margin:0 0 12px;font-size:.93rem;}
+  .src .cap{display:block;font-weight:800;color:#c2410c;font-size:.85rem;margin-bottom:4px;}
+  ruby rt{font-size:.6em;color:var(--accent);font-weight:600;}
+  .jp, .jp-stem, .jp-main{line-height:2.2;}
+  .jp-stem{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+    margin:0 0 12px;font-size:1.08rem;font-weight:700;}
+  .pron{color:var(--muted);font-size:.88rem;}
+  .jp-card{margin-top:24px;border-top:4px solid #db2777;}
+  .jp-label{margin:0 0 8px;font-weight:800;color:#db2777;font-size:.9rem;}
+  html{scroll-behavior:smooth;} section.sec{scroll-margin-top:12px;}
+  table.words{display:block;overflow-x:auto;} 
+  @media (min-width:521px){table.words{display:table;}}
+  @media (max-width:520px){
+    .wrap{padding:14px 10px 60px;}
+    header.top h1{font-size:1.3rem;}
+    section.sec{padding:16px 12px;}
+    .jp-main{font-size:1.15rem;}
+    nav.toc a{font-size:.82rem;padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>데일리 학습 퀴즈<span class="badge">난이도 상</span></h1>
+  <div class="meta">2026년 11월 6일 (금) · 토익 3문항 · 일본어 3문항 + 오늘의 문장 · 한국사 3문항 · 수학 1문항 · 국어 1문항</div>
+  <div class="meta">생성 시각: 2026-11-06 06:39 (KST, Asia/Seoul)</div>
+</header>
+
+<nav class="toc">
+  <a href="#s-eng" class="t-eng">Ⅰ 토익</a>
+  <a href="#s-jp" class="t-jp">Ⅱ 일본어</a>
+  <a href="#s-hist" class="t-hist">Ⅲ 한국사</a>
+  <a href="#s-math" class="t-math">Ⅳ 수학</a>
+  <a href="#s-kor" class="t-kor">Ⅴ 국어</a>
+</nav>
+
+<!-- ===================== 토익 ===================== -->
+<section class="sec sec-eng" id="s-eng">
+  <h2 class="sec-title">Ⅰ. 토익 — Part 5 문장 완성</h2>
+  <p class="sec-desc">Choose the word or phrase that best completes the sentence.</p>
+
+  <div class="q" id="e1">
+    <p class="q-title"><span class="num">1</span></p>
+    <p class="stem">Not until the external auditors had reviewed every quarterly statement ------- the discrepancy in the travel expense accounts.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>the finance team noticed</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>did the finance team notice</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>the finance team did notice</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>noticed the finance team</span></li>
+    </ul>
+    <div class="result" id="r-e1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e1">
+      <p class="ans">정답 (B) did the finance team notice</p>
+      <ul>
+        <li><b>해석</b> — 외부 감사인들이 분기별 재무제표를 모두 검토하고 나서야 비로소 재무팀은 출장비 계정의 불일치를 알아차렸다.</li>
+        <li><b>핵심</b> — 부정어구 <b>Not until ~</b>이 문장 맨 앞에 오면 주절은 <b>도치</b>된다. 일반동사 과거 시제이므로 <b>did + 주어 + 동사원형</b>.</li>
+        <li><b>(A) the finance team noticed</b> — 평서문 어순. 도치가 일어나지 않아 틀렸다. 가장 자주 고르는 오답.</li>
+        <li><b>(B) did the finance team notice ✔</b> — 조동사 did가 주어 앞으로 나간 올바른 도치.</li>
+        <li><b>(C) the finance team did notice</b> — 강조의 did를 썼지만 어순은 여전히 평서문.</li>
+        <li><b>(D) noticed the finance team</b> — 일반동사 자체를 주어 앞에 두는 도치는 불가. (be동사·조동사만 앞으로 나간다.)</li>
+        <li><b>[같은 유형]</b> Only after ~, Never, Hardly/Scarcely ~ when, Little, Seldom 등 문두 부정·제한어구 + 조동사 + 주어.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e2">
+    <p class="q-title"><span class="num">2</span></p>
+    <p class="stem">------- the renovation of the third-floor conference rooms is completed, all client meetings will be held in the lobby lounge of the adjacent building.</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">(A)</span><span>During</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>Until</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>Throughout</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>Unless</span></li>
+    </ul>
+    <div class="result" id="r-e2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e2">
+      <p class="ans">정답 (B) Until</p>
+      <ul>
+        <li><b>해석</b> — 3층 회의실 보수 공사가 완료될 때까지 모든 고객 회의는 옆 건물 로비 라운지에서 열린다.</li>
+        <li><b>1단계: 품사</b> — 빈칸 뒤가 <b>주어(the renovation) + 동사(is completed)</b>의 절이므로 <b>접속사</b>가 필요하다. → 전치사 During, Throughout 제외.</li>
+        <li><b>2단계: 의미</b> — '공사가 끝날 <b>때까지</b> 임시 장소 사용'이 자연스럽다. 시간 부사절이라 미래 대신 현재 시제(is completed)를 쓴 것도 단서.</li>
+        <li><b>(A) During</b> — 전치사. During the renovation(명사구)이라면 가능하지만 절은 받을 수 없다.</li>
+        <li><b>(B) Until ✔</b> — 접속사·전치사 둘 다 가능. '~할 때까지'.</li>
+        <li><b>(C) Throughout</b> — 전치사 '~ 내내'. 절 앞에 쓸 수 없다.</li>
+        <li><b>(D) Unless</b> — 접속사이긴 하나 '공사가 완료되지 않으면 로비에서 회의'는 일정 안내로서 논리가 어색하다(완료 여부가 아니라 완료 시점이 기준).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="e3">
+    <p class="q-title"><span class="num">3</span></p>
+    <p class="stem">Before purchasing the upgraded accounting software, please confirm that it is fully ------- with the operating system currently installed on your office computers.</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">(A)</span><span>comparable</span></li>
+      <li data-idx="1"><span class="mk">(B)</span><span>competent</span></li>
+      <li data-idx="2"><span class="mk">(C)</span><span>compatible</span></li>
+      <li data-idx="3"><span class="mk">(D)</span><span>complimentary</span></li>
+    </ul>
+    <div class="result" id="r-e3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-e3">
+      <p class="ans">정답 (C) compatible</p>
+      <ul>
+        <li><b>해석</b> — 업그레이드된 회계 소프트웨어를 구매하기 전에, 사무실 컴퓨터에 현재 설치된 운영 체제와 완전히 호환되는지 확인하십시오.</li>
+        <li><b>단서</b> — 소프트웨어 + operating system + <b>be compatible with</b>(~와 호환되는). 토익 빈출 콜로케이션.</li>
+        <li><b>(A) comparable</b> — '비교할 만한, 비슷한'(be comparable to/with). 형태가 비슷해 고르기 쉬운 함정이지만 소프트웨어 호환 문맥과 맞지 않는다.</li>
+        <li><b>(B) competent</b> — '유능한'. 주로 사람에 쓴다(a competent manager).</li>
+        <li><b>(C) compatible ✔</b> — 호환되는.</li>
+        <li><b>(D) complimentary</b> — '무료의, 칭찬하는'(complimentary breakfast). complementary(보완적인)와도 혼동 주의.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 일본어 ===================== -->
+<section class="sec sec-jp" id="s-jp">
+  <h2 class="sec-title">Ⅱ. 일본어</h2>
+  <p class="sec-desc">고등학교 일본어 교과서 범위 · 한자 위에는 히라가나 읽기를 표시했습니다.</p>
+
+  <div class="q" id="j1">
+    <p class="q-title"><span class="num">1</span>[3과 はじめまして] 처음 만났을 때의 인사</p>
+    <p class="stem">처음 만난 사람에게 자기소개를 마치며 하는 말로 가장 알맞은 것은?</p>
+    <p class="jp-stem">はじめまして。キム・ミナです。（　　　）。</p>
+    <ul class="choices" data-answer="1">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">どういたしまして</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">どうぞ よろしく おねがいします</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">おじゃまします</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">いってきます</span></li>
+    </ul>
+    <div class="result" id="r-j1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j1">
+      <p class="ans">정답 ② どうぞ よろしく おねがいします</p>
+      <ul>
+        <li><b>해석</b> — <span class="jp">はじめまして。キム・ミナです。どうぞ よろしく お<ruby>願<rt>ねが</rt></ruby>いします。</span> (하지메마시테. 키무 미나데스. 도-조 요로시쿠 오네가이시마스) = 처음 뵙겠습니다. 김민아입니다. 잘 부탁드립니다.</li>
+        <li><b>② ✔</b> — 자기소개의 정해진 마무리 표현. 줄여서 <span class="jp">よろしく</span>(친구 사이), 더 정중하게 <span class="jp">どうぞ よろしく お<ruby>願<rt>ねが</rt></ruby>いいたします</span>.</li>
+        <li><b>① ✘</b> — <span class="jp">どういたしまして</span>(도-이타시마시테) = 천만에요. <span class="jp">ありがとう</span>에 대한 대답.</li>
+        <li><b>③ ✘</b> — <span class="jp">おじゃまします</span>(오쟈마시마스) = 실례합니다. 남의 집에 들어갈 때(4과 방문 인사).</li>
+        <li><b>④ ✘</b> — <span class="jp">いってきます</span>(잇테키마스) = 다녀오겠습니다. 집을 나설 때.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j2">
+    <p class="q-title"><span class="num">2</span>[5과 いただきます] 물건 주문하기</p>
+    <p class="stem">가게에서 '커피를 주세요.'라고 주문할 때 바르게 말한 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">コーヒーが ください。</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">コーヒーに ください。</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">コーヒーを ください。</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">コーヒーで ください。</span></li>
+    </ul>
+    <div class="result" id="r-j2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j2">
+      <p class="ans">정답 ③ コーヒーを ください。</p>
+      <ul>
+        <li><b>③ ✔</b> — <span class="jp">コーヒーを ください</span> (코-히-오 쿠다사이). <b>〜を ください</b> = ~을/를 주세요. 원하는 물건은 목적격 조사 <b>を</b>로 나타낸다.</li>
+        <li><b>① ✘</b> — 한국어 '커피<u>가</u> 좋아요'의 감각으로 が를 쓴 오류. が는 <span class="jp">コーヒーが すきです</span>(커피를 좋아합니다)처럼 好き·ほしい 앞에 쓴다.</li>
+        <li><b>② ✘</b> — に는 장소·시간·대상(~에, ~에게). <span class="jp">わたしに ください</span>(저에게 주세요)는 가능.</li>
+        <li><b>④ ✘</b> — で는 수단·장소(~로, ~에서).</li>
+        <li><b>[응용]</b> 개수와 함께: <span class="jp">コーヒーを <ruby>二<rt>ふた</rt></ruby>つ ください</span> (커피를 두 잔 주세요). 가격 묻기: <span class="jp">いくらですか</span>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="j3">
+    <p class="q-title"><span class="num">3</span>[8과 よい おとしを] 동사 정중체의 과거</p>
+    <p class="jp-stem"><ruby>昨日<rt>きのう</rt></ruby> <ruby>図書館<rt>としょかん</rt></ruby>で <ruby>本<rt>ほん</rt></ruby>を（　　　）。</p>
+    <p class="stem">'어제 도서관에서 책을 읽었습니다.'라는 뜻이 되도록 빈칸에 들어갈 말로 알맞은 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span class="jp">よみます</span></li>
+      <li data-idx="1"><span class="mk">②</span><span class="jp">よみませんでした</span></li>
+      <li data-idx="2"><span class="mk">③</span><span class="jp">よみでした</span></li>
+      <li data-idx="3"><span class="mk">④</span><span class="jp">よみました</span></li>
+    </ul>
+    <div class="result" id="r-j3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-j3">
+      <p class="ans">정답 ④ よみました</p>
+      <ul>
+        <li><b>해석</b> — <span class="jp"><ruby>昨日<rt>きのう</rt></ruby> <ruby>図書館<rt>としょかん</rt></ruby>で <ruby>本<rt>ほん</rt></ruby>を <ruby>読<rt>よ</rt></ruby>みました。</span> (키노- 토쇼칸데 홍오 요미마시타)</li>
+        <li><b>④ ✔</b> — 정중체 활용표: <b>〜ます</b>(현재) · <b>〜ません</b>(부정) · <b>〜ました</b>(과거) · <b>〜ませんでした</b>(과거 부정).</li>
+        <li><b>① ✘</b> — 현재·미래형. 昨日(어제)와 시제가 맞지 않는다.</li>
+        <li><b>② ✘</b> — 과거 부정 '읽지 않았습니다'. 뜻이 반대.</li>
+        <li><b>③ ✘</b> — 동사에는 です의 과거 でした를 붙이지 않는다. でした는 명사·な형용사용(<span class="jp"><ruby>雨<rt>あめ</rt></ruby>でした</span> 비였습니다).</li>
+        <li><b>[조사 체크]</b> 장소 + <b>で</b> = 동작이 일어나는 곳(~에서). 존재 장소에는 に(<span class="jp"><ruby>図書館<rt>としょかん</rt></ruby>に います</span>).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="jp-card">
+    <p class="jp-label">📘 오늘의 문장</p>
+    <p class="jp-main"><ruby>日本語<rt>にほんご</rt></ruby>の <ruby>勉強<rt>べんきょう</rt></ruby>は むずかしいですが、とても おもしろいです。</p>
+    <p class="jp-read">にほんごの べんきょうは むずかしいですが、とても おもしろいです。</p>
+    <p class="jp-rom">니홍고노 벵쿄-와 무즈카시-데스가, 토테모 오모시로이데스.</p>
+    <p class="jp-ko">일본어 공부는 어렵지만, 아주 재미있습니다.</p>
+    <div class="jp-box">
+      <h4>문법 포인트</h4>
+      <ul>
+        <li><b>명사 + の + 명사</b> — '~의'. 日本語の 勉強(일본어(의) 공부). 한국어에서는 '의'를 생략해도 일본어에서는 の를 넣는다.</li>
+        <li><b>〜は</b> — 주제 조사, 읽기는 [wa].</li>
+        <li><b>〜ですが、</b> — '~입니다만, ~지만'(역접). 앞뒤 모두 정중체로 맞춘다.</li>
+        <li><b>い형용사 + です</b> — むずかしい(어렵다)·おもしろい(재미있다)는 기본형 그대로 です를 붙여 정중형.</li>
+        <li><b>とても</b> — 아주, 매우. 반대로 부정과 함께 쓰는 あまり 〜ない(별로 ~않다)도 함께 정리.</li>
+      </ul>
+    </div>
+    <table class="words">
+      <tr><th>단어</th><th>읽기</th><th>뜻</th></tr>
+      <tr><td>日本語</td><td>にほんご</td><td>일본어</td></tr>
+      <tr><td>勉強</td><td>べんきょう</td><td>공부</td></tr>
+      <tr><td>難しい</td><td>むずかしい</td><td>어렵다</td></tr>
+      <tr><td>面白い</td><td>おもしろい</td><td>재미있다</td></tr>
+      <tr><td>とても</td><td>とても</td><td>아주, 매우</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== 한국사 ===================== -->
+<section class="sec sec-hist" id="s-hist">
+  <h2 class="sec-title">Ⅲ. 한국사</h2>
+  <p class="sec-desc">고등 한국사2 (미래엔) 범위 · 사료를 읽고 물음에 답하시오.</p>
+
+  <div class="q" id="h1">
+    <p class="q-title"><span class="num">1</span>갑신정변</p>
+    <div class="src"><span class="cap">[자료] 어느 정변 주도 세력이 발표한 개혁 정강 (일부)</span>
+      1. 대원군을 곧 돌아오게 하며, 청에 대한 조공의 허례를 폐지한다.<br>
+      2. 문벌을 폐지하여 인민 평등의 권리를 세우고, 능력에 따라 관리를 임명한다.<br>
+      3. 지조법을 개혁하여 관리의 부정을 막고 백성을 보호하며, 국가 재정을 넉넉하게 한다.<br>
+      12. 모든 재정은 호조에서 통할한다.</div>
+    <p class="stem">자료의 개혁 정강을 발표한 정변에 대한 설명으로 옳은 것은?</p>
+    <ul class="choices" data-answer="0">
+      <li data-idx="0"><span class="mk">①</span><span>우정총국 개국 축하연을 이용하여 일으켰다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>별기군과의 차별 대우에 반발한 구식 군인들이 주도하였다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>정변의 결과 조선과 일본 사이에 제물포 조약이 체결되었다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>정부가 교정청을 설치하여 자주적 개혁을 추진하는 계기가 되었다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>개혁의 기본 방향을 담은 홍범 14조가 반포되었다.</span></li>
+    </ul>
+    <div class="result" id="r-h1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h1">
+      <p class="ans">정답 ① — 자료는 갑신정변(1884) 14개조 개혁 정강</p>
+      <ul>
+        <li><b>자료 단서</b> — '청에 대한 조공 허례 폐지'(청과의 사대 관계 청산), '문벌 폐지·인민 평등', '재정은 호조로 일원화' → 김옥균·박영효 등 급진 개화파의 갑신정변.</li>
+        <li><b>① ✔</b> — 1884년 우정총국 개국 축하연을 틈타 정변을 일으키고 일본 공사관 병력의 지원을 받았으나, 청군의 개입으로 <b>3일 만에 실패</b>.</li>
+        <li><b>② ✘</b> — 임오군란(1882). 구식 군인들이 별기군과의 차별, 밀린 급료 문제로 봉기.</li>
+        <li><b>③ ✘</b> — 제물포 조약은 임오군란의 결과. 갑신정변 이후에는 조선-일본 <b>한성 조약</b>, 청-일본 <b>톈진 조약</b>(조선에서 양국 군대 공동 철수, 파병 시 상호 통보)이 체결되었다.</li>
+        <li><b>④ ✘</b> — 교정청은 동학 농민 운동 시기(1894) 전주 화약 이후 조선 정부가 설치.</li>
+        <li><b>⑤ ✘</b> — 홍범 14조는 제2차 갑오개혁(1895 초) 때 반포.</li>
+        <li><b>[의의와 한계]</b> 근대 국가 수립을 목표로 한 최초의 정치 개혁 운동이었으나, 외세(일본)에 의존하고 토지 개혁 등 민중의 요구를 반영하지 못해 지지를 얻지 못했다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="h2">
+    <p class="q-title"><span class="num">2</span>1920년대 만주의 무장 독립 전쟁</p>
+    <div class="src"><span class="cap">[자료]</span>
+      김좌진이 이끄는 북로 군정서군과 홍범도의 대한 독립군 등 연합 부대는 일본군의 대규모 추격을 피해 이동하던 중, 백운평·완루구·어랑촌 등지에서 약 6일 동안 십여 차례 전투를 벌여 일본군에 큰 타격을 주었다.</div>
+    <p class="stem">자료의 전투가 있은 <b>이후</b>에 일어난 사실로 옳은 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>홍범도의 대한 독립군이 봉오동에서 일본군을 크게 무찔렀다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>이회영 등이 삼원보에 신흥 강습소를 세워 독립군을 양성하였다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>박상진 등이 공화 정체를 목표로 대한 광복회를 조직하였다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>독립군 부대들이 대한 독립 군단을 조직하여 자유시로 이동하였다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>상하이에서 대한민국 임시 정부가 수립되었다.</span></li>
+    </ul>
+    <div class="result" id="r-h2"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h2">
+      <p class="ans">정답 ④ — 자료는 청산리 전투(1920. 10.)</p>
+      <ul>
+        <li><b>흐름 정리</b> — 봉오동 전투(1920. 6.) → <b>청산리 전투(1920. 10.)</b> → 간도 참변(1920. 10.~, 일본군의 보복 학살) → 대한 독립 군단 조직(밀산, 1920. 12.) → 자유시 참변(1921. 6.) → 3부(참의부·정의부·신민부) 성립.</li>
+        <li><b>④ ✔</b> — 간도 참변을 피해 독립군은 밀산에서 대한 독립 군단을 조직하고 러시아 자유시로 이동하였으나, 적색군의 무장 해제 요구 과정에서 큰 피해를 입었다(자유시 참변).</li>
+        <li><b>① ✘</b> — 봉오동 전투는 청산리 전투보다 앞선 1920년 6월. 이 패배에 대한 일본군의 대규모 출병이 청산리 전투로 이어졌다.</li>
+        <li><b>② ✘</b> — 신흥 강습소는 1911년 설립(이후 신흥 무관 학교). 청산리 전투 이전.</li>
+        <li><b>③ ✘</b> — 대한 광복회는 1915년 국내에서 조직된 1910년대 비밀 결사.</li>
+        <li><b>⑤ ✘</b> — 대한민국 임시 정부는 1919년 4월 수립.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="q" id="h3">
+    <p class="q-title"><span class="num">3</span>4·19 혁명</p>
+    <div class="src"><span class="cap">[자료] 대학 교수단 시국 선언문 (일부)</span>
+      1. 마산, 서울, 기타 각지의 데모는 주권을 빼앗긴 국민의 울분을 대신하여 궐기한 학생들의 순수한 정의감의 발로이다.<br>
+      2. 3·15 선거는 부정 선거이다. 공명선거에 의하여 정·부통령 선거를 다시 실시하라.<br>
+      3. 대통령은 책임을 지고 즉시 물러나라.</div>
+    <p class="stem">자료가 발표된 시기의 민주화 운동에 대한 설명으로 옳은 것은?</p>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>호헌 철폐와 독재 타도를 외치며 대통령 직선제를 요구하였다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>신군부의 비상계엄 확대에 맞서 시민군이 조직되었다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>이승만 대통령이 하야하고 허정 과도 정부가 수립되었다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>유신 체제에 반대하여 부산과 마산 일대에서 일어났다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>굴욕적인 한·일 국교 정상화 회담에 반대하여 전개되었다.</span></li>
+    </ul>
+    <div class="result" id="r-h3"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-h3">
+      <p class="ans">정답 ③ — 자료는 4·19 혁명(1960) 당시 대학 교수단 시국 선언(4. 25.)</p>
+      <ul>
+        <li><b>자료 단서</b> — '3·15 선거는 부정 선거', '마산 데모'(김주열 사망 사건), '대통령은 물러나라' → 4·19 혁명.</li>
+        <li><b>③ ✔</b> — 교수단 시위 다음 날(4. 26.) 이승만 하야 → 허정 과도 정부 → <b>내각 책임제·양원제 개헌</b> → 장면 내각 출범.</li>
+        <li><b>① ✘</b> — 6월 민주 항쟁(1987). 4·13 호헌 조치에 반대, 결과는 6·29 민주화 선언.</li>
+        <li><b>② ✘</b> — 5·18 민주화 운동(1980).</li>
+        <li><b>④ ✘</b> — 부·마 민주 항쟁(1979). 유신 체제 붕괴의 계기.</li>
+        <li><b>⑤ ✘</b> — 6·3 시위(1964). 박정희 정부의 한·일 회담 반대.</li>
+        <li><b>[의의]</b> 학생과 시민이 독재 정권을 무너뜨린 <b>최초의 민주 혁명</b>으로, 이후 민주화 운동의 출발점이 되었다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 수학 ===================== -->
+<section class="sec sec-math" id="s-math">
+  <h2 class="sec-title">Ⅳ. 수학 — 경우의 수 (최상)</h2>
+  <p class="sec-desc">고1 순열과 조합 · 조건을 빠짐없이 따져 보시오.</p>
+
+  <div class="q" id="m1">
+    <p class="q-title"><span class="num">1</span>세 조건을 만족시키는 함수의 개수</p>
+    <p class="stem">집합 X = {1, 2, 3, 4, 5, 6}에 대하여 다음 조건을 모두 만족시키는 함수 f : X → X의 개수는?</p>
+    <div class="src" style="background:#faf7ff;border-color:#e2d6fb;border-left-color:#7c3aed;">
+      (가) X의 모든 원소 x에 대하여 f(f(x)) = f(x)이다.<br>
+      (나) X의 모든 원소 x에 대하여 f(x) ≥ x이다.<br>
+      (다) 함수 f의 치역의 원소의 개수는 3이다.</div>
+    <ul class="choices" data-answer="2">
+      <li data-idx="0"><span class="mk">①</span><span>65</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>75</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>90</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>105</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>120</span></li>
+    </ul>
+    <div class="result" id="r-m1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-m1">
+      <p class="ans">정답 ③ 90</p>
+      <ul>
+        <li><b>STEP 1. 조건 (가)의 의미</b> — 치역의 원소를 y라 하면 y = f(x)인 x가 있으므로 f(y) = f(f(x)) = f(x) = y. 즉 <b>치역의 원소는 모두 자기 자신으로 간다</b>(고정점).</li>
+        <li><b>STEP 2. 함숫값이 같은 원소끼리 묶기</b> — 함숫값이 같은 원소끼리 한 묶음으로 만들면, X가 <b>3개의 묶음</b>으로 나뉜다(조건 다). 각 묶음은 공통 함숫값 y를 포함하고(STEP 1), 조건 (나)에 의해 묶음의 모든 원소 x는 x ≤ y. 따라서 <b>y는 그 묶음의 최댓값</b>이다.</li>
+        <li><b>STEP 3. 일대일 대응</b> — 거꾸로 X를 3개의 묶음으로 나누고 각 원소를 '자기 묶음의 최댓값'으로 보내면 (가)·(나)·(다)를 모두 만족한다. 그러므로 구하는 수 = <b>6개의 원소를 3개의 묶음으로 나누는 방법의 수</b>.</li>
+        <li><b>STEP 4. 분할의 수 계산</b>
+          <br>· (4, 1, 1): <sub>6</sub>C<sub>4</sub> × <sub>2</sub>C<sub>1</sub> × <sub>1</sub>C<sub>1</sub> × 1/2! = 15
+          <br>· (3, 2, 1): <sub>6</sub>C<sub>3</sub> × <sub>3</sub>C<sub>2</sub> × <sub>1</sub>C<sub>1</sub> = 60
+          <br>· (2, 2, 2): <sub>6</sub>C<sub>2</sub> × <sub>4</sub>C<sub>2</sub> × <sub>2</sub>C<sub>2</sub> × 1/3! = 15
+          <br>→ 15 + 60 + 15 = <b>90</b></li>
+        <li><b>자주 하는 실수</b> — 크기가 같은 묶음의 순서를 나누지 않아 (4,1,1)을 30, (2,2,2)를 90으로 세면 180이 나온다. 또 치역에 6이 반드시 포함된다는 점(f(6) ≥ 6이므로 f(6) = 6)을 놓치고 치역을 <sub>6</sub>C<sub>3</sub>가지로 잡으면 과대 계산된다.</li>
+        <li><b>[검산]</b> 치역을 직접 정하는 방법: 6 ∈ 치역이므로 나머지 두 고정점 a &lt; b (a, b ∈ {1,…,5})를 고르고, 고정점이 아닌 원소 x는 x보다 큰 고정점 중 하나로 보낸다. 10가지 (a, b)에 대해 모두 더해도 90. 전체 6⁶ = 46656개 함수를 컴퓨터로 조사한 결과도 90개로 일치한다.</li>
+        <li><b>[참고]</b> 조건 (다)를 빼면 치역의 크기 1~6 전체에 대해 1 + 31 + 90 + 65 + 15 + 1 = 203 (6개 원소의 모든 분할 수, 벨 수 B₆).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 국어 ===================== -->
+<section class="sec sec-kor" id="s-kor">
+  <h2 class="sec-title">Ⅴ. 국어 — 독서(금융·경기 동향)</h2>
+  <p class="sec-desc">다음 글을 읽고 물음에 답하시오.</p>
+
+  <div class="passage">
+    <p>채권은 정부나 기업이 돈을 빌리면서 발행하는 증서로, 만기에 원금을 돌려주고 그 사이에 정해진 이자를 지급하겠다는 약속을 담고 있다. 시장에서 거래되는 채권의 가격은 매일 변하며, 현재 가격으로 채권을 사서 만기까지 보유할 때 얻는 연평균 수익률을 채권 수익률, 곧 시장 금리라고 한다. 채권 가격과 수익률은 반대로 움직인다. 정해진 이자와 원금을 더 싼 값에 살수록 수익률이 높아지기 때문이다. 만기가 서로 다른 채권들의 수익률을 가로축에 만기, 세로축에 수익률을 두고 이어 그린 것을 수익률 곡선이라 한다.</p>
+    <p>수익률 곡선의 모양을 설명하는 대표적인 이론은 기대 이론이다. 이 이론에 따르면 장기 금리는 현재부터 만기까지 예상되는 단기 금리들의 평균과 같다. 예컨대 현재 1년 만기 금리가 3%이고 1년 뒤의 1년 만기 금리가 5%가 될 것으로 모두가 예상한다면, 2년 만기 금리는 대략 두 값의 평균인 4%가 된다. 2년 만기 채권을 사는 것과 1년 만기 채권을 두 번 연달아 사는 것이 같은 수익을 주어야 투자자들이 어느 한쪽으로 쏠리지 않기 때문이다. 따라서 기대 이론에서는 단기 금리가 오를 것으로 예상되면 곡선이 우상향하고, 내릴 것으로 예상되면 우하향한다.</p>
+    <p>그런데 현실의 수익률 곡선은 대부분의 기간에 우상향한다. 단기 금리가 오르리라는 예상이 늘 우세하다고 보기는 어려우므로, 기대 이론만으로는 이를 설명하기 어렵다. 유동성 프리미엄 이론은 여기에 위험에 대한 보상을 더한다. 만기가 긴 채권일수록 같은 폭의 금리 변화에도 가격이 크게 변한다. 만기까지 남은 이자와 원금이 먼 미래에 들어오므로, 금리가 오르면 그 현재 가치가 더 많이 깎이기 때문이다. 만기 전에 채권을 팔아야 할지도 모르는 투자자는 이러한 가격 변동 위험을 꺼리므로, 장기채에는 기대 단기 금리의 평균에 더해 추가 보상이 붙어야 한다. 이 추가 보상을 기간 프리미엄이라 한다. 기간 프리미엄 때문에 미래 단기 금리에 대한 예상이 변하지 않더라도 수익률 곡선은 우상향하게 된다.</p>
+    <p>드물게 단기 금리가 장기 금리보다 높아지는 경우가 있는데, 이를 장단기 금리 역전이라 한다. 역전은 대개 두 힘이 겹칠 때 나타난다. 하나는 물가를 잡기 위해 중앙은행이 기준 금리를 빠르게 올리는 것이다. 단기 금리는 기준 금리에 밀접하게 연동되므로 곧바로 상승한다. 다른 하나는 시장의 예상이다. 투자자들이 긴축의 여파로 머지않아 경기가 둔화하고 중앙은행이 결국 금리를 내릴 것이라고 예상하면, 기대 이론에 따라 장기 금리는 오히려 낮아진다. 지금의 높은 단기 금리와 앞으로의 낮은 단기 금리에 대한 예상이 함께 작용하여 곡선이 뒤집히는 것이다.</p>
+    <p>장단기 금리 역전은 경기 침체를 예고하는 지표로 주목받아 왔다. 여러 나라에서 금리 역전이 나타난 뒤 대략 반년에서 2년 정도의 시차를 두고 경기 침체가 찾아온 사례가 많았기 때문이다. 역전은 시장의 비관적 예상을 보여 줄 뿐 아니라 그 자체로 경기를 위축시키는 경로를 갖기도 한다. 은행은 주로 단기 예금으로 자금을 모아 만기가 긴 대출을 내주고, 그 금리 차이에서 수익을 얻는다. 역전이 일어나면 자금 조달 비용은 높아지는데 장기 대출 금리는 낮아져 이 차이가 줄어든다. 수익성이 떨어진 은행이 대출을 깐깐하게 하면 기업과 가계의 자금 사정이 나빠지고, 이는 실제 경기 둔화로 이어질 수 있다. 침체에 대한 예상이 침체를 부르는 데 일조하는 셈이다.</p>
+    <p>그러나 금리 역전의 신호를 해석할 때에는 주의가 필요하다. 2008년 금융 위기 이후 여러 중앙은행은 장기 국채를 대규모로 사들이는 양적 완화를 시행하였다. 중앙은행이라는 거대한 매수자가 장기채를 흡수하자 투자자들이 떠안아야 할 가격 변동 위험이 줄었고, 기간 프리미엄은 크게 낮아졌다. 연금 기금이나 보험사처럼 먼 미래에 지급할 돈에 맞추어 장기채를 꾸준히 사야 하는 기관의 수요도 장기 금리를 누르는 요인이다. 기간 프리미엄이 매우 낮은 상황에서는 경기 전망이 크게 나빠지지 않아도 단기 금리가 조금만 올라 곡선이 쉽게 평평해지거나 뒤집힐 수 있다. 이 경우 역전은 미래의 침체보다는 장기채 수요 구조의 변화를 반영한 것일 수 있다.</p>
+    <p>역전이 끝나는 시점도 눈여겨볼 만하다. 과거의 여러 사례에서 침체가 실제로 시작된 시기는 역전이 한창일 때보다 역전이 해소되며 곡선이 다시 가팔라질 무렵인 경우가 많았다. 경기가 꺾이는 조짐이 뚜렷해지면 중앙은행이 서둘러 기준 금리를 내리고, 이에 따라 단기 금리가 장기 금리보다 빠르게 떨어지면서 역전이 풀리기 때문이다. 이 때문에 역전이 해소되었다는 사실을 위험이 지나갔다는 신호로 받아들이는 것은 성급한 판단일 수 있다.</p>
+    <p>결국 수익률 곡선은 미래 금리에 대한 시장의 예상과 위험에 대한 보상이 함께 담긴 그림이다. 곡선의 모양이 변했을 때 그것이 어느 쪽의 변화에서 비롯되었는지를 가려내지 않으면 같은 역전 현상을 두고도 전혀 다른 결론에 이를 수 있다. 그래서 많은 분석가는 수익률 곡선을 기업 채권과 국채의 금리 차이인 신용 스프레드, 고용 지표, 은행의 대출 태도 등과 함께 살펴 경기의 흐름을 판단한다.</p>
+  </div>
+
+  <div class="q" id="k1" style="margin-top:20px">
+    <p class="q-title"><span class="num">1</span>윗글의 내용과 일치하지 <u>않는</u> 것은?</p>
+    <ul class="choices" data-answer="3">
+      <li data-idx="0"><span class="mk">①</span><span>기대 이론에 따르면 앞으로 단기 금리가 하락할 것으로 예상될 때 장기 금리가 단기 금리보다 낮아질 수 있다.</span></li>
+      <li data-idx="1"><span class="mk">②</span><span>유동성 프리미엄 이론은 미래 단기 금리에 대한 예상이 변하지 않아도 수익률 곡선이 우상향하는 이유를 설명할 수 있다.</span></li>
+      <li data-idx="2"><span class="mk">③</span><span>장단기 금리 역전은 은행의 수익성을 떨어뜨려 대출을 위축시킴으로써 경기 둔화를 부추길 수 있다.</span></li>
+      <li data-idx="3"><span class="mk">④</span><span>중앙은행의 장기 국채 대규모 매입은 기간 프리미엄을 높여 장기 금리를 끌어올리므로, 경기 전망과 무관한 금리 역전을 일어나기 어렵게 만든다.</span></li>
+      <li data-idx="4"><span class="mk">⑤</span><span>과거 사례에서는 금리 역전이 해소되는 무렵에 경기 침체가 실제로 시작되는 경우가 많았다.</span></li>
+    </ul>
+    <div class="result" id="r-k1"></div>
+    <button class="reveal" type="button">정답 보기</button>
+    <div class="exp" id="e-k1">
+      <p class="ans">정답 ④</p>
+      <ul>
+        <li><b>① 일치</b> — 2문단 "단기 금리가 … 내릴 것으로 예상되면 우하향한다." 우하향 곡선 = 장기 금리 &lt; 단기 금리. 4문단의 역전 설명도 같은 원리.</li>
+        <li><b>② 일치</b> — 3문단 "기간 프리미엄 때문에 미래 단기 금리에 대한 예상이 변하지 않더라도 수익률 곡선은 우상향하게 된다."</li>
+        <li><b>③ 일치</b> — 5문단. 단기 조달·장기 대출 구조에서 금리 차이가 줄어 은행 수익성 하락 → 대출을 깐깐하게 → 실제 경기 둔화.</li>
+        <li><b>④ 불일치 ✔</b> — 6문단은 정반대. 양적 완화로 투자자의 가격 변동 위험이 줄어 기간 프리미엄이 <b>낮아졌고</b>, 그 결과 경기 전망이 크게 나빠지지 않아도 곡선이 <b>쉽게</b> 평평해지거나 뒤집힐 수 있다. '높여', '끌어올려', '어렵게' 세 군데가 모두 방향이 뒤집힌 함정 선지.</li>
+        <li><b>⑤ 일치</b> — 7문단 "침체가 실제로 시작된 시기는 … 역전이 해소되며 곡선이 다시 가팔라질 무렵인 경우가 많았다."</li>
+        <li><b>[배경지식]</b> 장기 금리 ≈ (기대 단기 금리의 평균) + 기간 프리미엄. 역전 신호를 읽을 때는 두 항 가운데 어느 쪽이 움직였는지부터 따져야 한다(8문단). 미국에서는 10년물−3개월물, 10년물−2년물 금리차가 대표 지표로 쓰인다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>데일리 학습 퀴즈 · 2026-11-06 · 선택지를 누르면 바로 채점되고 해설이 열립니다.</footer>
+</div>
+
+<script>
+(function(){
+  function openExp(id){
+    var e = document.getElementById('e-' + id);
+    if(e) e.classList.add('show');
+  }
+  document.querySelectorAll('.q').forEach(function(q){
+    var id = q.id;
+    var list = q.querySelector('ul.choices');
+    if(!list) return;
+    var answer = parseInt(list.getAttribute('data-answer'), 10);
+    var res = document.getElementById('r-' + id);
+    var items = list.querySelectorAll('li');
+
+    function markAll(){
+      items.forEach(function(li){
+        li.classList.add('locked');
+        if(parseInt(li.getAttribute('data-idx'),10) === answer){
+          li.classList.add('correct');
+        }
+      });
+    }
+
+    items.forEach(function(li){
+      li.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        q.dataset.done = '1';
+        var picked = parseInt(li.getAttribute('data-idx'), 10);
+        markAll();
+        if(picked !== answer){ li.classList.add('wrong'); }
+        if(res){
+          res.textContent = (picked === answer)
+            ? '정답입니다! 🎉'
+            : '오답입니다. 정답은 아래 해설을 확인하세요.';
+          res.className = 'result show ' + (picked === answer ? 'o' : 'x');
+        }
+        openExp(id);
+      });
+    });
+
+    var btn = q.querySelector('button.reveal');
+    if(btn){
+      btn.addEventListener('click', function(){
+        if(q.dataset.done !== '1'){
+          q.dataset.done = '1';
+          markAll();
+        }
+        openExp(id);
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>
